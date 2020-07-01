@@ -11,7 +11,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from dotenv import load_dotenv
-from instapost import post_conductor
+from instapost import post_conductor, switch_to_mobile
 from discord_grabber import parse, find_new_messages, message_listener
 from timeit import default_timer as timer
 
@@ -97,6 +97,7 @@ def post_driver():
     print(end - start)
     config.IMAGE_PATH = ''
     config.PARSED_TRADE = []
+    switch_to_mobile()
     print('Posted to instagram')
 
 
