@@ -4,12 +4,15 @@ import threading
 import os
 import logging
 import datetime
+import config
+import pathlib
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from dotenv import load_dotenv
-from discord_grabber import parse, find_new_messages
+from instapost import post_conductor
+from discord_grabber import parse, find_new_messages, message_listener
 from timeit import default_timer as timer
 
 load_dotenv()
@@ -22,6 +25,7 @@ LIVE_PW = os.getenv("LIVE_PW")
 INSTA_USERNAME = os.getenv("INSTA_USERNAME")
 INSTA_PW = os.getenv("INSTA_PASSWORD")
 CHROME_INSTA = os.getenv("INSTACHROME")
+PATH = pathlib.Path.cwd()
 
 
 def check_discord():
@@ -35,7 +39,8 @@ def check_discord():
                               options=chrome_options)
     #driver.get(
     #    'https://discord.com/channels/290278814217535489/699253100174770176')
-    parse(find_new_messages(driver))
+    # parse(find_new_messages(driver))
+    parse(message_listener(driver))
     end = timer()
     print(end - start)
 
@@ -66,16 +71,38 @@ def check_discord():
 #     time.sleep(2)
 #     parse(find_new_messages(driver))
 
+# def post_trade(post_func, filename):
+#     chrome_options = Options()
+#     chrome_options.add_argument("--headless")
+#     chrome_options.add_argument('--disable-gpu')
+#     chrome_options.add_argument('--log-level=3')
+#     driver = webdriver.Chrome(executable_path=DRIVER_PATH,
+#                               options=chrome_options)
+#     #driver.get('https://www.instagram.com/marginkings/')
+#     #time.sleep(2)
+#     post_func(filename, driver)
+filename = r'C:\example\file.png'
 
-def post_trade():
+
+def post_driver():
+    start = timer()
     chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument('--disable-gpu')
-    chrome_options.add_argument('--log-level=3')
+    chrome_options.debugger_address = '127.0.0.1:9223'
     driver = webdriver.Chrome(executable_path=DRIVER_PATH,
                               options=chrome_options)
-    driver.get('https://www.instagram.com/marginkings/')
-    time.sleep(2)
+    image = f'{PATH}\\test-01.png'
+    driver.switch_to_window(driver.current_window_handle)
+    post_conductor(config.IMAGE_PATH, driver)
+    end = timer()
+    print(end - start)
+    config.IMAGE_PATH = ''
+    config.PARSED_TRADE = []
+    print('Posted to instagram')
+
+
+def insta_poster():
+    if config.IMAGE_PATH != '' and config.PARSED_TRADE != []:
+        post_driver()
 
 
 def run_threaded(job_func):
@@ -83,7 +110,10 @@ def run_threaded(job_func):
     job_thread.start()
 
 
-schedule.every(15).seconds.do(run_threaded, check_discord)
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+post_driver()
+
+# schedule.every(1).seconds.do(run_threaded, check_discord)
+# schedule.every(1).seconds.do(run_threaded, insta_poster)
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)

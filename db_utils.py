@@ -1,7 +1,10 @@
 import sqlite3
 import os
 import re
+import logging
+
 import pandas as pd
+from make_image import text_on_img
 
 DEFAULT_PATH = os.path.join(os.path.dirname(__file__), 'database.sqlite3')
 
@@ -37,7 +40,7 @@ def create_table():
     cur.execute(trades_sql)
 
 
-def is_trade_already_out(trade_table, parsed_trade):
+def is_trade_already_out(trade_table, parsed_trade) -> bool:
     try:
         already_out_trade = False
         if trade_table == []:
@@ -55,6 +58,51 @@ def is_trade_already_out(trade_table, parsed_trade):
         pass
         already_out_trade = True
         return already_out_trade
+
+
+def is_duplicate(trade_table, parsed_trade) -> bool:
+    try:
+        is_duplicate_trade = False
+        if trade_table == []:
+            print("DATABASE EMPTY LOL")
+            return False
+        n = 2
+        parsed_trade_without_datetime = parsed_trade[:n] + parsed_trade[n + 1:]
+        for row in trade_table:
+            if row == parsed_trade_without_datetime:
+                is_duplicate_trade = True
+    finally:
+        pass
+
+
+def out_and_duplicate_check(parsed_trade: tuple) -> bool:
+    try:
+        con = db_connect()
+        cur = con.cursor()
+        load_filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, user_name, expiration from trades"
+        cur.execute(load_filtered_trades_sql)
+        filtered_trades = cur.fetchall()
+        trade_already_exited = is_trade_already_out(filtered_trades,
+                                                    parsed_trade)
+        load_trades_table_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, buy_price, user_name, expiration from trades"
+        cur.execute(load_trades_table_sql)
+        full_trades = cur.fetchall()
+        if trade_already_exited:
+            return True
+        is_duplicate = False
+        n = 2
+        trade_tuple_without_datetime = parsed_trade[:n] + parsed_trade[n + 1:]
+        for row in full_trades:
+            if row == trade_tuple_without_datetime:
+                is_duplicate = True
+                return is_duplicate
+        if is_duplicate is False and trade_already_exited is False:
+            return False
+    except sqlite3.Error as error:
+        logging.warning(error)
+    finally:
+        if (con):
+            con.close()
 
 
 def update_table(parsed_trade: tuple):
@@ -85,6 +133,7 @@ def update_table(parsed_trade: tuple):
                          parsed_trade[6], parsed_trade[7]))
             con.commit()
             print("Trade added to the database ")
+            print(parsed_trade)
             cur.close()
     except sqlite3.Error as error:
         print("Failed to update trade in sqlite table", error)

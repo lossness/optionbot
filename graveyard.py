@@ -78,6 +78,20 @@ def discord_driver():
     ACTION = ActionChains(driver)
     return driver
 
+def create_image(trade):
+    (in_or_out, ticker, datetime, strike_price, call_or_put, buy_price,
+     user_name, expiration) = trade
+    expiration = expiration.replace(r'/', '.')
+    img = Image.new('RGB', (1080, 1080), color=(73, 109, 137))
+    draw = ImageDraw.Draw(img)
+    draw.text(
+        (100, 100),
+        f'{ticker.upper()}: Get {in_or_out.upper()}. Strike price: {strike_price.upper()} Type: {call_or_put.upper()} Price: {buy_price} Expiration: {expiration}',
+        fill=(0, 0, 0))
+    path = f'{in_or_out}.{ticker}.{strike_price}.{call_or_put}.{expiration}.png'
+    img.save(path)
+    return path
+
 
 # def verify_channel_order(channels_dict: dict):
 #     for channel_name, channel_position in channels_dict.items():

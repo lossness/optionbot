@@ -4,6 +4,7 @@ import os
 import re
 import random
 import logging
+import config
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
@@ -14,7 +15,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from datetime import datetime
-from db_utils import update_table, error_checker
+from make_image import text_on_img
+from db_utils import update_table, error_checker, out_and_duplicate_check
 from dotenv import load_dotenv
 from tqdm import tqdm
 
@@ -172,6 +174,16 @@ def get_stock_ticker(split_message_list):
             logging.warning(e)
 
 
+def message_listener(driver) -> list:
+    try:
+        newest_message = []
+        newest_message.append(
+            driver.find_element_by_xpath("//*[@id='messages-51']").text)
+        return list(newest_message)
+    except NoSuchElementException('ERROR FINDING NEWEST MESSAGE') as e:
+        logging.warning(e)
+
+
 def parse(message_list: list):
     # loop over single discord posts in all matched posts in main channel
     for message in tqdm(message_list):
@@ -209,6 +221,10 @@ def parse(message_list: list):
                 trade_author_tup,
                 trade_expiration_tup,
             )
+            config.PARSED_TRADE = list(trade_tuple)
+            is_trade_unique = out_and_duplicate_check(trade_tuple)
+            if is_trade_unique:
+                config.IMAGE_PATH = text_on_img(trade_tuple, 'blue')
             update_table(trade_tuple)
         except TypeError:
             continue
