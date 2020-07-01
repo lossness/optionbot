@@ -29,7 +29,7 @@ PATH = pathlib.Path.cwd()
 KEYBOARD = Controller()
 
 
-def switch_to_mobile():
+def switch_to_mobile(driver):
     time.sleep(1)
     KEYBOARD.press(Key.ctrl)
     KEYBOARD.press(Key.shift)
@@ -44,6 +44,8 @@ def switch_to_mobile():
     KEYBOARD.release(Key.ctrl)
     KEYBOARD.release(Key.shift)
     KEYBOARD.release('m')
+    driver.refresh()
+    driver.get('https://www.instagram.com/marginkings/')
     time.sleep(1)
     KEYBOARD.press(Key.ctrl)
     KEYBOARD.press(Key.shift)
