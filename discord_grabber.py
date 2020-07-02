@@ -22,7 +22,7 @@ from tqdm import tqdm
 
 # include parent directory in path
 PATH = pathlib.Path.cwd()
-TRADERS = ["Eric68", "MariaC82", "ThuhKang", "Jen ❤crypto"]
+TRADERS = ["Eric68", "MariaC82", "ThuhKang", "Jen ❤crypto", "joel"]
 logging.basicConfig(filename='discord.log',
                     filemode='w',
                     format='%(name)s - %(levelname)s - %(message)s')
@@ -184,47 +184,56 @@ def message_listener(driver) -> list:
         logging.warning(e)
 
 
-def parse(message_list: list):
+def producer(message_list: list, pipeline):
     # loop over single discord posts in all matched posts in main channel
-    for message in tqdm(message_list):
-        try:
-            split_result = message.splitlines()
-            # removes any empty strings from list
-            split_result = list(filter(None, split_result))
-            split_result = list(filter(filter_message, split_result))
-            trade_author = list(filter(filter_trader, split_result))
-            trade_author_tup = trade_author[0]
-            # find the longest string left which is the message string
-            longest_string = max(split_result, key=len)
-            double_split_result = longest_string.split('-')
-            double_split_result = list(filter(None, double_split_result))
-            # gets a call or put status, and pops that matched entry out of the list
-            call_or_put_tup, strike_price_tup, double_split_result = get_call_or_put_and_strike_price(
-                double_split_result, split_result)
-            trade_expiration_tup, double_split_result = get_trade_expiration(
-                double_split_result, longest_string)
-            in_or_out_tup, double_split_result = get_in_or_out(
-                double_split_result)
-            buy_price_tup, double_split_result = get_buy_price(
-                double_split_result)
-            stock_ticker_tup, double_split_result = get_stock_ticker(
-                double_split_result)
-            datetime_tup = str(datetime.now())
-            stock_ticker_tup = stock_ticker_tup.lower()
-            trade_tuple = (
-                in_or_out_tup,
-                stock_ticker_tup,
-                datetime_tup,
-                strike_price_tup,
-                call_or_put_tup,
-                buy_price_tup,
-                trade_author_tup,
-                trade_expiration_tup,
-            )
-            config.PARSED_TRADE = list(trade_tuple)
-            is_trade_unique = out_and_duplicate_check(trade_tuple)
-            if is_trade_unique:
-                config.IMAGE_PATH = text_on_img(trade_tuple, 'blue')
-            update_table(trade_tuple)
-        except TypeError:
-            continue
+    if message_list == []:
+        return
+    else:
+        for message in tqdm(message_list):
+            try:
+                split_result = message.splitlines()
+                # removes any empty strings from list
+                split_result = list(filter(None, split_result))
+                split_result = list(filter(filter_message, split_result))
+                trade_author = list(filter(filter_trader, split_result))
+                trade_author_tup = trade_author[0]
+                # find the longest string left which is the message string
+                longest_string = max(split_result, key=len)
+                double_split_result = longest_string.split('-')
+                double_split_result = list(filter(None, double_split_result))
+                # gets a call or put status, and pops that matched entry out of the list
+                call_or_put_tup, strike_price_tup, double_split_result = get_call_or_put_and_strike_price(
+                    double_split_result, split_result)
+                trade_expiration_tup, double_split_result = get_trade_expiration(
+                    double_split_result, longest_string)
+                in_or_out_tup, double_split_result = get_in_or_out(
+                    double_split_result)
+                buy_price_tup, double_split_result = get_buy_price(
+                    double_split_result)
+                stock_ticker_tup, double_split_result = get_stock_ticker(
+                    double_split_result)
+                datetime_tup = str(datetime.now())
+                stock_ticker_tup = stock_ticker_tup.lower()
+                colors = ['red', 'blue', 'green' 'yellow', 'orange', 'white', 'purple', 'pink']
+                color = random.choice(colors)
+                trade_tuple = (
+                    in_or_out_tup,
+                    stock_ticker_tup,
+                    datetime_tup,
+                    strike_price_tup,
+                    call_or_put_tup,
+                    buy_price_tup,
+                    trade_author_tup,
+                    trade_expiration_tup,
+                    color,
+                )
+                is_trade_unique = out_and_duplicate_check(
+                    list(trade_tuple)
+                if is_trade_unique:
+                    message = trade_tuple
+                    logging.info(f"Producer got message: {message}")
+                    pipeline.set_message(message, "Producer")
+                pipeline.set_message(config.SENTINEL, "Producer")
+                update_table(trade_tuple)
+            except TypeError:
+                continue

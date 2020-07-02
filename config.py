@@ -1,2 +1,3 @@
 PARSED_TRADE = []
 IMAGE_PATH = ''
+SENTINEL = object()

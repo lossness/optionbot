@@ -6,6 +6,7 @@ import logging
 import datetime
 import config
 import pathlib
+import concurrent.futures
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -81,7 +82,6 @@ def check_discord():
 #     #driver.get('https://www.instagram.com/marginkings/')
 #     #time.sleep(2)
 #     post_func(filename, driver)
-filename = r'C:\example\file.png'
 
 
 def post_driver():
@@ -90,31 +90,69 @@ def post_driver():
     chrome_options.debugger_address = '127.0.0.1:9223'
     driver = webdriver.Chrome(executable_path=DRIVER_PATH,
                               options=chrome_options)
-    image = f'{PATH}\\test-01.png'
-    driver.switch_to_window(driver.current_window_handle)
     post_conductor(config.IMAGE_PATH, driver)
     end = timer()
     print(end - start)
     config.IMAGE_PATH = ''
     config.PARSED_TRADE = []
-    switch_to_mobile()
+    switch_to_mobile(driver)
     print('Posted to instagram')
 
 
 def insta_poster():
     if config.IMAGE_PATH != '' and config.PARSED_TRADE != []:
         post_driver()
+    else:
+        return
 
 
-def run_threaded(job_func):
-    job_thread = threading.Thread(target=job_func)
-    job_thread.start()
-
-
-post_driver()
+# def run_threaded(job_func):
+#     job_thread = threading.Thread(target=job_func)
+#     job_thread.start()
 
 # schedule.every(1).seconds.do(run_threaded, check_discord)
 # schedule.every(1).seconds.do(run_threaded, insta_poster)
-# while True:
+# while 1:
 #     schedule.run_pending()
 #     time.sleep(1)
+
+
+class Pipeline:
+    """
+    Class to allow a single element pipeline between producer and consumer.
+    """
+    def __init__(self):
+        self.message = 0
+        self.producer_lock = threading.Lock()
+        self.consumer_lock = threading.Lock()
+        self.consumer_lock.acquire()
+
+    def get_message(self, name):
+        logging.debug("%s:about to acquire getlock", name)
+        self.consumer_lock.acquire()
+        logging.debug("%s:have getlock", name)
+        message = self.message
+        logging.debug("%s:about to release setlock", name)
+        self.producer_lock.release()
+        logging.debug("%s:setlock released", name)
+        return message
+
+    def set_message(self, message, name):
+        logging.debug("%s:about to acquire setlock", name)
+        self.producer_lock.acquire()
+        logging.debug("%s:have setlock", name)
+        self.message = message
+        logging.debug("%s:about to release getlock", name)
+        self.consumer_lock.release()
+        logging.debug("%s:getlock released", name)
+
+
+if __name__ == '__main__':
+    format = "%(asctime)s: %(config.PARSED_TRADE)s"
+    logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")
+    # logging.getLogger().setLevel(logging.DEBUG)
+
+    pipeline = Pipeline()
+    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+        executor.submit(check_discord, pipeline)
+        executor.submit(insta_poster, pipeline)

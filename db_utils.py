@@ -5,6 +5,7 @@ import logging
 
 import pandas as pd
 from make_image import text_on_img
+from exceptions import DuplicateTrade, TradeAlreadyOut, IsAInTrade
 
 DEFAULT_PATH = os.path.join(os.path.dirname(__file__), 'database.sqlite3')
 
@@ -31,10 +32,11 @@ def create_table():
         in_or_out text NOT NULL,
         ticker text NOT NULL,
         datetime text NOT NULL,
-        option_price real NOT NULL,
+        option_price text NOT NULL,
         call_or_put text NOT NULL,
-        buy_price real NOT NULL,
-        user_name text,
+        buy_price text NOT NULL,
+        user_name text NOT NULL,
+        color text NOT NULL,
         FOREIGN KEY (user_name) REFERENCES traders (id))"""
 
     cur.execute(trades_sql)
@@ -75,31 +77,49 @@ def is_duplicate(trade_table, parsed_trade) -> bool:
         pass
 
 
-def out_and_duplicate_check(parsed_trade: tuple) -> bool:
+def out_and_duplicate_check(parsed_trade: tuple):
     try:
+        #is_duplicate = None
+        is_out = None
+        #has_matching_in = None
+        #trade_color = None
+        n = 2
         con = db_connect()
         cur = con.cursor()
         load_filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, user_name, expiration from trades"
         cur.execute(load_filtered_trades_sql)
         filtered_trades = cur.fetchall()
-        trade_already_exited = is_trade_already_out(filtered_trades,
-                                                    parsed_trade)
-        load_trades_table_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, buy_price, user_name, expiration from trades"
+        is_out = is_trade_already_out(filtered_trades, parsed_trade)
+        if is_out is True:
+            raise TradeAlreadyOut
+
+        load_trades_table_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, buy_price, user_name, expiration, color from trades"
         cur.execute(load_trades_table_sql)
         full_trades = cur.fetchall()
-        if trade_already_exited:
-            return True
-        is_duplicate = False
-        n = 2
         trade_tuple_without_datetime = parsed_trade[:n] + parsed_trade[n + 1:]
         for row in full_trades:
+            is_duplicate = None
+            has_matching_in = None
+            trade_color = None
+            (in_or_out, ticker, strike_price, call_or_put, buy_price,
+             user_name, expiration, color) = trade_tuple_without_datetime
             if row == trade_tuple_without_datetime:
                 is_duplicate = True
-                return is_duplicate
-        if is_duplicate is False and trade_already_exited is False:
-            return False
+                raise DuplicateTrade
+
+            if in_or_out == 'in':
+                has_matching_in = False
+                raise IsAInTrade
+
+            if in_or_out == 'out' and is_duplicate is not None or True:
+                trade_color = color
+        return is_duplicate, is_out, has_matching_in, trade_color
+
     except sqlite3.Error as error:
         logging.warning(error)
+    except (DuplicateTrade, IsAInTrade, TradeAlreadyOut) as error:
+        print(error)
+
     finally:
         if (con):
             con.close()
