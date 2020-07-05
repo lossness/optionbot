@@ -4,20 +4,23 @@ import threading
 import os
 import logging
 import datetime
-import config
 import pathlib
 import concurrent.futures
+import queue
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from dotenv import load_dotenv
-from instapost import post_conductor, switch_to_mobile
-from discord_grabber import parse, find_new_messages, message_listener
+from instapost import consumer
+from discord_grabber import producer
+from insta_browser import switch_to_mobile
 from timeit import default_timer as timer
 
 load_dotenv()
-DRIVER_PATH = os.getenv("DRIVER_PATH")
+DISCORD_DRIVER_PATH = os.getenv("DISCORD_DRIVER_PATH")
+INSTA_DRIVER_PATH = os.getenv("INSTA_DRIVER_PATH")
 DISCORD_USERNAME = os.getenv("DISCORD_USERNAME")
 DISCORD_PW = os.getenv("DISCORD_PW")
 CHROME = os.getenv("CHROME")
@@ -27,132 +30,70 @@ INSTA_USERNAME = os.getenv("INSTA_USERNAME")
 INSTA_PW = os.getenv("INSTA_PASSWORD")
 CHROME_INSTA = os.getenv("INSTACHROME")
 PATH = pathlib.Path.cwd()
+event = threading.Event()
 
 
-def check_discord():
+class Pipeline(queue.Queue):
+    def __init__(self):
+        super().__init__(maxsize=2)
+
+    def get_message(self, name):
+        logging.debug("%s:about to get from queue", name)
+        value = self.get()
+        logging.debug("%s:got %d from queue", name, value)
+        return value
+
+    def set_message(self, value, name):
+        logging.debug("%s:about to add %d to queue", name, value)
+        self.put(value)
+        logging.debug("%s:added %d to queue", name, value)
+
+
+def check_discord(queue=queue, event=event):
     start = timer()
     chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument('--disable-gpu')
-    chrome_options.add_argument('--log-level=3')
+    # chrome_options.add_argument("--headless")
+    # chrome_options.add_argument('--disable-gpu')
+    # chrome_options.add_argument('--log-level=3')
     chrome_options.debugger_address = '127.0.0.1:9222'
-    driver = webdriver.Chrome(executable_path=DRIVER_PATH,
-                              options=chrome_options)
+    discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
+                                      options=chrome_options)
     #driver.get(
     #    'https://discord.com/channels/290278814217535489/699253100174770176')
     # parse(find_new_messages(driver))
-    parse(message_listener(driver))
-    end = timer()
-    print(end - start)
+    try:
+        producer(discord_driver, queue, event)
+        end = timer()
+        print(end - start)
+    except (TimeoutException, NoSuchElementException) as error:
+        logging.warning(error)
+    #finally:
+    #os.system('taskkill /f /im chromedriver.exe')
 
 
-# def check_discord():
-#     options = webdriver.ChromeOptions()
-#     options.add_argument("start-maximized")
-#     options.add_experimental_option("excludeSwitches", ["enable-automation"])
-#     options.add_experimental_option('useAutomationExtension', False)
-#     driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
-#     driver.execute_cdp_cmd(
-#         "Page.addScriptToEvaluateOnNewDocument", {
-#             "source":
-#             """
-#         Object.defineProperty(navigator, 'webdriver', {
-#         get: () => undefined
-#         })
-#     """
-#         })
-#     driver.execute_cdp_cmd(
-#         'Network.setUserAgentOverride', {
-#             "userAgent":
-#             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.53 Safari/537.36'
-#         })
-#     print(driver.execute_script("return navigator.userAgent;"))
-#     driver.get(
-#         'https://discord.com/channels/290278814217535489/699253100174770176')
-#     time.sleep(2)
-#     parse(find_new_messages(driver))
-
-# def post_trade(post_func, filename):
-#     chrome_options = Options()
-#     chrome_options.add_argument("--headless")
-#     chrome_options.add_argument('--disable-gpu')
-#     chrome_options.add_argument('--log-level=3')
-#     driver = webdriver.Chrome(executable_path=DRIVER_PATH,
-#                               options=chrome_options)
-#     #driver.get('https://www.instagram.com/marginkings/')
-#     #time.sleep(2)
-#     post_func(filename, driver)
-
-
-def post_driver():
+def post_driver(queue=queue, event=event):
     start = timer()
     chrome_options = Options()
     chrome_options.debugger_address = '127.0.0.1:9223'
-    driver = webdriver.Chrome(executable_path=DRIVER_PATH,
-                              options=chrome_options)
-    post_conductor(config.IMAGE_PATH, driver)
-    end = timer()
-    print(end - start)
-    config.IMAGE_PATH = ''
-    config.PARSED_TRADE = []
-    switch_to_mobile(driver)
-    print('Posted to instagram')
+    insta_driver = webdriver.Chrome(executable_path=INSTA_DRIVER_PATH,
+                                    options=chrome_options)
+    try:
+        consumer(insta_driver, queue, event)
+        end = timer()
+        print(end - start)
+        logging.info('Posted new instagram post!')
+        print('posted to instagram!')
+    except (TimeoutException, NoSuchElementException) as error:
+        logging.warning(error)
+    finally:
+        switch_to_mobile(insta_driver)
+        #os.system('taskkill /f /im chromedriver.exe')
 
 
-def insta_poster():
-    if config.IMAGE_PATH != '' and config.PARSED_TRADE != []:
-        post_driver()
-    else:
-        return
-
-
-# def run_threaded(job_func):
-#     job_thread = threading.Thread(target=job_func)
-#     job_thread.start()
-
-# schedule.every(1).seconds.do(run_threaded, check_discord)
-# schedule.every(1).seconds.do(run_threaded, insta_poster)
-# while 1:
-#     schedule.run_pending()
-#     time.sleep(1)
-
-
-class Pipeline:
-    """
-    Class to allow a single element pipeline between producer and consumer.
-    """
-    def __init__(self):
-        self.message = 0
-        self.producer_lock = threading.Lock()
-        self.consumer_lock = threading.Lock()
-        self.consumer_lock.acquire()
-
-    def get_message(self, name):
-        logging.debug("%s:about to acquire getlock", name)
-        self.consumer_lock.acquire()
-        logging.debug("%s:have getlock", name)
-        message = self.message
-        logging.debug("%s:about to release setlock", name)
-        self.producer_lock.release()
-        logging.debug("%s:setlock released", name)
-        return message
-
-    def set_message(self, message, name):
-        logging.debug("%s:about to acquire setlock", name)
-        self.producer_lock.acquire()
-        logging.debug("%s:have setlock", name)
-        self.message = message
-        logging.debug("%s:about to release getlock", name)
-        self.consumer_lock.release()
-        logging.debug("%s:getlock released", name)
-
-
-if __name__ == '__main__':
-    format = "%(asctime)s: %(config.PARSED_TRADE)s"
-    logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")
-    # logging.getLogger().setLevel(logging.DEBUG)
-
-    pipeline = Pipeline()
-    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-        executor.submit(check_discord, pipeline)
-        executor.submit(insta_poster, pipeline)
+format = "%(asctime)s: %(message)s"
+logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")
+# logging.getLogger().setLevel(logging.DEBUG)
+pipeline = queue.Queue(maxsize=2)
+with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+    executor.submit(check_discord, pipeline, event)
+    executor.submit(post_driver, pipeline, event)

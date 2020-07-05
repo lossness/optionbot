@@ -4,7 +4,6 @@ import os
 import re
 import random
 import logging
-import config
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
@@ -18,6 +17,7 @@ from datetime import datetime
 from make_image import text_on_img
 from db_utils import update_table, error_checker, out_and_duplicate_check
 from dotenv import load_dotenv
+from exceptions import IsOldMessage
 from tqdm import tqdm
 
 # include parent directory in path
@@ -184,14 +184,21 @@ def message_listener(driver) -> list:
         logging.warning(e)
 
 
-def producer(message_list: list, pipeline):
+LAST_MESSAGE = None
+
+
+def producer(driver, queue, event):
     # loop over single discord posts in all matched posts in main channel
-    if message_list == []:
-        return
-    else:
-        for message in tqdm(message_list):
+    while not event.is_set():
+        event.set()
+        newest_message = []
+        get_message = driver.find_element_by_xpath(
+            "//*[@id='messages-51']").text
+        newest_message.append(get_message)
+        message_list = list(newest_message)
+        for trade_message in tqdm(message_list):
             try:
-                split_result = message.splitlines()
+                split_result = trade_message.splitlines()
                 # removes any empty strings from list
                 split_result = list(filter(None, split_result))
                 split_result = list(filter(filter_message, split_result))
@@ -214,7 +221,10 @@ def producer(message_list: list, pipeline):
                     double_split_result)
                 datetime_tup = str(datetime.now())
                 stock_ticker_tup = stock_ticker_tup.lower()
-                colors = ['red', 'blue', 'green' 'yellow', 'orange', 'white', 'purple', 'pink']
+                colors = [
+                    'red', 'blue', 'green'
+                    'yellow', 'orange', 'white', 'purple', 'pink'
+                ]
                 color = random.choice(colors)
                 trade_tuple = (
                     in_or_out_tup,
@@ -227,13 +237,14 @@ def producer(message_list: list, pipeline):
                     trade_expiration_tup,
                     color,
                 )
-                is_trade_unique = out_and_duplicate_check(
-                    list(trade_tuple)
-                if is_trade_unique:
+                is_duplicate, is_out, has_matching_in, trade_color = out_and_duplicate_check(
+                    list(trade_tuple))
+                if trade_color is not None:
                     message = trade_tuple
                     logging.info(f"Producer got message: {message}")
-                    pipeline.set_message(message, "Producer")
-                pipeline.set_message(config.SENTINEL, "Producer")
-                update_table(trade_tuple)
+                    queue.put(message)
+                    event.clear()
+                if is_duplicate is False:
+                    update_table(trade_tuple)
             except TypeError:
                 continue

@@ -62,25 +62,28 @@ def is_trade_already_out(trade_table, parsed_trade) -> bool:
         return already_out_trade
 
 
-def is_duplicate(trade_table, parsed_trade) -> bool:
-    try:
-        is_duplicate_trade = False
-        if trade_table == []:
-            print("DATABASE EMPTY LOL")
-            return False
-        n = 2
-        parsed_trade_without_datetime = parsed_trade[:n] + parsed_trade[n + 1:]
-        for row in trade_table:
-            if row == parsed_trade_without_datetime:
-                is_duplicate_trade = True
-    finally:
-        pass
+# def is_duplicate(trade_table, parsed_trade) -> bool:
+#     try:
+#         is_duplicate_trade = False
+#         if trade_table == []:
+#             print("DATABASE EMPTY LOL")
+#             return False
+#         n = 2
+#         parsed_trade_without_datetime = parsed_trade[:n] + parsed_trade[n + 1:]
+#         for row in trade_table:
+#             if row == parsed_trade_without_datetime:
+#                 is_duplicate_trade = True
+#     finally:
+#         pass
 
 
 def out_and_duplicate_check(parsed_trade: tuple):
     try:
         #is_duplicate = None
         is_out = None
+        is_duplicate = None
+        has_matching_in = None
+        trade_color = None
         #has_matching_in = None
         #trade_color = None
         n = 2
@@ -98,9 +101,9 @@ def out_and_duplicate_check(parsed_trade: tuple):
         full_trades = cur.fetchall()
         trade_tuple_without_datetime = parsed_trade[:n] + parsed_trade[n + 1:]
         for row in full_trades:
-            is_duplicate = None
-            has_matching_in = None
-            trade_color = None
+            #is_duplicate = None
+            #has_matching_in = None
+            #trade_color = None
             (in_or_out, ticker, strike_price, call_or_put, buy_price,
              user_name, expiration, color) = trade_tuple_without_datetime
             if row == trade_tuple_without_datetime:
@@ -117,8 +120,11 @@ def out_and_duplicate_check(parsed_trade: tuple):
 
     except sqlite3.Error as error:
         logging.warning(error)
+        return None, None, None, None
+
     except (DuplicateTrade, IsAInTrade, TradeAlreadyOut) as error:
         print(error)
+        return is_duplicate, is_out, has_matching_in, trade_color
 
     finally:
         if (con):

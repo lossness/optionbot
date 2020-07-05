@@ -8,3 +8,7 @@ class TradeAlreadyOut(Exception):
 
 class IsAInTrade(Exception):
     '''This is an IN trade'''
+
+
+class IsOldMessage(Exception):
+    '''This is an old message'''

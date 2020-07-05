@@ -1,2 +1,7 @@
 /.env
 database.sqlite3
+__pycache__/
+__pycache__/config.cpython-38.pyc
+__pycache__/db_utils.cpython-38.pyc
+__pycache__/discord_grabber.cpython-38.pyc
+__pycache__/instapost.cpython-38.pyc

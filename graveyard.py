@@ -356,3 +356,51 @@ def switch_to_mobile(driver):
 #     finally:
 #         driver.quit()
 #         driver.close()
+
+
+# def run_threaded(job_func):
+#     job_thread = threading.Thread(target=job_func)
+#     job_thread.start()
+
+# schedule.every(1).seconds.do(run_threaded, check_discord)
+# schedule.every(1).seconds.do(run_threaded, insta_poster)
+# while 1:
+#     schedule.run_pending()
+#     time.sleep(1)
+
+# def check_discord():
+#     options = webdriver.ChromeOptions()
+#     options.add_argument("start-maximized")
+#     options.add_experimental_option("excludeSwitches", ["enable-automation"])
+#     options.add_experimental_option('useAutomationExtension', False)
+#     driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+#     driver.execute_cdp_cmd(
+#         "Page.addScriptToEvaluateOnNewDocument", {
+#             "source":
+#             """
+#         Object.defineProperty(navigator, 'webdriver', {
+#         get: () => undefined
+#         })
+#     """
+#         })
+#     driver.execute_cdp_cmd(
+#         'Network.setUserAgentOverride', {
+#             "userAgent":
+#             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.53 Safari/537.36'
+#         })
+#     print(driver.execute_script("return navigator.userAgent;"))
+#     driver.get(
+#         'https://discord.com/channels/290278814217535489/699253100174770176')
+#     time.sleep(2)
+#     parse(find_new_messages(driver))
+
+# def post_trade(post_func, filename):
+#     chrome_options = Options()
+#     chrome_options.add_argument("--headless")
+#     chrome_options.add_argument('--disable-gpu')
+#     chrome_options.add_argument('--log-level=3')
+#     driver = webdriver.Chrome(executable_path=DRIVER_PATH,
+#                               options=chrome_options)
+#     #driver.get('https://www.instagram.com/marginkings/')
+#     #time.sleep(2)
+#     post_func(filename, driver)
