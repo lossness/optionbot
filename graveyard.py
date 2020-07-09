@@ -404,3 +404,114 @@ def switch_to_mobile(driver):
 #     #driver.get('https://www.instagram.com/marginkings/')
 #     #time.sleep(2)
 #     post_func(filename, driver)
+
+
+def verify_trade(parsed_trade: tuple):
+    try:
+        #is_duplicate = None
+        is_out = None
+        is_duplicate = None
+        has_matching_in = None
+        trade_color = None
+        #has_matching_in = None
+        #trade_color = None
+        n = 2
+        con = db_connect()
+        cur = con.cursor()
+        load_filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, user_name, expiration, color from trades"
+        cur.execute(load_filtered_trades_sql)
+        filtered_trades = cur.fetchall()
+
+        load_trades_table_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, buy_price, user_name, expiration, color from trades"
+        cur.execute(load_trades_table_sql)
+        full_trades = cur.fetchall()
+
+        is_out = is_trade_already_out(filtered_trades, tuple(parsed_trade))
+        if is_out is True:
+            raise TradeAlreadyOut
+        is_duplicate = duplicate_check(filtered_trades, tuple(parsed_trade))
+        if is_duplicate is True:
+            raise DuplicateTrade
+
+        has_matching_in = has_trade_match(filtered_trades, tuple(parsed_trade))
+
+        trade_tuple_without_datetime = parsed_trade[:n] + parsed_trade[n + 1:]
+        (in_or_out, ticker, strike_price, call_or_put, buy_price, user_name,
+         expiration, color) = trade_tuple_without_datetime
+
+         
+
+        if full_trades == []:
+            is_duplicate = False
+            is_out = False
+            has_matching_in = False
+            trade_color = color
+            return is_duplicate, is_out, has_matching_in, trade_color
+
+        for row in full_trades:
+            if in_or_out == 'in' and is_duplicate is not True:
+                is_duplicate = False
+                has_matching_in = False
+                is_out = False
+                trade_color = color
+                return is_duplicate, has_matching_in, is_out, trade_color
+
+            if in_or_out == 'out' and is_duplicate is not True and has_matching_in is True:
+                trade_color = color
+                is_duplicate = False
+                is_out = False
+
+        return is_duplicate, is_out, has_matching_in, trade_color
+
+    except sqlite3.Error as error:
+        logging.warning(error)
+        return None, None, None, None
+
+    except (DuplicateTrade, TradeAlreadyOut) as error:
+        print(error)
+        return is_duplicate, is_out, has_matching_in, trade_color
+
+    finally:
+        if (con):
+            con.close()
+
+
+def update_table(parsed_trade: tuple):
+    try:
+        con = db_connect()
+        cur = con.cursor()
+        load_filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, user_name, expiration from trades"
+        cur.execute(load_filtered_trades_sql)
+        filtered_trades = cur.fetchall()
+        trade_already_exited = is_trade_already_out(filtered_trades,
+                                                    parsed_trade)
+        load_trades_table_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, buy_price, user_name, expiration from trades"
+        cur.execute(load_trades_table_sql)
+        full_trades = cur.fetchall()
+        is_duplicate = False
+        n = 2
+        trade_tuple_without_datetime = parsed_trade[:n] + parsed_trade[n + 1:]
+        for row in full_trades:
+            if row == trade_tuple_without_datetime:
+                is_duplicate = True
+                raise KeyError("Duplicate trade detected!")
+
+        if is_duplicate is False and trade_already_exited is False:
+            trade_sql = "INSERT INTO trades (in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+            cur.execute(trade_sql,
+                        (parsed_trade[0], parsed_trade[1], parsed_trade[2],
+                         parsed_trade[3], parsed_trade[4], parsed_trade[5],
+                         parsed_trade[6], parsed_trade[7]))
+            con.commit()
+            print("Trade added to the database ")
+            print(parsed_trade)
+            cur.close()
+    except sqlite3.Error as error:
+        print("Failed to update trade in sqlite table", error)
+    except KeyError as error:
+        pass
+    finally:
+        if (con):
+            con.close()
+            # print("the sqlite connection is closed")
+

@@ -1,4 +1,3 @@
-import schedule
 import time
 import threading
 import os
@@ -7,6 +6,7 @@ import datetime
 import pathlib
 import concurrent.futures
 import queue
+import config
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -16,7 +16,6 @@ from dotenv import load_dotenv
 from instapost import consumer
 from discord_grabber import producer
 from insta_browser import switch_to_mobile
-from timeit import default_timer as timer
 
 load_dotenv()
 DISCORD_DRIVER_PATH = os.getenv("DISCORD_DRIVER_PATH")
@@ -30,27 +29,9 @@ INSTA_USERNAME = os.getenv("INSTA_USERNAME")
 INSTA_PW = os.getenv("INSTA_PASSWORD")
 CHROME_INSTA = os.getenv("INSTACHROME")
 PATH = pathlib.Path.cwd()
-event = threading.Event()
 
 
-class Pipeline(queue.Queue):
-    def __init__(self):
-        super().__init__(maxsize=2)
-
-    def get_message(self, name):
-        logging.debug("%s:about to get from queue", name)
-        value = self.get()
-        logging.debug("%s:got %d from queue", name, value)
-        return value
-
-    def set_message(self, value, name):
-        logging.debug("%s:about to add %d to queue", name, value)
-        self.put(value)
-        logging.debug("%s:added %d to queue", name, value)
-
-
-def check_discord(queue=queue, event=event):
-    start = timer()
+def check_discord():
     chrome_options = Options()
     # chrome_options.add_argument("--headless")
     # chrome_options.add_argument('--disable-gpu')
@@ -61,39 +42,49 @@ def check_discord(queue=queue, event=event):
     #driver.get(
     #    'https://discord.com/channels/290278814217535489/699253100174770176')
     # parse(find_new_messages(driver))
-    try:
-        producer(discord_driver, queue, event)
-        end = timer()
-        print(end - start)
-    except (TimeoutException, NoSuchElementException) as error:
-        logging.warning(error)
-    #finally:
-    #os.system('taskkill /f /im chromedriver.exe')
+    while True:
+        try:
+            producer(discord_driver)
+        except (TimeoutException, NoSuchElementException) as error:
+            logging.warning(error)
+            continue
+        #finally:
+        #os.system('taskkill /f /im chromedriver.exe')
 
 
-def post_driver(queue=queue, event=event):
-    start = timer()
+def post_driver():
     chrome_options = Options()
     chrome_options.debugger_address = '127.0.0.1:9223'
     insta_driver = webdriver.Chrome(executable_path=INSTA_DRIVER_PATH,
                                     options=chrome_options)
-    try:
-        consumer(insta_driver, queue, event)
-        end = timer()
-        print(end - start)
-        logging.info('Posted new instagram post!')
-        print('posted to instagram!')
-    except (TimeoutException, NoSuchElementException) as error:
-        logging.warning(error)
-    finally:
-        switch_to_mobile(insta_driver)
-        #os.system('taskkill /f /im chromedriver.exe')
+    while True:
+        try:
+            consumer(insta_driver)
+        except (TimeoutException, NoSuchElementException) as error:
+            logging.warning(error)
+            continue
+            #os.system('taskkill /f /im chromedriver.exe')
 
 
-format = "%(asctime)s: %(message)s"
-logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")
-# logging.getLogger().setLevel(logging.DEBUG)
-pipeline = queue.Queue(maxsize=2)
-with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-    executor.submit(check_discord, pipeline, event)
-    executor.submit(post_driver, pipeline, event)
+scraper = threading.Thread(target=check_discord)
+poster = threading.Thread(target=post_driver)
+
+scraper.start()
+poster.start()
+
+config.new_trades.join()
+
+scraper.join()
+poster.join()
+
+# format = "%(asctime)s: %(message)s"
+# logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")
+# # logging.getLogger().setLevel(logging.DEBUG)
+# new_trades = queue.Queue(maxsize=4)
+# with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+#     executor.submit(check_discord, new_trades, event)
+#     executor.submit(post_driver, new_trades, event)
+
+#     time.sleep(0.1)
+#     logging.info("Main: about to set event")
+#     event.set()

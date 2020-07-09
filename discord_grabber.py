@@ -4,6 +4,7 @@ import os
 import re
 import random
 import logging
+import config
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
@@ -15,14 +16,14 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from datetime import datetime
 from make_image import text_on_img
-from db_utils import update_table, error_checker, out_and_duplicate_check
+from db_utils import update_table, error_checker, verify_trade
 from dotenv import load_dotenv
 from exceptions import IsOldMessage
-from tqdm import tqdm
+from timeit import default_timer as timer
 
 # include parent directory in path
 PATH = pathlib.Path.cwd()
-TRADERS = ["Eric68", "MariaC82", "ThuhKang", "Jen ❤crypto", "joel"]
+TRADERS = ["Eric68", "MariaC82", "ThuhKang", "Jen ❤crypto"]
 logging.basicConfig(filename='discord.log',
                     filemode='w',
                     format='%(name)s - %(levelname)s - %(message)s')
@@ -81,7 +82,7 @@ def get_trade_expiration(split_message_list: list, unsplit_message_list: list):
 
 
 def filter_message(variable):
-    noise_words = ['BOT', r'BBS-TRADE-BOT\nBOT', 'BBS-TRADE-BOT']
+    noise_words = ['BOT', r'BBS-TRADE-BOT\nBOT', 'BBS-TRADE-BOT', 'joel']
     if (variable in noise_words):
         return False
     else:
@@ -184,21 +185,14 @@ def message_listener(driver) -> list:
         logging.warning(e)
 
 
-LAST_MESSAGE = None
-
-
-def producer(driver, queue, event):
+def producer(driver):
     # loop over single discord posts in all matched posts in main channel
-    while not event.is_set():
-        event.set()
-        newest_message = []
-        get_message = driver.find_element_by_xpath(
-            "//*[@id='messages-51']").text
-        newest_message.append(get_message)
-        message_list = list(newest_message)
-        for trade_message in tqdm(message_list):
+    try:
+        new_message = driver.find_elements_by_xpath(
+            "//*[@role='group']")[-1].text
+        if new_message != config.last_message:
             try:
-                split_result = trade_message.splitlines()
+                split_result = new_message.splitlines()
                 # removes any empty strings from list
                 split_result = list(filter(None, split_result))
                 split_result = list(filter(filter_message, split_result))
@@ -221,11 +215,7 @@ def producer(driver, queue, event):
                     double_split_result)
                 datetime_tup = str(datetime.now())
                 stock_ticker_tup = stock_ticker_tup.lower()
-                colors = [
-                    'red', 'blue', 'green'
-                    'yellow', 'orange', 'white', 'purple', 'pink'
-                ]
-                color = random.choice(colors)
+
                 trade_tuple = (
                     in_or_out_tup,
                     stock_ticker_tup,
@@ -235,16 +225,42 @@ def producer(driver, queue, event):
                     buy_price_tup,
                     trade_author_tup,
                     trade_expiration_tup,
-                    color,
                 )
-                is_duplicate, is_out, has_matching_in, trade_color = out_and_duplicate_check(
+
+                is_duplicate, is_out, has_matching_in, trade_color = verify_trade(
                     list(trade_tuple))
-                if trade_color is not None:
+
+                if is_duplicate:
+                    return
+
+                if is_duplicate is False and is_out is False and has_matching_in is False or True:
+                    print("updating table")
+                    trade_tuple = (
+                        in_or_out_tup,
+                        stock_ticker_tup,
+                        datetime_tup,
+                        strike_price_tup,
+                        call_or_put_tup,
+                        buy_price_tup,
+                        trade_author_tup,
+                        trade_expiration_tup,
+                        trade_color,
+                    )
                     message = trade_tuple
                     logging.info(f"Producer got message: {message}")
-                    queue.put(message)
-                    event.clear()
-                if is_duplicate is False:
+                    config.new_trades.put(message)
+                    config.has_trade.release()
                     update_table(trade_tuple)
+
             except TypeError:
-                continue
+                pass
+
+            except IndexError:
+                pass
+
+            finally:
+                config.last_message == new_message
+    except (TimeoutException, NoSuchElementException) as error:
+        logging.warning(
+            f"{error}: PRODUCER COULD NOT FIND NEWEST DISCORD MESSAGE!!")
+        pass

@@ -2,6 +2,7 @@ import sqlite3
 import os
 import re
 import logging
+import random
 
 import pandas as pd
 from make_image import text_on_img
@@ -42,16 +43,21 @@ def create_table():
     cur.execute(trades_sql)
 
 
-def is_trade_already_out(trade_table, parsed_trade) -> bool:
+def is_trade_already_out(database_trades: list, new_trade: tuple) -> bool:
+    '''
+    This checks if the trade already has one IN and one OUT
+    trade. Returns True or False.
+    '''
+    if database_trades == []:
+        return False
     try:
         already_out_trade = False
-        if trade_table == []:
+        if database_trades == []:
             print("DATABASE EMPTY LOL")
             return False
         out_trade_filtered = (
-            'out',
-        ) + parsed_trade[1:2] + parsed_trade[3:4] + parsed_trade[6:8]
-        for row in trade_table:
+            'out', ) + new_trade[1:2] + new_trade[3:4] + new_trade[6:8]
+        for row in new_trade:
             if row == out_trade_filtered:
                 raise KeyError("Trade already exited!")
         return already_out_trade
@@ -62,105 +68,122 @@ def is_trade_already_out(trade_table, parsed_trade) -> bool:
         return already_out_trade
 
 
-# def is_duplicate(trade_table, parsed_trade) -> bool:
-#     try:
-#         is_duplicate_trade = False
-#         if trade_table == []:
-#             print("DATABASE EMPTY LOL")
-#             return False
-#         n = 2
-#         parsed_trade_without_datetime = parsed_trade[:n] + parsed_trade[n + 1:]
-#         for row in trade_table:
-#             if row == parsed_trade_without_datetime:
-#                 is_duplicate_trade = True
-#     finally:
-#         pass
-
-
-def out_and_duplicate_check(parsed_trade: tuple):
+def duplicate_check(database_trades: list, new_trade: tuple) -> bool:
+    '''
+    This will check if the trade is in the database already.
+    returns True or False.
+    '''
+    if database_trades == []:
+        return False
+    n = 2
     try:
-        #is_duplicate = None
-        is_out = None
-        is_duplicate = None
+        new_trade_without_datetime = new_trade[:n] + new_trade[n + 1:]
+        for row in database_trades:
+            if row == new_trade_without_datetime:
+                return True
+            else:
+                return False
+
+    except (KeyError, ValueError, IndexError) as error:
+        logging.warning(f"{error} during duplicate trade check!")
+        return True
+
+
+def has_trade_match(database_trades: list,
+                    new_trade: tuple) -> (bool, str or None):
+    '''
+    This will check the database for a matching IN trade and return
+    True or False depending if matched.
+    '''
+    try:
+        if database_trades == []:
+            return False, None
+        for database_trade in database_trades:
+            (in_or_out, ticker, strike_price, user_name, expiration,
+             color) = database_trade
+            ticker = ticker.lower()
+            matched_trades = re.findall(
+                rf'\(((?:[\'in\', \'out\'])+, (\'{ticker}\'), (\'{strike_price}\'), (\'{user_name}\'), (\'{expiration}\'))\)',
+                str(database_trades))
+            if len(matched_trades) == 2:
+                return True, color
+            elif len(matched_trades) > 2:
+                logging.warning(
+                    "More than 2 of the same trade saved to database!")
+                return False, None
+            else:
+                return False, None
+    except ValueError:
+        pass
+
+
+def verify_trade(parsed_trade: tuple):
+    try:
+        is_out = False
+        is_duplicate = False
         has_matching_in = None
         trade_color = None
-        #has_matching_in = None
-        #trade_color = None
-        n = 2
         con = db_connect()
         cur = con.cursor()
-        load_filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, user_name, expiration from trades"
-        cur.execute(load_filtered_trades_sql)
+        filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, user_name, expiration, color from trades"
+        filtered_trades_no_color_sql = "SELECT in_or_out, ticker, strike_price, user_name, expiration from trades"
+        cur.execute(filtered_trades_sql)
         filtered_trades = cur.fetchall()
-        is_out = is_trade_already_out(filtered_trades, parsed_trade)
+        cur.execute(filtered_trades_no_color_sql)
+        filtered_trades_no_color = cur.fetchall()
+
+        is_out = is_trade_already_out(filtered_trades_no_color,
+                                      tuple(parsed_trade))
         if is_out is True:
             raise TradeAlreadyOut
 
-        load_trades_table_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, buy_price, user_name, expiration, color from trades"
-        cur.execute(load_trades_table_sql)
-        full_trades = cur.fetchall()
-        trade_tuple_without_datetime = parsed_trade[:n] + parsed_trade[n + 1:]
-        for row in full_trades:
-            #is_duplicate = None
-            #has_matching_in = None
-            #trade_color = None
-            (in_or_out, ticker, strike_price, call_or_put, buy_price,
-             user_name, expiration, color) = trade_tuple_without_datetime
-            if row == trade_tuple_without_datetime:
-                is_duplicate = True
-                raise DuplicateTrade
+        is_duplicate = duplicate_check(filtered_trades_no_color,
+                                       tuple(parsed_trade))
+        if is_duplicate is True:
+            raise DuplicateTrade
 
-            if in_or_out == 'in':
-                has_matching_in = False
-                raise IsAInTrade
+        has_matching_in, trade_color = has_trade_match(filtered_trades,
+                                                       tuple(parsed_trade))
 
-            if in_or_out == 'out' and is_duplicate is not None or True:
-                trade_color = color
-        return is_duplicate, is_out, has_matching_in, trade_color
+        if has_matching_in is False:
+            colors = [
+                'red', 'blue', 'green', 'yellow', 'orange', 'white', 'purple',
+                'pink'
+            ]
+            trade_color = random.choice(colors)
 
     except sqlite3.Error as error:
         logging.warning(error)
-        return None, None, None, None
+        verification_tuple = (None, None, None, None)
+        return verification_tuple
 
-    except (DuplicateTrade, IsAInTrade, TradeAlreadyOut) as error:
+    except (DuplicateTrade, TradeAlreadyOut) as error:
         print(error)
-        return is_duplicate, is_out, has_matching_in, trade_color
+        verification_tuple = (is_duplicate, is_out, has_matching_in,
+                              trade_color)
+        return verification_tuple
 
     finally:
         if (con):
             con.close()
+        verification_tuple = (is_duplicate, is_out, has_matching_in,
+                              trade_color)
+        return verification_tuple
 
 
 def update_table(parsed_trade: tuple):
     try:
         con = db_connect()
         cur = con.cursor()
-        load_filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, user_name, expiration from trades"
-        cur.execute(load_filtered_trades_sql)
-        filtered_trades = cur.fetchall()
-        trade_already_exited = is_trade_already_out(filtered_trades,
-                                                    parsed_trade)
-        load_trades_table_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, buy_price, user_name, expiration from trades"
-        cur.execute(load_trades_table_sql)
-        full_trades = cur.fetchall()
-        is_duplicate = False
-        n = 2
-        trade_tuple_without_datetime = parsed_trade[:n] + parsed_trade[n + 1:]
-        for row in full_trades:
-            if row == trade_tuple_without_datetime:
-                is_duplicate = True
-                raise KeyError("Duplicate trade detected!")
-
-        if is_duplicate is False and trade_already_exited is False:
-            trade_sql = "INSERT INTO trades (in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-            cur.execute(trade_sql,
-                        (parsed_trade[0], parsed_trade[1], parsed_trade[2],
-                         parsed_trade[3], parsed_trade[4], parsed_trade[5],
-                         parsed_trade[6], parsed_trade[7]))
-            con.commit()
-            print("Trade added to the database ")
-            print(parsed_trade)
-            cur.close()
+        trade_sql = "INSERT INTO trades (in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        cur.execute(trade_sql,
+                    (parsed_trade[0], parsed_trade[1], parsed_trade[2],
+                     parsed_trade[3], parsed_trade[4], parsed_trade[5],
+                     parsed_trade[6], parsed_trade[7], parsed_trade[8]))
+        con.commit()
+        print("Trade added to the database ")
+        print(parsed_trade)
+        cur.close()
     except sqlite3.Error as error:
         print("Failed to update trade in sqlite table", error)
     except KeyError as error:
