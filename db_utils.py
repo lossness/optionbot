@@ -73,20 +73,26 @@ def duplicate_check(database_trades: list, new_trade: tuple) -> bool:
     This will check if the trade is in the database already.
     returns True or False.
     '''
+    is_duplicate = True
     if database_trades == []:
-        return False
-    n = 2
+        is_duplicate = False
+        return is_duplicate
     try:
-        new_trade_without_datetime = new_trade[:n] + new_trade[n + 1:]
+        common_trade_features = new_trade[:2] + new_trade[3:5] + new_trade[6:]
         for row in database_trades:
-            if row == new_trade_without_datetime:
-                return True
+            if row == common_trade_features:
+                is_duplicate = True
+                break
             else:
-                return False
+                is_duplicate = False
+                break
 
     except (KeyError, ValueError, IndexError) as error:
         logging.warning(f"{error} during duplicate trade check!")
-        return True
+        is_duplicate = True
+
+    finally:
+        return is_duplicate
 
 
 def has_trade_match(database_trades: list,
@@ -126,7 +132,7 @@ def verify_trade(parsed_trade: tuple):
         con = db_connect()
         cur = con.cursor()
         filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, user_name, expiration, color from trades"
-        filtered_trades_no_color_sql = "SELECT in_or_out, ticker, strike_price, user_name, expiration from trades"
+        filtered_trades_no_color_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, user_name, expiration from trades"
         cur.execute(filtered_trades_sql)
         filtered_trades = cur.fetchall()
         cur.execute(filtered_trades_no_color_sql)
@@ -176,6 +182,29 @@ def update_table(parsed_trade: tuple):
         con = db_connect()
         cur = con.cursor()
         trade_sql = "INSERT INTO trades (in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        cur.execute(trade_sql,
+                    (parsed_trade[0], parsed_trade[1], parsed_trade[2],
+                     parsed_trade[3], parsed_trade[4], parsed_trade[5],
+                     parsed_trade[6], parsed_trade[7], parsed_trade[8]))
+        con.commit()
+        print("Trade added to the database ")
+        print(parsed_trade)
+        cur.close()
+    except sqlite3.Error as error:
+        print("Failed to update trade in sqlite table", error)
+    except KeyError as error:
+        pass
+    finally:
+        if (con):
+            con.close()
+            # print("the sqlite connection is closed")
+
+
+def update_error_table(parsed_trade: tuple):
+    try:
+        con = db_connect()
+        cur = con.cursor()
+        trade_sql = "INSERT INTO error_trades (in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
         cur.execute(trade_sql,
                     (parsed_trade[0], parsed_trade[1], parsed_trade[2],
                      parsed_trade[3], parsed_trade[4], parsed_trade[5],

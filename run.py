@@ -8,13 +8,14 @@ import concurrent.futures
 import queue
 import config
 
+from progress.spinner import Spinner
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from dotenv import load_dotenv
 from instapost import consumer
-from discord_grabber import producer
+from discord_grabber import producer, error_producer
 from insta_browser import switch_to_mobile
 
 load_dotenv()
@@ -39,17 +40,31 @@ def check_discord():
     chrome_options.debugger_address = '127.0.0.1:9222'
     discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
                                       options=chrome_options)
-    #driver.get(
-    #    'https://discord.com/channels/290278814217535489/699253100174770176')
-    # parse(find_new_messages(driver))
+    spinner = Spinner('Listening for new messages ')
     while True:
         try:
             producer(discord_driver)
         except (TimeoutException, NoSuchElementException) as error:
             logging.warning(error)
             continue
+        finally:
+            spinner.next()
         #finally:
         #os.system('taskkill /f /im chromedriver.exe')
+
+
+# def discord_error_checker():
+#     chrome_options = Options()
+#     # chrome_options.add_argument("--headless")
+#     # chrome_options.add_argument('--disable-gpu')
+#     # chrome_options.add_argument('--log-level=3')
+#     chrome_options.debugger_address = '127.0.0.1:9222'
+#     discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
+#                                       options=chrome_options)
+#     try:
+#         error_producer(discord_driver)
+#     except (TimeoutException, NoSuchElementException) as error:
+#         print(f"{error}")
 
 
 def post_driver():
@@ -66,16 +81,17 @@ def post_driver():
             #os.system('taskkill /f /im chromedriver.exe')
 
 
-scraper = threading.Thread(target=check_discord)
-poster = threading.Thread(target=post_driver)
+if __name__ == "__main__":
+    scraper = threading.Thread(target=check_discord)
+    poster = threading.Thread(target=post_driver)
 
-scraper.start()
-poster.start()
+    scraper.start()
+    poster.start()
 
-config.new_trades.join()
+    config.new_trades.join()
 
-scraper.join()
-poster.join()
+    scraper.join()
+    poster.join()
 
 # format = "%(asctime)s: %(message)s"
 # logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")

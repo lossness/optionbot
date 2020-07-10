@@ -16,7 +16,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from datetime import datetime
 from make_image import text_on_img
-from db_utils import update_table, error_checker, verify_trade
+from db_utils import update_table, error_checker, verify_trade, update_error_table
 from dotenv import load_dotenv
 from exceptions import IsOldMessage
 from timeit import default_timer as timer
@@ -185,12 +185,16 @@ def message_listener(driver) -> list:
         logging.warning(e)
 
 
+LAST_MESSAGE = "None"
+
+
 def producer(driver):
     # loop over single discord posts in all matched posts in main channel
     try:
+        global LAST_MESSAGE
         new_message = driver.find_elements_by_xpath(
             "//*[@role='group']")[-1].text
-        if new_message != config.last_message:
+        if new_message != LAST_MESSAGE:
             try:
                 split_result = new_message.splitlines()
                 # removes any empty strings from list
@@ -259,7 +263,62 @@ def producer(driver):
                 pass
 
             finally:
-                config.last_message == new_message
+                LAST_MESSAGE = new_message
+        else:
+            time.sleep(.1)
+            return
+    except (TimeoutException, NoSuchElementException) as error:
+        logging.warning(
+            f"{error}: PRODUCER COULD NOT FIND NEWEST DISCORD MESSAGE!!")
+        pass
+
+
+def error_producer(driver):
+    # loop over single discord posts in all matched posts in main channel
+    try:
+        new_messages = driver.find_elements_by_xpath("//*[@role='group']")
+        for message in new_messages:
+            try:
+                split_result = message.text.splitlines()
+                # removes any empty strings from list
+                split_result = list(filter(None, split_result))
+                split_result = list(filter(filter_message, split_result))
+                trade_author = list(filter(filter_trader, split_result))
+                trade_author_tup = trade_author[0]
+                # find the longest string left which is the message string
+                longest_string = max(split_result, key=len)
+                double_split_result = longest_string.split('-')
+                double_split_result = list(filter(None, double_split_result))
+                # gets a call or put status, and pops that matched entry out of the list
+                call_or_put_tup, strike_price_tup, double_split_result = get_call_or_put_and_strike_price(
+                    double_split_result, split_result)
+                trade_expiration_tup, double_split_result = get_trade_expiration(
+                    double_split_result, longest_string)
+                in_or_out_tup, double_split_result = get_in_or_out(
+                    double_split_result)
+                buy_price_tup, double_split_result = get_buy_price(
+                    double_split_result)
+                stock_ticker_tup, double_split_result = get_stock_ticker(
+                    double_split_result)
+                datetime_tup = str(datetime.now())
+                stock_ticker_tup = stock_ticker_tup.lower()
+
+                trade_tuple = (
+                    in_or_out_tup,
+                    stock_ticker_tup,
+                    datetime_tup,
+                    strike_price_tup,
+                    call_or_put_tup,
+                    buy_price_tup,
+                    trade_author_tup,
+                    trade_expiration_tup,
+                )
+
+                if 'error' in trade_tuple:
+                    update_error_table(trade_tuple)
+
+            except (KeyError, IndexError, ValueError) as error:
+                print(f"{error}")
     except (TimeoutException, NoSuchElementException) as error:
         logging.warning(
             f"{error}: PRODUCER COULD NOT FIND NEWEST DISCORD MESSAGE!!")
