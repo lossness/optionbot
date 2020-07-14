@@ -515,3 +515,15 @@ def update_table(parsed_trade: tuple):
             con.close()
             # print("the sqlite connection is closed")
 
+def filter_message(variable):
+    noise_words = ['BOT', r'BBS-TRADE-BOT\nBOT', 'BBS-TRADE-BOT', 'joel']
+    if (variable in noise_words):
+        return False
+    else:
+        return True
+
+def filter_trader(variable):
+    if (variable in TRADERS):
+        return True
+    else:
+        return False

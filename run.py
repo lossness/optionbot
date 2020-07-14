@@ -15,7 +15,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from dotenv import load_dotenv
 from instapost import consumer
-from discord_grabber import producer, error_producer
+from discord_grabber import producer, error_producer_beta, error_producer_classic
 from insta_browser import switch_to_mobile
 
 load_dotenv()
@@ -53,18 +53,18 @@ def check_discord():
         #os.system('taskkill /f /im chromedriver.exe')
 
 
-# def discord_error_checker():
-#     chrome_options = Options()
-#     # chrome_options.add_argument("--headless")
-#     # chrome_options.add_argument('--disable-gpu')
-#     # chrome_options.add_argument('--log-level=3')
-#     chrome_options.debugger_address = '127.0.0.1:9222'
-#     discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
-#                                       options=chrome_options)
-#     try:
-#         error_producer(discord_driver)
-#     except (TimeoutException, NoSuchElementException) as error:
-#         print(f"{error}")
+def discord_error_checker():
+    chrome_options = Options()
+    # chrome_options.add_argument("--headless")
+    # chrome_options.add_argument('--disable-gpu')
+    # chrome_options.add_argument('--log-level=3')
+    chrome_options.debugger_address = '127.0.0.1:9222'
+    discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
+                                      options=chrome_options)
+    try:
+        error_producer_classic(discord_driver)
+    except (TimeoutException, NoSuchElementException) as error:
+        print(f"{error}")
 
 
 def post_driver():
