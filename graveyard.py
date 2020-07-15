@@ -527,3 +527,34 @@ def filter_trader(variable):
         return True
     else:
         return False
+
+def has_trade_match(database_trades: list,
+                    new_trade: tuple) -> (bool, str or None):
+    '''
+    This will check the database for a matching IN trade and return
+    True or False depending if matched.
+    '''
+    try:
+        if database_trades == []:
+            return False, None
+
+        (in_or_out, ticker, strike_price, user_name, expiration,
+            color) = database_trade
+        ticker = ticker.lower()
+        matched_trades = re.findall(
+            rf'\(((?:[\'in\', \'out\'])+, (\'{ticker}\'), (\'{strike_price}\'), (\'{user_name}\'), (\'{expiration}\'))\)',
+            str(database_trades))
+
+        if len(matched_trades) == 2:
+            return True, color
+
+        elif len(matched_trades) > 2:
+            logging.warning(
+                "More than 2 of the same trade saved to database!")
+            return False, None
+            
+        else:
+            return False, None
+    except ValueError:
+        pass
+

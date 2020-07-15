@@ -78,10 +78,6 @@ def consumer(driver):
             share_button.click()
             print("instagram posting completed")
             time.sleep(2)
-            KEYBOARD.press(Key.esc)
-            time.sleep(1)
-            driver.maximize_window()
-            KEYBOARD.press(Key.esc)
 
             # caption_field = WebDriverWait(driver, 5).until(
             # EC.presence_of_element_located((By.XPATH, "//textarea")))

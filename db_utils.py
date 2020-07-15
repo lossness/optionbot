@@ -78,14 +78,14 @@ def duplicate_check(database_trades: list, new_trade: tuple) -> bool:
         is_duplicate = False
         return is_duplicate
     try:
-        common_trade_features = new_trade[:2] + new_trade[3:5] + new_trade[6:]
-        for row in database_trades:
-            if row == common_trade_features:
-                is_duplicate = True
-                break
-            else:
-                is_duplicate = False
-                break
+        common_trade_features_tup = new_trade[:2] + new_trade[3:5] + new_trade[
+            6:]
+        in_or_out, ticker, strike_price, call_or_put, trader, expiration = common_trade_features_tup
+        matched_trades = re.findall(
+            rf'\(((?:\'{in_or_out}\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{trader}\'), (\'{expiration}\'))\)',
+            str(database_trades))
+        if matched_trades != []:
+            return is_duplicate
 
     except (KeyError, ValueError, IndexError) as error:
         logging.warning(f"{error} during duplicate trade check!")
@@ -104,21 +104,24 @@ def has_trade_match(database_trades: list,
     try:
         if database_trades == []:
             return False, None
-        for database_trade in database_trades:
-            (in_or_out, ticker, strike_price, user_name, expiration,
-             color) = database_trade
-            ticker = ticker.lower()
-            matched_trades = re.findall(
-                rf'\(((?:[\'in\', \'out\'])+, (\'{ticker}\'), (\'{strike_price}\'), (\'{user_name}\'), (\'{expiration}\'))\)',
-                str(database_trades))
-            if len(matched_trades) == 2:
-                return True, color
-            elif len(matched_trades) > 2:
-                logging.warning(
-                    "More than 2 of the same trade saved to database!")
-                return False, None
-            else:
-                return False, None
+
+        in_or_out, ticker, date_time, strike_price, call_or_put, buy_price, user_name, expiration = new_trade
+        ticker = ticker.lower()
+        matched_trades = re.findall(
+            rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{user_name}\'), (\'{expiration}\'), (\'\w+\'))\)',
+            str(database_trades))
+
+        if len(matched_trades) == 1:
+            original_color = matched_trades[0][-1].replace("'", "")
+            return True, original_color
+
+        elif len(matched_trades) > 1:
+            logging.warning(
+                "More than 2 of the same IN trade saved to database!")
+            return False, None
+
+        else:
+            return False, None
     except ValueError:
         pass
 
