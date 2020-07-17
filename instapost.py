@@ -5,7 +5,6 @@ import re
 import sqlite3
 import random
 import pyperclip
-import logging
 import config
 
 from selenium import webdriver
@@ -22,6 +21,7 @@ from insta_browser import switch_to_mobile
 from PIL import Image, ImageDraw, ImageFont
 from dotenv import load_dotenv
 from timeit import default_timer as timer
+from main_logger import logger
 
 load_dotenv()
 INSTA_USERNAME = os.getenv("INSTA_USERNAME")

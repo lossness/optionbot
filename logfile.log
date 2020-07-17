@@ -1,0 +1,167 @@
+2020-07-15 20:20:57,282 : DEBUG : main_logger : A debug message
+2020-07-15 20:20:57,283 : INFO : main_logger : An info message
+2020-07-15 20:20:57,283 : WARNING : main_logger : Something is not right.
+2020-07-15 20:20:57,283 : ERROR : main_logger : A Major error has happened.
+2020-07-15 20:20:57,284 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-15 20:27:06,782 : DEBUG : main_logger : A debug message
+2020-07-15 20:27:06,782 : INFO : main_logger : An info message
+2020-07-15 20:27:06,783 : WARNING : main_logger : Something is not right.
+2020-07-15 20:27:06,783 : ERROR : main_logger : A Major error has happened.
+2020-07-15 20:27:06,783 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-15 20:38:24,833 : DEBUG : main_logger : A debug message
+2020-07-15 20:38:24,835 : INFO : main_logger : An info message
+2020-07-15 20:38:24,835 : WARNING : main_logger : Something is not right.
+2020-07-15 20:38:24,835 : ERROR : main_logger : A Major error has happened.
+2020-07-15 20:38:24,835 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-15 20:38:56,997 : DEBUG : main_logger : A debug message
+2020-07-15 20:38:56,998 : INFO : main_logger : An info message
+2020-07-15 20:38:56,998 : WARNING : main_logger : Something is not right.
+2020-07-15 20:38:56,998 : ERROR : main_logger : A Major error has happened.
+2020-07-15 20:38:56,998 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-15 20:39:38,537 : DEBUG : main_logger : A debug message
+2020-07-15 20:39:38,538 : INFO : main_logger : An info message
+2020-07-15 20:39:38,538 : WARNING : main_logger : Something is not right.
+2020-07-15 20:39:38,539 : ERROR : main_logger : A Major error has happened.
+2020-07-15 20:39:38,539 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-15 20:41:44,850 : DEBUG : main_logger : A debug message
+2020-07-15 20:41:44,850 : INFO : main_logger : An info message
+2020-07-15 20:41:44,851 : WARNING : main_logger : Something is not right.
+2020-07-15 20:41:44,851 : ERROR : main_logger : A Major error has happened.
+2020-07-15 20:41:44,851 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-15 20:42:43,019 : DEBUG : main_logger : A debug message
+2020-07-15 20:42:43,020 : INFO : main_logger : An info message
+2020-07-15 20:42:43,020 : WARNING : main_logger : Something is not right.
+2020-07-15 20:42:43,020 : ERROR : main_logger : A Major error has happened.
+2020-07-15 20:42:43,020 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-15 20:43:39,021 : DEBUG : main_logger : A debug message
+2020-07-15 20:43:39,022 : INFO : main_logger : An info message
+2020-07-15 20:43:39,022 : WARNING : main_logger : Something is not right.
+2020-07-15 20:43:39,022 : ERROR : main_logger : A Major error has happened.
+2020-07-15 20:43:39,022 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-15 20:50:44,622 : DEBUG : main_logger : A debug message
+2020-07-15 20:50:44,623 : INFO : main_logger : An info message
+2020-07-15 20:50:44,623 : WARNING : main_logger : Something is not right.
+2020-07-15 20:50:44,623 : ERROR : main_logger : A Major error has happened.
+2020-07-15 20:50:44,623 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-15 20:51:22,870 : DEBUG : main_logger : A debug message
+2020-07-15 20:51:22,871 : INFO : main_logger : An info message
+2020-07-15 20:51:22,871 : WARNING : main_logger : Something is not right.
+2020-07-15 20:51:22,871 : ERROR : main_logger : A Major error has happened.
+2020-07-15 20:51:22,871 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-15 20:51:46,757 : DEBUG : main_logger : A debug message
+2020-07-15 20:51:46,758 : INFO : main_logger : An info message
+2020-07-15 20:51:46,758 : WARNING : main_logger : Something is not right.
+2020-07-15 20:51:46,758 : ERROR : main_logger : A Major error has happened.
+2020-07-15 20:51:46,758 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-15 20:53:32,962 : DEBUG : main_logger : A debug message
+2020-07-15 20:53:32,963 : INFO : main_logger : An info message
+2020-07-15 20:53:32,963 : WARNING : main_logger : Something is not right.
+2020-07-15 20:53:32,963 : ERROR : main_logger : A Major error has happened.
+2020-07-15 20:53:32,963 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-15 20:57:22,328 : DEBUG : main_logger : A debug message
+2020-07-15 20:57:22,328 : INFO : main_logger : An info message
+2020-07-15 20:57:22,329 : WARNING : main_logger : Something is not right.
+2020-07-15 20:57:22,329 : ERROR : main_logger : A Major error has happened.
+2020-07-15 20:57:22,329 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-15 20:59:31,305 : DEBUG : main_logger : A debug message
+2020-07-15 20:59:31,306 : INFO : main_logger : An info message
+2020-07-15 20:59:31,306 : WARNING : main_logger : Something is not right.
+2020-07-15 20:59:31,306 : ERROR : main_logger : A Major error has happened.
+2020-07-15 20:59:31,306 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-15 21:01:39,795 : DEBUG : main_logger : A debug message
+2020-07-15 21:01:39,795 : INFO : main_logger : An info message
+2020-07-15 21:01:39,796 : WARNING : main_logger : Something is not right.
+2020-07-15 21:01:39,796 : ERROR : main_logger : A Major error has happened.
+2020-07-15 21:01:39,796 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-15 21:01:44,035 : DEBUG : main_logger : A debug message
+2020-07-15 21:01:44,036 : INFO : main_logger : An info message
+2020-07-15 21:01:44,036 : WARNING : main_logger : Something is not right.
+2020-07-15 21:01:44,036 : ERROR : main_logger : A Major error has happened.
+2020-07-15 21:01:44,037 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-15 21:05:22,702 : DEBUG : main_logger : A debug message
+2020-07-15 21:05:22,702 : INFO : main_logger : An info message
+2020-07-15 21:05:22,702 : WARNING : main_logger : Something is not right.
+2020-07-15 21:05:22,703 : ERROR : main_logger : A Major error has happened.
+2020-07-15 21:05:22,703 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 18:05:16,671 : DEBUG : main_logger : A debug message
+2020-07-16 18:05:16,672 : INFO : main_logger : An info message
+2020-07-16 18:05:16,673 : WARNING : main_logger : Something is not right.
+2020-07-16 18:05:16,673 : ERROR : main_logger : A Major error has happened.
+2020-07-16 18:05:16,673 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 18:43:22,439 : DEBUG : main_logger : A debug message
+2020-07-16 18:43:22,440 : INFO : main_logger : An info message
+2020-07-16 18:43:22,440 : WARNING : main_logger : Something is not right.
+2020-07-16 18:43:22,440 : ERROR : main_logger : A Major error has happened.
+2020-07-16 18:43:22,441 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 18:51:58,375 : DEBUG : main_logger : A debug message
+2020-07-16 18:51:58,375 : INFO : main_logger : An info message
+2020-07-16 18:51:58,376 : WARNING : main_logger : Something is not right.
+2020-07-16 18:51:58,376 : ERROR : main_logger : A Major error has happened.
+2020-07-16 18:51:58,376 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 19:10:34,811 : DEBUG : main_logger : A debug message
+2020-07-16 19:10:34,812 : INFO : main_logger : An info message
+2020-07-16 19:10:34,812 : WARNING : main_logger : Something is not right.
+2020-07-16 19:10:34,812 : ERROR : main_logger : A Major error has happened.
+2020-07-16 19:10:34,813 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 19:11:26,938 : DEBUG : main_logger : A debug message
+2020-07-16 19:11:26,939 : INFO : main_logger : An info message
+2020-07-16 19:11:26,939 : WARNING : main_logger : Something is not right.
+2020-07-16 19:11:26,940 : ERROR : main_logger : A Major error has happened.
+2020-07-16 19:11:26,940 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 19:12:00,365 : DEBUG : main_logger : A debug message
+2020-07-16 19:12:00,366 : INFO : main_logger : An info message
+2020-07-16 19:12:00,366 : WARNING : main_logger : Something is not right.
+2020-07-16 19:12:00,366 : ERROR : main_logger : A Major error has happened.
+2020-07-16 19:12:00,366 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 19:13:49,356 : DEBUG : main_logger : A debug message
+2020-07-16 19:13:49,357 : INFO : main_logger : An info message
+2020-07-16 19:13:49,357 : WARNING : main_logger : Something is not right.
+2020-07-16 19:13:49,357 : ERROR : main_logger : A Major error has happened.
+2020-07-16 19:13:49,358 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 19:14:37,150 : DEBUG : main_logger : A debug message
+2020-07-16 19:14:37,151 : INFO : main_logger : An info message
+2020-07-16 19:14:37,151 : WARNING : main_logger : Something is not right.
+2020-07-16 19:14:37,151 : ERROR : main_logger : A Major error has happened.
+2020-07-16 19:14:37,152 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 19:15:34,902 : DEBUG : main_logger : A debug message
+2020-07-16 19:15:34,903 : INFO : main_logger : An info message
+2020-07-16 19:15:34,904 : WARNING : main_logger : Something is not right.
+2020-07-16 19:15:34,904 : ERROR : main_logger : A Major error has happened.
+2020-07-16 19:15:34,904 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 19:16:43,402 : DEBUG : main_logger : A debug message
+2020-07-16 19:16:43,403 : INFO : main_logger : An info message
+2020-07-16 19:16:43,403 : WARNING : main_logger : Something is not right.
+2020-07-16 19:16:43,403 : ERROR : main_logger : A Major error has happened.
+2020-07-16 19:16:43,403 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 19:18:18,085 : DEBUG : main_logger : A debug message
+2020-07-16 19:18:18,086 : INFO : main_logger : An info message
+2020-07-16 19:18:18,086 : WARNING : main_logger : Something is not right.
+2020-07-16 19:18:18,086 : ERROR : main_logger : A Major error has happened.
+2020-07-16 19:18:18,087 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 19:25:13,962 : DEBUG : main_logger : A debug message
+2020-07-16 19:25:13,963 : INFO : main_logger : An info message
+2020-07-16 19:25:13,963 : WARNING : main_logger : Something is not right.
+2020-07-16 19:25:13,963 : ERROR : main_logger : A Major error has happened.
+2020-07-16 19:25:13,963 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 19:27:07,644 : DEBUG : main_logger : A debug message
+2020-07-16 19:27:07,645 : INFO : main_logger : An info message
+2020-07-16 19:27:07,645 : WARNING : main_logger : Something is not right.
+2020-07-16 19:27:07,645 : ERROR : main_logger : A Major error has happened.
+2020-07-16 19:27:07,645 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 19:27:32,438 : DEBUG : main_logger : A debug message
+2020-07-16 19:27:32,439 : INFO : main_logger : An info message
+2020-07-16 19:27:32,439 : WARNING : main_logger : Something is not right.
+2020-07-16 19:27:32,439 : ERROR : main_logger : A Major error has happened.
+2020-07-16 19:27:32,439 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 19:27:57,961 : DEBUG : main_logger : A debug message
+2020-07-16 19:27:57,962 : INFO : main_logger : An info message
+2020-07-16 19:27:57,962 : WARNING : main_logger : Something is not right.
+2020-07-16 19:27:57,962 : ERROR : main_logger : A Major error has happened.
+2020-07-16 19:27:57,962 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 19:28:27,653 : DEBUG : main_logger : A debug message
+2020-07-16 19:28:27,654 : INFO : main_logger : An info message
+2020-07-16 19:28:27,654 : WARNING : main_logger : Something is not right.
+2020-07-16 19:28:27,654 : ERROR : main_logger : A Major error has happened.
+2020-07-16 19:28:27,654 : CRITICAL : main_logger : Fatal error. Cannot continue
+2020-07-16 19:45:46,272 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' SPY ', ' DAY ', ' TRADE CUT POS 3.45 ', ' 2.1']
+2020-07-16 20:20:51,645 : INFO : main_logger : Producer got message: ('out', 'spy', '2020-07-16 20:20:51.641311', '311', 'put', '2.1', 'ThuhKang', '7/17', 'orange')

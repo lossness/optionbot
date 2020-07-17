@@ -558,3 +558,37 @@ def has_trade_match(database_trades: list,
     except ValueError:
         pass
 
+
+
+def get_trade_expiration(split_message_list: list, unsplit_message_list: list):
+    expiration_date = []
+    try:
+        for split in split_message_list:
+            expiration_date = re.findall(
+                r"^(0?[1-9]|1[0-2])(.|/|\\|-)(0?[1-9]|[12][0-9]|3[01])$",
+                split.replace(' ', ''))
+
+            if expiration_date:
+                expiration_date = ''.join(expiration_date[0])
+                split_message_list.remove(split)
+                return expiration_date, split_message_list
+
+            if expiration_date == []:
+                split_list = unsplit_message_list.split(" - ")
+                for split in split_list:
+                    expiration_date = re.findall(
+                        r"^(0?[1-9]|1[0-2])(.|/|\\|-)(0?[1-9]|[12][0-9]|3[01])$",
+                        split.replace(' ', ''))
+
+                    if expiration_date:
+                        expiration_date = ''.join(expiration_date[0])
+                        split_list.remove(split)
+                        return expiration_date, split_list
+
+        if expiration_date == []:
+            raise KeyError("Could not determine expiration of trade!")
+
+    except KeyError as e:
+        logger.warning(e)
+        return 'error', split_message_list
+

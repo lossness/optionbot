@@ -57,7 +57,7 @@ def is_trade_already_out(database_trades: list, new_trade: tuple) -> bool:
             return False
         out_trade_filtered = (
             'out', ) + new_trade[1:2] + new_trade[3:4] + new_trade[6:8]
-        for row in new_trade:
+        for row in database_trades:
             if row == out_trade_filtered:
                 raise KeyError("Trade already exited!")
         return already_out_trade
@@ -84,8 +84,8 @@ def duplicate_check(database_trades: list, new_trade: tuple) -> bool:
         matched_trades = re.findall(
             rf'\(((?:\'{in_or_out}\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{trader}\'), (\'{expiration}\'))\)',
             str(database_trades))
-        if matched_trades != []:
-            return is_duplicate
+        if matched_trades == []:
+            is_duplicate = False
 
     except (KeyError, ValueError, IndexError) as error:
         logging.warning(f"{error} during duplicate trade check!")

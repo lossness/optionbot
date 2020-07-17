@@ -1,4 +1,6 @@
 import re
+from main_logger import logger
+from db_utils import db_connect
 
 
 class ErrorChecker:
@@ -19,7 +21,7 @@ class ErrorChecker:
     strike_price(processed_list)
     call_or_put(processed_list)
     '''
-    def __intit__(self, processed_list):
+    def __intit__(self, processed_list, new_trade_tuple):
         '''
         Parameters
         ----------
@@ -29,26 +31,34 @@ class ErrorChecker:
         remove required data
         '''
         self.processed_list = processed_list
+        self.new_trade_tuple = new_trade_tuple
 
     def strike_price(self) -> str:
         '''
         This runs when the first round of processing detects
         an error in the strike price value of the processed tuple.
         '''
-        strike_price = False
-        try:
-            for split in self.processed_list:
-                match = re.findall(r'[-+]?\d*\.\d+|\d+', str(split))
-                if match:
-                    strike_price = match[0]
-                    return strike_price
-                elif match == []:
-                    raise ValueError(
-                        "Could not find strike price during level 2 check!")
+        strike_price = 'error'
+        call_or_put 'error'
+        in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, trade_author, expiration = new_trade_tuple
+        if 'out' in in_or_out:
+            try:
+                con = db_connect()
+                cur = con.cursor()
+                filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, user_name, expiration from trades"
+                cur.execute(filtered_trades_sql)
+                filtered_trades = cur.fetchall()
+                if filtered_trades == []:
+                    raise ValueError("The database is empty! Cannot perform level 2 IN match")
+
+            except ValueError as e:
+                logger.warning(e, stack_info=True)
+
+
 
         except (IndexError, ValueError) as error:
             print(f"{error} in strike_price level 2 check!")
-            logging.warning(f"{error} In strike_price level 2 check!")
+            logger.warning(f"{error} In strike_price level 2 check!")
             return 'error'
 
     def call_or_put(self) -> str:
@@ -81,5 +91,5 @@ class ErrorChecker:
 
         except (IndexError, ValueError) as error:
             print(f"{error} In call_or_put level 2 check!")
-            logging.warning(f"{error} In call_or_put level 2 check!")
+            logger.warning(f"{error} In call_or_put level 2 check!")
             return 'error'
