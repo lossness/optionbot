@@ -20,3 +20,7 @@ class DatabaseEmpty(Exception):
 
 class MultipleMatchingIn(Exception):
     '''There are multiple matching IN trades. This should never happen!'''
+
+
+class OutTradeHasNoMatch(Exception):
+    '''Out trade has no match! ignoring trade!'''

@@ -128,12 +128,35 @@ def has_trade_match(database_trades: list, new_trade: tuple) -> bool:
         return match_exists
 
 
+def ignore_out_trade(database_trades: list, new_trade: tuple) -> bool:
+    in_trade_exists = True
+    try:
+        if database_trades == []:
+            raise DatabaseEmpty
+
+        in_or_out, ticker, date_time, strike_price, call_or_put, buy_price, user_name, expiration = new_trade
+        ticker = ticker.lower()
+        matched_trades = re.findall(
+            rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{user_name}\'), (\'{expiration}\'), (\'\w+\'))\)',
+            str(database_trades))
+
+        if matched_trades == []:
+            in_trade_exists = False
+
+    except DatabaseEmpty as info_error:
+        in_trade_exists = False
+
+    finally:
+        return in_trade_exists
+
+
 def verify_trade(parsed_trade: tuple):
     try:
         is_out = False
         is_duplicate = False
         has_matching_in = None
         trade_color = None
+        ignore_trade = False
         con = db_connect()
         cur = con.cursor()
         filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, user_name, expiration, color from trades"
@@ -151,6 +174,10 @@ def verify_trade(parsed_trade: tuple):
 
         has_matching_in = has_trade_match(filtered_trades, tuple(parsed_trade))
 
+        if 'out' in parsed_tuple[0]:
+            ignore_trade = ignore_out_trade(filtered_trades_no_color,
+                                            tuple(parsed_trade))
+
         if has_matching_in is False:
             colors = [
                 'red', 'blue', 'green', 'yellow', 'orange', 'white', 'purple',
@@ -160,14 +187,14 @@ def verify_trade(parsed_trade: tuple):
 
     except sqlite3.Error as error:
         logger.warning(error)
-        verification_tuple = (None, None, None, None)
+        verification_tuple = ('error', 'error', 'error', 'error')
         return verification_tuple
 
     finally:
         if (con):
             con.close()
         verification_tuple = (is_duplicate, is_out, has_matching_in,
-                              trade_color)
+                              trade_color, ignore_trade)
         return verification_tuple
 
 

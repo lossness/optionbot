@@ -202,3 +202,18 @@
 2020-07-17 18:56:00,250 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' T ', ' day ', " Don't ", ' want to hang on to it over night. .38 ', ' .30']
 2020-07-17 18:56:00,283 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' FB ', ' 242.50 ', ' .74 ', ' day ', ' broke my stop area 1.14 ', ' .74']
 2020-07-17 18:56:00,346 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' SQ ', ' 4 ', ' SCALP ', ' OUT OF 1/2']
+2020-07-19 19:03:30,836 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' DIS ', ' day/swing ', ' Tight ', ' stop']
+2020-07-19 19:03:30,890 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' DIS ', ' day ', ' Could ', " still work but that is why I don't recommend holding DIS long term right now. 1.38 ", ' 1.56']
+2020-07-19 19:03:30,966 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' DBX ', ' 1,45 ', ' swing ', ' I will give this one some room to play out']
+2020-07-19 19:03:31,018 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' TSLA ', ' 33 ', ' DAY ', ' CLOSING MORE 27.65 ', ' 32.26, 33']
+2020-07-19 19:03:31,031 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' TSLA ', ' 34 ', ' DAY ', ' CLOSING POS 27.65 ', ' 32.26, 33, 34']
+2020-07-19 19:03:31,043 : ERROR : main_logger : 'Could not determine buy price!' : ['IN ', ' UPWK ', ' $1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT']
+2020-07-19 19:03:31,199 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' T ', ' day ', " Don't ", ' want to hang on to it over night. .38 ', ' .30']
+2020-07-19 19:03:31,222 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' FB ', ' 242.50 ', ' .74 ', ' day ', ' broke my stop area 1.14 ', ' .74']
+2020-07-19 19:03:31,277 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' SQ ', ' 4 ', ' SCALP ', ' OUT OF 1/2']
+2020-07-19 19:03:31,515 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' SQ ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE $3 & $2.99 @everyone']
+2020-07-19 19:03:31,757 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' AAPL ', ' 8 ', ' DAY ', ' CLOSING POS 4.72 ', ' 6.5, 8']
+2020-07-19 19:03:31,931 : WARNING : main_logger : 'Could not determine expiration of trade!'
+2020-07-19 19:03:31,957 : WARNING : main_logger : 'Could not determine expiration of trade!'
+2020-07-19 19:03:32,213 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' AAPL ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-07-19 19:03:32,257 : WARNING : main_logger : 'Could not determine if the trade is in or out!'

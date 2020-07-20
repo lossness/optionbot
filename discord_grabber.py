@@ -270,10 +270,13 @@ def processor(new_message):
             trade_expiration_tup,
         )
 
-        is_duplicate, is_out, has_matching_in, trade_color = verify_trade(
+        is_duplicate, is_out, has_matching_in, trade_color, ignore_trade = verify_trade(
             list(trade_tuple))
 
         if is_duplicate:
+            return
+
+        if ignore_trade:
             return
 
         if is_duplicate is False and is_out is False and has_matching_in is False or True:
