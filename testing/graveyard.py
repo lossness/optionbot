@@ -592,3 +592,44 @@ def get_trade_expiration(split_message_list: list, unsplit_message_list: list):
         logger.warning(e)
         return 'error', split_message_list
 
+class Trade:
+    '''
+    A trade that consists of multiple variables
+
+    Attributes
+    ----------
+    in_or_out : str
+        Signifies if the trade is a trade going into the
+        market or exiting the market.
+    ticker : str
+        The market ticker that the trade is for.
+    datetime : str
+        Generated at the time the trade is scraped.
+    strike_price : str
+        The price of the stock when the trade has been
+        exercised.
+    call_or_put : str
+        Signifies if the trade is of a call or put type.
+    buy_price : str
+        The price paid for the trade.
+    trade_author : str
+        The author of the trade from the source.
+    trade_expiration : str
+        The trades set expiration.
+
+    Methods
+    -------
+    N/A
+    '''
+    def __init__(self, in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, trade_author, trade_expiration):
+        self.in_or_out = in_or_out
+        self.ticker = ticker
+        self.datetime = datetime
+        self.strike_price = strike_price
+        self.call_or_put = call_or_put
+        self.buy_price = buy_price
+        self.trade_author = trade_author
+        self.trade_expiration = trade_expiration
+
+    def contains_error(self):
+        if 'error' in 

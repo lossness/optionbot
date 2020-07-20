@@ -21,7 +21,7 @@ from exceptions import IsOldMessage
 from timeit import default_timer as timer
 from tqdm import tqdm
 from main_logger import logger
-
+from second_level_checks import ErrorChecker
 # include parent directory in path
 PATH = pathlib.Path.cwd()
 TRADERS = ["Eric68", "MariaC82", "ThuhKang", "Jen ❤crypto"]
@@ -104,20 +104,33 @@ def get_call_or_put_and_strike_price(split_message_list: list):
 
 def get_in_or_out(split_message_list: list):
     try:
-        in_or_out_tup = None
+        in_or_out = None
+        matches = 0
         for split in split_message_list:
             if str(split.lower()).replace(' ', '') in ('in', 'buy'):
                 split_message_list.remove(split)
-                in_or_out_tup = 'in'
-                return in_or_out_tup, split_message_list
+                in_or_out = 'in'
+                matches += 1
+
             if str(split.lower()).replace(' ', '') in ('out', 'sell'):
                 split_message_list.remove(split)
-                in_or_out_tup = 'out'
-                return in_or_out_tup, split_message_list
-        if in_or_out_tup is None:
-            raise KeyError("Could not determine if the trade is in or out!")
-    except KeyError as e:
+                in_or_out = 'out'
+                matches += 1
+
+        if in_or_out is None:
+            raise KeyError(
+                "Could not determine if the trade is in or out! Level 1.")
+
+        if matches > 1:
+            raise ValueError(
+                "Mulitple matches detected for in or out! Level 1.")
+
+    except (KeyError, ValueError) as e:
         logger.warning(e)
+        in_or_out = 'error'
+
+    finally:
+        return in_or_out, split_message_list
 
 
 def get_buy_price(split_message_list):
@@ -295,7 +308,8 @@ def processor(new_message):
 def error_producer_classic(driver):
     # loop over single discord posts in all matched posts in main channel
     try:
-        counter = 1
+        counter = 0
+        error_counter = 0
         message_list = find_new_messages(driver)
         try:
             for new_message in tqdm(message_list):
@@ -326,6 +340,7 @@ def error_producer_classic(driver):
                     double_split_result)
                 datetime_tup = str(datetime.now())
                 stock_ticker_tup = stock_ticker_tup.lower()
+                color_tup = 'error_check'
 
                 trade_tuple = (
                     in_or_out_tup,
@@ -336,13 +351,19 @@ def error_producer_classic(driver):
                     buy_price_tup,
                     trade_author_tup,
                     trade_expiration_tup,
+                    color_tup,
                 )
-                if ('error', 'ERROR') in trade_tuple:
+                if 'error' in trade_tuple:
                     update_error_table(trade_tuple)
+                    error_counter += 1
+
+                elif ('error', 'ERROR') not in trade_tuple:
+                    update_table(trade_tuple)
                     counter += 1
 
         except (KeyError, IndexError, ValueError) as error:
             print(f"{error}")
+            pass
 
     except (TimeoutException, NoSuchElementException) as error:
         logger.warning(

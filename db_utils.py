@@ -1,12 +1,12 @@
 import sqlite3
 import os
 import re
-import logging
 import random
 
 import pandas as pd
 from make_image import text_on_img
-from exceptions import DuplicateTrade, TradeAlreadyOut, IsAInTrade
+from exceptions import DuplicateTrade, TradeAlreadyOut, IsAInTrade, DatabaseEmpty, MultipleMatchingIn
+from main_logger import logger
 
 DEFAULT_PATH = os.path.join(os.path.dirname(__file__), 'database.sqlite3')
 
@@ -48,24 +48,23 @@ def is_trade_already_out(database_trades: list, new_trade: tuple) -> bool:
     This checks if the trade already has one IN and one OUT
     trade. Returns True or False.
     '''
-    if database_trades == []:
-        return False
+    is_out = True
     try:
-        already_out_trade = False
         if database_trades == []:
-            print("DATABASE EMPTY LOL")
-            return False
-        out_trade_filtered = (
+            is_out = False
+            raise DatabaseEmpty
+
+        search_criteria = (
             'out', ) + new_trade[1:2] + new_trade[3:4] + new_trade[6:8]
         for row in database_trades:
-            if row == out_trade_filtered:
-                raise KeyError("Trade already exited!")
-        return already_out_trade
+            if row == search_criteria:
+                raise TradeAlreadyOut
 
-    except KeyError as e:
-        pass
-        already_out_trade = True
-        return already_out_trade
+    except (DatabaseEmpty, TradeAlreadyOut) as info_error:
+        logger.info(info_error)
+
+    finally:
+        return is_out
 
 
 def duplicate_check(database_trades: list, new_trade: tuple) -> bool:
@@ -88,22 +87,22 @@ def duplicate_check(database_trades: list, new_trade: tuple) -> bool:
             is_duplicate = False
 
     except (KeyError, ValueError, IndexError) as error:
-        logging.warning(f"{error} during duplicate trade check!")
+        logger.warning(f"{error} during duplicate trade check!")
         is_duplicate = True
 
     finally:
         return is_duplicate
 
 
-def has_trade_match(database_trades: list,
-                    new_trade: tuple) -> (bool, str or None):
+def has_trade_match(database_trades: list, new_trade: tuple) -> bool:
     '''
     This will check the database for a matching IN trade and return
     True or False depending if matched.
     '''
+    match_exists = False
     try:
         if database_trades == []:
-            return False, None
+            raise DatabaseEmpty
 
         in_or_out, ticker, date_time, strike_price, call_or_put, buy_price, user_name, expiration = new_trade
         ticker = ticker.lower()
@@ -112,18 +111,21 @@ def has_trade_match(database_trades: list,
             str(database_trades))
 
         if len(matched_trades) == 1:
-            original_color = matched_trades[0][-1].replace("'", "")
-            return True, original_color
+            match_exists = True
 
         elif len(matched_trades) > 1:
-            logging.warning(
-                "More than 2 of the same IN trade saved to database!")
-            return False, None
+            raise MultipleMatchingIn
 
-        else:
-            return False, None
-    except ValueError:
+    except DatabaseEmpty as info_error:
+        logger.info(info_error)
         pass
+
+    except MultipleMatchingIn as error:
+        logger.error(error)
+        match_exists = True
+
+    finally:
+        return match_exists
 
 
 def verify_trade(parsed_trade: tuple):
@@ -143,16 +145,11 @@ def verify_trade(parsed_trade: tuple):
 
         is_out = is_trade_already_out(filtered_trades_no_color,
                                       tuple(parsed_trade))
-        if is_out is True:
-            raise TradeAlreadyOut
 
         is_duplicate = duplicate_check(filtered_trades_no_color,
                                        tuple(parsed_trade))
-        if is_duplicate is True:
-            raise DuplicateTrade
 
-        has_matching_in, trade_color = has_trade_match(filtered_trades,
-                                                       tuple(parsed_trade))
+        has_matching_in = has_trade_match(filtered_trades, tuple(parsed_trade))
 
         if has_matching_in is False:
             colors = [
@@ -162,14 +159,8 @@ def verify_trade(parsed_trade: tuple):
             trade_color = random.choice(colors)
 
     except sqlite3.Error as error:
-        logging.warning(error)
+        logger.warning(error)
         verification_tuple = (None, None, None, None)
-        return verification_tuple
-
-    except (DuplicateTrade, TradeAlreadyOut) as error:
-        print(error)
-        verification_tuple = (is_duplicate, is_out, has_matching_in,
-                              trade_color)
         return verification_tuple
 
     finally:

@@ -3,7 +3,7 @@ class DuplicateTrade(Exception):
 
 
 class TradeAlreadyOut(Exception):
-    '''This trade already has a match!'''
+    '''This trade has already exited!'''
 
 
 class IsAInTrade(Exception):
@@ -12,3 +12,11 @@ class IsAInTrade(Exception):
 
 class IsOldMessage(Exception):
     '''This is an old message'''
+
+
+class DatabaseEmpty(Exception):
+    '''The database is empty.'''
+
+
+class MultipleMatchingIn(Exception):
+    '''There are multiple matching IN trades. This should never happen!'''
