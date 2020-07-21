@@ -217,3 +217,57 @@
 2020-07-19 19:03:31,957 : WARNING : main_logger : 'Could not determine expiration of trade!'
 2020-07-19 19:03:32,213 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' AAPL ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
 2020-07-19 19:03:32,257 : WARNING : main_logger : 'Could not determine if the trade is in or out!'
+2020-07-20 19:35:48,563 : ERROR : main_logger : 'Could not determine buy price!' : B
+2020-07-20 19:35:48,564 : WARNING : main_logger : 'Could not determine if the trade is in or out! Level 1.'
+2020-07-20 19:35:49,678 : ERROR : main_logger : 'Could not determine buy price!' : B
+2020-07-20 19:35:49,678 : WARNING : main_logger : 'Could not determine if the trade is in or out! Level 1.'
+2020-07-20 19:54:04,132 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' 242.50 ', ' .74 ', ' day ', ' broke my stop area 1.14 ', ' .74']
+2020-07-20 19:54:04,209 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' SQ ', ' 4 ', ' SCALP ', ' OUT OF 1/2']
+2020-07-20 19:54:04,373 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 19:54:04,403 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 19:54:04,479 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' SQ ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE $3 & $2.99 @everyone']
+2020-07-20 19:54:04,528 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 19:54:04,658 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 19:54:04,707 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' AAPL ', ' 8 ', ' DAY ', ' CLOSING POS 4.72 ', ' 6.5, 8']
+2020-07-20 19:54:04,808 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 19:54:04,892 : WARNING : main_logger : 'Could not determine expiration of trade!'
+2020-07-20 19:54:04,917 : WARNING : main_logger : 'Could not determine expiration of trade!'
+2020-07-20 19:54:05,178 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' AAPL ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-07-20 19:54:05,203 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 19:54:05,222 : WARNING : main_logger : 'Could not determine if the trade is in or out! Level 1.'
+2020-07-20 19:54:05,272 : WARNING : main_logger : 'Could not determine expiration of trade!'
+2020-07-20 19:54:05,275 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' BABA ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-07-20 19:54:05,337 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' SQ ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-07-20 21:22:02,154 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:02,171 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:02,171 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' 242.50 ', ' .74 ', ' day ', ' broke my stop area 1.14 ', ' .74']
+2020-07-20 21:22:03,800 : ERROR : main_logger :  : ['IN ', ' 7/10 ', ' 1410P ', ' 10.35 ', ' DAY ', ' TRADE AT YOUR OWN RISK...USE OWN STOPS...RISKY RISKY'] Live price : 1662 Strike price : 1410
+2020-07-20 21:22:03,803 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:05,287 : ERROR : main_logger :  : ['IN ', ' 7/10 ', ' 1480P ', ' 10.05 ', ' DAY ', ' TRADE AT YOUR OWN RISK...USE OWN STOPS...'] Live price : 1662 Strike price : 1480
+2020-07-20 21:22:05,290 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:06,867 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:07,689 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' SQ ', ' 135C ', ' 4 ', ' SCALP ', ' OUT OF 1/2']
+2020-07-20 21:22:10,961 : ERROR : main_logger :  : ['IN ', ' 07/17 ', ' 57C ', ' 1.06 ', ' SCALP ', ' STOP AT YOUR OWN RISK RISKY AF. FOLLOWING ROULETTE BULLISH FLOW ALERT'] Live price : 61.41 Strike price : 57
+2020-07-20 21:22:10,964 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:13,820 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:16,303 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:17,400 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:19,960 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:21,861 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:23,299 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:23,312 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:24,736 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:26,051 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:28,388 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:31,519 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' SQ ', ' 125C ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE $3 & $2.99 @everyone']
+2020-07-20 21:22:33,687 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:34,653 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:36,157 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:37,619 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:22:39,880 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:27:27,494 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:27:27,512 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:27:27,512 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' 242.50 ', ' .74 ', ' day ', ' broke my stop area 1.14 ', ' .74']
+2020-07-20 21:27:28,698 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:27:30,071 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:28:41,454 : ERROR : main_logger :  : Ticker matches : 0

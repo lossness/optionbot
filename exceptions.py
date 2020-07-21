@@ -24,3 +24,11 @@ class MultipleMatchingIn(Exception):
 
 class OutTradeHasNoMatch(Exception):
     '''Out trade has no match! ignoring trade!'''
+
+
+class TickerError(Exception):
+    '''Could not determine ticker of trade!'''
+
+
+class LiveStrikePriceError(Exception):
+    '''Strike price scraped from trade differs +/- 5% of live bid price!'''

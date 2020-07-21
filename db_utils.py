@@ -155,7 +155,7 @@ def verify_trade(parsed_trade: tuple):
         is_out = False
         is_duplicate = False
         has_matching_in = None
-        trade_color = None
+        trade_color = 'filler'
         ignore_trade = False
         con = db_connect()
         cur = con.cursor()
@@ -174,7 +174,7 @@ def verify_trade(parsed_trade: tuple):
 
         has_matching_in = has_trade_match(filtered_trades, tuple(parsed_trade))
 
-        if 'out' in parsed_tuple[0]:
+        if 'out' in parsed_trade[0]:
             ignore_trade = ignore_out_trade(filtered_trades_no_color,
                                             tuple(parsed_trade))
 
@@ -187,8 +187,11 @@ def verify_trade(parsed_trade: tuple):
 
     except sqlite3.Error as error:
         logger.warning(error)
-        verification_tuple = ('error', 'error', 'error', 'error')
-        return verification_tuple
+        is_out = 'error'
+        is_duplicate = 'error'
+        has_matching_in = 'error'
+        trade_color = 'error'
+        ignore_trade = 'error'
 
     finally:
         if (con):

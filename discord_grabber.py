@@ -4,6 +4,7 @@ import os
 import re
 import random
 import config
+import yfinance as yf
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
@@ -17,7 +18,7 @@ from datetime import datetime
 from make_image import text_on_img
 from db_utils import update_table, error_checker, verify_trade, update_error_table
 from dotenv import load_dotenv
-from exceptions import IsOldMessage
+from exceptions import IsOldMessage, TickerError, LiveStrikePriceError
 from timeit import default_timer as timer
 from tqdm import tqdm
 from main_logger import logger
@@ -69,42 +70,79 @@ def get_trade_expiration(split_message_list: list):
         return expiration_date, split_message_list
 
 
-def get_call_or_put_and_strike_price(split_message_list: list):
+def three_feet(split_message_list: list, ticker_func):
+    '''
+    returns three values in ONE! 
+    1. If the trade is call or put
+    2. The strike price of the trade
+    3. The ticker for the trade
+    '''
     try:
-        call_or_put = False
+        call_or_put = 'error'
         strike_price = 'error'
+        ticker = 'error'
+        ticker, split_message_list = ticker_func(split_message_list)
         match = re.findall(
             r"[-+]?\d*\.\d+(?:[c, C, call, CALL]|[p, P, PUT, put])+|\d+(?:[c, C, call, CALL]|[p, P, PUT, put])+",
             str(split_message_list))
-        for item in match:
-            if 'c' in str(item).lower():
-                strike_price = re.findall(r'[-+]?\d*\.\d+|\d+', str(item))
-                split_message_list.remove(' ' + item)
-                call_or_put = 'call'
-                break
-
-            if 'p' in str(item).lower():
-                strike_price = re.findall(r'[-+]?\d*\.\d+|\d+', str(item))
-                split_message_list.remove(' ' + item)
-                call_or_put = 'put'
-                break
 
         if match == [] or False:
             raise KeyError(
                 "Could not determine if trade is call or put! Could not get strike price!"
             )
 
+        for item in match:
+            if 'c' in str(item).lower():
+                strike_price = re.findall(r'[-+]?\d*\.\d+|\d+', str(item))
+                strike_price = strike_price[0]
+                try:
+                    ticker_data = yf.Ticker(ticker)
+                    call_or_put = 'call'
+                    live_price = ticker_data.info['open']
+                    if float(((live_price - float(strike_price)) * 100) /
+                             float(strike_price)) > 15:
+                        raise LiveStrikePriceError
+                    split_message_list.remove(' ' + item)
+                    break
+
+                except LiveStrikePriceError as error:
+                    logger.error(
+                        f'{error} : {split_message_list} Live price : {live_price} Strike price : {strike_price}'
+                    )
+                    strike_price = 'error'
+
+            if 'p' in str(item).lower():
+                strike_price = re.findall(r'[-+]?\d*\.\d+|\d+', str(item))
+                strike_price = strike_price[0]
+                try:
+                    ticker_data = yf.Ticker(ticker)
+                    call_or_put = 'put'
+                    live_price = ticker_data.info['open']
+                    if float(((live_price - float(strike_price)) * 100) /
+                             float(strike_price)) > 15:
+                        raise LiveStrikePriceError
+                    split_message_list.remove(' ' + item)
+                    break
+
+                except LiveStrikePriceError as error:
+                    logger.error(
+                        f'{error} : {split_message_list} Live price : {live_price} Strike price : {strike_price}'
+                    )
+                    strike_price = 'error'
+
     except KeyError as e:
-        logger.warning(e)
-        return 'error', 'error', split_message_list
+        logger.warning(f'{e} : {split_message_list}')
+        call_or_put = 'error'
+        strike_price = 'error'
 
     finally:
-        return call_or_put, strike_price[0], split_message_list
+        results = (call_or_put, strike_price, ticker, split_message_list)
+        return results
 
 
 def get_in_or_out(split_message_list: list):
     try:
-        in_or_out = None
+        in_or_out = 'error'
         matches = 0
         for split in split_message_list:
             if str(split.lower()).replace(' ', '') in ('in', 'buy'):
@@ -126,11 +164,40 @@ def get_in_or_out(split_message_list: list):
                 "Mulitple matches detected for in or out! Level 1.")
 
     except (KeyError, ValueError) as e:
-        logger.warning(e)
+        logger.error(f'{e} : {split_message_list}')
         in_or_out = 'error'
 
     finally:
         return in_or_out, split_message_list
+
+
+def get_stock_ticker(split_message_list):
+    lines = []
+    result = 'error'
+    ticker_matches = 0
+    with open('NASDAQandNYSE.txt', 'rt') as file:
+        for line in file:
+            lines.append(line.rstrip('\n'))
+        try:
+            for split in split_message_list:
+                split = split.replace('\n', '')
+                split = split.replace(' ', '')
+                if lines.count(split) == 1 and split != 'OUT':
+                    result = split
+                    ticker_matches += 1
+                    split = ' ' + split + ' '
+                    split_message_list.remove(split)
+
+            if ticker_matches != 1:
+                result = 'error'
+                raise TickerError
+
+        except TickerError as e:
+            logger.error(f'{e} : Ticker matches : {ticker_matches}')
+
+        finally:
+            file.close()
+            return result, split_message_list
 
 
 def get_buy_price(split_message_list):
@@ -157,25 +224,6 @@ def get_buy_price(split_message_list):
 
     finally:
         return buy_price, split_message_list
-
-
-def get_stock_ticker(split_message_list):
-    lines = []
-    with open('NASDAQandNYSE.txt', 'rt') as file:
-        for line in file:
-            lines.append(line.rstrip('\n'))
-        try:
-            stock_ticker = split_message_list[0].replace('\n', '')
-            stock_ticker = stock_ticker.replace(' ', '')
-            if stock_ticker.upper() in lines or 'SPY':
-                split_message_list.pop(0)
-                file.close()
-                return str(stock_ticker), split_message_list
-            else:
-                file.close()
-                raise KeyError("Stock ticker could not be matched!")
-        except KeyError as e:
-            logger.warning(e)
 
 
 def message_listener(driver) -> list:
@@ -244,20 +292,25 @@ def processor(new_message):
         double_split_result = longest_string.split('-')
         double_split_result = list(filter(None, double_split_result))
         # gets a call or put status, and pops that matched entry out of the list
-        call_or_put_tup, strike_price_tup, double_split_result = get_call_or_put_and_strike_price(
+        call_or_put_tup, strike_price_tup, double_split_result = three_feet(
             double_split_result)
 
         trade_expiration_tup, double_split_result = get_trade_expiration(
+            double_split_result)
+
+        stock_ticker_tup, double_split_result = get_stock_ticker(
             double_split_result)
 
         buy_price_tup, double_split_result = get_buy_price(double_split_result)
 
         in_or_out_tup, double_split_result = get_in_or_out(double_split_result)
 
-        stock_ticker_tup, double_split_result = get_stock_ticker(
-            double_split_result)
         datetime_tup = str(datetime.now())
         stock_ticker_tup = stock_ticker_tup.lower()
+
+        if strike_price_tup == buy_price_tup:
+            strike_price_tup = 'error'
+            buy_price_tup = 'error'
 
         trade_tuple = (
             in_or_out_tup,
@@ -270,16 +323,16 @@ def processor(new_message):
             trade_expiration_tup,
         )
 
-        is_duplicate, is_out, has_matching_in, trade_color, ignore_trade = verify_trade(
+        duplicate_check, out_check, matching_in_check, trade_color_choice, trade_ignored = verify_trade(
             list(trade_tuple))
 
-        if is_duplicate:
+        if duplicate_check:
             return
 
-        if ignore_trade:
+        if trade_ignored:
             return
 
-        if is_duplicate is False and is_out is False and has_matching_in is False or True:
+        if duplicate_check is False and out_check is False and matching_in_check is False or True:
             print("updating table")
             trade_tuple = (
                 in_or_out_tup,
@@ -290,7 +343,7 @@ def processor(new_message):
                 buy_price_tup,
                 trade_author_tup,
                 trade_expiration_tup,
-                trade_color,
+                trade_color_choice,
             )
             message = trade_tuple
             logger.info(f"Producer got message: {message}")
@@ -327,10 +380,15 @@ def error_producer_classic(driver):
                 double_split_result = longest_string.split('-')
                 double_split_result = list(filter(None, double_split_result))
                 # gets a call or put status, and pops that matched entry out of the list
-                call_or_put_tup, strike_price_tup, double_split_result = get_call_or_put_and_strike_price(
-                    double_split_result)
+                three_feet_results = three_feet(double_split_result,
+                                                get_stock_ticker)
+
+                call_or_put_tup, strike_price_tup, stock_ticker_tup, double_split_list = three_feet_results
 
                 trade_expiration_tup, double_split_result = get_trade_expiration(
+                    double_split_result)
+
+                stock_ticker_tup, double_split_result = get_stock_ticker(
                     double_split_result)
 
                 buy_price_tup, double_split_result = get_buy_price(
@@ -339,8 +397,6 @@ def error_producer_classic(driver):
                 in_or_out_tup, double_split_result = get_in_or_out(
                     double_split_result)
 
-                stock_ticker_tup, double_split_result = get_stock_ticker(
-                    double_split_result)
                 datetime_tup = str(datetime.now())
                 stock_ticker_tup = stock_ticker_tup.lower()
                 color_tup = 'error_check'
