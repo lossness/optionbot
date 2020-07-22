@@ -7,7 +7,7 @@ class TradeAlreadyOut(Exception):
 
 
 class IsAInTrade(Exception):
-    '''This is an IN trade'''
+    '''An IN trade already exists with this information!'''
 
 
 class IsOldMessage(Exception):
@@ -32,3 +32,7 @@ class TickerError(Exception):
 
 class LiveStrikePriceError(Exception):
     '''Strike price scraped from trade differs +/- 5% of live bid price!'''
+
+
+class IgnoreTrade(Exception):
+    '''Ignoring this trade, not commiting to database'''

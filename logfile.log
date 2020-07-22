@@ -271,3 +271,262 @@
 2020-07-20 21:27:28,698 : ERROR : main_logger :  : Ticker matches : 0
 2020-07-20 21:27:30,071 : ERROR : main_logger :  : Ticker matches : 0
 2020-07-20 21:28:41,454 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:33:56,673 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:48:33,072 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:48:33,073 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' 242.50 ', ' .74 ', ' day ', ' broke my stop area 1.14 ', ' .74']
+2020-07-20 21:48:34,371 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-20 21:48:35,807 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:29:15,040 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:29:16,191 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:29:17,650 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:29:19,053 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:29:20,380 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:29:21,896 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:31:56,683 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:31:57,565 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:31:59,108 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:32:00,861 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:32:02,388 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:32:03,756 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:35:28,419 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:35:35,830 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8 ', ' DAY ', ' CLOSING POS 4.72 ', ' 6.5, 8']
+2020-07-21 18:35:44,039 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:35:45,490 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:35:55,046 : WARNING : main_logger : 'Could not determine expiration of trade!'
+2020-07-21 18:35:58,138 : WARNING : main_logger : 'Could not determine expiration of trade!'
+2020-07-21 18:36:22,892 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-07-21 18:36:24,158 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:36:28,558 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:36:32,787 : WARNING : main_logger : 'Could not determine expiration of trade!'
+2020-07-21 18:36:32,787 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-07-21 18:36:40,597 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-07-21 18:37:31,764 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:37:40,689 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:37:42,751 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:37:44,503 : ERROR : main_logger :  : Ticker matches : 0
+2020-07-21 18:43:55,257 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Out ', ' Penn ', ' 8/21 ', ' 38call ', ' 2.35 ', ' swing ', ' Taking my gains 1.40 ', ' 2.35']
+2020-07-21 18:45:28,091 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Out ', ' Penn ', ' 8/21 ', ' 38call ', ' 2.35 ', ' swing ', ' Taking my gains 1.40 ', ' 2.35']
+2020-07-21 18:45:34,874 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8 ', ' DAY ', ' CLOSING POS 4.72 ', ' 6.5, 8']
+2020-07-21 18:49:24,642 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8 ', ' DAY ', ' CLOSING POS 4.72 ', ' 6.5, 8']
+2020-07-21 18:51:57,059 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8 ', ' DAY ', ' CLOSING POS 4.72 ', ' 6.5, 8']
+2020-07-21 18:52:18,990 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['In ', ' 1.70 ', ' scalp/day ', ' Keeping ', ' a tight stop on it']
+2020-07-21 18:52:22,097 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Out ', ' 2.10 ', ' scalp ', ' Taking ', ' my gains.']
+2020-07-21 18:52:47,370 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-07-21 18:53:08,197 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-07-21 18:53:08,197 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-07-21 18:53:15,713 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-07-21 19:12:58,704 : INFO : main_logger : 
+2020-07-21 19:12:58,704 : INFO : main_logger : 
+2020-07-21 19:12:59,835 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:28,324 : INFO : main_logger : 
+2020-07-21 19:22:28,325 : INFO : main_logger : 
+2020-07-21 19:22:29,384 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:30,765 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:32,332 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:33,725 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:35,255 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:36,750 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:38,203 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:39,830 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:41,216 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:42,748 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:44,122 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8 ', ' DAY ', ' CLOSING POS 4.72 ', ' 6.5, 8']
+2020-07-21 19:22:44,122 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 392.5P - 8 - DAY - CLOSING POS 4.72 - 6.5, 8
+2020-07-21 19:22:45,675 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:47,588 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:49,202 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:50,582 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:52,821 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:54,447 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:56,092 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:57,722 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:22:58,940 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:00,607 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:01,946 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:03,332 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:05,007 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:06,437 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['In ', ' 1.70 ', ' scalp/day ', ' Keeping ', ' a tight stop on it']
+2020-07-21 19:23:06,437 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+Eric68
+In - LOW - 143call - 1.70 - scalp/day - Keeping - a tight stop on it
+2020-07-21 19:23:08,018 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:09,431 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Out ', ' 2.10 ', ' scalp ', ' Taking ', ' my gains.']
+2020-07-21 19:23:09,431 : ERROR : main_logger : This trade contains error(s)! : 6:58 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - LOW - 143call - 2.10 - scalp - Taking - my gains.
+2020-07-21 19:23:10,917 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:12,344 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:13,913 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:15,250 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:16,627 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:17,908 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:19,488 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:21,188 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:22,208 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:23,816 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:25,771 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:26,986 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:28,460 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:29,839 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:31,431 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:32,734 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:34,241 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:35,734 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:35,766 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-07-21 19:23:35,766 : ERROR : main_logger : This trade contains error(s)! : 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-07-21 19:23:37,370 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:39,161 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:40,650 : ERROR : main_logger : This trade contains error(s)! : 11:01 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+DIS - 7/17 - 117put - .15 - scalp - total - yolo pending FL news Will let it go to 0
+2020-07-21 19:23:41,949 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:43,442 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:44,896 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:46,236 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-07-21 19:23:46,236 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-07-21 19:23:46,237 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - BABA - 8.28 - 250C - 16.50 - SWING - OUT OF 1/2: $16.5 FROM: 12.5
+2020-07-21 19:23:47,696 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:48,977 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:50,260 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:51,933 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:53,349 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-07-21 19:23:53,349 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/24 - 125C - 3 - SCALP - OUT OF SOME MORE
+2020-07-21 19:23:54,754 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:55,988 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:56,935 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:57,874 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:23:59,382 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:00,808 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:02,198 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:03,626 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:04,941 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:06,038 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:07,590 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:09,159 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:10,612 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:12,015 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:13,446 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:14,661 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:16,021 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:17,432 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:18,766 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:19,970 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:21,263 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:22,927 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:24,381 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:26,003 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:27,775 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:29,065 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:30,503 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:31,874 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:33,192 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:34,541 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:35,968 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:37,880 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:37,917 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+Eric68
+Out - XLNX - 7/24 - .90 - scalp/day - Broke - through LOD which was my stop
+2020-07-21 19:24:39,362 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:40,826 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:42,271 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:43,648 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:44,982 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:46,413 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:47,861 : ERROR : main_logger : This trade contains error(s)! : 10:41 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+OStk - 7/24 - 53CALL - 2.70 - scalp. - Looks - real nice now that I exited lol
+2020-07-21 19:24:49,232 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:50,718 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:52,070 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:53,601 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:55,072 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:57,032 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:24:58,491 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:25:00,173 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:33:26,966 : INFO : main_logger : 
+2020-07-21 19:33:26,967 : INFO : main_logger : 
+2020-07-21 19:34:35,561 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:37:02,626 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:38:19,089 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:38:20,275 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:38:21,579 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:38:22,720 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:38:24,271 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:38:25,727 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:38:26,987 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:38:28,145 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:38:29,375 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:38:30,808 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:38:32,100 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:52:54,756 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 19:55:32,455 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 20:06:51,979 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 20:06:58,966 : WARNING : main_logger : too many values to unpack (expected 6) during duplicate trade check!
+2020-07-21 20:51:09,988 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8 ', ' DAY ', ' CLOSING POS 4.72 ', ' 6.5, 8']
+2020-07-21 20:51:09,988 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 392.5P - 8 - DAY - CLOSING POS 4.72 - 6.5, 8
+2020-07-21 20:51:30,033 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['In ', ' 1.70 ', ' scalp/day ', ' Keeping ', ' a tight stop on it']
+2020-07-21 20:51:30,034 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+Eric68
+In - LOW - 143call - 1.70 - scalp/day - Keeping - a tight stop on it
+2020-07-21 20:51:32,932 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Out ', ' 2.10 ', ' scalp ', ' Taking ', ' my gains.']
+2020-07-21 20:51:32,933 : ERROR : main_logger : This trade contains error(s)! : 6:58 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - LOW - 143call - 2.10 - scalp - Taking - my gains.
+2020-07-21 20:51:57,181 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-07-21 20:51:57,181 : ERROR : main_logger : This trade contains error(s)! : 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-07-21 20:52:01,299 : ERROR : main_logger : This trade contains error(s)! : 11:01 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+DIS - 7/17 - 117put - .15 - scalp - total - yolo pending FL news Will let it go to 0
+2020-07-21 20:52:07,221 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-07-21 20:52:07,221 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-07-21 20:52:07,221 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - BABA - 8.28 - 250C - 16.50 - SWING - OUT OF 1/2: $16.5 FROM: 12.5
+2020-07-21 20:52:14,520 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-07-21 20:52:14,520 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/24 - 125C - 3 - SCALP - OUT OF SOME MORE
+2020-07-21 20:52:58,765 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+Eric68
+Out - XLNX - 7/24 - .90 - scalp/day - Broke - through LOD which was my stop
+2020-07-21 20:53:08,568 : ERROR : main_logger : This trade contains error(s)! : 10:41 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+OStk - 7/24 - 53CALL - 2.70 - scalp. - Looks - real nice now that I exited lol

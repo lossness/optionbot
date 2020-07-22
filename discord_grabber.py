@@ -18,7 +18,7 @@ from datetime import datetime
 from make_image import text_on_img
 from db_utils import update_table, error_checker, verify_trade, update_error_table
 from dotenv import load_dotenv
-from exceptions import IsOldMessage, TickerError, LiveStrikePriceError
+from exceptions import IsOldMessage, TickerError, LiveStrikePriceError, DuplicateTrade, IsAInTrade
 from timeit import default_timer as timer
 from tqdm import tqdm
 from main_logger import logger
@@ -63,7 +63,7 @@ def get_trade_expiration(split_message_list: list):
             raise KeyError("Could not determine expiration of trade!")
 
     except KeyError as e:
-        logger.warning(e)
+        logger.warning(f'{e} : message : {split_message_list}')
         expiration_date = 'error'
 
     finally:
@@ -80,7 +80,6 @@ def three_feet(split_message_list: list, ticker_func):
     try:
         call_or_put = 'error'
         strike_price = 'error'
-        ticker = 'error'
         ticker, split_message_list = ticker_func(split_message_list)
         match = re.findall(
             r"[-+]?\d*\.\d+(?:[c, C, call, CALL]|[p, P, PUT, put])+|\d+(?:[c, C, call, CALL]|[p, P, PUT, put])+",
@@ -180,12 +179,18 @@ def get_stock_ticker(split_message_list):
             lines.append(line.rstrip('\n'))
         try:
             for split in split_message_list:
-                split = split.replace('\n', '')
-                split = split.replace(' ', '')
-                if lines.count(split) == 1 and split != 'OUT':
-                    result = split
+                potential_ticker = split.replace('\n', '')
+                potential_ticker = split.replace(' ', '')
+                potential_ticker = potential_ticker.upper()
+                if potential_ticker == 'SPY':
+                    result = potential_ticker
                     ticker_matches += 1
-                    split = ' ' + split + ' '
+                    split_message_list.remove(split)
+                    break
+
+                if potential_ticker in lines and potential_ticker != 'OUT':
+                    result = potential_ticker
+                    ticker_matches += 1
                     split_message_list.remove(split)
 
             if ticker_matches != 1:
@@ -193,7 +198,9 @@ def get_stock_ticker(split_message_list):
                 raise TickerError
 
         except TickerError as e:
-            logger.error(f'{e} : Ticker matches : {ticker_matches}')
+            logger.error(
+                f'{e} : Ticker matches : {ticker_matches} trade : {split_message_list}'
+            )
 
         finally:
             file.close()
@@ -332,7 +339,7 @@ def processor(new_message):
         if trade_ignored:
             return
 
-        if duplicate_check is False and out_check is False and matching_in_check is False or True:
+        if duplicate_check is False and out_check is False and matching_in_check is False or True and trade_ignored is False:
             print("updating table")
             trade_tuple = (
                 in_or_out_tup,
@@ -383,12 +390,9 @@ def error_producer_classic(driver):
                 three_feet_results = three_feet(double_split_result,
                                                 get_stock_ticker)
 
-                call_or_put_tup, strike_price_tup, stock_ticker_tup, double_split_list = three_feet_results
+                call_or_put_tup, strike_price_tup, stock_ticker_tup, double_split_result = three_feet_results
 
                 trade_expiration_tup, double_split_result = get_trade_expiration(
-                    double_split_result)
-
-                stock_ticker_tup, double_split_result = get_stock_ticker(
                     double_split_result)
 
                 buy_price_tup, double_split_result = get_buy_price(
@@ -401,6 +405,10 @@ def error_producer_classic(driver):
                 stock_ticker_tup = stock_ticker_tup.lower()
                 color_tup = 'error_check'
 
+                if buy_price_tup == strike_price_tup:
+                    buy_price_tup = 'error'
+                    strike_price_tup = 'error'
+
                 trade_tuple = (
                     in_or_out_tup,
                     stock_ticker_tup,
@@ -412,13 +420,19 @@ def error_producer_classic(driver):
                     trade_expiration_tup,
                     color_tup,
                 )
+
                 if 'error' in trade_tuple:
+                    logger.error(
+                        f'This trade contains error(s)! : {new_message}')
                     update_error_table(trade_tuple)
                     error_counter += 1
 
-                elif ('error', 'ERROR') not in trade_tuple:
-                    update_table(trade_tuple)
-                    counter += 1
+                elif 'error' not in trade_tuple:
+                    ignore_trade, trade_color_choice = verify_trade(
+                        list(trade_tuple))
+                    if ignore_trade is False:
+                        update_table(trade_tuple)
+                        counter += 1
 
         except (KeyError, IndexError, ValueError) as error:
             print(f"{error}")

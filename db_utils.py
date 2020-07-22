@@ -5,7 +5,7 @@ import random
 
 import pandas as pd
 from make_image import text_on_img
-from exceptions import DuplicateTrade, TradeAlreadyOut, IsAInTrade, DatabaseEmpty, MultipleMatchingIn
+from exceptions import DuplicateTrade, TradeAlreadyOut, IsAInTrade, DatabaseEmpty, MultipleMatchingIn, IgnoreTrade
 from main_logger import logger
 
 DEFAULT_PATH = os.path.join(os.path.dirname(__file__), 'database.sqlite3')
@@ -48,17 +48,17 @@ def is_trade_already_out(database_trades: list, new_trade: tuple) -> bool:
     This checks if the trade already has one IN and one OUT
     trade. Returns True or False.
     '''
-    is_out = True
+    is_out = False
     try:
         if database_trades == []:
             is_out = False
             raise DatabaseEmpty
 
         search_criteria = (
-            'out', ) + new_trade[1:2] + new_trade[3:4] + new_trade[6:8]
-        for row in database_trades:
-            if row == search_criteria:
-                raise TradeAlreadyOut
+            'out', ) + new_trade[1:2] + new_trade[3:5] + new_trade[6:]
+        if search_criteria in database_trades:
+            is_out = True
+            raise TradeAlreadyOut
 
     except (DatabaseEmpty, TradeAlreadyOut) as info_error:
         logger.info(info_error)
@@ -77,9 +77,7 @@ def duplicate_check(database_trades: list, new_trade: tuple) -> bool:
         is_duplicate = False
         return is_duplicate
     try:
-        common_trade_features_tup = new_trade[:2] + new_trade[3:5] + new_trade[
-            6:]
-        in_or_out, ticker, strike_price, call_or_put, trader, expiration = common_trade_features_tup
+        in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, trader, expiration, color = new_trade
         matched_trades = re.findall(
             rf'\(((?:\'{in_or_out}\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{trader}\'), (\'{expiration}\'))\)',
             str(database_trades))
@@ -107,7 +105,7 @@ def has_trade_match(database_trades: list, new_trade: tuple) -> bool:
         in_or_out, ticker, date_time, strike_price, call_or_put, buy_price, user_name, expiration = new_trade
         ticker = ticker.lower()
         matched_trades = re.findall(
-            rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{user_name}\'), (\'{expiration}\'), (\'\w+\'))\)',
+            rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{user_name}\'), (\'{expiration}\'), (\'\w+\'))\)',
             str(database_trades))
 
         if len(matched_trades) == 1:
@@ -118,7 +116,6 @@ def has_trade_match(database_trades: list, new_trade: tuple) -> bool:
 
     except DatabaseEmpty as info_error:
         logger.info(info_error)
-        pass
 
     except MultipleMatchingIn as error:
         logger.error(error)
@@ -126,28 +123,6 @@ def has_trade_match(database_trades: list, new_trade: tuple) -> bool:
 
     finally:
         return match_exists
-
-
-def ignore_out_trade(database_trades: list, new_trade: tuple) -> bool:
-    in_trade_exists = True
-    try:
-        if database_trades == []:
-            raise DatabaseEmpty
-
-        in_or_out, ticker, date_time, strike_price, call_or_put, buy_price, user_name, expiration = new_trade
-        ticker = ticker.lower()
-        matched_trades = re.findall(
-            rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{user_name}\'), (\'{expiration}\'), (\'\w+\'))\)',
-            str(database_trades))
-
-        if matched_trades == []:
-            in_trade_exists = False
-
-    except DatabaseEmpty as info_error:
-        in_trade_exists = False
-
-    finally:
-        return in_trade_exists
 
 
 def verify_trade(parsed_trade: tuple):
@@ -159,24 +134,30 @@ def verify_trade(parsed_trade: tuple):
         ignore_trade = False
         con = db_connect()
         cur = con.cursor()
-        filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, user_name, expiration, color from trades"
+        filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, user_name, expiration, color from trades"
         filtered_trades_no_color_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, user_name, expiration from trades"
         cur.execute(filtered_trades_sql)
         filtered_trades = cur.fetchall()
         cur.execute(filtered_trades_no_color_sql)
         filtered_trades_no_color = cur.fetchall()
 
-        is_out = is_trade_already_out(filtered_trades_no_color,
-                                      tuple(parsed_trade))
-
         is_duplicate = duplicate_check(filtered_trades_no_color,
                                        tuple(parsed_trade))
 
-        has_matching_in = has_trade_match(filtered_trades, tuple(parsed_trade))
+        if is_duplicate:
+            ignore_trade = True
+            raise DuplicateTrade
 
-        if 'out' in parsed_trade[0]:
-            ignore_trade = ignore_out_trade(filtered_trades_no_color,
-                                            tuple(parsed_trade))
+        is_out = is_trade_already_out(filtered_trades_no_color,
+                                      tuple(parsed_trade))
+
+        if is_out is False and 'out' in parsed_trade[0]:
+            has_matching_in = has_trade_match(filtered_trades,
+                                              tuple(parsed_trade))
+
+        # for testing
+        if filtered_trades == []:
+            ignore_trade = False
 
         if has_matching_in is False:
             colors = [
@@ -193,11 +174,17 @@ def verify_trade(parsed_trade: tuple):
         trade_color = 'error'
         ignore_trade = 'error'
 
+    except DuplicateTrade:
+        is_out = 'duplicate'
+        is_duplicate = True
+        has_matching_in = 'duplicate'
+        trade_color = 'duplicate'
+        ignore_trade = True
+
     finally:
         if (con):
             con.close()
-        verification_tuple = (is_duplicate, is_out, has_matching_in,
-                              trade_color, ignore_trade)
+        verification_tuple = (ignore_trade, trade_color)
         return verification_tuple
 
 

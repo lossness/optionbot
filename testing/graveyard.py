@@ -633,3 +633,25 @@ class Trade:
 
     def contains_error(self):
         if 'error' in 
+
+
+def ignore_out_trade(database_trades: list, new_trade: tuple) -> bool:
+    in_trade_exists = True
+    try:
+        if database_trades == []:
+            raise DatabaseEmpty
+
+        in_or_out, ticker, date_time, strike_price, call_or_put, buy_price, user_name, expiration = new_trade
+        ticker = ticker.lower()
+        matched_trades = re.findall(
+            rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{user_name}\'), (\'{expiration}\'), (\'\w+\'))\)',
+            str(database_trades))
+
+        if matched_trades == []:
+            in_trade_exists = False
+
+    except DatabaseEmpty as info_error:
+        in_trade_exists = False
+
+    finally:
+        return in_trade_exists
