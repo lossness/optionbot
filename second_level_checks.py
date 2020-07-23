@@ -30,8 +30,8 @@ class ErrorChecker:
         after having all successful algorithms
         remove required data
         '''
-        self.processed_list = processed_list
-        self.new_trade_tuple = new_trade_tuple
+        self.processed_list = []
+        self.new_trade_tuple = ()
 
     def strike_price_fixer(self) -> str:
         '''
@@ -112,3 +112,37 @@ class ErrorChecker:
         status of a trade
         '''
         is_in = 'error'
+
+    def buy_price_fixer(self, processed_list) -> str:
+        '''
+        Runs when the first round of processing
+        detects an error determing the buy price.
+        Will return a integer / float if successful
+        and 'error' if not.
+        '''
+        try:
+            filtered_dict = {}
+            for split in processed_list:
+                possible_result = split.replace('$', '')
+                possible_result = possible_result.replace(' ', '')
+                possible_result = possible_result.replace(',', '.')
+                if len(possible_result) > 2 and any(
+                        char.isalpha() for char in split) is False:
+                    filtered_dict[possible_result] = split
+            possible_results = list(filtered_dict.keys())
+            buy_price = re.findall(r'\s?([-+]?\d*)(\.)(\d+|\d+)\s?',
+                                   str(possible_results))
+
+            if buy_price == [] or len(buy_price) > 1:
+                raise KeyError("Could not determine buy price! LEVEL 2")
+
+            if buy_price:
+                buy_price = ''.join(buy_price[0])
+                processed_list.remove(filtered_dict[buy_price])
+
+        except KeyError as e:
+            logger.error(f'{e} : {processed_list}')
+            buy_price = 'error'
+
+        finally:
+            return buy_price, processed_list

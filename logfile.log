@@ -530,3 +530,349 @@ BOT
 BBS-TRADE-BOT
 Eric68
 OStk - 7/24 - 53CALL - 2.70 - scalp. - Looks - real nice now that I exited lol
+2020-07-21 20:59:47,941 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8 ', ' DAY ', ' CLOSING POS 4.72 ', ' 6.5, 8']
+2020-07-21 20:59:47,942 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 392.5P - 8 - DAY - CLOSING POS 4.72 - 6.5, 8
+2020-07-21 21:00:09,518 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['In ', ' 1.70 ', ' scalp/day ', ' Keeping ', ' a tight stop on it']
+2020-07-21 21:00:09,519 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+Eric68
+In - LOW - 143call - 1.70 - scalp/day - Keeping - a tight stop on it
+2020-07-21 21:00:12,421 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Out ', ' 2.10 ', ' scalp ', ' Taking ', ' my gains.']
+2020-07-21 21:00:12,421 : ERROR : main_logger : This trade contains error(s)! : 6:58 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - LOW - 143call - 2.10 - scalp - Taking - my gains.
+2020-07-21 21:00:37,933 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-07-21 21:00:37,933 : ERROR : main_logger : This trade contains error(s)! : 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-07-21 21:00:42,670 : ERROR : main_logger : This trade contains error(s)! : 11:01 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+DIS - 7/17 - 117put - .15 - scalp - total - yolo pending FL news Will let it go to 0
+2020-07-21 21:00:48,790 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-07-21 21:00:48,791 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-07-21 21:00:48,791 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - BABA - 8.28 - 250C - 16.50 - SWING - OUT OF 1/2: $16.5 FROM: 12.5
+2020-07-21 21:00:55,369 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-07-21 21:00:55,370 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/24 - 125C - 3 - SCALP - OUT OF SOME MORE
+2020-07-22 18:38:36,698 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' day/swing ', ' Tight ', ' stop']
+2020-07-22 18:38:36,700 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+Eric68
+In - DIS - 7/17 - 117call - day/swing - Tight - stop
+2020-07-22 18:40:46,943 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' day ', ' Could ', " still work but that is why I don't recommend holding DIS long term right now. 1.38 ", ' 1.56']
+2020-07-22 18:40:46,944 : ERROR : main_logger : This trade contains error(s)! : 7:32 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - DIS - 7/17 - 117call - day - Could - still work but that is why I don't recommend holding DIS long term right now. 1.38 - 1.56
+2020-07-22 18:41:27,952 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' 1,45 ', ' swing ', ' I will give this one some room to play out']
+2020-07-22 18:41:27,953 : ERROR : main_logger : This trade contains error(s)! : 10:33 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+In - DBX - 8/21 - 23call - 1,45 - swing - I will give this one some room to play out
+2020-07-22 18:41:29,458 : ERROR : main_logger :  : ['IN ', ' 7/10 ', ' 1375P ', ' 27.65 ', ' DAY ', ' TRADE AT YOUR OWN RISK...USE OWN STOPS...'] Live price : 1599 Strike price : 1375
+2020-07-22 18:41:29,459 : ERROR : main_logger : This trade contains error(s)! : 10:44 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+IN - TSLA - 7/10 - 1375P - 27.65 - DAY - TRADE AT YOUR OWN RISK...USE OWN STOPS...
+2020-07-22 18:41:30,851 : ERROR : main_logger :  : ['OUT ', ' 7/10 ', ' 1375P ', ' 32.26 ', ' DAY ', ' CLOSING 1/2 POS 27.65 ', ' 32.26'] Live price : 1599 Strike price : 1375
+2020-07-22 18:41:32,182 : ERROR : main_logger :  : ['OUT ', ' 7/10 ', ' 1375P ', ' 32.26 ', ' DAY ', ' CLOSING 1/2 POS 27.65 ', ' 32.26'] Live price : 1599 Strike price : 2
+2020-07-22 18:41:32,183 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - TSLA - 7/10 - 1375P - 32.26 - DAY - CLOSING 1/2 POS 27.65 - 32.26
+2020-07-22 18:41:33,576 : ERROR : main_logger :  : ['OUT ', ' 7/10 ', ' 1375P ', ' 33 ', ' DAY ', ' CLOSING MORE 27.65 ', ' 32.26, 33'] Live price : 1599 Strike price : 1375
+2020-07-22 18:41:33,577 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 1375P ', ' 33 ', ' DAY ', ' CLOSING MORE 27.65 ', ' 32.26, 33']
+2020-07-22 18:41:33,577 : ERROR : main_logger : This trade contains error(s)! : 10:55 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - TSLA - 7/10 - 1375P - 33 - DAY - CLOSING MORE 27.65 - 32.26, 33
+2020-07-22 18:41:34,868 : ERROR : main_logger :  : ['OUT ', ' 7/10 ', ' 1375P ', ' 34 ', ' DAY ', ' CLOSING POS 27.65 ', ' 32.26, 33, 34'] Live price : 1599 Strike price : 1375
+2020-07-22 18:41:34,869 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 1375P ', ' 34 ', ' DAY ', ' CLOSING POS 27.65 ', ' 32.26, 33, 34']
+2020-07-22 18:41:34,869 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - TSLA - 7/10 - 1375P - 34 - DAY - CLOSING POS 27.65 - 32.26, 33, 34
+2020-07-22 18:41:36,074 : ERROR : main_logger : 'Could not determine buy price!' : ['IN ', ' $1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT']
+2020-07-22 18:41:36,074 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+MariaC82
+IN - UPWK - 08/21 - 20C - $1 - SWING - POSSIBLE SCALP. STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT
+2020-07-22 18:41:51,112 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' day ', " Don't ", ' want to hang on to it over night. .38 ', ' .30']
+2020-07-22 18:41:51,112 : ERROR : main_logger : This trade contains error(s)! : 12:33 PM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - T - 7/17 - 30call - day - Don't - want to hang on to it over night. .38 - .30
+2020-07-22 18:41:52,316 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' 242.50 ', ' .74 ', ' day ', ' broke my stop area 1.14 ', ' .74']
+2020-07-22 18:41:52,317 : ERROR : main_logger : This trade contains error(s)! : 7:49 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - FB - 7/10 - 242.50 - .74 - day - broke my stop area 1.14 - .74
+2020-07-22 18:41:57,608 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 4 ', ' SCALP ', ' OUT OF 1/2']
+2020-07-22 18:41:57,608 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/17 - 135C - 4 - SCALP - OUT OF 1/2
+2020-07-22 18:42:25,321 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE $3 & $2.99 @everyone']
+2020-07-22 18:42:25,322 : ERROR : main_logger : This trade contains error(s)! : 6:44 AM
+BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/17 - 125C - 3 - SCALP - OUT OF SOME MORE $3 & $2.99 @everyone
+2020-07-22 18:42:50,627 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8 ', ' DAY ', ' CLOSING POS 4.72 ', ' 6.5, 8']
+2020-07-22 18:42:50,627 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 392.5P - 8 - DAY - CLOSING POS 4.72 - 6.5, 8
+2020-07-22 18:43:09,836 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['In ', ' 1.70 ', ' scalp/day ', ' Keeping ', ' a tight stop on it']
+2020-07-22 18:43:09,836 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+Eric68
+In - LOW - 143call - 1.70 - scalp/day - Keeping - a tight stop on it
+2020-07-22 18:43:12,586 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Out ', ' 2.10 ', ' scalp ', ' Taking ', ' my gains.']
+2020-07-22 18:43:12,586 : ERROR : main_logger : This trade contains error(s)! : 6:58 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - LOW - 143call - 2.10 - scalp - Taking - my gains.
+2020-07-22 18:43:40,574 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-07-22 18:43:40,574 : ERROR : main_logger : This trade contains error(s)! : 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-07-22 18:53:31,292 : INFO : main_logger : 
+2020-07-22 18:53:38,713 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' day/swing ', ' Tight ', ' stop']
+2020-07-22 19:17:22,326 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+Eric68
+In - DIS - 7/17 - 117call - day/swing - Tight - stop
+2020-07-22 19:17:27,061 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' day ', ' Could ', " still work but that is why I don't recommend holding DIS long term right now. 1.38 ", ' 1.56']
+2020-07-22 19:18:13,257 : ERROR : main_logger : This trade contains error(s)! : 7:32 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - DIS - 7/17 - 117call - day - Could - still work but that is why I don't recommend holding DIS long term right now. 1.38 - 1.56
+2020-07-22 19:18:21,018 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' 1,45 ', ' swing ', ' I will give this one some room to play out']
+2020-07-22 20:11:16,229 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' day/swing ', ' Tight ', ' stop']
+2020-07-22 20:12:50,111 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' day/swing ', ' Tight ', ' stop']
+2020-07-22 20:13:17,030 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' day/swing ', ' Tight ', ' stop']
+2020-07-22 20:13:24,414 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+Eric68
+In - DIS - 7/17 - 117call - day/swing - Tight - stop
+2020-07-22 20:13:29,226 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' day ', ' Could ', " still work but that is why I don't recommend holding DIS long term right now. 1.38 ", ' 1.56']
+2020-07-22 20:24:11,650 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' day/swing ', ' Tight ', ' stop']
+2020-07-22 20:24:28,657 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' day/swing ', ' Tight ', ' stop']
+2020-07-22 20:24:36,545 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+Eric68
+In - DIS - 7/17 - 117call - day/swing - Tight - stop
+2020-07-22 20:24:59,196 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' day ', ' Could ', " still work but that is why I don't recommend holding DIS long term right now. 1.38 ", ' 1.56']
+2020-07-22 20:27:29,894 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' day/swing ', ' Tight ', ' stop']
+2020-07-22 20:27:42,063 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' day/swing ', ' Tight ', ' stop']
+2020-07-22 20:27:42,559 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+Eric68
+In - DIS - 7/17 - 117call - day/swing - Tight - stop
+2020-07-22 20:27:46,892 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' day ', ' Could ', " still work but that is why I don't recommend holding DIS long term right now. 1.38 ", ' 1.56']
+2020-07-22 20:29:23,098 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' day/swing ', ' Tight ', ' stop']
+2020-07-22 20:29:36,500 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' day/swing ', ' Tight ', ' stop']
+2020-07-22 20:29:37,120 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+Eric68
+In - DIS - 7/17 - 117call - day/swing - Tight - stop
+2020-07-22 20:29:41,006 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' day ', ' Could ', " still work but that is why I don't recommend holding DIS long term right now. 1.38 ", ' 1.56']
+2020-07-22 20:30:51,696 : INFO : main_logger : 
+2020-07-22 20:30:58,520 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' day/swing ', ' Tight ', ' stop']
+2020-07-22 20:30:58,522 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' day/swing ', ' Tight ', ' stop']
+2020-07-22 20:30:58,522 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+Eric68
+In - DIS - 7/17 - 117call - day/swing - Tight - stop
+2020-07-22 20:31:03,294 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' day ', ' Could ', " still work but that is why I don't recommend holding DIS long term right now. 1.38 ", ' 1.56']
+2020-07-22 20:31:10,645 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' 1,45 ', ' swing ', ' I will give this one some room to play out']
+2020-07-22 20:31:11,927 : ERROR : main_logger :  : ['IN ', ' 7/10 ', ' 1375P ', ' 27.65 ', ' DAY ', ' TRADE AT YOUR OWN RISK...USE OWN STOPS...'] Live price : 1599 Strike price : 1375
+2020-07-22 20:31:11,928 : ERROR : main_logger : This trade contains error(s)! : 10:44 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+IN - TSLA - 7/10 - 1375P - 27.65 - DAY - TRADE AT YOUR OWN RISK...USE OWN STOPS...
+2020-07-22 20:31:13,311 : ERROR : main_logger :  : ['OUT ', ' 7/10 ', ' 1375P ', ' 32.26 ', ' DAY ', ' CLOSING 1/2 POS 27.65 ', ' 32.26'] Live price : 1599 Strike price : 1375
+2020-07-22 20:31:14,976 : ERROR : main_logger :  : ['OUT ', ' 7/10 ', ' 1375P ', ' 32.26 ', ' DAY ', ' CLOSING 1/2 POS 27.65 ', ' 32.26'] Live price : 1599 Strike price : 2
+2020-07-22 20:31:14,976 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - TSLA - 7/10 - 1375P - 32.26 - DAY - CLOSING 1/2 POS 27.65 - 32.26
+2020-07-22 20:31:16,181 : ERROR : main_logger :  : ['OUT ', ' 7/10 ', ' 1375P ', ' 33 ', ' DAY ', ' CLOSING MORE 27.65 ', ' 32.26, 33'] Live price : 1599 Strike price : 1375
+2020-07-22 20:31:16,182 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 1375P ', ' 33 ', ' DAY ', ' CLOSING MORE 27.65 ', ' 32.26, 33']
+2020-07-22 20:31:16,182 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 1375P ', ' 33 ', ' DAY ', ' CLOSING MORE 27.65 ', ' 32.26, 33']
+2020-07-22 20:31:16,182 : ERROR : main_logger : This trade contains error(s)! : 10:55 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - TSLA - 7/10 - 1375P - 33 - DAY - CLOSING MORE 27.65 - 32.26, 33
+2020-07-22 20:31:17,513 : ERROR : main_logger :  : ['OUT ', ' 7/10 ', ' 1375P ', ' 34 ', ' DAY ', ' CLOSING POS 27.65 ', ' 32.26, 33, 34'] Live price : 1599 Strike price : 1375
+2020-07-22 20:31:17,513 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 1375P ', ' 34 ', ' DAY ', ' CLOSING POS 27.65 ', ' 32.26, 33, 34']
+2020-07-22 20:31:17,514 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 1375P ', ' 34 ', ' DAY ', ' CLOSING POS 27.65 ', ' 32.26, 33, 34']
+2020-07-22 20:31:17,514 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - TSLA - 7/10 - 1375P - 34 - DAY - CLOSING POS 27.65 - 32.26, 33, 34
+2020-07-22 20:31:18,801 : ERROR : main_logger : 'Could not determine buy price!' : ['IN ', ' $1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT']
+2020-07-22 20:31:18,801 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' $1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT']
+2020-07-22 20:31:18,801 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+MariaC82
+IN - UPWK - 08/21 - 20C - $1 - SWING - POSSIBLE SCALP. STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT
+2020-07-22 20:31:35,848 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' day ', " Don't ", ' want to hang on to it over night. .38 ', ' .30']
+2020-07-22 20:31:37,477 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' 242.50 ', ' .74 ', ' day ', ' broke my stop area 1.14 ', ' .74']
+2020-07-22 20:31:37,477 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 242.50 ', ' .74 ', ' day ', ' broke my stop area 1.14 ', ' .74']
+2020-07-22 20:31:37,477 : ERROR : main_logger : This trade contains error(s)! : 7:49 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - FB - 7/10 - 242.50 - .74 - day - broke my stop area 1.14 - .74
+2020-07-22 20:31:43,486 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 4 ', ' SCALP ', ' OUT OF 1/2']
+2020-07-22 20:31:43,486 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 4 ', ' SCALP ', ' OUT OF 1/2']
+2020-07-22 20:31:43,486 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/17 - 135C - 4 - SCALP - OUT OF 1/2
+2020-07-22 20:32:13,605 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE $3 & $2.99 @everyone']
+2020-07-22 20:32:13,605 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 3 ', ' SCALP ', ' OUT OF SOME MORE $3 & $2.99 @everyone']
+2020-07-22 20:32:13,605 : ERROR : main_logger : This trade contains error(s)! : 6:44 AM
+BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/17 - 125C - 3 - SCALP - OUT OF SOME MORE $3 & $2.99 @everyone
+2020-07-22 20:32:37,515 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8 ', ' DAY ', ' CLOSING POS 4.72 ', ' 6.5, 8']
+2020-07-22 20:32:37,515 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 8 ', ' DAY ', ' CLOSING POS 4.72 ', ' 6.5, 8']
+2020-07-22 20:32:37,515 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 392.5P - 8 - DAY - CLOSING POS 4.72 - 6.5, 8
+2020-07-22 20:33:01,610 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['In ', ' 1.70 ', ' scalp/day ', ' Keeping ', ' a tight stop on it']
+2020-07-22 20:33:01,610 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+Eric68
+In - LOW - 143call - 1.70 - scalp/day - Keeping - a tight stop on it
+2020-07-22 20:33:05,472 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Out ', ' 2.10 ', ' scalp ', ' Taking ', ' my gains.']
+2020-07-22 20:33:05,472 : ERROR : main_logger : This trade contains error(s)! : 6:58 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - LOW - 143call - 2.10 - scalp - Taking - my gains.
+2020-07-22 20:33:37,746 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-07-22 20:33:37,747 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-07-22 20:33:37,747 : ERROR : main_logger : This trade contains error(s)! : 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-07-22 20:44:13,193 : INFO : main_logger : 
+2020-07-22 20:44:20,367 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' day/swing ', ' Tight ', ' stop']
+2020-07-22 20:44:20,368 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' day/swing ', ' Tight ', ' stop']
+2020-07-22 20:44:31,500 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+Eric68
+In - DIS - 7/17 - 117call - day/swing - Tight - stop
+2020-07-22 20:44:35,729 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' day ', ' Could ', " still work but that is why I don't recommend holding DIS long term right now. 1.38 ", ' 1.56']
+2020-07-22 20:44:42,475 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' 1,45 ', ' swing ', ' I will give this one some room to play out']
+2020-07-22 20:44:43,890 : ERROR : main_logger :  : ['IN ', ' 7/10 ', ' 1375P ', ' 27.65 ', ' DAY ', ' TRADE AT YOUR OWN RISK...USE OWN STOPS...'] Live price : 1599 Strike price : 1375
+2020-07-22 20:50:26,927 : ERROR : main_logger : This trade contains error(s)! : 10:44 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+IN - TSLA - 7/10 - 1375P - 27.65 - DAY - TRADE AT YOUR OWN RISK...USE OWN STOPS...
+2020-07-22 20:50:28,303 : ERROR : main_logger :  : ['OUT ', ' 7/10 ', ' 1375P ', ' 32.26 ', ' DAY ', ' CLOSING 1/2 POS 27.65 ', ' 32.26'] Live price : 1599 Strike price : 1375
+2020-07-22 20:50:29,633 : ERROR : main_logger :  : ['OUT ', ' 7/10 ', ' 1375P ', ' 32.26 ', ' DAY ', ' CLOSING 1/2 POS 27.65 ', ' 32.26'] Live price : 1599 Strike price : 2
+2020-07-22 20:50:29,633 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - TSLA - 7/10 - 1375P - 32.26 - DAY - CLOSING 1/2 POS 27.65 - 32.26
+2020-07-22 20:50:30,832 : ERROR : main_logger :  : ['OUT ', ' 7/10 ', ' 1375P ', ' 33 ', ' DAY ', ' CLOSING MORE 27.65 ', ' 32.26, 33'] Live price : 1599 Strike price : 1375
+2020-07-22 20:50:30,833 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 1375P ', ' 33 ', ' DAY ', ' CLOSING MORE 27.65 ', ' 32.26, 33']
+2020-07-22 20:50:30,833 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 1375P ', ' 33 ', ' DAY ', ' CLOSING MORE 27.65 ', ' 32.26, 33']
+2020-07-22 20:50:30,833 : ERROR : main_logger : This trade contains error(s)! : 10:55 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - TSLA - 7/10 - 1375P - 33 - DAY - CLOSING MORE 27.65 - 32.26, 33
+2020-07-22 20:50:32,466 : ERROR : main_logger :  : ['OUT ', ' 7/10 ', ' 1375P ', ' 34 ', ' DAY ', ' CLOSING POS 27.65 ', ' 32.26, 33, 34'] Live price : 1599 Strike price : 1375
+2020-07-22 20:50:32,467 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 1375P ', ' 34 ', ' DAY ', ' CLOSING POS 27.65 ', ' 32.26, 33, 34']
+2020-07-22 20:50:32,467 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 1375P ', ' 34 ', ' DAY ', ' CLOSING POS 27.65 ', ' 32.26, 33, 34']
+2020-07-22 20:50:32,467 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - TSLA - 7/10 - 1375P - 34 - DAY - CLOSING POS 27.65 - 32.26, 33, 34
+2020-07-22 20:50:33,837 : ERROR : main_logger : 'Could not determine buy price!' : ['IN ', ' $1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT']
+2020-07-22 20:50:33,837 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' $1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT']
+2020-07-22 20:50:33,838 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+MariaC82
+IN - UPWK - 08/21 - 20C - $1 - SWING - POSSIBLE SCALP. STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT
+2020-07-22 20:50:50,238 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' day ', " Don't ", ' want to hang on to it over night. .38 ', ' .30']
+2020-07-22 20:50:51,730 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' 242.50 ', ' .74 ', ' day ', ' broke my stop area 1.14 ', ' .74']
+2020-07-22 20:50:51,730 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 242.50 ', ' .74 ', ' day ', ' broke my stop area 1.14 ', ' .74']
+2020-07-22 20:50:51,730 : ERROR : main_logger : This trade contains error(s)! : 7:49 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - FB - 7/10 - 242.50 - .74 - day - broke my stop area 1.14 - .74
+2020-07-22 20:50:57,340 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 4 ', ' SCALP ', ' OUT OF 1/2']
+2020-07-22 20:50:57,340 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 4 ', ' SCALP ', ' OUT OF 1/2']
+2020-07-22 20:50:57,340 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/17 - 135C - 4 - SCALP - OUT OF 1/2
+2020-07-22 20:51:25,895 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE $3 & $2.99 @everyone']
+2020-07-22 20:51:25,896 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 3 ', ' SCALP ', ' OUT OF SOME MORE $3 & $2.99 @everyone']
+2020-07-22 20:51:25,896 : ERROR : main_logger : This trade contains error(s)! : 6:44 AM
+BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/17 - 125C - 3 - SCALP - OUT OF SOME MORE $3 & $2.99 @everyone
+2020-07-22 20:51:50,647 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8 ', ' DAY ', ' CLOSING POS 4.72 ', ' 6.5, 8']
+2020-07-22 20:51:50,647 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 8 ', ' DAY ', ' CLOSING POS 4.72 ', ' 6.5, 8']
+2020-07-22 20:51:50,647 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 392.5P - 8 - DAY - CLOSING POS 4.72 - 6.5, 8
+2020-07-22 20:52:11,772 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['In ', ' 1.70 ', ' scalp/day ', ' Keeping ', ' a tight stop on it']
+2020-07-22 20:52:11,773 : ERROR : main_logger : This trade contains error(s)! : BOT
+BBS-TRADE-BOT
+Eric68
+In - LOW - 143call - 1.70 - scalp/day - Keeping - a tight stop on it
+2020-07-22 20:52:14,910 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Out ', ' 2.10 ', ' scalp ', ' Taking ', ' my gains.']
+2020-07-22 20:52:14,911 : ERROR : main_logger : This trade contains error(s)! : 6:58 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - LOW - 143call - 2.10 - scalp - Taking - my gains.
+2020-07-22 20:52:39,639 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-07-22 20:52:39,639 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-07-22 20:52:39,639 : ERROR : main_logger : This trade contains error(s)! : 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4

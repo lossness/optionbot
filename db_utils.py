@@ -102,7 +102,7 @@ def has_trade_match(database_trades: list, new_trade: tuple) -> bool:
         if database_trades == []:
             raise DatabaseEmpty
 
-        in_or_out, ticker, date_time, strike_price, call_or_put, buy_price, user_name, expiration = new_trade
+        in_or_out, ticker, date_time, strike_price, call_or_put, buy_price, user_name, expiration, color = new_trade
         ticker = ticker.lower()
         matched_trades = re.findall(
             rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{user_name}\'), (\'{expiration}\'), (\'\w+\'))\)',
@@ -151,9 +151,14 @@ def verify_trade(parsed_trade: tuple):
         is_out = is_trade_already_out(filtered_trades_no_color,
                                       tuple(parsed_trade))
 
+        if is_out is True:
+            raise TradeAlreadyOut
+
         if is_out is False and 'out' in parsed_trade[0]:
             has_matching_in = has_trade_match(filtered_trades,
                                               tuple(parsed_trade))
+            if has_matching_in is False:
+                raise IgnoreTrade
 
         # for testing
         if filtered_trades == []:
@@ -172,13 +177,13 @@ def verify_trade(parsed_trade: tuple):
         is_duplicate = 'error'
         has_matching_in = 'error'
         trade_color = 'error'
-        ignore_trade = 'error'
+        ignore_trade = True
 
-    except DuplicateTrade:
-        is_out = 'duplicate'
+    except (DuplicateTrade, TradeAlreadyOut, IgnoreTrade):
+        is_out = 'ignore'
         is_duplicate = True
-        has_matching_in = 'duplicate'
-        trade_color = 'duplicate'
+        has_matching_in = 'ignore'
+        trade_color = 'ignore'
         ignore_trade = True
 
     finally:

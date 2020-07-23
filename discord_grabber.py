@@ -409,6 +409,11 @@ def error_producer_classic(driver):
                     buy_price_tup = 'error'
                     strike_price_tup = 'error'
 
+                if buy_price_tup == 'error':
+                    check = ErrorChecker()
+                    buy_price_tup, double_split_result = check.buy_price_fixer(
+                        double_split_result)
+
                 trade_tuple = (
                     in_or_out_tup,
                     stock_ticker_tup,
