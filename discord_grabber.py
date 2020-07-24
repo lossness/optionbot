@@ -405,14 +405,30 @@ def error_producer_classic(driver):
                 stock_ticker_tup = stock_ticker_tup.lower()
                 color_tup = 'error_check'
 
+                check = ErrorChecker()
+
                 if buy_price_tup == strike_price_tup:
                     buy_price_tup = 'error'
                     strike_price_tup = 'error'
 
                 if buy_price_tup == 'error':
-                    check = ErrorChecker()
                     buy_price_tup, double_split_result = check.buy_price_fixer(
                         double_split_result)
+
+                if trade_expiration_tup == 'error':
+                    error_tuple = (
+                        in_or_out_tup,
+                        stock_ticker_tup,
+                        datetime_tup,
+                        strike_price_tup,
+                        call_or_put_tup,
+                        buy_price_tup,
+                        trade_author_tup,
+                        trade_expiration_tup,
+                        color_tup,
+                    )
+                    trade_expiration_tup = check.expiration_fixer(
+                        double_split_result, error_tuple)
 
                 trade_tuple = (
                     in_or_out_tup,
@@ -427,8 +443,9 @@ def error_producer_classic(driver):
                 )
 
                 if 'error' in trade_tuple:
+                    full_message = new_message.replace('\n', '')
                     logger.error(
-                        f'This trade contains error(s)! : {new_message}')
+                        f'This trade contains error(s)! : {full_message}')
                     update_error_table(trade_tuple)
                     error_counter += 1
 

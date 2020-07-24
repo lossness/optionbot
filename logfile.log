@@ -876,3 +876,16 @@ BOT
 BBS-TRADE-BOT
 ThuhKang
 OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-07-23 19:21:20,836 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['In ', ' 1.70 ', ' scalp/day ', ' Keeping ', ' a tight stop on it']
+2020-07-23 19:23:47,968 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['In ', ' 1.70 ', ' scalp/day ', ' Keeping ', ' a tight stop on it']
+2020-07-23 19:23:59,374 : ERROR : main_logger : This trade contains error(s)! : 6:49 AMBOTBBS-TRADE-BOTEric68In - LOW - 143call - 1.70 - scalp/day - Keeping - a tight stop on it
+2020-07-23 19:24:02,284 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Out ', ' 2.10 ', ' scalp ', ' Taking ', ' my gains.']
+2020-07-23 19:53:51,589 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['In ', ' 1.70 ', ' scalp/day ', ' Keeping ', ' a tight stop on it']
+2020-07-23 19:54:12,182 : ERROR : main_logger : This trade contains error(s)! : 6:49 AMBOTBBS-TRADE-BOTEric68In - LOW - 143call - 1.70 - scalp/day - Keeping - a tight stop on it
+2020-07-23 20:37:06,434 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['In ', ' 1.70 ', ' scalp/day ', ' Keeping ', ' a tight stop on it']
+2020-07-23 20:37:58,450 : ERROR : main_logger : This trade contains error(s)! : 6:49 AMBOTBBS-TRADE-BOTEric68In - LOW - 143call - 1.70 - scalp/day - Keeping - a tight stop on it
+2020-07-23 20:38:16,330 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Out ', ' 2.10 ', ' scalp ', ' Taking ', ' my gains.']
+2020-07-23 20:39:47,766 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['In ', ' 1.70 ', ' scalp/day ', ' Keeping ', ' a tight stop on it']
+2020-07-23 20:39:47,770 : ERROR : main_logger : This trade contains error(s)! : 6:49 AMBOTBBS-TRADE-BOTEric68In - LOW - 143call - 1.70 - scalp/day - Keeping - a tight stop on it
+2020-07-23 20:40:40,778 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Out ', ' 2.10 ', ' scalp ', ' Taking ', ' my gains.']
+2020-07-23 20:40:40,779 : ERROR : main_logger : This trade contains error(s)! : 6:58 AMBOTBBS-TRADE-BOTEric68Out - LOW - 143call - 2.10 - scalp - Taking - my gains.

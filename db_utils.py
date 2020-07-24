@@ -119,7 +119,7 @@ def has_trade_match(database_trades: list, new_trade: tuple) -> bool:
 
     except MultipleMatchingIn as error:
         logger.error(error)
-        match_exists = True
+        match_exists = False
 
     finally:
         return match_exists
