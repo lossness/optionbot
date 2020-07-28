@@ -413,7 +413,7 @@ def error_producer_classic(driver):
 
                 if buy_price_tup == 'error':
                     buy_price_tup, double_split_result = check.buy_price_fixer(
-                        double_split_result)
+                        double_split_result, new_message)
 
                 if trade_expiration_tup == 'error':
                     error_tuple = (

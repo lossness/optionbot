@@ -36,3 +36,15 @@ class LiveStrikePriceError(Exception):
 
 class IgnoreTrade(Exception):
     '''Ignoring this trade, not commiting to database'''
+
+
+class StageOneError(Exception):
+    '''Stage 1 in second level check failed!'''
+
+
+class StageTwoError(Exception):
+    '''Stage 2 in second level check failed!!'''
+
+
+class StageThreeError(Exception):
+    '''Stage 3 in second level check failed!!!'''

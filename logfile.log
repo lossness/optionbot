@@ -900,3 +900,152 @@ OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
 2020-07-27 18:28:41,610 : WARNING : main_logger : 'Could not determine if trade is call or put! Could not get strike price!' : ['Nina... Shreem Brrrr Zeeeee']
 2020-07-27 18:28:41,611 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Nina... Shreem Brrrr Zeeeee']
 2020-07-27 18:28:41,612 : ERROR : main_logger : 'Could not determine buy price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:48:16,572 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:48:16,574 : WARNING : main_logger : 'Could not determine if trade is call or put! Could not get strike price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:48:16,576 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:48:16,577 : ERROR : main_logger : 'Could not determine buy price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:48:16,578 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:48:16,600 : INFO : main_logger : 
+2020-07-27 18:50:41,286 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:50:41,288 : WARNING : main_logger : 'Could not determine if trade is call or put! Could not get strike price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:50:41,289 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:50:41,290 : ERROR : main_logger : 'Could not determine buy price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:50:41,292 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:50:41,304 : INFO : main_logger : 
+2020-07-27 18:50:50,818 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:50:50,819 : WARNING : main_logger : 'Could not determine if trade is call or put! Could not get strike price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:50:50,819 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:50:50,819 : ERROR : main_logger : 'Could not determine buy price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:50:50,820 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:50:50,824 : INFO : main_logger : 
+2020-07-27 18:51:04,332 : INFO : main_logger : 
+2020-07-27 18:51:04,332 : INFO : main_logger : 
+2020-07-27 18:51:05,625 : INFO : main_logger : 
+2020-07-27 18:51:08,565 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-07-27 18:51:08,565 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-07-27 18:51:08,565 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTMariaC82OUT - SQ - 07/24 - 125C - 3 - SCALP - OUT OF SOME MORE
+2020-07-27 18:51:50,756 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTEric68Out - XLNX - 7/24 - .90 - scalp/day - Broke - through LOD which was my stop
+2020-07-27 18:52:00,058 : ERROR : main_logger : This trade contains error(s)! : 10:41 AMBOTBBS-TRADE-BOTEric68OStk - 7/24 - 53CALL - 2.70 - scalp. - Looks - real nice now that I exited lol
+2020-07-27 18:52:22,118 : ERROR : main_logger : 'Could not determine buy price!' : ['IN ', ' 1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW']
+2020-07-27 18:52:22,118 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW']
+2020-07-27 19:06:15,663 : ERROR : main_logger : This trade contains error(s)! : 8:49 AMBOTBBS-TRADE-BOTMariaC82IN - SBUX - 07/31 - 80C - 1 - SWING - POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW
+2020-07-27 19:06:17,294 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 4 ', ' DAY ', ' CLOSING POS 4.8 ', ' 5.3, 4']
+2020-07-27 19:06:17,294 : ERROR : main_logger : 'Could not determine buy price! LEVEL 2' : [' 4 ', ' DAY ', ' CLOSING POS 4.8 ', ' 5.3, 4']
+2020-07-27 19:30:28,163 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 19:30:28,165 : WARNING : main_logger : 'Could not determine if trade is call or put! Could not get strike price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 19:30:28,166 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 19:30:28,168 : ERROR : main_logger : 'Could not determine buy price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 19:30:28,169 : ERROR : main_logger : 'Could not determine buy price LEVEL 2' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 19:31:01,311 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-07-27 19:31:01,312 : ERROR : main_logger : 'Could not determine buy price LEVEL 2' : [' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-07-27 20:22:33,727 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 20:22:33,729 : WARNING : main_logger : 'Could not determine if trade is call or put! Could not get strike price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 20:22:33,730 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 20:22:33,731 : ERROR : main_logger : 'Could not determine buy price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 20:23:17,411 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 20:23:17,413 : WARNING : main_logger : 'Could not determine if trade is call or put! Could not get strike price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 20:23:17,415 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 20:23:17,416 : ERROR : main_logger : 'Could not determine buy price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 20:24:12,003 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-07-27 20:24:28,839 : WARNING : main_logger :  
+ [' 3 ', ' SCALP ', ' OUT OF SOME MORE'] 
+ BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/24 - 125C - 3 - SCALP - OUT OF SOME MORE
+2020-07-27 20:28:34,550 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 20:28:34,552 : WARNING : main_logger : 'Could not determine if trade is call or put! Could not get strike price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 20:28:34,553 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 20:28:34,555 : ERROR : main_logger : 'Could not determine buy price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 20:29:05,360 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-07-27 20:29:08,782 : WARNING : main_logger :  
+ [' 3 ', ' SCALP ', ' OUT OF SOME MORE'] 
+ BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/24 - 125C - 3 - SCALP - OUT OF SOME MORE
+2020-07-27 20:30:11,258 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTEric68Out - XLNX - 7/24 - .90 - scalp/day - Broke - through LOD which was my stop
+2020-07-27 20:30:21,321 : ERROR : main_logger : This trade contains error(s)! : 10:41 AMBOTBBS-TRADE-BOTEric68OStk - 7/24 - 53CALL - 2.70 - scalp. - Looks - real nice now that I exited lol
+2020-07-27 20:30:42,062 : ERROR : main_logger : 'Could not determine buy price!' : ['IN ', ' 1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW']
+2020-07-27 20:31:04,028 : WARNING : main_logger :  
+ [' 1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW'] 
+ 8:49 AM
+BOT
+BBS-TRADE-BOT
+MariaC82
+IN - SBUX - 07/31 - 80C - 1 - SWING - POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW
+2020-07-27 20:31:54,872 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 4 ', ' DAY ', ' CLOSING POS 4.8 ', ' 5.3, 4']
+2020-07-27 20:32:00,721 : WARNING : main_logger :  
+ [' 4 ', ' DAY ', ' CLOSING POS 4.8 ', ' 5.3, 4'] 
+ 10:13 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - NFLX - 7/24 - 485P - 4 - DAY - CLOSING POS 4.8 - 5.3, 4
+2020-07-27 20:33:11,971 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTMariaC82IN - MSFT - 07/24 - 210 - 2.16 - SCALP - STOP AT YOUR OWN RISK RISKY AF
+2020-07-27 20:33:28,676 : ERROR : main_logger :  : Ticker matches : 0 trade : ['In ', ' APT ', ' 7/24 ', ' 23.50call ', ' .65 ', ' scalp/day ', ' using LOD as stop']
+2020-07-27 20:33:30,169 : ERROR : main_logger : This trade contains error(s)! : 10:00 AMBOTBBS-TRADE-BOTEric68In - APT - 7/24 - 23.50call - .65 - scalp/day - using LOD as stop
+2020-07-27 20:33:30,182 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Out ', ' APT ', ' 7/24 ', ' 23.50call ', ' .40 ', ' scalp/day ', ' Broke LOD which was my stop. I gave it a minute to see if it would bounce back over']
+2020-07-27 20:33:31,698 : ERROR : main_logger : This trade contains error(s)! : 10:43 AMBOTBBS-TRADE-BOTEric68Out - APT - 7/24 - 23.50call - .40 - scalp/day - Broke LOD which was my stop. I gave it a minute to see if it would bounce back over
+2020-07-27 20:33:34,378 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 21 ', ' CUT ', ' POS 24.8 ', ' 21']
+2020-07-27 20:34:10,691 : WARNING : main_logger :  
+ [' 21 ', ' CUT ', ' POS 24.8 ', ' 21'] 
+ 11:39 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AMZN - 7/24 - 3020C - 21 - CUT - POS 24.8 - 21
+2020-07-27 20:41:29,744 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 20:41:29,746 : WARNING : main_logger : 'Could not determine if trade is call or put! Could not get strike price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 20:41:29,748 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 20:41:29,749 : ERROR : main_logger : 'Could not determine buy price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 20:41:29,825 : INFO : main_logger : 
+2020-07-27 20:41:31,619 : INFO : main_logger : 
+2020-07-27 20:41:31,620 : INFO : main_logger : 
+2020-07-27 20:41:32,882 : INFO : main_logger : 
+2020-07-27 20:41:35,723 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-07-27 20:41:35,724 : WARNING : main_logger :  
+ [' 3 ', ' SCALP ', ' OUT OF SOME MORE'] 
+ BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/24 - 125C - 3 - SCALP - OUT OF SOME MORE
+2020-07-27 20:42:35,713 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTEric68Out - XLNX - 7/24 - .90 - scalp/day - Broke - through LOD which was my stop
+2020-07-27 20:42:45,572 : ERROR : main_logger : This trade contains error(s)! : 10:41 AMBOTBBS-TRADE-BOTEric68OStk - 7/24 - 53CALL - 2.70 - scalp. - Looks - real nice now that I exited lol
+2020-07-27 20:43:07,352 : ERROR : main_logger : 'Could not determine buy price!' : ['IN ', ' 1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW']
+2020-07-27 20:43:07,352 : WARNING : main_logger :  
+ [' 1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW'] 
+ 8:49 AM
+BOT
+BBS-TRADE-BOT
+MariaC82
+IN - SBUX - 07/31 - 80C - 1 - SWING - POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW
+2020-07-27 20:43:08,883 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 4 ', ' DAY ', ' CLOSING POS 4.8 ', ' 5.3, 4']
+2020-07-27 20:43:08,884 : WARNING : main_logger :  
+ [' 4 ', ' DAY ', ' CLOSING POS 4.8 ', ' 5.3, 4'] 
+ 10:13 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - NFLX - 7/24 - 485P - 4 - DAY - CLOSING POS 4.8 - 5.3, 4
+2020-07-27 20:43:12,908 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTMariaC82IN - MSFT - 07/24 - 210 - 2.16 - SCALP - STOP AT YOUR OWN RISK RISKY AF
+2020-07-27 20:43:32,731 : ERROR : main_logger :  : Ticker matches : 0 trade : ['In ', ' APT ', ' 7/24 ', ' 23.50call ', ' .65 ', ' scalp/day ', ' using LOD as stop']
+2020-07-27 20:43:34,726 : ERROR : main_logger : This trade contains error(s)! : 10:00 AMBOTBBS-TRADE-BOTEric68In - APT - 7/24 - 23.50call - .65 - scalp/day - using LOD as stop
+2020-07-27 20:43:34,740 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Out ', ' APT ', ' 7/24 ', ' 23.50call ', ' .40 ', ' scalp/day ', ' Broke LOD which was my stop. I gave it a minute to see if it would bounce back over']
+2020-07-27 20:43:36,952 : ERROR : main_logger : This trade contains error(s)! : 10:43 AMBOTBBS-TRADE-BOTEric68Out - APT - 7/24 - 23.50call - .40 - scalp/day - Broke LOD which was my stop. I gave it a minute to see if it would bounce back over
+2020-07-27 20:43:40,549 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 21 ', ' CUT ', ' POS 24.8 ', ' 21']
+2020-07-27 20:43:40,550 : WARNING : main_logger :  
+ [' 21 ', ' CUT ', ' POS 24.8 ', ' 21'] 
+ 11:39 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AMZN - 7/24 - 3020C - 21 - CUT - POS 24.8 - 21
+2020-07-27 20:43:40,550 : ERROR : main_logger : DEBUG INFO QUALITY CHECK
+['21', '21']
+11:39 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AMZN - 7/24 - 3020C - 21 - CUT - POS 24.8 - 21
+[' 21 ', ' CUT ', ' POS 24.8 ', ' 21']

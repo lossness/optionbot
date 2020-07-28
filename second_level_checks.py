@@ -2,7 +2,7 @@ import re
 from main_logger import logger
 from db_utils import db_connect
 import sqlite3
-from exceptions import DatabaseEmpty, MultipleMatchingIn
+from exceptions import DatabaseEmpty, MultipleMatchingIn, StageOneError, StageTwoError, StageThreeError
 
 
 class ErrorChecker:
@@ -134,7 +134,7 @@ class ErrorChecker:
         '''
         is_in = 'error'
 
-    def buy_price_fixer(self, processed_list) -> str:
+    def buy_price_fixer(self, processed_list, original_message) -> str:
         '''
         Runs when the first round of processing
         detects an error determing the buy price.
@@ -154,21 +154,66 @@ class ErrorChecker:
             buy_price = re.findall(r'\s?([-+]?\d*)(\.)(\d+|\d+)\s?',
                                    str(possible_results))
 
-            if buy_price == [] or len(buy_price) > 1:
-                buy_price_list = list(buy_price)
-                fixed_list = []
-                for item in buy_price_list:
-                    item = list(item)
-                    fixed_list.append(item)
-
-                raise KeyError("Could not determine buy price! LEVEL 2")
-
-            if buy_price:
+            if len(buy_price) == 1:
                 buy_price = ''.join(buy_price[0])
                 processed_list.remove(filtered_dict[buy_price])
 
-        except KeyError as e:
-            logger.error(f'{e} : {processed_list}')
+            if buy_price == [] or len(buy_price) > 1:
+                raise StageOneError
+
+        except StageOneError as error:
+            logger.warning(
+                f'{error} \n {processed_list} \n {original_message}')
+            # buy_price_list = list(buy_price)
+            # fixed_list = []
+            # for item in buy_price_list:
+            #     item = list(item)
+            #     fixed_list.append(item)
+            split_original_message = original_message.split('-')
+            duplicates = [
+                value for value in processed_list
+                if value in split_original_message
+            ]
+            if duplicates == []:
+                raise StageTwoError
+            elif len(duplicates) == 1 and any(item.isdigit()
+                                              for item in duplicates) is True:
+                buy_price = duplicates[0]
+                buy_price = buy_price.replace(' ', '')
+            elif len(duplicates) > 1:
+                duplicate_ints = []
+                for item in duplicates:
+                    if item.replace(' ', '').isdigit():
+                        duplicate_ints.append(item.replace(' ', ''))
+                if len(duplicate_ints) == 1:
+                    buy_price = duplicate_ints[0]
+                # testing to see if this stage catches many duplicates and quality of catches
+                elif duplicate_ints.count(duplicate_ints[0]) > 1:
+                    logger.error(
+                        f'DEBUG INFO QUALITY CHECK\n{duplicate_ints}\n{original_message}\n{processed_list}'
+                    )
+                    raise StageTwoError
+                else:
+                    raise StageTwoError
+
+        except StageTwoError as second_error:
+            logger.warning(
+                f'{second_error} \n {processed_list} \n {original_message}')
+            second_try_list = str(processed_list)
+            second_try_list = second_try_list.replace(' ', '')
+            second_try_list = second_try_list.replace(",", '')
+            second_try_list = second_try_list.replace('[', '')
+            second_try_list = second_try_list.replace(']', '')
+            second_try_list = second_try_list.split(',')
+            for element in second_try_list:
+                if second_try_list.count(element) > 1:
+                    buy_price = element
+                    break
+                else:
+                    raise StageThreeError
+
+        except StageThreeError as e:
+            logger.error(f'{e} \n {processed_list} \n {original_message}')
             buy_price = 'error'
 
         finally:
