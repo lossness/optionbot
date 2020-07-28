@@ -1,6 +1,8 @@
 import re
 from main_logger import logger
 from db_utils import db_connect
+import sqlite3
+from exceptions import DatabaseEmpty, MultipleMatchingIn
 
 
 class ErrorChecker:
@@ -30,8 +32,27 @@ class ErrorChecker:
         after having all successful algorithms
         remove required data
         '''
-        self.processed_list = processed_list
-        self.new_trade_tuple = new_trade_tuple
+        self.processed_list = []
+        self.new_trade_tuple = ()
+
+    def fetch_database(self):
+        '''
+        Fetches all trades in the database minus the
+        datetime column.
+        Values: in_or_out, ticker, strike_price, call_or_put, user_name, expiration, color
+        '''
+        try:
+            con = db_connect()
+            cur = con.cursor()
+            filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, user_name, expiration, color from trades"
+            cur.execute(filtered_trades_sql)
+            filtered_trades = cur.fetchall()
+        except sqlite3.Error as error:
+            logger.fatal(f'Houston we have a fucking {error}!', exc_info=1)
+        finally:
+            if (con):
+                con.close()
+            return filtered_trades
 
     def strike_price_fixer(self) -> str:
         '''
@@ -112,3 +133,85 @@ class ErrorChecker:
         status of a trade
         '''
         is_in = 'error'
+
+    def buy_price_fixer(self, processed_list) -> str:
+        '''
+        Runs when the first round of processing
+        detects an error determing the buy price.
+        Will return a integer / float if successful
+        and 'error' if not.
+        '''
+        try:
+            filtered_dict = {}
+            for split in processed_list:
+                possible_result = split.replace('$', '')
+                possible_result = possible_result.replace(' ', '')
+                possible_result = possible_result.replace(',', '.')
+                if len(possible_result) > 2 and any(
+                        char.isalpha() for char in split) is False:
+                    filtered_dict[possible_result] = split
+            possible_results = list(filtered_dict.keys())
+            buy_price = re.findall(r'\s?([-+]?\d*)(\.)(\d+|\d+)\s?',
+                                   str(possible_results))
+
+            if buy_price == [] or len(buy_price) > 1:
+                buy_price_list = list(buy_price)
+                fixed_list = []
+                for item in buy_price_list:
+                    item = list(item)
+                    fixed_list.append(item)
+
+                raise KeyError("Could not determine buy price! LEVEL 2")
+
+            if buy_price:
+                buy_price = ''.join(buy_price[0])
+                processed_list.remove(filtered_dict[buy_price])
+
+        except KeyError as e:
+            logger.error(f'{e} : {processed_list}')
+            buy_price = 'error'
+
+        finally:
+            return buy_price, processed_list
+
+    def expiration_fixer(self, processed_list, new_trade):
+        '''
+        Runs after the first round of processing
+        detects an error determing the trade expiration.
+        Looks for a IN trade that matches this trade,
+        and will grab the expiration. Else, run processed
+        list again to see if the value is remaining in the
+        pruned message.
+        '''
+        new_expiration = 'error'
+        try:
+            database_trades = self.fetch_database()
+            if database_trades == []:
+                raise DatabaseEmpty
+
+            in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color = new_trade
+            ticker = ticker.lower()
+            matched_trades = re.findall(
+                rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{user_name}\'), (\'\d+/\d+\'), (\'\w+\'))\)',
+                str(database_trades))
+
+            if len(matched_trades) == 1:
+                matched_str = matched_trades[0][0]
+                matched_list = matched_str.split(',')
+                new_expiration = matched_list[5]
+                new_expiration = expiration.replace("'", "")
+                new_expiration = expiration.replace(' ', '')
+
+            elif len(matched_trades) > 1:
+                raise MultipleMatchingIn
+
+        except DatabaseEmpty as info_error:
+            logger.info(info_error)
+            new_expiration = 'error'
+
+        except MultipleMatchingIn as error:
+            logger.error(f'{error} SECOND LEVEL EXPIRATION CHECK!')
+            new_expiration = 'error'
+
+        finally:
+            return new_expiration

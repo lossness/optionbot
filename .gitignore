@@ -9,4 +9,8 @@ __pycache__/instapost.cpython-38.pyc
 in.tsla.1480.put.7.10.png
 out.ba.175.put.7.17.png
 .png
+<<<<<<< HEAD
 database.sqlite3
+=======
+logfile.log
+>>>>>>> 2caef1c2b0129e65e154f08e4b93e4aa825e41bd
