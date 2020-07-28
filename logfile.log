@@ -889,3 +889,14 @@ OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
 2020-07-23 20:39:47,770 : ERROR : main_logger : This trade contains error(s)! : 6:49 AMBOTBBS-TRADE-BOTEric68In - LOW - 143call - 1.70 - scalp/day - Keeping - a tight stop on it
 2020-07-23 20:40:40,778 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Out ', ' 2.10 ', ' scalp ', ' Taking ', ' my gains.']
 2020-07-23 20:40:40,779 : ERROR : main_logger : This trade contains error(s)! : 6:58 AMBOTBBS-TRADE-BOTEric68Out - LOW - 143call - 2.10 - scalp - Taking - my gains.
+2020-07-23 20:41:51,737 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['In ', ' 1.70 ', ' scalp/day ', ' Keeping ', ' a tight stop on it']
+2020-07-23 20:41:51,743 : INFO : main_logger : 
+2020-07-23 20:41:51,744 : ERROR : main_logger : This trade contains error(s)! : 6:49 AMBOTBBS-TRADE-BOTEric68In - LOW - 143call - 1.70 - scalp/day - Keeping - a tight stop on it
+2020-07-23 20:41:53,070 : INFO : main_logger : 
+2020-07-23 20:41:54,347 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Out ', ' 2.10 ', ' scalp ', ' Taking ', ' my gains.']
+2020-07-23 20:41:54,354 : ERROR : main_logger : This trade contains error(s)! : 6:58 AMBOTBBS-TRADE-BOTEric68Out - LOW - 143call - 2.10 - scalp - Taking - my gains.
+2020-07-23 20:42:27,878 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-07-27 18:28:41,608 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:28:41,610 : WARNING : main_logger : 'Could not determine if trade is call or put! Could not get strike price!' : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:28:41,611 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Nina... Shreem Brrrr Zeeeee']
+2020-07-27 18:28:41,612 : ERROR : main_logger : 'Could not determine buy price!' : ['Nina... Shreem Brrrr Zeeeee']
