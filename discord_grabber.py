@@ -299,13 +299,11 @@ def processor(new_message):
         double_split_result = longest_string.split('-')
         double_split_result = list(filter(None, double_split_result))
         # gets a call or put status, and pops that matched entry out of the list
-        call_or_put_tup, strike_price_tup, double_split_result = three_feet(
-            double_split_result)
+        three_feet_results = three_feet(double_split_result, get_stock_ticker)
+
+        call_or_put_tup, strike_price_tup, stock_ticker_tup, double_split_result = three_feet_results
 
         trade_expiration_tup, double_split_result = get_trade_expiration(
-            double_split_result)
-
-        stock_ticker_tup, double_split_result = get_stock_ticker(
             double_split_result)
 
         buy_price_tup, double_split_result = get_buy_price(double_split_result)
@@ -314,10 +312,32 @@ def processor(new_message):
 
         datetime_tup = str(datetime.now())
         stock_ticker_tup = stock_ticker_tup.lower()
+        color_tup = 'error_check'
 
-        if strike_price_tup == buy_price_tup:
-            strike_price_tup = 'error'
+        check = ErrorChecker()
+
+        if buy_price_tup == strike_price_tup:
             buy_price_tup = 'error'
+            strike_price_tup = 'error'
+
+        if buy_price_tup == 'error':
+            buy_price_tup, double_split_result = check.buy_price_fixer(
+                double_split_result, new_message)
+
+        if trade_expiration_tup == 'error':
+            error_tuple = (
+                in_or_out_tup,
+                stock_ticker_tup,
+                datetime_tup,
+                strike_price_tup,
+                call_or_put_tup,
+                buy_price_tup,
+                trade_author_tup,
+                trade_expiration_tup,
+                color_tup,
+            )
+            trade_expiration_tup = check.expiration_fixer(
+                double_split_result, error_tuple)
 
         trade_tuple = (
             in_or_out_tup,
@@ -328,40 +348,40 @@ def processor(new_message):
             buy_price_tup,
             trade_author_tup,
             trade_expiration_tup,
+            color_tup,
         )
 
-        duplicate_check, out_check, matching_in_check, trade_color_choice, trade_ignored = verify_trade(
-            list(trade_tuple))
+        if 'error' in trade_tuple:
+            full_message = new_message.replace('\n', '')
+            logger.error(f'This trade contains error(s)! : {full_message}')
+            update_error_table(trade_tuple)
 
-        if duplicate_check:
-            return
+        elif 'error' not in trade_tuple:
+            ignore_trade, trade_color_choice = verify_trade(list(trade_tuple))
+            if ignore_trade:
+                return
 
-        if trade_ignored:
-            return
+            elif ignore_trade is False:
+                valid_trade = (
+                    in_or_out_tup,
+                    stock_ticker_tup,
+                    datetime_tup,
+                    strike_price_tup,
+                    call_or_put_tup,
+                    buy_price_tup,
+                    trade_author_tup,
+                    trade_expiration_tup,
+                    trade_color_choice,
+                )
+                message = valid_trade
+                config.new_trades.put(message)
+                config.has_trade.release()
+                logger.info(f"\nProducer received a fresh trade : {message}")
+                print(f"\nProducer received a fresh trade : {message}")
+                update_table(valid_trade)
 
-        if duplicate_check is False and out_check is False and matching_in_check is False or True and trade_ignored is False:
-            print("updating table")
-            trade_tuple = (
-                in_or_out_tup,
-                stock_ticker_tup,
-                datetime_tup,
-                strike_price_tup,
-                call_or_put_tup,
-                buy_price_tup,
-                trade_author_tup,
-                trade_expiration_tup,
-                trade_color_choice,
-            )
-            message = trade_tuple
-            logger.info(f"Producer got message: {message}")
-            config.new_trades.put(message)
-            config.has_trade.release()
-            update_table(trade_tuple)
-
-    except TypeError:
-        pass
-
-    except IndexError:
+    except (KeyError, IndexError, ValueError) as error:
+        print(f"{error}")
         pass
 
 

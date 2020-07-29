@@ -98,6 +98,7 @@ def has_trade_match(database_trades: list, new_trade: tuple) -> bool:
     True or False depending if matched.
     '''
     match_exists = False
+    trade_color = 'error_in_has_trade_match'
     try:
         if database_trades == []:
             raise DatabaseEmpty
@@ -109,6 +110,8 @@ def has_trade_match(database_trades: list, new_trade: tuple) -> bool:
             str(database_trades))
 
         if len(matched_trades) == 1:
+            existing_color = matched_trades[0][7]
+            trade_color = existing_color.replace("'", "")
             match_exists = True
 
         elif len(matched_trades) > 1:
@@ -122,14 +125,14 @@ def has_trade_match(database_trades: list, new_trade: tuple) -> bool:
         match_exists = False
 
     finally:
-        return match_exists
+        return match_exists, trade_color
 
 
 def verify_trade(parsed_trade: tuple):
     try:
         is_out = False
         is_duplicate = False
-        has_matching_in = None
+        has_matching_in = False
         trade_color = 'filler'
         ignore_trade = False
         con = db_connect()
@@ -155,19 +158,24 @@ def verify_trade(parsed_trade: tuple):
             raise TradeAlreadyOut
 
         if is_out is False and 'out' in parsed_trade[0]:
-            has_matching_in = has_trade_match(filtered_trades,
-                                              tuple(parsed_trade))
+            has_matching_in, trade_color = has_trade_match(
+                filtered_trades, tuple(parsed_trade))
             if has_matching_in is False:
                 raise IgnoreTrade
 
         # for testing
-        if filtered_trades == []:
+        if filtered_trades == [] and 'in' in parsed_trade[0]:
+            colors = [
+                'MK1', 'MK2', 'MK3', 'MK4', 'MK5', 'MK6', 'MK7', 'MK8', 'MK9',
+                'MK10', 'MK11', 'MK12'
+            ]
+            trade_color = random.choice(colors)
             ignore_trade = False
 
         if has_matching_in is False:
             colors = [
-                'red', 'blue', 'green', 'yellow', 'orange', 'white', 'purple',
-                'pink'
+                'MK1', 'MK2', 'MK3', 'MK4', 'MK5', 'MK6', 'MK7', 'MK8', 'MK9',
+                'MK10', 'MK11', 'MK12'
             ]
             trade_color = random.choice(colors)
 

@@ -1049,3 +1049,49 @@ BBS-TRADE-BOT
 ThuhKang
 OUT - AMZN - 7/24 - 3020C - 21 - CUT - POS 24.8 - 21
 [' 21 ', ' CUT ', ' POS 24.8 ', ' 21']
+2020-07-28 18:50:43,299 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Out ', ' 2.10 ', ' scalp ', ' Taking ', ' my gains.']
+2020-07-28 18:50:43,306 : ERROR : main_logger : This trade contains error(s)! : 6:58 AMBOTBBS-TRADE-BOTEric68Out - LOW - 143call - 2.10 - scalp - Taking - my gains.
+2020-07-28 20:01:21,962 : INFO : main_logger : 
+2020-07-28 20:01:21,962 : INFO : main_logger : Producer received a fresh trade : ('in', 'spy', '2020-07-28 20:01:21.948230', '322', 'put', '2.5', 'ThuhKang', '7/31', 'filler')
+2020-07-28 20:01:21,963 : CRITICAL : main_logger : COULD NOT OPEN IMAGE TO POST TRADE!
+2020-07-28 20:02:48,284 : INFO : main_logger : Producer received a fresh trade : ('in', 'spy', '2020-07-28 20:02:48.281732', '323', 'put', '2.5', 'ThuhKang', '7/31', 'filler')
+2020-07-28 20:02:48,285 : CRITICAL : main_logger : COULD NOT OPEN IMAGE TO POST TRADE!
+2020-07-28 20:11:11,781 : INFO : main_logger : 
+2020-07-28 20:11:11,782 : INFO : main_logger : Producer received a fresh trade : ('in', 'spy', '2020-07-28 20:11:11.776985', '323', 'put', '2.5', 'ThuhKang', '7/31', 'filler')
+2020-07-28 20:11:11,783 : CRITICAL : main_logger : COULD NOT OPEN IMAGE TO POST TRADE!
+2020-07-28 20:11:11,783 : CRITICAL : main_logger : 
+2020-07-28 20:13:01,267 : INFO : main_logger : 
+2020-07-28 20:13:01,267 : INFO : main_logger : Producer received a fresh trade : ('in', 'spy', '2020-07-28 20:13:01.262719', '323', 'put', '2.5', 'ThuhKang', '7/31', 'filler')
+2020-07-28 20:13:01,268 : CRITICAL : main_logger : COULD NOT OPEN IMAGE TO POST TRADE!
+2020-07-28 20:13:01,268 : CRITICAL : main_logger : 
+2020-07-28 20:18:09,560 : INFO : main_logger : 
+2020-07-28 20:18:09,560 : INFO : main_logger : Producer received a fresh trade : ('in', 'spy', '2020-07-28 20:18:09.555224', '323', 'put', '2.5', 'ThuhKang', '7/31', 'filler')
+2020-07-28 20:18:09,561 : CRITICAL : main_logger : COULD NOT OPEN IMAGE TO POST TRADE!
+2020-07-28 20:18:09,561 : CRITICAL : main_logger : 
+2020-07-28 20:19:26,523 : INFO : main_logger : 
+2020-07-28 20:21:02,221 : INFO : main_logger : 
+2020-07-28 20:21:17,791 : INFO : main_logger : Producer received a fresh trade : ('in', 'spy', '2020-07-28 20:21:02.220728', '323', 'put', '2.5', 'ThuhKang', '7/31', 'MK2')
+2020-07-28 20:21:17,836 : CRITICAL : main_logger : COULD NOT OPEN IMAGE TO POST TRADE!
+2020-07-28 20:21:17,844 : CRITICAL : main_logger : 
+2020-07-28 20:22:12,148 : INFO : main_logger : 
+2020-07-28 20:22:28,919 : INFO : main_logger : Producer received a fresh trade : ('in', 'spy', '2020-07-28 20:22:12.143748', '323', 'put', '2.5', 'ThuhKang', '7/31', 'MK5')
+2020-07-28 20:25:06,209 : INFO : main_logger : 
+2020-07-28 20:25:06,210 : INFO : main_logger : Producer received a fresh trade : ('in', 'spy', '2020-07-28 20:25:06.204710', '323', 'put', '2.5', 'ThuhKang', '7/31', 'MK9')
+2020-07-28 20:42:31,169 : INFO : main_logger : 
+Producer received a fresh trade : ('in', 'spy', '2020-07-28 20:42:31.168463', '316', 'put', '3.03', 'ThuhKang', '7/10', 'filler')
+2020-07-28 20:42:31,170 : CRITICAL : main_logger : COULD NOT OPEN IMAGE TO POST TRADE!
+2020-07-28 20:42:31,170 : CRITICAL : main_logger : 
+2020-07-28 20:43:54,523 : INFO : main_logger : 
+Producer received a fresh trade : ('in', 'spy', '2020-07-28 20:43:54.517997', '316', 'put', '3.03', 'ThuhKang', '7/10', 'filler')
+2020-07-28 20:46:02,373 : INFO : main_logger : 
+Producer received a fresh trade : ('in', 'spy', '2020-07-28 20:46:02.372997', '316', 'put', '3.03', 'ThuhKang', '7/10', 'filler')
+2020-07-28 20:46:02,374 : CRITICAL : main_logger : COULD NOT OPEN IMAGE TO POST TRADE!
+2020-07-28 20:46:02,374 : CRITICAL : main_logger : 
+2020-07-28 20:48:21,986 : INFO : main_logger : 
+Producer received a fresh trade : ('in', 'spy', '2020-07-28 20:46:46.690499', '316', 'put', '3.03', 'ThuhKang', '7/10', 'MK10')
+2020-07-28 20:50:17,707 : INFO : main_logger : 
+Producer received a fresh trade : ('out', 'spy', '2020-07-28 20:50:17.699952', '316', 'put', '3.24', 'ThuhKang', '7/10', 'MK10')
+2020-07-28 20:51:56,792 : ERROR : main_logger :  : ['IN ', ' 07/10 ', ' 53C ', ' 0.56 ', ' SCALP ', ' POSSIBLE SWING. STOP AT YOUR OWN RISK FOLLOWING STEADY BULLISH FLOW ALERT'] Live price : 61.8 Strike price : 53
+2020-07-28 20:51:56,792 : ERROR : main_logger : This trade contains error(s)! : joelMariaC82IN - FSLR - 07/10 - 53C - 0.56 - SCALP - POSSIBLE SWING. STOP AT YOUR OWN RISK FOLLOWING STEADY BULLISH FLOW ALERT
+2020-07-28 20:52:34,436 : INFO : main_logger : 
+Producer received a fresh trade : ('in', 'roku', '2020-07-28 20:52:34.431953', '140', 'call', '2.76', 'MariaC82', '07/10', 'MK9')

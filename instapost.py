@@ -22,6 +22,7 @@ from PIL import Image, ImageDraw, ImageFont
 from dotenv import load_dotenv
 from timeit import default_timer as timer
 from main_logger import logger
+from exceptions import MakeImageError
 
 load_dotenv()
 INSTA_USERNAME = os.getenv("INSTA_USERNAME")
@@ -33,33 +34,46 @@ PATH = pathlib.Path.cwd()
 KEYBOARD = Controller()
 
 
-def consumer(driver):
-    while config.has_trade.acquire():
-        start = timer()
-        print("Instagram posting initiated..")
-        message = config.new_trades.get()
-        (in_or_out, ticker, datetime, strike_price, call_or_put, buy_price,
-         user_name, expiration, color) = message
-        expiration = expiration.replace(r'/', '.')
+def make_image(msg):
+    suffix = '.png'
+    in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color = msg
+    try:
+        expiration = expiration.replace('/', '.')
+        im = Image.open(os.path.join(PATH, 'template_images', color + suffix))
         text = f'We are going\n {in_or_out.upper()} on {ticker.upper()}\n Strike price: {strike_price.upper()}\n {call_or_put.upper()} Price: {buy_price}\n Expiration: {expiration}'
         filename = f'{in_or_out}.{ticker}.{strike_price}.{call_or_put}.{expiration}.png'
-        my_font = ImageFont.truetype('micross.ttf', 100)
-        # create image
-        max_w, max_h = (1080, 1080)
-        image = Image.new("RGBA", (max_w, max_h), color)
-        draw = ImageDraw.Draw(image)
-        w, h = draw.multiline_textsize(text, font=my_font)
+        my_font = ImageFont.truetype('micross.ttf', 75)
+        draw = ImageDraw.Draw(im)
+        # w, h = draw.multiline_textsize(text, font=my_font)
         # draw text
-        draw.multiline_text((0, 0),
+        draw.multiline_text((235, 415),
                             text,
                             fill='black',
                             font=my_font,
                             spacing=4,
                             align='center')
         # save file
-        image.save(filename)
+        trade_image_path = os.path.join(PATH, 'trade_images', filename)
+        im.save(trade_image_path)
+    except:
+        logger.fatal("COULD NOT OPEN IMAGE TO POST TRADE!")
+        print("COULD NOT OPEN IMAGE TO POST TRADE")
+        trade_image_path = 'error'
+
+    finally:
+        return trade_image_path
+
+
+def consumer(driver):
+    while config.has_trade.acquire():
+        start = timer()
+        print("\nInstagram posting initiated..")
+        message = config.new_trades.get()
         try:
-            image_path = f"{PATH}\\{filename}"
+            image_path = make_image(message)
+            if 'error' in image_path:
+                raise MakeImageError
+
             upload_element = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((
                     By.XPATH,
@@ -76,12 +90,14 @@ def consumer(driver):
                 EC.presence_of_element_located(
                     (By.XPATH, "//button[text()='Share']")))
             share_button.click()
-            print("instagram posting completed")
+            print("\ninstagram posting completed")
             time.sleep(2)
 
+        except MakeImageError as error:
+            logger.fatal(f'{error}')
             # caption_field = WebDriverWait(driver, 5).until(
             # EC.presence_of_element_located((By.XPATH, "//textarea")))
         finally:
             end = timer()
-            print(end - start)
+            print(f"\n{end - start}")
             config.new_trades.task_done()

@@ -655,3 +655,82 @@ def ignore_out_trade(database_trades: list, new_trade: tuple) -> bool:
 
     finally:
         return in_trade_exists
+
+
+def processor(new_message):
+    try:
+        split_result = new_message.splitlines()
+        # removes any empty strings from list
+        split_result = list(filter(None, split_result))
+        split_result = list(filter(filter_message, split_result))
+        trade_author = list(filter(filter_trader, split_result))
+        trade_author_tup = trade_author[0]
+        # find the longest string left which is the message string
+        longest_string = max(split_result, key=len)
+        double_split_result = longest_string.split('-')
+        double_split_result = list(filter(None, double_split_result))
+        # gets a call or put status, and pops that matched entry out of the list
+        call_or_put_tup, strike_price_tup, double_split_result = three_feet(
+            double_split_result)
+
+        trade_expiration_tup, double_split_result = get_trade_expiration(
+            double_split_result)
+
+        stock_ticker_tup, double_split_result = get_stock_ticker(
+            double_split_result)
+
+        buy_price_tup, double_split_result = get_buy_price(double_split_result)
+
+        in_or_out_tup, double_split_result = get_in_or_out(double_split_result)
+
+        datetime_tup = str(datetime.now())
+        stock_ticker_tup = stock_ticker_tup.lower()
+
+        if strike_price_tup == buy_price_tup:
+            strike_price_tup = 'error'
+            buy_price_tup = 'error'
+
+        trade_tuple = (
+            in_or_out_tup,
+            stock_ticker_tup,
+            datetime_tup,
+            strike_price_tup,
+            call_or_put_tup,
+            buy_price_tup,
+            trade_author_tup,
+            trade_expiration_tup,
+        )
+
+        duplicate_check, out_check, matching_in_check, trade_color_choice, trade_ignored = verify_trade(
+            list(trade_tuple))
+
+        if duplicate_check:
+            return
+
+        if trade_ignored:
+            return
+
+        if duplicate_check is False and out_check is False and matching_in_check is False or True and trade_ignored is False:
+            print("updating table")
+            trade_tuple = (
+                in_or_out_tup,
+                stock_ticker_tup,
+                datetime_tup,
+                strike_price_tup,
+                call_or_put_tup,
+                buy_price_tup,
+                trade_author_tup,
+                trade_expiration_tup,
+                trade_color_choice,
+            )
+            message = trade_tuple
+            logger.info(f"Producer got message: {message}")
+            config.new_trades.put(message)
+            config.has_trade.release()
+            update_table(trade_tuple)
+
+    except TypeError:
+        pass
+
+    except IndexError:
+        pass

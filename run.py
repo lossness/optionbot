@@ -14,7 +14,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from dotenv import load_dotenv
 from instapost import consumer
-from discord_grabber import producer, error_producer_classic
+from discord_grabber import producer
 from insta_browser import switch_to_mobile
 from main_logger import logger
 
@@ -51,6 +51,7 @@ def check_discord():
             spinner.next()
         #finally:
         #os.system('taskkill /f /im chromedriver.exe')
+    logger.fatal("INFINITE CHECK_DISCORD LISTENER GOT OUT THE LOOP FUCK")
     print("It should never reach here! check_discord")
 
 
@@ -93,14 +94,3 @@ if __name__ == "__main__":
 #     event.set()
 
 # ERROR CHECKING FUNCTIONS BELOW ########
-
-
-def discord_error_check():
-    chrome_options = Options()
-    # chrome_options.add_argument("--headless")
-    # chrome_options.add_argument('--disable-gpu')
-    # chrome_options.add_argument('--log-level=3')
-    chrome_options.debugger_address = '127.0.0.1:9222'
-    discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
-                                      options=chrome_options)
-    error_producer_classic(discord_driver)

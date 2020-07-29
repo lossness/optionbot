@@ -48,3 +48,7 @@ class StageTwoError(Exception):
 
 class StageThreeError(Exception):
     '''Stage 3 in second level check failed!!!'''
+
+
+class MakeImageError(Exception):
+    '''Error creating image!'''
