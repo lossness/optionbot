@@ -54,14 +54,14 @@ class ErrorChecker:
                 con.close()
             return filtered_trades
 
-    def strike_price_fixer(self) -> str:
+    def strike_price_fixer(self, processed_list, new_trade) -> str:
         '''
         This runs when the first round of processing detects
         an error in the strike price value of the processed tuple.
         '''
         strike_price = 'error'
         call_or_put = 'error'
-        in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration = self.new_trade_tuple
+        in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color = new_trade
         if 'out' in in_or_out:
             try:
                 con = db_connect()
@@ -76,7 +76,7 @@ class ErrorChecker:
                     )
 
                 matched_in_trade = re.findall(
-                    rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{user_name}\'), (\'{expiration}\')',
+                    rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{user_name}\'), (\'{expiration}\'))',
                     str(filtered_trades))
 
                 if matched_in_trade != [] and len(matched_in_trade) < 2:
@@ -134,7 +134,8 @@ class ErrorChecker:
         '''
         is_in = 'error'
 
-    def buy_price_fixer(self, processed_list, original_message) -> str:
+    def buy_price_fixer(self, processed_list, original_message,
+                        strike_price) -> str:
         '''
         Runs when the first round of processing
         detects an error determing the buy price.
@@ -146,7 +147,6 @@ class ErrorChecker:
             for split in processed_list:
                 possible_result = split.replace('$', '')
                 possible_result = possible_result.replace(' ', '')
-                possible_result = possible_result.replace(',', '.')
                 if len(possible_result) > 2 and any(
                         char.isalpha() for char in split) is False:
                     filtered_dict[possible_result] = split
@@ -162,6 +162,7 @@ class ErrorChecker:
                 raise StageOneError
 
         except StageOneError as error:
+            buy_price = 'error'
             logger.warning(
                 f'{error} \n {processed_list} \n {original_message}')
             # buy_price_list = list(buy_price)
@@ -183,22 +184,37 @@ class ErrorChecker:
             elif len(duplicates) > 1:
                 duplicate_ints = []
                 for item in duplicates:
-                    if item.replace(' ', '').isdigit():
-                        duplicate_ints.append(item.replace(' ', ''))
+                    try:
+                        if ',' in item:
+                            split_items = item.split(',')
+                            duplicates.remove(item)
+                            for split_item in split_items:
+                                try:
+                                    converted_split_item = float(split_item)
+                                    duplicate_ints.append(converted_split_item)
+                                except ValueError:
+                                    pass
+                                duplicates.append(split_item)
+                        converted_item = float(item)
+                        duplicate_ints.append(converted_item)
+                    except ValueError:
+                        pass
                 if len(duplicate_ints) == 1:
                     buy_price = duplicate_ints[0]
                 # testing to see if this stage catches many duplicates and quality of catches
                 elif duplicate_ints.count(duplicate_ints[0]) > 1:
                     logger.error(
-                        f'DEBUG INFO QUALITY CHECK\n{duplicate_ints}\n{original_message}\n{processed_list}'
+                        f'DEBUG INFO QUALITY CHECK | Number of Duplicate ints : {duplicate_ints} Original message : {original_message} Processed message : {processed_list}'
                     )
                     raise StageTwoError
                 else:
                     raise StageTwoError
 
         except StageTwoError as second_error:
+            buy_price = 'error'
             logger.warning(
-                f'{second_error} \n {processed_list} \n {original_message}')
+                f'{second_error} | Processed message : {processed_list} Original message : {original_message}'
+            )
             second_try_list = str(processed_list)
             second_try_list = second_try_list.replace(' ', '')
             second_try_list = second_try_list.replace(",", '')
@@ -213,7 +229,9 @@ class ErrorChecker:
                     raise StageThreeError
 
         except StageThreeError as e:
-            logger.error(f'{e} \n {processed_list} \n {original_message}')
+            logger.error(
+                f'{e} | Processed message : {processed_list} Original Message : {original_message}'
+            )
             buy_price = 'error'
 
         finally:
@@ -255,7 +273,9 @@ class ErrorChecker:
             new_expiration = 'error'
 
         except MultipleMatchingIn as error:
-            logger.error(f'{error} SECOND LEVEL EXPIRATION CHECK!')
+            logger.error(
+                f'{error} | Processed message : {processed_list} New trade : {new_trade}'
+            )
             new_expiration = 'error'
 
         finally:

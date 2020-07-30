@@ -376,7 +376,7 @@ def processor(new_message):
                 message = valid_trade
                 config.new_trades.put(message)
                 config.has_trade.release()
-                logger.info(f"\nProducer received a fresh trade : {message}")
+                logger.info(f"Producer received a fresh trade : {message}")
                 print(f"\nProducer received a fresh trade : {message}")
                 update_table(valid_trade)
 
@@ -397,6 +397,7 @@ def error_producer_classic(driver):
         try:
             for new_message in tqdm(message_list):
                 split_result = new_message.splitlines()
+                print(split_result)
                 # removes any empty strings from list
                 split_result = list(filter(None, split_result))
                 split_result = list(filter(filter_message, split_result))
@@ -427,28 +428,37 @@ def error_producer_classic(driver):
 
                 check = ErrorChecker()
 
+                error_tuple = (
+                    in_or_out_tup,
+                    stock_ticker_tup,
+                    datetime_tup,
+                    strike_price_tup,
+                    call_or_put_tup,
+                    buy_price_tup,
+                    trade_author_tup,
+                    trade_expiration_tup,
+                    color_tup,
+                )
+
                 if buy_price_tup == strike_price_tup:
-                    buy_price_tup = 'error'
-                    strike_price_tup = 'error'
-
-                if buy_price_tup == 'error':
-                    buy_price_tup, double_split_result = check.buy_price_fixer(
-                        double_split_result, new_message)
-
-                if trade_expiration_tup == 'error':
-                    error_tuple = (
-                        in_or_out_tup,
-                        stock_ticker_tup,
-                        datetime_tup,
-                        strike_price_tup,
-                        call_or_put_tup,
-                        buy_price_tup,
-                        trade_author_tup,
-                        trade_expiration_tup,
-                        color_tup,
-                    )
-                    trade_expiration_tup = check.expiration_fixer(
+                    strike_price_tup, double_split_result = check.strike_price_fixer(
                         double_split_result, error_tuple)
+
+                    buy_price_tup, double_split_result = check.buy_price_fixer(
+                        double_split_result, new_message, strike_price_tup)
+
+                if 'error' in error_tuple:
+                    if buy_price_tup == 'error':
+                        buy_price_tup, double_split_result = check.buy_price_fixer(
+                            double_split_result, new_message, strike_price_tup)
+
+                    if strike_price_tup == 'error':
+                        strike_price_tup, double_split_result = check.strike_price_fixer(
+                            double_split_result, new_message)
+
+                    if trade_expiration_tup == 'error':
+                        trade_expiration_tup = check.expiration_fixer(
+                            double_split_result, error_tuple)
 
                 trade_tuple = (
                     in_or_out_tup,

@@ -1,3 +1,3 @@
-from run import discord_error_check
+from run import discord_error_checker
 
-discord_error_check()
+discord_error_checker()
