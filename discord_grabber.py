@@ -441,7 +441,7 @@ def error_producer_classic(driver):
                 )
 
                 if buy_price_tup == strike_price_tup:
-                    strike_price_tup, double_split_result = check.strike_price_fixer(
+                    strike_price_tup, call_or_put_tup = check.strike_price_fixer(
                         double_split_result, error_tuple)
 
                     buy_price_tup, double_split_result = check.buy_price_fixer(
@@ -453,11 +453,15 @@ def error_producer_classic(driver):
                             double_split_result, new_message, strike_price_tup)
 
                     if strike_price_tup == 'error':
-                        strike_price_tup, double_split_result = check.strike_price_fixer(
-                            double_split_result, new_message)
+                        strike_price_tup, call_or_put_tup = check.strike_price_fixer(
+                            double_split_result, error_tuple)
 
                     if trade_expiration_tup == 'error':
                         trade_expiration_tup = check.expiration_fixer(
+                            double_split_result, error_tuple)
+
+                    if call_or_put_tup == 'error':
+                        call_or_put_tup = check.call_or_put_fixer(
                             double_split_result, error_tuple)
 
                 trade_tuple = (

@@ -54,42 +54,107 @@ class ErrorChecker:
                 con.close()
             return filtered_trades
 
+    def fetch_matchable_in_trades(self, new_trade):
+        '''
+        Fetches all trades by the unique
+        values that distinguishes one trade
+        from another trade for matching purposes.
+        '''
+        try:
+            con = db_connect()
+            cur = con.cursor()
+            filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, user_name, expiration from trades"
+            cur.execute(filtered_trades_sql)
+            filtered_trades = cur.fetchall()
+            in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color = new_trade
+
+            if filtered_trades == []:
+                raise DatabaseEmpty
+
+            matched_in_trade = re.findall(
+                rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{user_name}\'), (\'{expiration}\'))',
+                str(filtered_trades))
+
+            if matched_in_trade == [] and len(matched_in_trade) > 1:
+                matched_in_trade = 'error'
+
+        except sqlite3.Error as error:
+            logger.fatal(f'{error}', stack_info=True)
+
+        except DatabaseEmpty as error:
+            logger.warning(error, stack_info=True)
+
+        finally:
+            if (con):
+                con.close()
+            return matched_in_trade
+
+    def fetch_matchable_trades(self):
+        '''
+        Fetches all trades by the unique
+        values that distinguishes one trade
+        from another trade for matching purposes.
+        '''
+        try:
+            con = db_connect()
+            cur = con.cursor()
+            filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, user_name, expiration from trades"
+            cur.execute(filtered_trades_sql)
+            filtered_trades = cur.fetchall()
+
+            if filtered_trades == []:
+                filtered_trades = 'error'
+                raise DatabaseEmpty
+
+        except sqlite3.Error as error:
+            logger.fatal(error, stack_info=True)
+
+        except DatabaseEmpty as error:
+            logger.warning(error, stack_info=True)
+
+        finally:
+            if (con):
+                con.close()
+            return filtered_trades
+
     def strike_price_fixer(self, processed_list, new_trade) -> str:
         '''
         This runs when the first round of processing detects
         an error in the strike price value of the processed tuple.
         '''
         strike_price = 'error'
-        call_or_put = 'error'
         in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color = new_trade
         if 'out' in in_or_out:
             try:
-                con = db_connect()
-                cur = con.cursor()
-                filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, user_name, expiration from trades"
-                cur.execute(filtered_trades_sql)
-                filtered_trades = cur.fetchall()
+                database_trades = self.fetch_matchable_trades()
+                if database_trades == []:
+                    raise DatabaseEmpty
 
-                if filtered_trades == []:
-                    raise ValueError(
-                        "The database is empty! Cannot perform level 2 IN match"
-                    )
+                matched_trade = re.findall(
+                    rf'\(((\'in\'), (\'{ticker}\'), (\'\d+\'), (\'\w+\'), (\'{user_name}\'), (\'{expiration}\'))',
+                    str(database_trades))
 
-                matched_in_trade = re.findall(
-                    rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{user_name}\'), (\'{expiration}\'))',
-                    str(filtered_trades))
+                if len(matched_trade) == 1 and matched_trade != []:
+                    strike_price = matched_trade[0][3].replace("'", "")
+                    if 'error' in call_or_put:
+                        call_or_put = matched_trade[0][4].replace("'", "")
 
-                if matched_in_trade != [] and len(matched_in_trade) < 2:
-                    strike_price = matched_in_trade[2]
-                    call_or_put = matched_in_trade[3]
-
-            except ValueError as e:
+            except DatabaseEmpty as e:
                 logger.warning(e, stack_info=True)
+
+            except StageOneError as error:
+                logger.error(f'{error}', stack_info=True)
 
             finally:
                 return strike_price, call_or_put
 
-    def call_or_put_fixer(self) -> str:
+        elif 'in' in in_or_out:
+            return strike_price, call_or_put
+
+        else:
+            return strike_price, call_or_put
+
+    def call_or_put_fixer(self, processed_list, new_trade) -> str:
         '''
         This runs when the first round of processing detects
         errors in call_or_put values. processed_list contains
@@ -100,7 +165,7 @@ class ErrorChecker:
         is_put = False
         result = 'error'
         try:
-            for split in self.processed_list:
+            for split in processed_list:
                 if 'call' in split.lower():
                     is_call = 'call'
                 if 'put' in split.lower():
@@ -109,8 +174,7 @@ class ErrorChecker:
             if is_call and is_put:
                 is_call = 'error'
                 is_put = 'error'
-                raise ValueError(
-                    "Call_or_put level 2 function returned TRUE for both!")
+                raise StageOneError
 
             elif is_call and not is_put:
                 result = 'call'
@@ -118,21 +182,46 @@ class ErrorChecker:
             elif is_put and not is_call:
                 result = 'put'
 
-        except (IndexError, ValueError) as error:
-            print(f"{error} In call_or_put level 2 check!")
-            logger.warning(f"{error} In call_or_put level 2 check!")
-            result = 'error'
+        except StageOneError as error:
+            logger.warning(f'{error} | Processed list : {processed_list}')
+            in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color = new_trade
+            if 'out' in in_or_out:
+                try:
+                    matched_trade = self.fetch_matchable_in_trades(new_trade)
+                    if 'error' in matched_trade:
+                        raise StageTwoError
+
+                    if matched_trade == []:
+                        raise DatabaseEmpty
+
+                    if len(matched_trade
+                           ) == 1 and 'error' not in matched_trade:
+                        result = matched_trade[3]
+
+                except StageTwoError as error:
+                    logger.error(f'{error}', stack_info=True)
+
+                except DatabaseEmpty as error:
+                    logger.warning(f'{error}', stack_info=True)
 
         finally:
             return result
+        # except (IndexError, ValueError) as error:
+        #     print(f"{error} In call_or_put level 2 check!")
+        #     logger.warning(f"{error} In call_or_put level 2 check!")
+        #     result = 'error'
 
-    def in_or_out_fixer(self) -> str:
+    def in_or_out_fixer(self, processed_list, new_trade) -> str:
         '''
         Runs when the first round of processing
         detects an error determing the in or out
-        status of a trade
+        status of a trade.
+
+        First step is to try and find a matching
+        trade in the database to pull the in_or_out
+        data from.
         '''
-        is_in = 'error'
+        in_or_out_fix = 'error'
 
     def buy_price_fixer(self, processed_list, original_message,
                         strike_price) -> str:
@@ -203,11 +292,12 @@ class ErrorChecker:
                     buy_price = duplicate_ints[0]
                 # testing to see if this stage catches many duplicates and quality of catches
                 elif duplicate_ints.count(duplicate_ints[0]) > 1:
+                    buy_price = duplicate_ints[0]
+
+                else:
                     logger.error(
                         f'DEBUG INFO QUALITY CHECK | Number of Duplicate ints : {duplicate_ints} Original message : {original_message} Processed message : {processed_list}'
                     )
-                    raise StageTwoError
-                else:
                     raise StageTwoError
 
         except StageTwoError as second_error:
@@ -235,7 +325,7 @@ class ErrorChecker:
             buy_price = 'error'
 
         finally:
-            return buy_price, processed_list
+            return str(buy_price), processed_list
 
     def expiration_fixer(self, processed_list, new_trade):
         '''
