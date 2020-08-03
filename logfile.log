@@ -1504,3 +1504,222 @@ BOT
 BBS-TRADE-BOT
 ThuhKang
 OUT - AMZN - 7/24 - 3020C - 21 - CUT - POS 24.8 - 21
+2020-07-30 20:44:18,507 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-07-30 20:44:18,509 : WARNING : main_logger :  
+ [' 3 ', ' SCALP ', ' OUT OF SOME MORE'] 
+ BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/24 - 125C - 3 - SCALP - OUT OF SOME MORE
+2020-07-30 20:45:07,199 : ERROR : main_logger : This trade contains error(s)! : 10:41 AMBOTBBS-TRADE-BOTEric68OStk - 7/24 - 53CALL - 2.70 - scalp. - Looks - real nice now that I exited lol
+2020-07-30 20:45:27,389 : ERROR : main_logger : 'Could not determine buy price!' : ['IN ', ' 1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW']
+2020-07-30 20:45:27,390 : WARNING : main_logger :  
+ [' 1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW'] 
+ 8:49 AM
+BOT
+BBS-TRADE-BOT
+MariaC82
+IN - SBUX - 07/31 - 80C - 1 - SWING - POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW
+2020-07-30 20:45:28,760 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 4 ', ' DAY ', ' CLOSING POS 4.8 ', ' 5.3, 4']
+2020-07-30 20:52:17,400 : ERROR : main_logger :  : Ticker matches : 0 trade : ['IN ', ' 07/24 ', ' 210 ', ' 2.16 ', ' SCALP ', ' STOP AT YOUR OWN RISK RISKY AF']
+2020-08-02 17:18:39,130 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-08-02 17:18:57,626 : WARNING : main_logger :  
+ [' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4'] 
+ 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-08-02 17:18:57,627 : ERROR : main_logger : DEBUG INFO QUALITY CHECK | Number of Duplicate ints : [387.5, 1.4, 1.2, 1.4, 1.4] Original message : 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4 Processed message : [' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-08-02 17:19:06,553 : WARNING : main_logger :  
+ [' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4'] 
+ 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-08-02 17:19:06,553 : ERROR : main_logger : DEBUG INFO QUALITY CHECK | Number of Duplicate ints : [387.5, 1.4, 1.2, 1.4, 1.4] Original message : 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4 Processed message : [' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-08-02 17:19:12,720 : ERROR : main_logger : This trade contains error(s)! : 9:11 AMBOTBBS-TRADE-BOTThuhKangOUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-08-02 17:19:16,669 : ERROR : main_logger : This trade contains error(s)! : 11:01 AMBOTBBS-TRADE-BOTEric68DIS - 7/17 - 117put - .15 - scalp - total - yolo pending FL news Will let it go to 0
+2020-08-02 17:19:22,073 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-08-02 17:19:22,073 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-08-02 17:19:22,074 : WARNING : main_logger :  
+ [' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5'] 
+ BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - BABA - 8.28 - 250C - 16.50 - SWING - OUT OF 1/2: $16.5 FROM: 12.5
+2020-08-02 17:19:22,074 : ERROR : main_logger : DEBUG INFO QUALITY CHECK | Number of Duplicate ints : [8.28, 16.5] Original message : BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - BABA - 8.28 - 250C - 16.50 - SWING - OUT OF 1/2: $16.5 FROM: 12.5 Processed message : [' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-08-02 19:35:54,712 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-08-02 19:36:12,079 : WARNING : main_logger :  
+ [' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4'] 
+ 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-08-02 19:36:25,744 : ERROR : main_logger : DEBUG INFO QUALITY CHECK | Number of Duplicate ints : [387.5, 1.4, 1.2, 1.4, 1.4] Original message : 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4 Processed message : [' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-08-02 19:40:44,767 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-08-02 19:40:56,330 : WARNING : main_logger :  
+ [' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4'] 
+ 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-08-02 19:43:44,910 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-08-02 19:43:48,367 : WARNING : main_logger :  
+ [' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4'] 
+ 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-08-02 19:45:44,816 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-08-02 19:46:07,233 : WARNING : main_logger :  
+ [' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4'] 
+ 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-08-02 19:49:19,421 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-08-02 19:49:24,545 : WARNING : main_logger :  
+ [' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4'] 
+ 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-08-02 19:51:05,273 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-08-02 19:51:08,012 : WARNING : main_logger :  
+ [' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4'] 
+ 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-08-02 19:52:01,076 : ERROR : main_logger : This trade contains error(s)! : 11:01 AMBOTBBS-TRADE-BOTEric68DIS - 7/17 - 117put - .15 - scalp - total - yolo pending FL news Will let it go to 0
+2020-08-02 19:52:10,302 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-08-02 19:52:10,302 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-08-02 19:52:10,303 : WARNING : main_logger :  
+ [' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5'] 
+ BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - BABA - 8.28 - 250C - 16.50 - SWING - OUT OF 1/2: $16.5 FROM: 12.5
+2020-08-02 19:54:16,366 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTMariaC82OUT - BABA - 8.28 - 250C - 16.50 - SWING - OUT OF 1/2: $16.5 FROM: 12.5
+2020-08-02 19:54:24,776 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-08-02 19:54:24,777 : WARNING : main_logger :  
+ [' 3 ', ' SCALP ', ' OUT OF SOME MORE'] 
+ BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/24 - 125C - 3 - SCALP - OUT OF SOME MORE
+2020-08-02 19:57:42,899 : ERROR : main_logger :  : ['In ', ' 7/24 ', ' 53call ', ' 2.33 ', ' scalp/day ', ' RAF'] Live price : 76.76 Strike price : 53
+2020-08-02 19:58:27,256 : ERROR : main_logger : This trade contains error(s)! : 9:56 AMBOTBBS-TRADE-BOTEric68In - OSTK - 7/24 - 53call - 2.33 - scalp/day - RAF
+2020-08-02 19:58:28,729 : ERROR : main_logger :  : [' 7/24 ', ' 53CALL ', ' 2.70 ', ' scalp. ', ' Looks ', ' real nice now that I exited lol'] Live price : 76.76 Strike price : 53
+2020-08-02 19:58:39,648 : ERROR : main_logger : This trade contains error(s)! : 10:41 AMBOTBBS-TRADE-BOTEric68OStk - 7/24 - 53CALL - 2.70 - scalp. - Looks - real nice now that I exited lol
+2020-08-02 19:59:04,620 : ERROR : main_logger : 'Could not determine buy price!' : ['IN ', ' 1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW']
+2020-08-02 19:59:04,620 : WARNING : main_logger :  
+ [' 1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW'] 
+ 8:49 AM
+BOT
+BBS-TRADE-BOT
+MariaC82
+IN - SBUX - 07/31 - 80C - 1 - SWING - POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW
+2020-08-02 19:59:22,507 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 4 ', ' DAY ', ' CLOSING POS 4.8 ', ' 5.3, 4']
+2020-08-02 19:59:45,809 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTMariaC82IN - MSFT - 07/24 - 210 - 2.16 - SCALP - STOP AT YOUR OWN RISK RISKY AF
+2020-08-02 20:00:05,050 : ERROR : main_logger :  : Ticker matches : 0 trade : ['In ', ' APT ', ' 7/24 ', ' 23.50call ', ' .65 ', ' scalp/day ', ' using LOD as stop']
+2020-08-02 20:00:06,694 : ERROR : main_logger : This trade contains error(s)! : 10:00 AMBOTBBS-TRADE-BOTEric68In - APT - 7/24 - 23.50call - .65 - scalp/day - using LOD as stop
+2020-08-02 20:00:06,732 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Out ', ' APT ', ' 7/24 ', ' 23.50call ', ' .40 ', ' scalp/day ', ' Broke LOD which was my stop. I gave it a minute to see if it would bounce back over']
+2020-08-02 20:00:09,518 : ERROR : main_logger : This trade contains error(s)! : 10:43 AMBOTBBS-TRADE-BOTEric68Out - APT - 7/24 - 23.50call - .40 - scalp/day - Broke LOD which was my stop. I gave it a minute to see if it would bounce back over
+2020-08-02 20:00:12,299 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 21 ', ' CUT ', ' POS 24.8 ', ' 21']
+2020-08-02 20:00:12,299 : WARNING : main_logger :  
+ [' 21 ', ' CUT ', ' POS 24.8 ', ' 21'] 
+ 11:39 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AMZN - 7/24 - 3020C - 21 - CUT - POS 24.8 - 21
+2020-08-02 20:00:43,985 : ERROR : main_logger :  : ['IN ', ' 07/24 ', ' 67C ', ' 0.69 ', ' SCALP ', ' STOP AT YOUR OWN RISK RIKSY AF. DONT TAKE UNLESS YOURE WILLING TO LOSE'] Live price : 78.67 Strike price : 67
+2020-08-02 20:00:50,996 : ERROR : main_logger : This trade contains error(s)! : 6:35 AMBOTBBS-TRADE-BOTMariaC82IN - AMD - 07/24 - 67C - 0.69 - SCALP - STOP AT YOUR OWN RISK RIKSY AF. DONT TAKE UNLESS YOURE WILLING TO LOSE
+2020-08-02 20:00:53,644 : ERROR : main_logger :  : ['OUT ', ' 07/24 ', ' 67C ', ' 0.87 ', ' SCALP ', ' OUT OF 3/4'] Live price : 78.67 Strike price : 67
+2020-08-02 20:01:27,300 : ERROR : main_logger :  : ['OUT ', ' 07/24 ', ' 67C ', ' 0.83 ', ' SCALP ', ' OUT OF THE REST'] Live price : 78.67 Strike price : 67
+2020-08-02 20:02:29,450 : INFO : main_logger : 
+2020-08-02 20:02:29,451 : INFO : main_logger : 
+2020-08-02 20:02:30,775 : INFO : main_logger : 
+2020-08-02 20:02:30,775 : INFO : main_logger : 
+2020-08-02 20:02:31,678 : INFO : main_logger : 
+2020-08-02 20:02:48,885 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-08-02 20:02:48,892 : WARNING : main_logger :  
+ [' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4'] 
+ 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-08-02 20:02:53,223 : ERROR : main_logger : This trade contains error(s)! : 11:01 AMBOTBBS-TRADE-BOTEric68DIS - 7/17 - 117put - .15 - scalp - total - yolo pending FL news Will let it go to 0
+2020-08-02 20:03:02,119 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-08-02 20:03:02,119 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-08-02 20:03:02,120 : WARNING : main_logger :  
+ [' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5'] 
+ BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - BABA - 8.28 - 250C - 16.50 - SWING - OUT OF 1/2: $16.5 FROM: 12.5
+2020-08-02 20:03:02,126 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTMariaC82OUT - BABA - 8.28 - 250C - 16.50 - SWING - OUT OF 1/2: $16.5 FROM: 12.5
+2020-08-02 20:03:09,799 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-08-02 20:03:09,800 : WARNING : main_logger :  
+ [' 3 ', ' SCALP ', ' OUT OF SOME MORE'] 
+ BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/24 - 125C - 3 - SCALP - OUT OF SOME MORE
+2020-08-02 20:04:09,934 : ERROR : main_logger :  : ['In ', ' 7/24 ', ' 53call ', ' 2.33 ', ' scalp/day ', ' RAF'] Live price : 76.76 Strike price : 53
+2020-08-02 20:04:09,935 : ERROR : main_logger : This trade contains error(s)! : 9:56 AMBOTBBS-TRADE-BOTEric68In - OSTK - 7/24 - 53call - 2.33 - scalp/day - RAF
+2020-08-02 20:04:11,658 : ERROR : main_logger :  : [' 7/24 ', ' 53CALL ', ' 2.70 ', ' scalp. ', ' Looks ', ' real nice now that I exited lol'] Live price : 76.76 Strike price : 53
+2020-08-02 20:04:11,658 : ERROR : main_logger : This trade contains error(s)! : 10:41 AMBOTBBS-TRADE-BOTEric68OStk - 7/24 - 53CALL - 2.70 - scalp. - Looks - real nice now that I exited lol
+2020-08-02 20:04:35,159 : ERROR : main_logger : 'Could not determine buy price!' : ['IN ', ' 1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW']
+2020-08-02 20:04:35,159 : WARNING : main_logger :  
+ [' 1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW'] 
+ 8:49 AM
+BOT
+BBS-TRADE-BOT
+MariaC82
+IN - SBUX - 07/31 - 80C - 1 - SWING - POSSIBLE SCALP. STOP AT YOUR OWN RISK. FOLLOWING FLOW
+2020-08-02 20:04:36,533 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 4 ', ' DAY ', ' CLOSING POS 4.8 ', ' 5.3, 4']
+2020-08-02 20:04:40,547 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTMariaC82IN - MSFT - 07/24 - 210 - 2.16 - SCALP - STOP AT YOUR OWN RISK RISKY AF
+2020-08-02 20:04:58,425 : ERROR : main_logger :  : Ticker matches : 0 trade : ['In ', ' APT ', ' 7/24 ', ' 23.50call ', ' .65 ', ' scalp/day ', ' using LOD as stop']
+2020-08-02 20:05:01,267 : ERROR : main_logger : This trade contains error(s)! : 10:00 AMBOTBBS-TRADE-BOTEric68In - APT - 7/24 - 23.50call - .65 - scalp/day - using LOD as stop
+2020-08-02 20:05:01,303 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Out ', ' APT ', ' 7/24 ', ' 23.50call ', ' .40 ', ' scalp/day ', ' Broke LOD which was my stop. I gave it a minute to see if it would bounce back over']
+2020-08-02 20:05:02,469 : ERROR : main_logger : This trade contains error(s)! : 10:43 AMBOTBBS-TRADE-BOTEric68Out - APT - 7/24 - 23.50call - .40 - scalp/day - Broke LOD which was my stop. I gave it a minute to see if it would bounce back over
+2020-08-02 20:05:05,586 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 21 ', ' CUT ', ' POS 24.8 ', ' 21']
+2020-08-02 20:05:05,586 : WARNING : main_logger :  
+ [' 21 ', ' CUT ', ' POS 24.8 ', ' 21'] 
+ 11:39 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AMZN - 7/24 - 3020C - 21 - CUT - POS 24.8 - 21
+2020-08-02 20:05:12,021 : ERROR : main_logger :  : ['IN ', ' 07/24 ', ' 67C ', ' 0.69 ', ' SCALP ', ' STOP AT YOUR OWN RISK RIKSY AF. DONT TAKE UNLESS YOURE WILLING TO LOSE'] Live price : 78.67 Strike price : 67
+2020-08-02 20:05:12,022 : ERROR : main_logger : This trade contains error(s)! : 6:35 AMBOTBBS-TRADE-BOTMariaC82IN - AMD - 07/24 - 67C - 0.69 - SCALP - STOP AT YOUR OWN RISK RIKSY AF. DONT TAKE UNLESS YOURE WILLING TO LOSE
+2020-08-02 20:05:13,400 : ERROR : main_logger :  : ['OUT ', ' 07/24 ', ' 67C ', ' 0.87 ', ' SCALP ', ' OUT OF 3/4'] Live price : 78.67 Strike price : 67
+2020-08-02 20:05:13,407 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTMariaC82OUT - AMD - 07/24 - 67C - 0.87 - SCALP - OUT OF 3/4
+2020-08-02 20:05:14,852 : ERROR : main_logger :  : ['OUT ', ' 07/24 ', ' 67C ', ' 0.83 ', ' SCALP ', ' OUT OF THE REST'] Live price : 78.67 Strike price : 67
+2020-08-02 20:05:14,858 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTMariaC82OUT - AMD - 07/24 - 67C - 0.83 - SCALP - OUT OF THE REST

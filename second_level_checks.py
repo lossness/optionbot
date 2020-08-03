@@ -284,6 +284,13 @@ class ErrorChecker:
                                 except ValueError:
                                     pass
                                 duplicates.append(split_item)
+                        # Covers a rare edge case example. 'BOT\nBBS-TRADE-BOT\nMariaC82\nOUT - BABA - 8.28 - 250C - 16.50 - SWING - OUT OF 1/2: $16.5 FROM: 12.5'
+                        if '$' in item:
+                            split_item_money = item.split(' ')
+                            for split_money in split_item_money:
+                                if '$' in split_money:
+                                    money_item = split_money.replace('$', '')
+                                    duplicate_ints.append(float(money_item))
                         converted_item = float(item)
                         duplicate_ints.append(converted_item)
                     except ValueError:
@@ -291,8 +298,19 @@ class ErrorChecker:
                 if len(duplicate_ints) == 1:
                     buy_price = duplicate_ints[0]
                 # testing to see if this stage catches many duplicates and quality of catches
-                elif duplicate_ints.count(duplicate_ints[0]) > 1:
-                    buy_price = duplicate_ints[0]
+                elif len(duplicate_ints) > 1:
+                    possible_buy_prices = []
+                    for dup_int in duplicate_ints:
+                        if duplicate_ints.count(dup_int) > 1:
+                            possible_buy_prices.append(dup_int)
+                            if len(possible_buy_prices) == 1:
+                                buy_price = possible_buy_prices[0]
+                            elif len(possible_buy_prices
+                                     ) == 2 and possible_buy_prices.count(
+                                         possible_buy_prices[0]) == 2:
+                                buy_price = possible_buy_prices[0]
+                            else:
+                                raise StageTwoError
 
                 else:
                     logger.error(
