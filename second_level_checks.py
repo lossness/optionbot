@@ -138,12 +138,15 @@ class ErrorChecker:
                     strike_price = matched_trade[0][3].replace("'", "")
                     if 'error' in call_or_put:
                         call_or_put = matched_trade[0][4].replace("'", "")
+                else:
+                    raise StageTwoError
 
             except DatabaseEmpty as e:
                 logger.warning(e, stack_info=True)
 
             except StageOneError as error:
                 logger.error(f'{error}', stack_info=True)
+                strike_price = 'error'
 
             finally:
                 return strike_price, call_or_put
@@ -370,8 +373,8 @@ class ErrorChecker:
                 matched_str = matched_trades[0][0]
                 matched_list = matched_str.split(',')
                 new_expiration = matched_list[5]
-                new_expiration = expiration.replace("'", "")
-                new_expiration = expiration.replace(' ', '')
+                new_expiration = new_expiration.replace("'", "")
+                new_expiration = new_expiration.replace(' ', '')
 
             elif len(matched_trades) > 1:
                 raise MultipleMatchingIn

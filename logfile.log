@@ -1723,3 +1723,235 @@ OUT - AMZN - 7/24 - 3020C - 21 - CUT - POS 24.8 - 21
 2020-08-02 20:05:13,407 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTMariaC82OUT - AMD - 07/24 - 67C - 0.87 - SCALP - OUT OF 3/4
 2020-08-02 20:05:14,852 : ERROR : main_logger :  : ['OUT ', ' 07/24 ', ' 67C ', ' 0.83 ', ' SCALP ', ' OUT OF THE REST'] Live price : 78.67 Strike price : 67
 2020-08-02 20:05:14,858 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTMariaC82OUT - AMD - 07/24 - 67C - 0.83 - SCALP - OUT OF THE REST
+2020-08-03 19:16:51,399 : INFO : main_logger : 
+2020-08-03 19:16:51,399 : INFO : main_logger : 
+2020-08-03 19:16:52,864 : INFO : main_logger : 
+2020-08-03 19:16:52,864 : INFO : main_logger : 
+2020-08-03 19:16:54,455 : INFO : main_logger : 
+2020-08-03 19:17:01,223 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' day/swing ', ' Tight ', ' stop']
+2020-08-03 19:17:01,225 : WARNING : main_logger :  
+ [' day/swing ', ' Tight ', ' stop'] 
+ BOT
+BBS-TRADE-BOT
+Eric68
+In - DIS - 7/17 - 117call - day/swing - Tight - stop
+2020-08-03 19:17:01,225 : ERROR : main_logger : DEBUG INFO QUALITY CHECK | Number of Duplicate ints : [] Original message : BOT
+BBS-TRADE-BOT
+Eric68
+In - DIS - 7/17 - 117call - day/swing - Tight - stop Processed message : [' day/swing ', ' Tight ', ' stop']
+2020-08-03 19:17:01,226 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTEric68In - DIS - 7/17 - 117call - day/swing - Tight - stop
+2020-08-03 19:17:05,530 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' day ', ' Could ', " still work but that is why I don't recommend holding DIS long term right now. 1.38 ", ' 1.56']
+2020-08-03 19:17:05,531 : WARNING : main_logger :  
+ [' day ', ' Could ', " still work but that is why I don't recommend holding DIS long term right now. 1.38 "] 
+ 7:32 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - DIS - 7/17 - 117call - day - Could - still work but that is why I don't recommend holding DIS long term right now. 1.38 - 1.56
+2020-08-03 19:17:05,531 : ERROR : main_logger : DEBUG INFO QUALITY CHECK | Number of Duplicate ints : [] Original message : 7:32 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - DIS - 7/17 - 117call - day - Could - still work but that is why I don't recommend holding DIS long term right now. 1.38 - 1.56 Processed message : [' day ', ' Could ', " still work but that is why I don't recommend holding DIS long term right now. 1.38 "]
+2020-08-03 19:17:05,532 : ERROR : main_logger : This trade contains error(s)! : 7:32 AMBOTBBS-TRADE-BOTEric68Out - DIS - 7/17 - 117call - day - Could - still work but that is why I don't recommend holding DIS long term right now. 1.38 - 1.56
+2020-08-03 19:17:11,943 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' 1,45 ', ' swing ', ' I will give this one some room to play out']
+2020-08-03 19:17:11,944 : WARNING : main_logger :  
+ [' 1,45 ', ' swing ', ' I will give this one some room to play out'] 
+ 10:33 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+In - DBX - 8/21 - 23call - 1,45 - swing - I will give this one some room to play out
+2020-08-03 19:17:15,947 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 33 ', ' DAY ', ' CLOSING MORE 27.65 ', ' 32.26, 33']
+2020-08-03 19:17:17,326 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 34 ', ' DAY ', ' CLOSING POS 27.65 ', ' 32.26, 33, 34']
+2020-08-03 19:17:18,609 : ERROR : main_logger : 'Could not determine buy price!' : ['IN ', ' $1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT']
+2020-08-03 19:17:18,609 : WARNING : main_logger :  
+ [' $1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT'] 
+ BOT
+BBS-TRADE-BOT
+MariaC82
+IN - UPWK - 08/21 - 20C - $1 - SWING - POSSIBLE SCALP. STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT
+2020-08-03 19:17:33,400 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' day ', " Don't ", ' want to hang on to it over night. .38 ', ' .30']
+2020-08-03 19:17:33,401 : WARNING : main_logger :  
+ [' day ', " Don't ", ' want to hang on to it over night. .38 '] 
+ 12:33 PM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - T - 7/17 - 30call - day - Don't - want to hang on to it over night. .38 - .30
+2020-08-03 19:17:33,401 : ERROR : main_logger : DEBUG INFO QUALITY CHECK | Number of Duplicate ints : [] Original message : 12:33 PM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - T - 7/17 - 30call - day - Don't - want to hang on to it over night. .38 - .30 Processed message : [' day ', " Don't ", ' want to hang on to it over night. .38 ']
+2020-08-03 19:17:33,401 : ERROR : main_logger : This trade contains error(s)! : 12:33 PMBOTBBS-TRADE-BOTEric68Out - T - 7/17 - 30call - day - Don't - want to hang on to it over night. .38 - .30
+2020-08-03 19:17:34,730 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' 242.50 ', ' .74 ', ' day ', ' broke my stop area 1.14 ', ' .74']
+2020-08-03 19:17:34,736 : WARNING : main_logger :  
+ [' 242.50 ', ' .74 ', ' day ', ' broke my stop area 1.14 ', ' .74'] 
+ 7:49 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - FB - 7/10 - 242.50 - .74 - day - broke my stop area 1.14 - .74
+2020-08-03 19:17:34,738 : ERROR : main_logger : This trade contains error(s)! : 7:49 AMBOTBBS-TRADE-BOTEric68Out - FB - 7/10 - 242.50 - .74 - day - broke my stop area 1.14 - .74
+2020-08-03 19:17:40,013 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 4 ', ' SCALP ', ' OUT OF 1/2']
+2020-08-03 19:17:40,014 : WARNING : main_logger :  
+ [' 4 ', ' SCALP ', ' OUT OF 1/2'] 
+ BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/17 - 135C - 4 - SCALP - OUT OF 1/2
+2020-08-03 19:17:44,168 : ERROR : main_logger :  : ['IN ', ' 07/17 ', ' 57C ', ' 1.06 ', ' SCALP ', ' STOP AT YOUR OWN RISK RISKY AF. FOLLOWING ROULETTE BULLISH FLOW ALERT'] Live price : 66.85 Strike price : 57
+2020-08-03 19:17:44,168 : ERROR : main_logger : This trade contains error(s)! : 7:15 AMBOTBBS-TRADE-BOTMariaC82IN - CTSH - 07/17 - 57C - 1.06 - SCALP - STOP AT YOUR OWN RISK RISKY AF. FOLLOWING ROULETTE BULLISH FLOW ALERT
+2020-08-03 19:17:45,558 : ERROR : main_logger :  : ['OUT ', ' 07/17 ', ' 57C ', ' 1.30 ', ' SCALP ', ' OUT OF 1/2'] Live price : 66.85 Strike price : 57
+2020-08-03 19:17:45,564 : ERROR : main_logger : This trade contains error(s)! : 7:22 AMBOTBBS-TRADE-BOTMariaC82OUT - CTSH - 07/17 - 57C - 1.30 - SCALP - OUT OF 1/2
+2020-08-03 19:17:48,228 : ERROR : main_logger :  : ['OUT ', ' 07/17 ', ' 57C ', ' 1.25 ', ' SCALP ', ' OUT OF THE REST'] Live price : 66.85 Strike price : 57
+2020-08-03 19:17:48,232 : ERROR : main_logger : This trade contains error(s)! : 7:32 AMBOTBBS-TRADE-BOTMariaC82OUT - CTSH - 07/17 - 57C - 1.25 - SCALP - OUT OF THE REST
+2020-08-03 19:18:07,673 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE $3 & $2.99 @everyone']
+2020-08-03 19:18:07,674 : WARNING : main_logger :  
+ [' 3 ', ' SCALP ', ' OUT OF SOME MORE $3 & $2.99 @everyone'] 
+ 6:44 AM
+BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/17 - 125C - 3 - SCALP - OUT OF SOME MORE $3 & $2.99 @everyone
+2020-08-03 19:18:31,053 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8 ', ' DAY ', ' CLOSING POS 4.72 ', ' 6.5, 8']
+2020-08-03 19:18:52,588 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['In ', ' 1.70 ', ' scalp/day ', ' Keeping ', ' a tight stop on it']
+2020-08-03 19:22:18,906 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTEric68In - LOW - 143call - 1.70 - scalp/day - Keeping - a tight stop on it
+2020-08-03 19:22:22,098 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Out ', ' 2.10 ', ' scalp ', ' Taking ', ' my gains.']
+2020-08-03 19:22:33,773 : ERROR : main_logger : This trade contains error(s)! : 6:58 AMBOTBBS-TRADE-BOTEric68Out - LOW - 143call - 2.10 - scalp - Taking - my gains.
+2020-08-03 19:22:57,152 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-08-03 19:22:57,160 : WARNING : main_logger :  
+ [' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4'] 
+ 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-08-03 19:22:57,161 : ERROR : main_logger : This trade contains error(s)! : 9:11 AMBOTBBS-TRADE-BOTThuhKangOUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-08-03 19:23:02,040 : ERROR : main_logger : This trade contains error(s)! : 11:01 AMBOTBBS-TRADE-BOTEric68DIS - 7/17 - 117put - .15 - scalp - total - yolo pending FL news Will let it go to 0
+2020-08-03 19:23:07,456 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-08-03 19:23:07,457 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-08-03 19:23:07,457 : WARNING : main_logger :  
+ [' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5'] 
+ BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - BABA - 8.28 - 250C - 16.50 - SWING - OUT OF 1/2: $16.5 FROM: 12.5
+2020-08-03 19:29:31,642 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' day/swing ', ' Tight ', ' stop']
+2020-08-03 19:29:31,644 : WARNING : main_logger :  
+ [' day/swing ', ' Tight ', ' stop'] 
+ BOT
+BBS-TRADE-BOT
+Eric68
+In - DIS - 7/17 - 117call - day/swing - Tight - stop
+2020-08-03 19:29:31,644 : ERROR : main_logger : DEBUG INFO QUALITY CHECK | Number of Duplicate ints : [] Original message : BOT
+BBS-TRADE-BOT
+Eric68
+In - DIS - 7/17 - 117call - day/swing - Tight - stop Processed message : [' day/swing ', ' Tight ', ' stop']
+2020-08-03 19:29:31,645 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTEric68In - DIS - 7/17 - 117call - day/swing - Tight - stop
+2020-08-03 19:29:35,572 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' day ', ' Could ', " still work but that is why I don't recommend holding DIS long term right now. 1.38 ", ' 1.56']
+2020-08-03 19:29:35,573 : WARNING : main_logger :  
+ [' day ', ' Could ', " still work but that is why I don't recommend holding DIS long term right now. 1.38 "] 
+ 7:32 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - DIS - 7/17 - 117call - day - Could - still work but that is why I don't recommend holding DIS long term right now. 1.38 - 1.56
+2020-08-03 19:29:35,573 : ERROR : main_logger : DEBUG INFO QUALITY CHECK | Number of Duplicate ints : [] Original message : 7:32 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - DIS - 7/17 - 117call - day - Could - still work but that is why I don't recommend holding DIS long term right now. 1.38 - 1.56 Processed message : [' day ', ' Could ', " still work but that is why I don't recommend holding DIS long term right now. 1.38 "]
+2020-08-03 19:29:35,574 : ERROR : main_logger : This trade contains error(s)! : 7:32 AMBOTBBS-TRADE-BOTEric68Out - DIS - 7/17 - 117call - day - Could - still work but that is why I don't recommend holding DIS long term right now. 1.38 - 1.56
+2020-08-03 19:29:42,135 : ERROR : main_logger : 'Could not determine buy price!' : ['In ', ' 1,45 ', ' swing ', ' I will give this one some room to play out']
+2020-08-03 19:29:42,135 : WARNING : main_logger :  
+ [' 1,45 ', ' swing ', ' I will give this one some room to play out'] 
+ 10:33 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+In - DBX - 8/21 - 23call - 1,45 - swing - I will give this one some room to play out
+2020-08-03 19:29:45,960 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 33 ', ' DAY ', ' CLOSING MORE 27.65 ', ' 32.26, 33']
+2020-08-03 19:29:47,194 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 34 ', ' DAY ', ' CLOSING POS 27.65 ', ' 32.26, 33, 34']
+2020-08-03 19:29:49,130 : ERROR : main_logger : 'Could not determine buy price!' : ['IN ', ' $1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT']
+2020-08-03 19:29:49,131 : WARNING : main_logger :  
+ [' $1 ', ' SWING ', ' POSSIBLE SCALP. STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT'] 
+ BOT
+BBS-TRADE-BOT
+MariaC82
+IN - UPWK - 08/21 - 20C - $1 - SWING - POSSIBLE SCALP. STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT
+2020-08-03 19:30:03,195 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' day ', " Don't ", ' want to hang on to it over night. .38 ', ' .30']
+2020-08-03 19:30:03,195 : WARNING : main_logger :  
+ [' day ', " Don't ", ' want to hang on to it over night. .38 '] 
+ 12:33 PM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - T - 7/17 - 30call - day - Don't - want to hang on to it over night. .38 - .30
+2020-08-03 19:30:03,196 : ERROR : main_logger : DEBUG INFO QUALITY CHECK | Number of Duplicate ints : [] Original message : 12:33 PM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - T - 7/17 - 30call - day - Don't - want to hang on to it over night. .38 - .30 Processed message : [' day ', " Don't ", ' want to hang on to it over night. .38 ']
+2020-08-03 19:30:03,196 : ERROR : main_logger : This trade contains error(s)! : 12:33 PMBOTBBS-TRADE-BOTEric68Out - T - 7/17 - 30call - day - Don't - want to hang on to it over night. .38 - .30
+2020-08-03 19:30:04,809 : ERROR : main_logger : 'Could not determine buy price!' : ['Out ', ' 242.50 ', ' .74 ', ' day ', ' broke my stop area 1.14 ', ' .74']
+2020-08-03 19:30:04,812 : WARNING : main_logger :  
+ [' 242.50 ', ' .74 ', ' day ', ' broke my stop area 1.14 ', ' .74'] 
+ 7:49 AM
+BOT
+BBS-TRADE-BOT
+Eric68
+Out - FB - 7/10 - 242.50 - .74 - day - broke my stop area 1.14 - .74
+2020-08-03 19:30:04,814 : ERROR : main_logger : This trade contains error(s)! : 7:49 AMBOTBBS-TRADE-BOTEric68Out - FB - 7/10 - 242.50 - .74 - day - broke my stop area 1.14 - .74
+2020-08-03 19:30:09,805 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 4 ', ' SCALP ', ' OUT OF 1/2']
+2020-08-03 19:30:09,806 : WARNING : main_logger :  
+ [' 4 ', ' SCALP ', ' OUT OF 1/2'] 
+ BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/17 - 135C - 4 - SCALP - OUT OF 1/2
+2020-08-03 19:30:13,748 : ERROR : main_logger :  : ['IN ', ' 07/17 ', ' 57C ', ' 1.06 ', ' SCALP ', ' STOP AT YOUR OWN RISK RISKY AF. FOLLOWING ROULETTE BULLISH FLOW ALERT'] Live price : 66.85 Strike price : 57
+2020-08-03 19:30:13,749 : ERROR : main_logger : This trade contains error(s)! : 7:15 AMBOTBBS-TRADE-BOTMariaC82IN - CTSH - 07/17 - 57C - 1.06 - SCALP - STOP AT YOUR OWN RISK RISKY AF. FOLLOWING ROULETTE BULLISH FLOW ALERT
+2020-08-03 19:30:15,048 : ERROR : main_logger :  : ['OUT ', ' 07/17 ', ' 57C ', ' 1.30 ', ' SCALP ', ' OUT OF 1/2'] Live price : 66.85 Strike price : 57
+2020-08-03 19:30:15,055 : ERROR : main_logger : This trade contains error(s)! : 7:22 AMBOTBBS-TRADE-BOTMariaC82OUT - CTSH - 07/17 - 57C - 1.30 - SCALP - OUT OF 1/2
+2020-08-03 19:30:17,651 : ERROR : main_logger :  : ['OUT ', ' 07/17 ', ' 57C ', ' 1.25 ', ' SCALP ', ' OUT OF THE REST'] Live price : 66.85 Strike price : 57
+2020-08-03 19:30:17,652 : ERROR : main_logger : This trade contains error(s)! : 7:32 AMBOTBBS-TRADE-BOTMariaC82OUT - CTSH - 07/17 - 57C - 1.25 - SCALP - OUT OF THE REST
+2020-08-03 19:30:41,734 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE $3 & $2.99 @everyone']
+2020-08-03 19:30:41,735 : WARNING : main_logger :  
+ [' 3 ', ' SCALP ', ' OUT OF SOME MORE $3 & $2.99 @everyone'] 
+ 6:44 AM
+BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/17 - 125C - 3 - SCALP - OUT OF SOME MORE $3 & $2.99 @everyone
+2020-08-03 19:31:14,064 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8 ', ' DAY ', ' CLOSING POS 4.72 ', ' 6.5, 8']
+2020-08-03 19:31:39,635 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['In ', ' 1.70 ', ' scalp/day ', ' Keeping ', ' a tight stop on it']
+2020-08-03 19:32:01,520 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTEric68In - LOW - 143call - 1.70 - scalp/day - Keeping - a tight stop on it
+2020-08-03 19:32:05,408 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['Out ', ' 2.10 ', ' scalp ', ' Taking ', ' my gains.']
+2020-08-03 19:32:07,668 : ERROR : main_logger : This trade contains error(s)! : 6:58 AMBOTBBS-TRADE-BOTEric68Out - LOW - 143call - 2.10 - scalp - Taking - my gains.
+2020-08-03 19:32:41,741 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4']
+2020-08-03 19:32:41,744 : WARNING : main_logger :  
+ [' 387.5 ', ' 1.4 ', ' DAY ', ' CLOSING more .94 ', ' 1.2, 1.4'] 
+ 9:11 AM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+OUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-08-03 19:32:41,746 : ERROR : main_logger : This trade contains error(s)! : 9:11 AMBOTBBS-TRADE-BOTThuhKangOUT - AAPL - 7/17 - 387.5 - 1.4 - DAY - CLOSING more .94 - 1.2, 1.4
+2020-08-03 19:32:47,088 : ERROR : main_logger : This trade contains error(s)! : 11:01 AMBOTBBS-TRADE-BOTEric68DIS - 7/17 - 117put - .15 - scalp - total - yolo pending FL news Will let it go to 0
+2020-08-03 19:32:54,456 : WARNING : main_logger : 'Could not determine expiration of trade!' : message : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-08-03 19:32:54,456 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5']
+2020-08-03 19:32:54,457 : WARNING : main_logger :  
+ [' 8.28 ', ' 16.50 ', ' SWING ', ' OUT OF 1/2: $16.5 FROM: 12.5'] 
+ BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - BABA - 8.28 - 250C - 16.50 - SWING - OUT OF 1/2: $16.5 FROM: 12.5
+2020-08-03 19:33:26,884 : ERROR : main_logger : 'Could not determine buy price!' : ['OUT ', ' 3 ', ' SCALP ', ' OUT OF SOME MORE']
+2020-08-03 19:33:26,884 : WARNING : main_logger :  
+ [' 3 ', ' SCALP ', ' OUT OF SOME MORE'] 
+ BOT
+BBS-TRADE-BOT
+MariaC82
+OUT - SQ - 07/24 - 125C - 3 - SCALP - OUT OF SOME MORE
