@@ -3,6 +3,7 @@ from main_logger import logger
 from db_utils import db_connect
 import sqlite3
 from exceptions import DatabaseEmpty, MultipleMatchingIn, StageOneError, StageTwoError, StageThreeError
+import yahoo_fin.options as ops
 
 
 class ErrorChecker:

@@ -6,7 +6,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # set log level
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.ERROR)
 
 # define file handler and set formatter
 file_handler = logging.FileHandler('logfile.log')
