@@ -235,21 +235,44 @@ class ErrorChecker:
         Will return a integer / float if successful
         and 'error' if not.
         '''
-        try:
-            filtered_dict = {}
-            for split in processed_list:
-                possible_result = split.replace('$', '')
-                possible_result = possible_result.replace(' ', '')
-                if len(possible_result) > 2 and any(
-                        char.isalpha() for char in split) is False:
-                    filtered_dict[possible_result] = split
-            possible_results = list(filtered_dict.keys())
-            buy_price = re.findall(r'\s?([-+]?\d*)(\.)(\d+|\d+)\s?',
-                                   str(possible_results))
+        class possible_result():
+            def __init__(self, processed_list_value, possible_result):
+                self.processed_list_value = processed_list_value
+                self.possible_result = possible_result
 
-            if len(buy_price) == 1:
-                buy_price = ''.join(buy_price[0])
-                processed_list.remove(filtered_dict[buy_price])
+            def add_processed_list_value(self, processed_list_value):
+                self.processed_list_value = processed_list_value
+
+            def add_possible_result(self, possible_result):
+                self.possible_result = possible_result
+
+        try:
+            possible_buy_prices = {}
+            duplicate_possible_buy_prices = []
+            for processed_list_value in processed_list:
+                possible_result = processed_list_value.replace('$', '')
+                possible_result = possible_result.replace(' ', '')
+
+                if any(char.isalpha() for char in possible_result) is False:
+                    if ',' in possible_result:
+                        comma_split_values = possible_result.split(',')
+                        for split_value in comma_split_values:
+                            possible_buy_prices[
+                                split_value] = processed_list_value
+                    else:
+                        possible_buy_prices[
+                            possible_result] = processed_list_value
+
+            possible_buy_prices_keys = list(possible_buy_prices.keys())
+            for possible_price in possible_buy_prices_keys:
+                # checks if there are repeating integers that match the buy price format.
+                # if so, theres a high probability that integer is the buy / sell price.
+                if possible_buy_prices_keys.count(possible_price) > 1:
+                    duplicate_possible_buy_prices.append(possible_price)
+
+            if len(duplicate_possible_buy_prices) == 1:
+                buy_price = ''.join(possible_price[0])
+                processed_list.remove(possible_buy_prices[possible_price])
 
             if buy_price == [] or len(buy_price) > 1:
                 raise StageOneError
@@ -317,8 +340,8 @@ class ErrorChecker:
                                 raise StageTwoError
 
                 else:
-                    logger.error(
-                        f'DEBUG INFO QUALITY CHECK | Number of Duplicate ints : {duplicate_ints} Original message : {original_message} Processed message : {processed_list}'
+                    logger.warning(
+                        f'DEBUG INFO QUALITY CHECK -\nAmount of duplicate potential buy prices : {duplicate_ints} \nOriginal message : {original_message} \nProcessed message : {processed_list}'
                     )
                     raise StageTwoError
 
@@ -342,7 +365,7 @@ class ErrorChecker:
 
         except StageThreeError as e:
             logger.error(
-                f'{e} | Processed message : {processed_list} Original Message : {original_message}'
+                f'{e} | Remaining message : {processed_list}\n Original Message : {original_message}'
             )
             buy_price = 'error'
 
