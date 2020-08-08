@@ -227,54 +227,65 @@ class ErrorChecker:
         '''
         in_or_out_fix = 'error'
 
-    def buy_price_fixer(self, processed_list, original_message,
-                        strike_price) -> str:
+    def buy_price_fixer(self, processed_list, original_message) -> str:
         '''
         Runs when the first round of processing
         detects an error determing the buy price.
         Will return a integer / float if successful
         and 'error' if not.
         '''
-        class possible_result():
-            def __init__(self, processed_list_value, possible_result):
-                self.processed_list_value = processed_list_value
-                self.possible_result = possible_result
+        class buy_price_candidates:
+            def __init__(self, possible_buy_price, original_list_value):
+                self.possible_buy_price = possible_buy_price
+                self.original_list_value = original_list_value
 
-            def add_processed_list_value(self, processed_list_value):
-                self.processed_list_value = processed_list_value
+            # def add_processed_list_value(self, processed_list_value):
+            #     self.processed_list_value = processed_list_value
 
-            def add_possible_result(self, possible_result):
-                self.possible_result = possible_result
+            # def add_possible_result(self, possible_result):
+            #     self.possible_result = possible_result
 
         try:
-            possible_buy_prices = {}
-            duplicate_possible_buy_prices = []
-            for processed_list_value in processed_list:
-                possible_result = processed_list_value.replace('$', '')
+            possible_buy_prices = []
+            duplicate_possibles = []
+            for list_value in processed_list:
+                possible_result = list_value.replace('$', '')
                 possible_result = possible_result.replace(' ', '')
 
                 if any(char.isalpha() for char in possible_result) is False:
                     if ',' in possible_result:
                         comma_split_values = possible_result.split(',')
                         for split_value in comma_split_values:
-                            possible_buy_prices[
-                                split_value] = processed_list_value
+                            possible_buy_prices.append(
+                                buy_price_candidates(split_value, list_value))
                     else:
-                        possible_buy_prices[
-                            possible_result] = processed_list_value
+                        possible_buy_prices.append(
+                            buy_price_candidates(possible_result, list_value))
 
-            possible_buy_prices_keys = list(possible_buy_prices.keys())
-            for possible_price in possible_buy_prices_keys:
-                # checks if there are repeating integers that match the buy price format.
-                # if so, theres a high probability that integer is the buy / sell price.
-                if possible_buy_prices_keys.count(possible_price) > 1:
-                    duplicate_possible_buy_prices.append(possible_price)
+            if len(possible_buy_prices) == 1:
+                buy_price = possible_buy_prices[0].possible_buy_price
+                processed_list.remove(
+                    possible_buy_prices[0].original_list_value)
 
-            if len(duplicate_possible_buy_prices) == 1:
-                buy_price = ''.join(possible_price[0])
-                processed_list.remove(possible_buy_prices[possible_price])
+            elif len(possible_buy_prices) > 1:
+                list_of_possible_results = []
+                for obj in possible_buy_prices:
+                    list_of_possible_results.append(obj.possible_buy_price)
 
-            if buy_price == [] or len(buy_price) > 1:
+                for item in list_of_possible_results:
+                    if list_of_possible_results.count(item) > 1:
+                        duplicate_possibles.append(item)
+
+                if len(duplicate_possibles) == 1:
+                    for obj in possible_buy_prices:
+                        if obj.possible_buy_price == duplicate_possibles[0]:
+                            buy_price = obj.possible_buy_price
+                            processed_list.remove(obj.original_list_value)
+
+                elif duplicate_possibles == [] or len(duplicate_possibles) > 1:
+                    raise StageOneError
+
+            else:
                 raise StageOneError
 
         except StageOneError as error:

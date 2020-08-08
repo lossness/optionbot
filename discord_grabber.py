@@ -445,12 +445,12 @@ def error_producer_classic(driver):
                         double_split_result, error_tuple)
 
                     buy_price_tup, double_split_result = check.buy_price_fixer(
-                        double_split_result, new_message, strike_price_tup)
+                        double_split_result, new_message)
 
                 if 'error' in error_tuple:
                     if buy_price_tup == 'error':
                         buy_price_tup, double_split_result = check.buy_price_fixer(
-                            double_split_result, new_message, strike_price_tup)
+                            double_split_result, new_message)
 
                     if strike_price_tup == 'error':
                         strike_price_tup, call_or_put_tup = check.strike_price_fixer(
