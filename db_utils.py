@@ -5,8 +5,9 @@ import random
 
 import pandas as pd
 from make_image import text_on_img
-from exceptions import DuplicateTrade, TradeAlreadyOut, IsAInTrade, DatabaseEmpty, MultipleMatchingIn, IgnoreTrade
+from exceptions import DuplicateTrade, TradeAlreadyOut, IsAInTrade, DatabaseEmpty, MultipleMatchingIn, IgnoreTrade, DateConversionError
 from main_logger import logger
+from datetime import datetime
 
 DEFAULT_PATH = os.path.join(os.path.dirname(__file__), 'database.sqlite3')
 
@@ -323,3 +324,28 @@ def error_checker():
         if (con):
             con.close()
             print("Error check completed.")
+
+
+def convert_date(date):
+    try:
+        split_date = date.split('/')
+        month = split_date[0]
+        day = split_date[1]
+        if len(split_date) == 3:
+            year = split_date[2]
+        else:
+            year = '2020'
+        if len(year) == 2:
+            year = '20' + year
+        if len(day) == 1:
+            day = '0' + day
+        if len(month) == 1:
+            month = '0' + month
+        converted_date = f"{month}/{day}/{year}"
+
+    except (TypeError, ValueError, KeyError) as error:
+        logger.error(f"{error}", exc_info=True)
+        converted_date = 'error'
+
+    finally:
+        return converted_date

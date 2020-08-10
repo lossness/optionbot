@@ -5,6 +5,7 @@ import re
 import random
 import config
 import yfinance as yf
+import pandas as pd
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
@@ -106,7 +107,7 @@ def three_feet(split_message_list: list, ticker_func):
 
                 except LiveStrikePriceError as error:
                     logger.error(
-                        f'{error} : {split_message_list} Live price : {live_price} Strike price : {strike_price}'
+                        f'{error}:\nLive price : {live_price}\n Strike price : {strike_price}'
                     )
                     strike_price = 'error'
 
@@ -125,7 +126,7 @@ def three_feet(split_message_list: list, ticker_func):
 
                 except LiveStrikePriceError as error:
                     logger.error(
-                        f'{error} : {split_message_list} Live price : {live_price} Strike price : {strike_price}'
+                        f'{error}:\nLive price : {live_price}\n Strike price : {strike_price}\n Message : {split_message_list}'
                     )
                     strike_price = 'error'
 
@@ -226,7 +227,7 @@ def get_buy_price(split_message_list):
             split_message_list.remove(' ' + buy_price + ' ')
 
     except KeyError as e:
-        logger.error(f'{e} : {split_message_list}')
+        logger.warning(f'{e} : {split_message_list}')
         buy_price = 'error'
 
     finally:
@@ -467,6 +468,13 @@ def error_producer_classic(driver):
                     if in_or_out_tup == 'error':
                         print(f'ERROR IN_OR_OUT {in_or_out_tup}')
 
+                if 'error' not in (strike_price_tup, stock_ticker_tup,
+                                   trade_expiration_tup, call_or_put_tup
+                                   ) and 'error' in buy_price_tup:
+                    buy_price_tup = check.live_buy_price(
+                        stock_ticker_tup, strike_price_tup,
+                        trade_expiration_tup, call_or_put_tup)
+
                 trade_tuple = (
                     in_or_out_tup,
                     stock_ticker_tup,
@@ -481,7 +489,7 @@ def error_producer_classic(driver):
 
                 if 'error' in trade_tuple:
                     full_message = new_message.replace('\n', '')
-                    logger.error(
+                    logger.info(
                         f'This trade contains error(s)! : {full_message}')
                     update_error_table(trade_tuple)
                     error_counter += 1
@@ -498,7 +506,7 @@ def error_producer_classic(driver):
             pass
 
     except (TimeoutException, NoSuchElementException) as error:
-        logger.warning(
+        logger.error(
             f"{error}: PRODUCER COULD NOT FIND NEWEST DISCORD MESSAGE!!")
         pass
 

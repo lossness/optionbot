@@ -52,3 +52,11 @@ class StageThreeError(Exception):
 
 class MakeImageError(Exception):
     '''Error creating image!'''
+
+
+class DateConversionError(Exception):
+    '''Date could not be converted!'''
+
+
+class LiveBuyPriceError(Exception):
+    '''Error in live buy price function!'''

@@ -1,9 +1,12 @@
 import re
-from main_logger import logger
-from db_utils import db_connect
 import sqlite3
-from exceptions import DatabaseEmpty, MultipleMatchingIn, StageOneError, StageTwoError, StageThreeError
 import yahoo_fin.options as ops
+
+from datetime import datetime
+
+from main_logger import logger
+from db_utils import db_connect, convert_date
+from exceptions import DatabaseEmpty, MultipleMatchingIn, StageOneError, StageTwoError, StageThreeError, LiveBuyPriceError
 
 
 class ErrorChecker:
@@ -239,12 +242,6 @@ class ErrorChecker:
                 self.possible_buy_price = possible_buy_price
                 self.original_list_value = original_list_value
 
-            # def add_processed_list_value(self, processed_list_value):
-            #     self.processed_list_value = processed_list_value
-
-            # def add_possible_result(self, possible_result):
-            #     self.possible_result = possible_result
-
         try:
             possible_buy_prices = []
             duplicate_possibles = []
@@ -276,7 +273,8 @@ class ErrorChecker:
                     if list_of_possible_results.count(item) > 1:
                         duplicate_possibles.append(item)
 
-                if len(duplicate_possibles) == 1:
+                if len(duplicate_possibles) == 1 or len(
+                        set(duplicate_possibles)) == 1:
                     for obj in possible_buy_prices:
                         if obj.possible_buy_price == duplicate_possibles[0]:
                             buy_price = obj.possible_buy_price
@@ -349,6 +347,8 @@ class ErrorChecker:
                                 buy_price = possible_buy_prices[0]
                             else:
                                 raise StageTwoError
+                        else:
+                            raise StageTwoError
 
                 else:
                     logger.warning(
@@ -426,3 +426,47 @@ class ErrorChecker:
 
         finally:
             return new_expiration
+
+    def live_buy_price(self, ticker, strike, expiration, call_or_put):
+        try:
+            if 'error' in (ticker, strike, expiration, call_or_put):
+                raise LiveBuyPriceError
+
+            converted_expiration = convert_date(expiration)
+            if converted_expiration == 'error':
+                raise LiveBuyPriceError
+
+            if call_or_put == 'call':
+                df = ops.get_calls(f'{ticker}', converted_expiration)
+
+            if call_or_put == 'put':
+                df = ops.get_puts(f'{ticker}', converted_expiration)
+
+            if '.' in strike:
+                table = df.loc[df['Strike'] == float(strike)]
+            if '.' not in strike:
+                table = df.loc[df['Strike'] == int(strike)]
+
+            last_sell_price = list(table['Last Price'])[0]
+
+        except LiveBuyPriceError as error:
+            logger.fatal(f"{error}", exc_info=True)
+            last_sell_price = 'error'
+
+        except (IndexError, KeyError) as error:
+            logger.fatal(f"{error}", exc_info=True)
+            last_sell_price = 'error'
+
+        except ValueError as error:
+            date_object_now = datetime.now()
+            date_now = date_object_now.strftime("%m/%d/%Y")
+            print(
+                f"LIVE BUY PRICE ERROR:\n Current Date: {date_now} Trade Expiration: {expiration}"
+            )
+            logger.fatal(
+                f"{error}:\nLIVE BUY PRICE ERROR:\n Current Date: {date_now} Trade Expiration: {expiration}"
+            )
+            last_sell_price = 'error'
+
+        finally:
+            return str(last_sell_price)

@@ -734,3 +734,49 @@ def processor(new_message):
 
     except IndexError:
         pass
+
+def convert_date(date):
+    try:
+        if len(date) != 4 or 5:
+            raise DateConversionError
+        if len(date) == 4:
+            date = '0' + date
+        if len(date) == 5:
+            date = date + '/2020'
+        date = date.replace('/', '-')
+        date_object = datetime.strptime(date, "%m-%d-%Y")
+        converted_date = date_object.strftime("%B %d, %Y")
+
+    except DateConversionError as error:
+        logger.error(f"{error} | \n {date}", exc_info=True)
+        converted_date = 'error'
+
+    finally:
+        return converted_date
+
+
+def convert_date(date):
+    try:
+        split_date = date.split('/')
+        month = split_date[0]
+        day = split_date[1]
+        if len(split_date) == 3:
+            year = split_date[2]
+        else:
+            year = '2020'
+        if len(year) == 2:
+            year = '20' + year
+        if len(day) == 1:
+            day = '0' + day
+        if len(month) == 1:
+            month = '0' + month
+        date = f"{month}-{day}-{year}"
+        date_object = datetime.strptime(date, "%m-%d-%Y")
+        converted_date = date_object.strftime("%B %d, %Y")
+
+    except (TypeError, ValueError, KeyError) as error:
+        logger.error(f"{error}", exc_info=True)
+        converted_date = 'error'
+
+    finally:
+        return converted_date
