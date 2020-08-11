@@ -23,6 +23,7 @@ from dotenv import load_dotenv
 from timeit import default_timer as timer
 from main_logger import logger
 from exceptions import MakeImageError
+from db_utils import convert_date_to_text
 
 load_dotenv()
 INSTA_USERNAME = os.getenv("INSTA_USERNAME")
@@ -38,7 +39,12 @@ def make_image(msg):
     suffix = '.png'
     in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color = msg
     try:
-        expiration = expiration.replace('/', '.')
+        expiration = convert_date_to_text(expiration)
+        if in_or_out == 'in':
+            in_or_out = 'buy'
+        if in_or_out == 'out':
+            in_or_out = 'sell'
+
         im = Image.open(os.path.join(PATH, 'template_images', color + suffix))
         text = f'We are going\n {in_or_out.upper()} on {ticker.upper()}\n Strike price: {strike_price.upper()}\n {call_or_put.upper()} Price: {buy_price}\n Expiration: {expiration}'
         filename = f'{in_or_out}.{ticker}.{strike_price}.{call_or_put}.{expiration}.png'

@@ -1,47 +1,29 @@
-2020-08-08 22:59:15,943 : ERROR : main_logger : :
-Live price : 505.45
- Strike price : 385
- Message : ['OUT ', ' 7/31 ', ' 385P ', ' 5 ', ' DAY ', ' CLOSING 1/2 POS 4.14 ', ' 5']
-2020-08-08 22:59:17,179 : ERROR : main_logger : :
-Live price : 505.45
- Strike price : 2
- Message : ['OUT ', ' 7/31 ', ' 385P ', ' 5 ', ' DAY ', ' CLOSING 1/2 POS 4.14 ', ' 5']
-2020-08-08 22:59:18,431 : ERROR : main_logger : :
-Live price : 505.45
- Strike price : 385
- Message : ['OUT ', ' 7/31 ', ' 385P ', ' 5.5 ', ' DAY ', ' CLOSING POS 4.14 ', ' 5, 5.5']
-2020-08-08 22:59:23,924 : CRITICAL : main_logger : No tables found:
+2020-08-09 17:28:09,003 : ERROR : main_logger :  Live price:505.45 Strike price:385
+Message with LiveStrikePriceError:['OUT ', ' 7/31 ', ' 385P ', ' 5 ', ' DAY ', ' CLOSING 1/2 POS 4.14 ', ' 5']
+2020-08-09 17:28:10,270 : ERROR : main_logger :  Live price:505.45 Strike price:2
+Message with LiveStrikePriceError:['OUT ', ' 7/31 ', ' 385P ', ' 5 ', ' DAY ', ' CLOSING 1/2 POS 4.14 ', ' 5']
+2020-08-09 17:28:11,609 : ERROR : main_logger :  Live price:505.45 Strike price:385
+Message with LiveStrikePriceError:['OUT ', ' 7/31 ', ' 385P ', ' 5.5 ', ' DAY ', ' CLOSING POS 4.14 ', ' 5, 5.5']
+2020-08-09 17:28:16,969 : CRITICAL : main_logger : No tables found:
 LIVE BUY PRICE ERROR:
- Current Date: 08/08/2020 Trade Expiration: 7/31
-2020-08-08 22:59:27,514 : ERROR : main_logger : :
-Live price : 452.82
- Strike price : 375
- Message : ['IN ', ' 7/31 ', ' 375P ', ' 6.85 ', ' DAY ', ' TRADE AT YOUR OWN RISK...USE OWN STOPS']
-2020-08-08 22:59:29,004 : ERROR : main_logger : :
-Live price : 452.82
- Strike price : 375
- Message : ['OUT ', ' 7/31 ', ' 375P ', ' 7.10 ', ' DAY ', ' CLOSING 2/3 POS 6.85 ', ' 7.10 lightening up on pos amid choppiness and upcoming fed press conference.']
-2020-08-08 22:59:30,777 : ERROR : main_logger : :
-Live price : 452.82
- Strike price : 3
- Message : ['OUT ', ' 7/31 ', ' 375P ', ' 7.10 ', ' DAY ', ' CLOSING 2/3 POS 6.85 ', ' 7.10 lightening up on pos amid choppiness and upcoming fed press conference.']
-2020-08-08 22:59:32,324 : ERROR : main_logger : :
-Live price : 452.82
- Strike price : 375
- Message : ['OUT ', ' 7/31 ', ' 375P ', ' 6.2 ', ' DAY ', ' CLOSING POS 6.85 ', ' 7.1. 6.2']
-2020-08-08 22:59:52,032 : ERROR : main_logger : :
-Live price : 56.54
- Strike price : 46
-2020-08-08 23:00:42,627 : ERROR : main_logger :  : Ticker matches : 0 trade : [' remaining POS 5.60 pelosi news and uvxy action...']
-2020-08-08 23:01:46,175 : ERROR : main_logger : :
-Live price : 264.08
- Strike price : 160
-2020-08-08 23:01:53,412 : CRITICAL : main_logger : No tables found:
+ Current Date: 08/09/2020 Trade Expiration: 7/31
+2020-08-09 17:28:20,217 : ERROR : main_logger :  Live price:452.82 Strike price:375
+Message with LiveStrikePriceError:['IN ', ' 7/31 ', ' 375P ', ' 6.85 ', ' DAY ', ' TRADE AT YOUR OWN RISK...USE OWN STOPS']
+2020-08-09 17:28:21,955 : ERROR : main_logger :  Live price:452.82 Strike price:375
+Message with LiveStrikePriceError:['OUT ', ' 7/31 ', ' 375P ', ' 7.10 ', ' DAY ', ' CLOSING 2/3 POS 6.85 ', ' 7.10 lightening up on pos amid choppiness and upcoming fed press conference.']
+2020-08-09 17:28:23,362 : ERROR : main_logger :  Live price:452.82 Strike price:3
+Message with LiveStrikePriceError:['OUT ', ' 7/31 ', ' 375P ', ' 7.10 ', ' DAY ', ' CLOSING 2/3 POS 6.85 ', ' 7.10 lightening up on pos amid choppiness and upcoming fed press conference.']
+2020-08-09 17:28:24,809 : ERROR : main_logger :  Live price:452.82 Strike price:375
+Message with LiveStrikePriceError:['OUT ', ' 7/31 ', ' 375P ', ' 6.2 ', ' DAY ', ' CLOSING POS 6.85 ', ' 7.1. 6.2']
+2020-08-09 17:28:39,752 : ERROR : main_logger :  Live price:56.54 Strike price:46
+Message with LiveStrikePriceError:['Out ', ' 8/21 ', ' 46call ', ' 4.53 ', ' swing ', ' 4.10 ', " 4.53 Got greedy on this one. Should've exited a couple weeks ago over 100% Still working on the emotions myself. lol"]
+2020-08-09 17:29:22,668 : ERROR : main_logger :  : Ticker matches : 0 trade : [' remaining POS 5.60 pelosi news and uvxy action...']
+2020-08-09 17:30:17,422 : ERROR : main_logger :  Live price:264.08 Strike price:160
+Message with LiveStrikePriceError:['IN ', ' 08/07 ', ' 160C ', ' 1.44 ', ' SCALP ', ' POSSIBLE OVERNIGHT SWING STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT']
+2020-08-09 17:30:24,257 : CRITICAL : main_logger : No tables found:
 LIVE BUY PRICE ERROR:
- Current Date: 08/08/2020 Trade Expiration: 08/07
-2020-08-08 23:01:56,873 : ERROR : main_logger : :
-Live price : 264.08
- Strike price : 160
-2020-08-08 23:02:18,023 : ERROR : main_logger : :
-Live price : 130.22
- Strike price : 1.32
+ Current Date: 08/09/2020 Trade Expiration: 08/07
+2020-08-09 17:30:28,086 : ERROR : main_logger :  Live price:264.08 Strike price:160
+Message with LiveStrikePriceError:['OUT ', ' 08/07 ', ' 160C ', ' 3.93 ', ' SCALP ', ' OUT OF THE LAST ONE']
+2020-08-09 17:30:50,450 : ERROR : main_logger :  Live price:130.22 Strike price:1.32
+Message with LiveStrikePriceError:['OUT ', ' 08/14 ', ' 1.32C ', ' 2.00 ', ' SWING ', ' OUT OF 3/4TH']

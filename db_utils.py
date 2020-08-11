@@ -2,6 +2,7 @@ import sqlite3
 import os
 import re
 import random
+import math
 
 import pandas as pd
 from make_image import text_on_img
@@ -349,3 +350,34 @@ def convert_date(date):
 
     finally:
         return converted_date
+
+
+def convert_date_to_text(date):
+    try:
+        split_date = date.split('/')
+        month = split_date[0]
+        day = split_date[1]
+        if len(split_date) == 3:
+            year = split_date[2]
+        else:
+            year = '2020'
+        if len(year) == 2:
+            year = '20' + year
+        if len(day) == 1:
+            day = '0' + day
+        if len(month) == 1:
+            month = '0' + month
+        date = f"{month}-{day}-{year}"
+        date_object = datetime.strptime(date, "%m-%d-%Y")
+        converted_date = date_object.strftime("%B %d, %Y")
+
+    except (TypeError, ValueError, KeyError) as error:
+        logger.error(f"{error}", exc_info=True)
+        converted_date = 'error'
+
+    finally:
+        return converted_date
+
+
+def mask_buy_price(price):
+    

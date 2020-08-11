@@ -6,6 +6,7 @@ import random
 import config
 import yfinance as yf
 import pandas as pd
+import math
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
@@ -107,7 +108,7 @@ def three_feet(split_message_list: list, ticker_func):
 
                 except LiveStrikePriceError as error:
                     logger.error(
-                        f'{error}:\nLive price : {live_price}\n Strike price : {strike_price}'
+                        f'{error} Live price:{live_price} Strike price:{strike_price}\nMessage with LiveStrikePriceError:{split_message_list}'
                     )
                     strike_price = 'error'
 
@@ -126,7 +127,7 @@ def three_feet(split_message_list: list, ticker_func):
 
                 except LiveStrikePriceError as error:
                     logger.error(
-                        f'{error}:\nLive price : {live_price}\n Strike price : {strike_price}\n Message : {split_message_list}'
+                        f'{error} Live price:{live_price} Strike price:{strike_price}\nMessage with LiveStrikePriceError:{split_message_list}'
                     )
                     strike_price = 'error'
 
@@ -317,28 +318,52 @@ def processor(new_message):
 
         check = ErrorChecker()
 
-        if buy_price_tup == strike_price_tup:
-            buy_price_tup = 'error'
-            strike_price_tup = 'error'
+        error_tuple = (
+            in_or_out_tup,
+            stock_ticker_tup,
+            datetime_tup,
+            strike_price_tup,
+            call_or_put_tup,
+            buy_price_tup,
+            trade_author_tup,
+            trade_expiration_tup,
+            color_tup,
+        )
 
-        if buy_price_tup == 'error':
+        if buy_price_tup == strike_price_tup:
+            strike_price_tup, call_or_put_tup = check.strike_price_fixer(
+                double_split_result, error_tuple)
+
             buy_price_tup, double_split_result = check.buy_price_fixer(
                 double_split_result, new_message)
 
-        if trade_expiration_tup == 'error':
-            error_tuple = (
-                in_or_out_tup,
-                stock_ticker_tup,
-                datetime_tup,
-                strike_price_tup,
-                call_or_put_tup,
-                buy_price_tup,
-                trade_author_tup,
-                trade_expiration_tup,
-                color_tup,
-            )
-            trade_expiration_tup = check.expiration_fixer(
-                double_split_result, error_tuple)
+        if 'error' in error_tuple:
+            if buy_price_tup == 'error':
+                buy_price_tup, double_split_result = check.buy_price_fixer(
+                    double_split_result, new_message)
+
+            if strike_price_tup == 'error':
+                strike_price_tup, call_or_put_tup = check.strike_price_fixer(
+                    double_split_result, error_tuple)
+
+            if trade_expiration_tup == 'error':
+                trade_expiration_tup = check.expiration_fixer(
+                    double_split_result, error_tuple)
+
+            if call_or_put_tup == 'error':
+                call_or_put_tup = check.call_or_put_fixer(
+                    double_split_result, error_tuple)
+
+            if in_or_out_tup == 'error':
+                print(f'ERROR IN_OR_OUT {in_or_out_tup}')
+
+        if 'error' not in (strike_price_tup, stock_ticker_tup,
+                           trade_expiration_tup,
+                           call_or_put_tup) and 'error' in buy_price_tup:
+            buy_price_tup = check.live_buy_price(stock_ticker_tup,
+                                                 strike_price_tup,
+                                                 trade_expiration_tup,
+                                                 call_or_put_tup)
 
         trade_tuple = (
             in_or_out_tup,
@@ -512,101 +537,3 @@ def error_producer_classic(driver):
 
     finally:
         print(counter)
-
-
-def error_producer_single(new_message):
-    # loop over single discord posts in all matched posts in main channel
-    try:
-        split_result = new_message.splitlines()
-        print(split_result)
-        # removes any empty strings from list
-        split_result = list(filter(None, split_result))
-        split_result = list(filter(filter_message, split_result))
-        trade_author = list(filter(filter_trader, split_result))
-        trade_author_tup = trade_author[0]
-        # find the longest string left which is the message string
-        longest_string = max(split_result, key=len)
-        double_split_result = longest_string.split('-')
-        double_split_result = list(filter(None, double_split_result))
-        # gets a call or put status, and pops that matched entry out of the list
-        three_feet_results = three_feet(double_split_result, get_stock_ticker)
-
-        call_or_put_tup, strike_price_tup, stock_ticker_tup, double_split_result = three_feet_results
-
-        trade_expiration_tup, double_split_result = get_trade_expiration(
-            double_split_result)
-
-        buy_price_tup, double_split_result = get_buy_price(double_split_result)
-
-        in_or_out_tup, double_split_result = get_in_or_out(double_split_result)
-
-        datetime_tup = str(datetime.now())
-        stock_ticker_tup = stock_ticker_tup.lower()
-        color_tup = 'error_check'
-
-        check = ErrorChecker()
-
-        error_tuple = (
-            in_or_out_tup,
-            stock_ticker_tup,
-            datetime_tup,
-            strike_price_tup,
-            call_or_put_tup,
-            buy_price_tup,
-            trade_author_tup,
-            trade_expiration_tup,
-            color_tup,
-        )
-
-        if buy_price_tup == strike_price_tup:
-            strike_price_tup, call_or_put_tup = check.strike_price_fixer(
-                double_split_result, error_tuple)
-
-            buy_price_tup, double_split_result = check.buy_price_fixer(
-                double_split_result, new_message, strike_price_tup)
-
-        if 'error' in error_tuple:
-            if buy_price_tup == 'error':
-                buy_price_tup, double_split_result = check.buy_price_fixer(
-                    double_split_result, new_message, strike_price_tup)
-
-            if strike_price_tup == 'error':
-                strike_price_tup, call_or_put_tup = check.strike_price_fixer(
-                    double_split_result, error_tuple)
-
-            if trade_expiration_tup == 'error':
-                trade_expiration_tup = check.expiration_fixer(
-                    double_split_result, error_tuple)
-
-            if call_or_put_tup == 'error':
-                call_or_put_tup = check.call_or_put_fixer(
-                    double_split_result, error_tuple)
-
-            if in_or_out_tup == 'error':
-                print(f'ERROR IN_OR_OUT {in_or_out_tup}')
-
-        trade_tuple = (
-            in_or_out_tup,
-            stock_ticker_tup,
-            datetime_tup,
-            strike_price_tup,
-            call_or_put_tup,
-            buy_price_tup,
-            trade_author_tup,
-            trade_expiration_tup,
-            color_tup,
-        )
-
-        if 'error' in trade_tuple:
-            full_message = new_message.replace('\n', '')
-            logger.error(f'This trade contains error(s)! : {full_message}')
-            update_error_table(trade_tuple)
-
-        elif 'error' not in trade_tuple:
-            ignore_trade, trade_color_choice = verify_trade(list(trade_tuple))
-            if ignore_trade is False:
-                update_table(trade_tuple)
-
-    except (KeyError, IndexError, ValueError) as error:
-        print(f"{error}")
-        pass
