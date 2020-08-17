@@ -8,11 +8,19 @@ import yfinance as yf
 import pandas as pd
 import math
 
+from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 from datetime import datetime
 from make_image import text_on_img
 from db_utils import update_table, error_checker, verify_trade, update_error_table
 from dotenv import load_dotenv
-from exceptions import *
+from exceptions import IsOldMessage, TickerError, LiveStrikePriceError, DuplicateTrade, IsAInTrade
 from timeit import default_timer as timer
 from tqdm import tqdm
 from main_logger import logger

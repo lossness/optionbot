@@ -1,3 +1,6 @@
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+
+
 class DuplicateTrade(Exception):
     '''This trade has already been recorded'''
 

@@ -16,5 +16,3 @@ file_handler.setFormatter(formatter)
 
 # add file handler to logger
 logger.addHandler(file_handler)
-
-# Logs

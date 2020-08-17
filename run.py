@@ -12,31 +12,30 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
-from dotenv import load_dotenv
 from instapost import consumer
 from discord_grabber import producer, error_producer_classic
 from insta_browser import switch_to_mobile
 from main_logger import logger
 
-load_dotenv()
-DISCORD_DRIVER_PATH = os.getenv("DISCORD_DRIVER_PATH")
-INSTA_DRIVER_PATH = os.getenv("INSTA_DRIVER_PATH")
-DISCORD_USERNAME = os.getenv("DISCORD_USERNAME")
-DISCORD_PW = os.getenv("DISCORD_PW")
-CHROME = os.getenv("CHROME")
-LIVE_USERNAME = os.getenv("LIVE_USERNAME")
-LIVE_PW = os.getenv("LIVE_PW")
-INSTA_USERNAME = os.getenv("INSTA_USERNAME")
-INSTA_PW = os.getenv("INSTA_PASSWORD")
-CHROME_INSTA = os.getenv("INSTACHROME")
-PATH = pathlib.Path.cwd()
+if os.name == 'nt':
+    DISCORD_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
+                                       'windows', 'discord',
+                                       'chromedriver.exe')
+    INSTA_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
+                                     'windows', 'insta', 'chromedriver.exe')
+
+if os.name == 'posix':
+    DISCORD_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
+                                       'linux', 'discord', 'chromedriver.exe')
+    INSTA_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
+                                     'linux', 'insta', 'chromedriver.exe')
 
 
 def check_discord():
     chrome_options = Options()
-    # chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--headless")
     # chrome_options.add_argument('--disable-gpu')
-    # chrome_options.add_argument('--log-level=3')
+    chrome_options.add_argument('--log-level=3')
     chrome_options.debugger_address = '127.0.0.1:9222'
     discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
                                       options=chrome_options)
@@ -57,6 +56,8 @@ def check_discord():
 
 def post_driver():
     chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--log-level=3")
     chrome_options.debugger_address = '127.0.0.1:9223'
     insta_driver = webdriver.Chrome(executable_path=INSTA_DRIVER_PATH,
                                     options=chrome_options)
