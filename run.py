@@ -16,14 +16,17 @@ from instapost import consumer
 from discord_grabber import producer, error_producer_classic
 from insta_browser import switch_to_mobile
 from main_logger import logger
+from dotenv import load_dotenv
 
+load_dotenv()
 if os.name == 'nt':
-    DISCORD_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
-                                       'windows', 'discord',
-                                       'chromedriver.exe')
-    INSTA_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
-                                     'windows', 'insta', 'chromedriver.exe')
-
+    # DISCORD_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
+    #                                   'windows', 'discord',
+    #                                   'chromedriver.exe')
+    #INSTA_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
+    #                                 'windows', 'insta', 'chromedriver.exe')
+    DISCORD_DRIVER_PATH = os.getenv('WINDOWS_DISCORD_DRIVER_PATH')
+    INSTA_DRIVER_PATH = os.getenv('WINDOWS_INSTA_DRIVER_PATH')
 if os.name == 'posix':
     DISCORD_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
                                        'linux', 'discord', 'chromedriver.exe')
@@ -39,12 +42,18 @@ def check_discord():
     chrome_options.debugger_address = '127.0.0.1:9222'
     discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
                                       options=chrome_options)
+    try:
+        element = discord_driver.find_elements_by_xpath(
+            "//*[@role='group']")[-1]
+        element.location_once_scrolled_into_view
+    except (NoSuchElementException, TimeoutError) as error:
+        logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
     spinner = Spinner('Listening for new messages ')
     while True:
         try:
             producer(discord_driver)
         except (TimeoutException, NoSuchElementException) as error:
-            logger.warning(error)
+            logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
             continue
         finally:
             spinner.next()

@@ -7,6 +7,7 @@ import config
 import yfinance as yf
 import pandas as pd
 import math
+import yahoo_fin.stock_info as si
 
 from datetime import datetime
 from make_image import text_on_img
@@ -17,6 +18,7 @@ from timeit import default_timer as timer
 from tqdm import tqdm
 from main_logger import logger
 from second_level_checks import ErrorChecker
+
 # include parent directory in path
 PATH = pathlib.Path.cwd()
 TRADERS = ["Eric68", "MariaC82", "ThuhKang", "Jen ❤crypto"]
@@ -266,6 +268,7 @@ def producer(driver):
     # loop over single discord posts in all matched posts in main channel
     try:
         global LAST_MESSAGE
+
         new_message = driver.find_elements_by_xpath(
             "//*[@role='group']")[-1].text
         if new_message != LAST_MESSAGE:
@@ -278,6 +281,17 @@ def producer(driver):
         logger.warning(
             f"{error}: PRODUCER COULD NOT FIND NEWEST DISCORD MESSAGE!!")
         pass
+
+
+def release_trade(trade):
+    '''
+    1. Pads IN trades option price depending
+    on value.
+    2. Keeps trade in queue until live price
+    hits padded price, then releases to post.
+    '''
+
+    pass
 
 
 def processor(new_message):
