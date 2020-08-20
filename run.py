@@ -14,7 +14,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from instapost import consumer
 from discord_grabber import producer, error_producer_classic
-from insta_browser import switch_to_mobile
+#from insta_browser import switch_to_mobile
 from main_logger import logger
 from dotenv import load_dotenv
 
@@ -28,16 +28,20 @@ if os.name == 'nt':
     DISCORD_DRIVER_PATH = os.getenv('WINDOWS_DISCORD_DRIVER_PATH')
     INSTA_DRIVER_PATH = os.getenv('WINDOWS_INSTA_DRIVER_PATH')
 if os.name == 'posix':
-    DISCORD_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
-                                       'linux', 'discord', 'chromedriver.exe')
-    INSTA_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
-                                     'linux', 'insta', 'chromedriver.exe')
+    DISCORD_DRIVER_PATH = r'/usr/bin/chromedriver'
+    INSTA_DRIVER_PATH = r'/usr/bin/chromedriver'
 
 
 def check_discord():
     chrome_options = Options()
+    chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.add_argument("--disable-extensions")
+    chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument("--headless")
-    # chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--ignore-certificate-errors")
     chrome_options.add_argument('--log-level=3')
     chrome_options.debugger_address = '127.0.0.1:9222'
     discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
@@ -65,7 +69,14 @@ def check_discord():
 
 def post_driver():
     chrome_options = Options()
+    chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.add_argument("--disable-extensions")
+    chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--ignore-certificate-errors")
     chrome_options.add_argument("--log-level=3")
     chrome_options.debugger_address = '127.0.0.1:9223'
     insta_driver = webdriver.Chrome(executable_path=INSTA_DRIVER_PATH,

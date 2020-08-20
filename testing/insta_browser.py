@@ -1,3 +1,4 @@
+'''
 import time
 from pynput.keyboard import Key, Controller
 
@@ -28,3 +29,4 @@ def switch_to_mobile(driver):
     KEYBOARD.release(Key.ctrl)
     KEYBOARD.release(Key.shift)
     KEYBOARD.release('j')
+'''

@@ -16,8 +16,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from datetime import datetime
-from pynput.keyboard import Key, Controller
-from insta_browser import switch_to_mobile
+#from pynput.keyboard import Key, Controller
+#from insta_browser import switch_to_mobile
 from PIL import Image, ImageDraw, ImageFont
 from dotenv import load_dotenv
 from timeit import default_timer as timer
@@ -32,7 +32,7 @@ CHROME_INSTA = os.getenv("INSTACHROME")
 DRIVER_PATH = os.getenv("DRIVER_PATH")
 # include parent directory in path
 PATH = pathlib.Path.cwd()
-KEYBOARD = Controller()
+#KEYBOARD = Controller()
 
 
 def make_image(msg):
