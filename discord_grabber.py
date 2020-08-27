@@ -320,14 +320,14 @@ def mask_buy_price(price: str) -> str:
                 elif len(first_split_price[1]) == 1:
                     price = '.' + first_split_price[1] + str(random_int)
 
-            elif 2 <= int(first_split_price[0]) <= 5:
-                price = float(price) + .01
+            elif 3 <= int(first_split_price[0]) <= 5:
+                price = Decimal(float(price)) + Decimal(.01)
 
             elif 6 <= int(first_split_price[0]) <= 11:
-                price = float(price) + .06
+                price = Decimal(float(price)) + Decimal(.06)
 
             elif 12 <= int(first_split_price[0]) <= 21:
-                price = float(price) + .11
+                price = Decimal(float(price)) + Decimal(.11)
 
             price = str(price)
             if '.' in price and first_split_price[0] != '':
@@ -374,14 +374,47 @@ def mask_buy_price(price: str) -> str:
         return str(price)
 
 
-def mask_sell_price(ticker, strike, expiration, buy_price, call_or_put):
+def mask_sell_price(price):
     try:
-        pass
-    except:
-        pass
+        if '.' in price:
+            split_price = price.split('.')
+            # If price has one decimal point (x.x or xx.x) add a second spot x.x5
+            if len(split_price[1]) == 1:
+                split_price[1] = split_price[1] + '5'
+                price = '.'.join(split_price)
+
+            # If price has two decimal spots there are multiple techniques required.
+            if len(split_price[1]) == 2:
+                # If the second decimal spot is less than 5, round up to 5.
+                if int(split_price[1][1]) < 5:
+                    price = split_price[0] + '.' + split_price[1][0] + '5'
+
+                # If the second integer to the right of decimal
+                # is more than 5, and the first integer is 9
+                # add one to the number to the left of the decimal
+                if int(split_price[1][1]) >= 5 and split_price[1][0] == '9':
+                    if split_price[0] == '':
+                        price = '1'
+                    else:
+                        price = int(split_price[0]) + 1
+                        price = str(price)
+
+                # if the second decimal spot is more than 5, and the first spot is less
+                # than 9, add 1 to the first spot, and make the second spot a 0.
+                if int(split_price[1][1]) >= 5 and int(split_price[1][0]) < 9:
+                    modified_int = int(split_price[1][0]) + 1
+                    price = split_price[0] + '.' + str(modified_int) + '0'
+
+        elif '.' not in price:
+            if len(price) == 3:
+                price = price + '.5'
+            if len(price) < 3:
+                price = price + '.05'
+    except ValueError as error:
+        logger.fatal(f'{error} SELL PRICE MASKING VALUE ERROR', exc_info=True)
 
     finally:
-        pass
+        return str(price)
 
 
 def release_trade(ticker, strike, expiration, call_or_put):
@@ -507,7 +540,7 @@ def processor(new_message):
                 if in_or_out_tup == 'in':
                     buy_price_tup = mask_buy_price(buy_price_tup)
                 if in_or_out_tup == 'out':
-                    pass
+                    buy_price_tup = mask_sell_price(buy_price_tup)
                 valid_trade = (
                     in_or_out_tup,
                     stock_ticker_tup,
@@ -527,7 +560,7 @@ def processor(new_message):
                 update_table(valid_trade)
 
     except (KeyError, IndexError, ValueError) as error:
-        print(f"{error}")
+        print(f"\n{error}")
         pass
 
 

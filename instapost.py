@@ -23,7 +23,7 @@ from dotenv import load_dotenv
 from timeit import default_timer as timer
 from main_logger import logger
 from exceptions import MakeImageError
-from db_utils import convert_date_to_text
+from db_utils import convert_date
 
 load_dotenv()
 INSTA_USERNAME = os.getenv("INSTA_USERNAME")
@@ -39,14 +39,15 @@ def make_image(msg):
     suffix = '.png'
     in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color = msg
     try:
-        expiration = convert_date_to_text(expiration)
+        expiration = convert_date(expiration)
+        expiration = expiration.replace('/', '-')
         if in_or_out == 'in':
             in_or_out = 'buying'
         if in_or_out == 'out':
             in_or_out = 'selling'
 
         im = Image.open(os.path.join(PATH, 'template_images', color + suffix))
-        text = f'We\'re {in_or_out} {ticker.upper()}\n Strike: {strike_price.upper()}\n {call_or_put.upper()} Price: {buy_price}\n Expiration: {expiration}'
+        text = f'We\'re {in_or_out} {ticker.upper()}\n Strike: {strike_price.upper()}\n {call_or_put.upper()} Price: {buy_price}\n Expires: {expiration}'
         filename = f'{in_or_out}.{ticker}.{strike_price}.{call_or_put}.{expiration}.png'
         #my_font = ImageFont.truetype('micross.ttf', 75)
         my_font = ImageFont.truetype(
@@ -54,7 +55,7 @@ def make_image(msg):
         draw = ImageDraw.Draw(im)
         # w, h = draw.multiline_textsize(text, font=my_font)
         # draw text
-        draw.multiline_text((75, 425),
+        draw.multiline_text((215, 425),
                             text,
                             fill='black',
                             font=my_font,
