@@ -27,3 +27,19 @@ LIVE BUY PRICE ERROR:
 Message with LiveStrikePriceError:['OUT ', ' 08/07 ', ' 160C ', ' 3.93 ', ' SCALP ', ' OUT OF THE LAST ONE']
 2020-08-09 17:30:50,450 : ERROR : main_logger :  Live price:130.22 Strike price:1.32
 Message with LiveStrikePriceError:['OUT ', ' 08/14 ', ' 1.32C ', ' 2.00 ', ' SWING ', ' OUT OF 3/4TH']
+2020-08-24 02:55:30,817 : CRITICAL : main_logger : COULD NOT OPEN IMAGE TO POST TRADE!
+2020-08-24 02:55:30,818 : CRITICAL : main_logger : 
+2020-08-24 03:03:56,564 : ERROR : main_logger :  Live price:73.93 Strike price:53
+Message with LiveStrikePriceError:['IN ', ' 07/10 ', ' 53C ', ' 0.56 ', ' SCALP ', ' POSSIBLE SWING. STOP AT YOUR OWN RISK FOLLOWING STEADY BULLISH FLOW ALERT']
+2020-08-24 03:03:56,566 : ERROR : main_logger : This trade contains error(s)! : joelMariaC82IN - FSLR - 07/10 - 53C - 0.56 - SCALP - POSSIBLE SWING. STOP AT YOUR OWN RISK FOLLOWING STEADY BULLISH FLOW ALERT
+2020-08-24 03:04:10,468 : CRITICAL : main_logger : COULD NOT OPEN IMAGE TO POST TRADE!
+2020-08-24 03:04:10,469 : CRITICAL : main_logger : 
+2020-08-24 03:21:12,814 : ERROR : main_logger :  : Ticker matches : 0 trade : ['in ', ' test ', ' 8/21 ', ' 99c ', ' 1.15 ', ' scalp ', ' just testing']
+2020-08-24 03:21:14,900 : ERROR : main_logger : This trade contains error(s)! : joelThuhKangin - test - 8/21 - 99c - 1.15 - scalp - just testing
+2020-08-25 03:23:36,641 : CRITICAL : main_logger : COULD NOT OPEN IMAGE TO POST TRADE!
+2020-08-25 03:23:36,644 : CRITICAL : main_logger : 
+2020-08-26 03:18:47,469 : CRITICAL : main_logger : invalid literal for int() with base 10: '4.05' BUY PRICE MASKING VALUE ERROR
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/discord_grabber.py", line 318, in mask_buy_price
+    price = int(price) + .01
+ValueError: invalid literal for int() with base 10: '4.05'

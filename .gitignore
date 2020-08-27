@@ -15,3 +15,10 @@ template_images/MK1.png
 template_images/
 trade_images/
 /selenium_utilities
+/discord_session
+/insta_session
+.pyc
+settings.json
+/settings.json
+test.sqlite3
+__pycache__/config.cpython-38.pyc

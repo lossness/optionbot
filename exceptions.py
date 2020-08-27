@@ -63,3 +63,7 @@ class DateConversionError(Exception):
 
 class LiveBuyPriceError(Exception):
     '''Error in live buy price function!'''
+
+
+class ReleaseTradeError(Exception):
+    '''Error in release trade function!'''

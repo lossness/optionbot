@@ -41,18 +41,20 @@ def make_image(msg):
     try:
         expiration = convert_date_to_text(expiration)
         if in_or_out == 'in':
-            in_or_out = 'buy'
+            in_or_out = 'buying'
         if in_or_out == 'out':
-            in_or_out = 'sell'
+            in_or_out = 'selling'
 
         im = Image.open(os.path.join(PATH, 'template_images', color + suffix))
-        text = f'We are going\n {in_or_out.upper()} on {ticker.upper()}\n Strike price: {strike_price.upper()}\n {call_or_put.upper()} Price: {buy_price}\n Expiration: {expiration}'
+        text = f'We\'re {in_or_out} {ticker.upper()}\n Strike: {strike_price.upper()}\n {call_or_put.upper()} Price: {buy_price}\n Expiration: {expiration}'
         filename = f'{in_or_out}.{ticker}.{strike_price}.{call_or_put}.{expiration}.png'
-        my_font = ImageFont.truetype('micross.ttf', 75)
+        #my_font = ImageFont.truetype('micross.ttf', 75)
+        my_font = ImageFont.truetype(
+            r'/home/swing/projects/fonts/Eurostile LT Bold.ttf', 60)
         draw = ImageDraw.Draw(im)
         # w, h = draw.multiline_textsize(text, font=my_font)
         # draw text
-        draw.multiline_text((235, 415),
+        draw.multiline_text((75, 425),
                             text,
                             fill='black',
                             font=my_font,

@@ -34,14 +34,14 @@ if os.name == 'posix':
 
 def check_discord():
     chrome_options = Options()
-    chrome_options.add_argument("--window-size=1920,1080")
-    chrome_options.add_argument("--disable-extensions")
-    chrome_options.add_argument("--start-maximized")
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--ignore-certificate-errors")
+    # chrome_options.add_argument("--window-size=1920,1080")
+    # chrome_options.add_argument("--disable-extensions")
+    # chrome_options.add_argument("--start-maximized")
+    # chrome_options.add_argument("--headless")
+    # chrome_options.add_argument("--disable-gpu")
+    # chrome_options.add_argument("--disable-dev-shm-usage")
+    # chrome_options.add_argument("--no-sandbox")
+    # chrome_options.add_argument("--ignore-certificate-errors")
     chrome_options.add_argument('--log-level=3')
     chrome_options.debugger_address = '127.0.0.1:9222'
     discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
@@ -69,15 +69,15 @@ def check_discord():
 
 def post_driver():
     chrome_options = Options()
-    chrome_options.add_argument("--window-size=1920,1080")
-    chrome_options.add_argument("--disable-extensions")
-    chrome_options.add_argument("--start-maximized")
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--ignore-certificate-errors")
-    chrome_options.add_argument("--log-level=3")
+    # chrome_options.add_argument("--window-size=1920,1080")
+    # chrome_options.add_argument("--disable-extensions")
+    # chrome_options.add_argument("--start-maximized")
+    # chrome_options.add_argument("--headless")
+    # chrome_options.add_argument("--disable-gpu")
+    # chrome_options.add_argument("--disable-dev-shm-usage")
+    # chrome_options.add_argument("--no-sandbox")
+    # chrome_options.add_argument("--ignore-certificate-errors")
+    # chrome_options.add_argument("--log-level=3")
     chrome_options.debugger_address = '127.0.0.1:9223'
     insta_driver = webdriver.Chrome(executable_path=INSTA_DRIVER_PATH,
                                     options=chrome_options)

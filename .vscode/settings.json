@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\joel\\anaconda3\\envs\\optionbotenv\\python.exe",
+    "python.pythonPath": "/home/swing/projects/env/bin/python3",
     "python.formatting.provider": "yapf",
     "python.linting.pylintEnabled": true,
     "python.linting.mypyEnabled": false,

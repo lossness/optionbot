@@ -11,13 +11,14 @@ import yahoo_fin.stock_info as si
 
 from datetime import datetime
 from make_image import text_on_img
-from db_utils import update_table, error_checker, verify_trade, update_error_table
+from db_utils import update_table, error_checker, verify_trade, update_error_table, convert_date, convert_date_to_text
 from dotenv import load_dotenv
 from exceptions import *
 from timeit import default_timer as timer
 from tqdm import tqdm
 from main_logger import logger
 from second_level_checks import ErrorChecker
+from decimal import *
 
 # include parent directory in path
 PATH = pathlib.Path.cwd()
@@ -283,15 +284,124 @@ def producer(driver):
         pass
 
 
-def release_trade(trade):
+def mask_buy_price(price: str) -> str:
+    '''
+    Pads the buy price depending on value
+    for added safety.
+    '''
+    # Set decimal rounding to .xx
+    getcontext().prec = 3
+    getcontext().rounding = ROUND_UP
+    try:
+        # First round of if's will check if the value to
+        # the left of the decimal (if there is one) within
+        # 2 different price brackets.
+        if '.' in price:
+            first_split_price = price.split('.')
+            if first_split_price[0] == '':
+                # if the price is less than a dollar (.x or .xx)
+                # position [0] in the split will be empty.
+                # the following logic deals with the various
+                # mathematical situations that arise from this
+                # price range.
+                # all trades under a dollar gets padded with
+                # .01 to .03 cents
+                random_int = random.randint(1, 3)
+                if len(first_split_price[1]) == 2:
+                    price = int(first_split_price[1]) + random_int
+                    price = str(price)
+                    if len(price) == 3:
+                        second_split_price = list(price)
+                        second_split_price.insert(1, '.')
+                        price = ''.join(second_split_price)
+                    elif len(price) == 2:
+                        price = '.' + str(price)
+
+                elif len(first_split_price[1]) == 1:
+                    price = '.' + first_split_price[1] + str(random_int)
+
+            elif 2 <= int(first_split_price[0]) <= 5:
+                price = float(price) + .01
+
+            elif 6 <= int(first_split_price[0]) <= 11:
+                price = float(price) + .06
+
+            elif 12 <= int(first_split_price[0]) <= 21:
+                price = float(price) + .11
+
+            price = str(price)
+            if '.' in price and first_split_price[0] != '':
+                split_price = price.split('.')
+                # If price has one decimal point (x.x or xx.x) add a second spot x.x5
+                if len(split_price[1]) == 1:
+                    split_price[1] = split_price[1] + '5'
+                    price = '.'.join(split_price)
+
+                # If price has two decimal spots there are multiple techniques required.
+                if len(split_price[1]) == 2:
+                    # If the second decimal spot is less than 5, round up to 5.
+                    if int(split_price[1][1]) < 5:
+                        price = split_price[0] + '.' + split_price[1][0] + '5'
+
+                    # If the second integer to the right of decimal
+                    # is more than 5, and the first integer is 9
+                    # add one to the number to the left of the decimal
+                    if int(split_price[1]
+                           [1]) >= 5 and split_price[1][0] == '9':
+                        if split_price[0] == '':
+                            price = '1'
+                        else:
+                            price = int(split_price[0]) + 1
+                            price = str(price)
+
+                    # if the second decimal spot is more than 5, and the first spot is less
+                    # than 9, add 1 to the first spot, and make the second spot a 0.
+                    if int(split_price[1][1]) >= 5 and int(
+                            split_price[1][0]) < 9:
+                        modified_int = int(split_price[1][0]) + 1
+                        price = split_price[0] + '.' + str(modified_int) + '0'
+
+        elif '.' not in price:
+            if len(price) == 3:
+                price = price + '.5'
+            if len(price) < 3:
+                price = price + '.05'
+
+    except ValueError as error:
+        logger.fatal(f'{error} BUY PRICE MASKING VALUE ERROR', exc_info=True)
+
+    finally:
+        return str(price)
+
+
+def mask_sell_price(ticker, strike, expiration, buy_price, call_or_put):
+    try:
+        pass
+    except:
+        pass
+
+    finally:
+        pass
+
+
+def release_trade(ticker, strike, expiration, call_or_put):
     '''
     1. Pads IN trades option price depending
     on value.
     2. Keeps trade in queue until live price
     hits padded price, then releases to post.
     '''
+    try:
+        converted_expiration = convert_date(expiration)
+        if 'error' in (ticker, strike, expiration,
+                       call_or_put) or converted_expiration == 'error':
+            raise ReleaseTradeError
 
-    pass
+        if call_or_put == 'call':
+            pass
+
+    except:
+        pass
 
 
 def processor(new_message):
@@ -394,6 +504,10 @@ def processor(new_message):
                 return
 
             elif ignore_trade is False:
+                if in_or_out_tup == 'in':
+                    buy_price_tup = mask_buy_price(buy_price_tup)
+                if in_or_out_tup == 'out':
+                    pass
                 valid_trade = (
                     in_or_out_tup,
                     stock_ticker_tup,
