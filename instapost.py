@@ -102,8 +102,9 @@ def consumer(driver):
             print("\ninstagram posting completed")
             time.sleep(2)
 
-        except MakeImageError as error:
-            logger.fatal(f'{error}')
+        except (MakeImageError, NoSuchElementException,
+                TimeoutException) as error:
+            logger.fatal(f'{error}\n COULD NOT POST TO INSTA. ', exc_info=True)
             # caption_field = WebDriverWait(driver, 5).until(
             # EC.presence_of_element_located((By.XPATH, "//textarea")))
         finally:

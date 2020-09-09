@@ -22,7 +22,7 @@ from decimal import *
 
 # include parent directory in path
 PATH = pathlib.Path.cwd()
-TRADERS = ["Eric68", "MariaC82", "ThuhKang", "Jen ❤crypto"]
+TRADERS = ["Eric68", "MariaC82", "ThuhKang", "Jen♡♡crypto"]
 
 
 def find_new_messages(driver) -> list:
@@ -57,7 +57,16 @@ def get_trade_expiration(split_message_list: list):
             split_message_list.remove(' ' + expiration_date + ' ')
 
         if expiration_date == []:
-            raise KeyError("Could not determine expiration of trade!")
+            possible_expiration_date = re.findall(
+                r"\s(0?[1-9]|1[0-2])(.)(0?[1-9]|[12][0-9]|3[01])\s",
+                str(split_message_list))
+            if len(possible_expiration_date) == 1:
+                expiration_date = possible_expiration_date
+                expiration_date = ''.join(expiration_date[0])
+                expiration_date = expiration_date.replace('.', '/')
+                split_message_list.remove(' ' + expiration_date + ' ')
+            else:
+                raise KeyError("Could not determine expiration of trade!")
 
     except KeyError as e:
         logger.warning(f'{e} : message : {split_message_list}')

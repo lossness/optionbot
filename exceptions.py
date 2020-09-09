@@ -67,3 +67,6 @@ class LiveBuyPriceError(Exception):
 
 class ReleaseTradeError(Exception):
     '''Error in release trade function!'''
+
+class MarketClosed(Exception):
+    '''Market is closed'''

@@ -44,3 +44,36 @@ Traceback (most recent call last):
     price = int(price) + .01
 ValueError: invalid literal for int() with base 10: '4.05'
 2020-08-27 03:36:22,696 : CRITICAL : main_logger : COULD NOT OPEN IMAGE TO POST TRADE!
+2020-08-27 13:58:17,892 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTMariaC82OUT - JPM - SEPTEMBER - 105C - 1.92 - SWING - OUT OF ALL
+2020-09-01 13:43:08,623 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTJen♡♡cryptoBuy - WMT - 9.18 - 145c - 3.33 - Seing or scalp - Keep stop
+2020-09-01 13:50:22,524 : ERROR : main_logger : This trade contains error(s)! : 1:50 PMBOTBBS-TRADE-BOTJen♡♡cryptoSell - Wmt - 9.18 - 145 call - 4.07 - Swing scalp - Take some off
+2020-09-01 13:54:02,137 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTJen♡♡cryptoSell - JD - 9.4 - 81 call - 2.02 - Swing - Green
+2020-09-02 00:25:52,031 : ERROR : main_logger : This trade contains error(s)! : 12:14 AMjoelJen♡♡cryptoBuy - WMT - 9.18 - 145c - 3.33 - Seing or scalp - Keep stop
+2020-09-02 00:42:18,509 : CRITICAL : main_logger : COULD NOT OPEN IMAGE TO POST TRADE!
+2020-09-02 13:00:01,779 : ERROR : main_logger : This trade contains error(s)! : 7:10 PMBOTBBS-TRADE-BOTJen♡♡cryptoSell - sbux - 9.11 - 85 call - 2.11 - Swing - Taking some at 10% bulding an account on slow gains. Holding 1
+2020-09-02 15:33:20,205 : ERROR : main_logger :  Live price:478.99 Strike price:375
+Message with LiveStrikePriceError:['BUY ', ' 9/4 ', ' 375 p ', ' 3.50 ', ' SCALP OR SWING ', ' SUPER RICKY AF YOLO. EXPECT TO LOSE']
+2020-09-02 15:33:20,206 : ERROR : main_logger : This trade contains error(s)! : 3:33 PMBOTBBS-TRADE-BOTJen♡♡cryptoBUY - Tsla - 9/4 - 375 p - 3.50 - SCALP OR SWING - SUPER RICKY AF YOLO. EXPECT TO LOSE
+2020-09-02 15:35:07,864 : ERROR : main_logger :  Live price:478.99 Strike price:410
+Message with LiveStrikePriceError:['IN ', ' 9/4 ', ' 410P ', ' 11.75 ', ' DAY ', ' TRADE AT YOUR OWN RISK....USE OWN STOPS.... RISKY AS F&K* SMALL POS']
+2020-09-02 15:35:07,865 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTThuhKangIN - TSLA - 9/4 - 410P - 11.75 - DAY - TRADE AT YOUR OWN RISK....USE OWN STOPS.... RISKY AS F&K* SMALL POS
+2020-09-02 15:35:51,222 : ERROR : main_logger :  Live price:478.99 Strike price:375
+Message with LiveStrikePriceError:['Sell ', ' 9/4 ', ' 375 put ', ' 4.55 ', ' Scalp ', ' Holding 1']
+2020-09-02 15:35:51,224 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTJen♡♡cryptoSell - Tsla - 9/4 - 375 put - 4.55 - Scalp - Holding 1
+2020-09-02 15:38:08,103 : ERROR : main_logger :  Live price:478.99 Strike price:410
+Message with LiveStrikePriceError:['OUT ', ' 9/4 ', ' 410P ', ' 19 ', ' DAY ', ' CLOSING POS 11.75 ', ' 19']
+2020-09-02 15:38:08,105 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTThuhKangOUT - TSLA - 9/4 - 410P - 19 - DAY - CLOSING POS 11.75 - 19
+2020-09-04 15:57:27,007 : ERROR : main_logger : This trade contains error(s)! : 3:57 PMBOTBBS-TRADE-BOTJen♡♡cryptoBuy - SPY - 9.9 - 345 call - 1.5 - Swing - Risky but holding. .35 stop
+2020-09-04 16:33:12,181 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTJen♡♡cryptoSell - Spy - 9.9 - 345 call - 2.15 - Swing. - Still holding but locking SOME green!! 17% not bad
+2020-09-09 02:57:32,774 : CRITICAL : main_logger : Message: 
+
+2020-09-09 03:00:43,572 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/home/swing/projects/env/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+

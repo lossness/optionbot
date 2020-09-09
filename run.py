@@ -2,12 +2,13 @@ import time
 import threading
 import os
 import datetime
+import pytz
 import pathlib
 import concurrent.futures
 import queue
 import config
 
-from progress.spinner import Spinner
+from progress.spinner import Spinner, LineSpinner
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
@@ -19,6 +20,8 @@ from main_logger import logger
 from dotenv import load_dotenv
 
 load_dotenv()
+EVENT = threading.Event()
+
 if os.name == 'nt':
     # DISCORD_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
     #                                   'windows', 'discord',
@@ -30,6 +33,21 @@ if os.name == 'nt':
 if os.name == 'posix':
     DISCORD_DRIVER_PATH = r'/usr/bin/chromedriver'
     INSTA_DRIVER_PATH = r'/usr/bin/chromedriver'
+
+
+def time_now():
+    utc_now = pytz.utc.localize(datetime.datetime.utcnow())
+    ast_now = utc_now.astimezone(pytz.timezone("America/New_York"))
+    return ast_now.time()
+
+
+def is_market_open():
+    last_checked_time = time_now()
+    if datetime.time(9, 00, 00, 000000) <= time_now() <= datetime.time(
+            15, 59, 00, 000000):
+        return True
+    else:
+        return False
 
 
 def check_discord():
@@ -52,17 +70,23 @@ def check_discord():
         element.location_once_scrolled_into_view
     except (NoSuchElementException, TimeoutError) as error:
         logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
-    spinner = Spinner('Listening for new messages ')
+    listen_spinner = Spinner('Listening for new messages ')
+    #sleep_spinner = LineSpinner('Waiting for market to open ')
     while True:
-        try:
-            producer(discord_driver)
-        except (TimeoutException, NoSuchElementException) as error:
-            logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
-            continue
-        finally:
-            spinner.next()
-        #finally:
-        #os.system('taskkill /f /im chromedriver.exe')
+        if is_market_open():
+            try:
+                producer(discord_driver)
+            except (TimeoutException, NoSuchElementException) as error:
+                logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
+                continue
+            finally:
+                listen_spinner.next()
+            #finally:
+            #os.system('taskkill /f /im chromedriver.exe')
+        else:
+            listen_spinner.next()
+            EVENT.wait(3)
+
     logger.fatal("INFINITE CHECK_DISCORD LISTENER GOT OUT THE LOOP FUCK")
     print("It should never reach here! check_discord")
 
@@ -90,7 +114,7 @@ def post_driver():
             #os.system('taskkill /f /im chromedriver.exe')
 
 
-if __name__ == "__main__":
+def main():
     scraper = threading.Thread(target=check_discord)
     poster = threading.Thread(target=post_driver)
 
@@ -101,6 +125,10 @@ if __name__ == "__main__":
 
     scraper.join()
     poster.join()
+
+
+if __name__ == "__main__":
+    main()
 
 # format = "%(asctime)s: %(message)s"
 # logger.basicConfig(format=format, level=loggej.INFO, datefmt="%H:%M:%S")
