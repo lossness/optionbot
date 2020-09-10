@@ -450,11 +450,11 @@ class ErrorChecker:
             last_sell_price = list(table['Last Price'])[0]
 
         except LiveBuyPriceError as error:
-            logger.fatal(f"{error}", exc_info=True)
+            logger.error(f"{error}", exc_info=True)
             last_sell_price = 'error'
 
         except (IndexError, KeyError) as error:
-            logger.fatal(f"{error}", exc_info=True)
+            logger.error(f"{error}", exc_info=True)
             last_sell_price = 'error'
 
         except ValueError as error:
@@ -463,7 +463,7 @@ class ErrorChecker:
             print(
                 f"LIVE BUY PRICE ERROR:\n Current Date: {date_now} Trade Expiration: {expiration}"
             )
-            logger.fatal(
+            logger.error(
                 f"{error}:\nLIVE BUY PRICE ERROR:\n Current Date: {date_now} Trade Expiration: {expiration}"
             )
             last_sell_price = 'error'

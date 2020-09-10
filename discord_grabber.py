@@ -377,7 +377,7 @@ def mask_buy_price(price: str) -> str:
                 price = price + '.05'
 
     except ValueError as error:
-        logger.fatal(f'{error} BUY PRICE MASKING VALUE ERROR', exc_info=True)
+        logger.error(f'{error} BUY PRICE MASKING VALUE ERROR', exc_info=True)
 
     finally:
         return str(price)
@@ -420,7 +420,7 @@ def mask_sell_price(price):
             if len(price) < 3:
                 price = price + '.05'
     except ValueError as error:
-        logger.fatal(f'{error} SELL PRICE MASKING VALUE ERROR', exc_info=True)
+        logger.error(f'{error} SELL PRICE MASKING VALUE ERROR', exc_info=True)
 
     finally:
         return str(price)
