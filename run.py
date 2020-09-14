@@ -43,8 +43,8 @@ def time_now():
 
 def is_market_open():
     last_checked_time = time_now()
-    if datetime.time(9, 00, 00, 000000) <= time_now() <= datetime.time(
-            23, 59, 00, 000000):
+    if datetime.time(9, 30, 00, 000000) <= time_now() <= datetime.time(
+            15, 59, 00, 000000):
         return True
     else:
         return False
