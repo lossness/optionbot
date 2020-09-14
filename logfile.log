@@ -77,3 +77,283 @@ Traceback (most recent call last):
     raise TimeoutException(message, screen, stacktrace)
 selenium.common.exceptions.TimeoutException: Message: 
 
+2020-09-10 13:34:45,248 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 94, in consumer
+    next_button = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-10 13:44:38,270 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-10 13:47:47,210 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-10 14:42:38,476 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-10 14:44:30,159 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-10 14:57:27,779 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-10 16:22:38,084 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-10 16:39:36,556 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-10 17:52:39,734 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-10 17:54:00,118 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-10 17:59:23,562 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-10 18:00:43,914 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-10 18:30:05,466 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-10 18:43:28,913 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-10 19:09:49,421 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-10 19:28:21,029 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-10 19:32:35,272 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-11 13:57:29,029 : ERROR : main_logger :  Live price:120.36 Strike price:2
+Message with LiveStrikePriceError:['out ', ' 9/11 ', ' 112.5 ', ' 1.32 ', ' DAY ', ' closing 1/2 pos .99 ', ' 1.32']
+2020-09-11 14:43:22,763 : ERROR : main_logger :  Live price:114.57 Strike price:2
+Message with LiveStrikePriceError:['out ', ' 9/11 ', ' 112.5 ', ' 1.32 ', ' DAY ', ' closing 1/2 pos .99 ', ' 1.32']
+2020-09-11 14:44:48,524 : ERROR : main_logger :  Live price:114.57 Strike price:2
+Message with LiveStrikePriceError:['out ', ' 9/11 ', ' 112.5 ', ' 1.32 ', ' DAY ', ' closing 1/2 pos .99 ', ' 1.32']
+2020-09-11 14:45:28,178 : ERROR : main_logger :  Live price:114.57 Strike price:2
+Message with LiveStrikePriceError:['out ', ' 9/11 ', ' 112.5 ', ' 1.32 ', ' DAY ', ' closing 1/2 pos .99 ', ' 1.32']
+2020-09-11 14:51:46,478 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 94, in consumer
+    next_button = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-11 15:07:00,350 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-11 15:13:41,651 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-11 15:17:05,692 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-11 16:31:44,459 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-11 16:35:09,014 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-11 17:45:54,909 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-11 18:35:37,363 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 98, in consumer
+    share_button = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-11 19:34:43,773 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-11 19:37:18,116 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 86, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-11 19:40:00,450 : ERROR : main_logger :  Live price:3307.22 Strike price:100
+Message with LiveStrikePriceError:['OUT ', ' 9/11 ', ' 100c ', ' 3.4 ', ' DAY ', ' CLOSING POS .66 ', ' 1.4, 3.4']

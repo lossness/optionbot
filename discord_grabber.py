@@ -22,6 +22,7 @@ from decimal import *
 
 # include parent directory in path
 PATH = pathlib.Path.cwd()
+EVENT = config.EVENT
 TRADERS = ["Eric68", "MariaC82", "ThuhKang", "Jen♡♡crypto"]
 
 
@@ -285,7 +286,7 @@ def producer(driver):
             processor(new_message)
             LAST_MESSAGE = new_message
         else:
-            time.sleep(.1)
+            EVENT.wait(.1)
             return
     except (TimeoutException, NoSuchElementException) as error:
         logger.warning(

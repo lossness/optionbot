@@ -42,9 +42,9 @@ def make_image(msg):
         expiration = convert_date(expiration)
         expiration = expiration.replace('/', '-')
         if in_or_out == 'in':
-            in_or_out = 'buying'
+            in_or_out = 'BUYing'
         if in_or_out == 'out':
-            in_or_out = 'selling'
+            in_or_out = 'SELLing'
 
         im = Image.open(os.path.join(PATH, 'template_images', color + suffix))
         text = f'We\'re {in_or_out} {ticker.upper()}\n Strike: {strike_price.upper()}\n {call_or_put.upper()} Price: {buy_price}\n Expires: {expiration}'

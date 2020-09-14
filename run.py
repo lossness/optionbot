@@ -20,7 +20,7 @@ from main_logger import logger
 from dotenv import load_dotenv
 
 load_dotenv()
-EVENT = threading.Event()
+EVENT = config.EVENT
 
 if os.name == 'nt':
     # DISCORD_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
@@ -44,7 +44,7 @@ def time_now():
 def is_market_open():
     last_checked_time = time_now()
     if datetime.time(9, 00, 00, 000000) <= time_now() <= datetime.time(
-            15, 59, 00, 000000):
+            23, 59, 00, 000000):
         return True
     else:
         return False
