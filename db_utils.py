@@ -344,7 +344,7 @@ def convert_date(date):
             month = '0' + month
         converted_date = f"{month}/{day}/{year}"
 
-    except (TypeError, ValueError, KeyError) as error:
+    except (TypeError, ValueError, KeyError, IndexError) as error:
         logger.error(f"{error}", exc_info=True)
         converted_date = 'error'
 
@@ -371,7 +371,7 @@ def convert_date_to_text(date):
         date_object = datetime.strptime(date, "%m-%d-%Y")
         converted_date = date_object.strftime("%B %d, %Y")
 
-    except (TypeError, ValueError, KeyError) as error:
+    except (TypeError, ValueError, KeyError, IndexError) as error:
         logger.error(f"{error}", exc_info=True)
         converted_date = 'error'
 
