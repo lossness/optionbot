@@ -12,9 +12,13 @@ from progress.spinner import Spinner, LineSpinner
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException
 from instapost import consumer
-from discord_grabber import producer, error_producer_classic
+from discord_grabber import producer
 #from insta_browser import switch_to_mobile
 from main_logger import logger
 from dotenv import load_dotenv
@@ -41,10 +45,10 @@ def time_now():
     return ast_now.time()
 
 
+# Market hours are 930-4pm est 9:30 -> 16:00 24hr format
 def is_market_open():
-    last_checked_time = time_now()
     if datetime.time(9, 30, 00, 000000) <= time_now() <= datetime.time(
-            15, 59, 00, 000000):
+            23, 59, 00, 000000):
         return True
     else:
         return False
@@ -68,21 +72,22 @@ def check_discord():
         element = discord_driver.find_elements_by_xpath(
             "//*[@role='group']")[-1]
         element.location_once_scrolled_into_view
+
     except (NoSuchElementException, TimeoutError) as error:
         logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
     listen_spinner = Spinner('Listening for new messages ')
-    #sleep_spinner = LineSpinner('Waiting for market to open ')
+
     while True:
         if is_market_open():
             try:
                 producer(discord_driver)
+
             except (TimeoutException, NoSuchElementException) as error:
                 logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
                 continue
+
             finally:
                 listen_spinner.next()
-            #finally:
-            #os.system('taskkill /f /im chromedriver.exe')
         else:
             listen_spinner.next()
             EVENT.wait(3)

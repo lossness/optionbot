@@ -357,3 +357,52 @@ selenium.common.exceptions.TimeoutException: Message:
 
 2020-09-11 19:40:00,450 : ERROR : main_logger :  Live price:3307.22 Strike price:100
 Message with LiveStrikePriceError:['OUT ', ' 9/11 ', ' 100c ', ' 3.4 ', ' DAY ', ' CLOSING POS .66 ', ' 1.4, 3.4']
+2020-09-14 15:19:19,856 : ERROR : main_logger : list index out of range
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/db_utils.py", line 334, in convert_date
+    day = split_date[1]
+IndexError: list index out of range
+2020-09-14 15:19:19,859 : ERROR : main_logger : 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/second_level_checks.py", line 437, in live_buy_price
+    raise LiveBuyPriceError
+exceptions.LiveBuyPriceError
+2020-09-14 15:19:19,860 : ERROR : main_logger : This trade contains error(s)! : 3:19 PMBOTBBS-TRADE-BOTJen♡♡cryptoSell - wkhs - 9.18 - 24 call - 1.77 - Scalp - Taking a couple at 20%
+2020-09-15 13:32:43,744 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 09/15/2020 Trade Expiration: 9/11
+2020-09-15 13:32:43,745 : ERROR : main_logger : This trade contains error(s)! : 1:32 PMBOTBBS-TRADE-BOTThuhKangout - ba - 9/11 - 165c - 4.3 - DAY - 3.55 - 4, 4.15, 4.3 closing pos
+2020-09-15 14:00:42,186 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTJen♡♡cryptoBuy - fb - 9.25 - 277.5 call - 6.06 - Swing or scalp - .70 stop roughly
+2020-09-16 02:31:28,214 : ERROR : main_logger : This trade contains error(s)! : 2:31 AMjoelJen♡♡cryptoBuy - fb - 9.25 - 277.5 call - 6.06 - Swing or scalp - .70 stop roughly
+2020-09-16 02:55:26,829 : ERROR : main_logger : This trade contains error(s)! : joelJen♡♡cryptoBuy - fb - 9.25 - 277.5 call - 6.06 - Swing or scalp - .70 stop roughly
+2020-09-16 02:56:10,827 : ERROR : main_logger : This trade contains error(s)! : joelJen♡♡cryptoBuy - fb - 9.25 - 277.5 call - 6.06 - Swing or scalp - .70 stop roughly
+2020-09-16 02:56:47,759 : ERROR : main_logger : This trade contains error(s)! : joelJen♡♡cryptoBuy - fb - 9.25 - 277.5 call - 6.06 - Swing or scalp - .70 stop roughly
+2020-09-16 13:32:11,155 : ERROR : main_logger :  Live price:47.79 Strike price:5
+Message with LiveStrikePriceError:['Buy ', ' 9.18 ', ' 50 call ', ' 1.50 ', ' Scalp ', ' Already moved!!']
+2020-09-16 13:33:03,784 : ERROR : main_logger :  Live price:47.79 Strike price:5
+Message with LiveStrikePriceError:['Sell ', ' 9.18 ', ' 50 call ', ' 2.10 ', ' Scalp ', ' Still have 1']
+2020-09-16 14:11:06,478 : ERROR : main_logger :  Live price:439.87 Strike price:47
+Message with LiveStrikePriceError:['IN ', ' 9/18 ', ' 470C ', ' 12.7 ', ' DAY ', ' TRADE AT YOUR OWN RISK....USE OWN STOPS...RISKY TRADE']
+2020-09-16 14:11:06,479 : ERROR : main_logger : This trade contains error(s)! : 2:11 PMBOTBBS-TRADE-BOTThuhKangIN - TSLA - 9/18 - 470C - 12.7 - DAY - TRADE AT YOUR OWN RISK....USE OWN STOPS...RISKY TRADE
+2020-09-16 14:13:40,578 : ERROR : main_logger :  : Ticker matches : 0 trade : ['OUTTSLA ', ' 9/18 ', ' 470c ', ' 13.5 ', ' DAY ', ' CLOSING ', ' 1/2 POS 12.7 ', ' 13.5']
+2020-09-16 14:13:42,414 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTThuhKangOUTTSLA - 9/18 - 470c - 13.5 - DAY - CLOSING - 1/2 POS 12.7 - 13.5
+2020-09-16 16:35:55,243 : ERROR : main_logger :  Live price:439.87 Strike price:47
+Message with LiveStrikePriceError:['OUT ', ' 9/18 ', ' 470C ', ' 8 ', ' DAY ', ' Cut rest of pos']
+2020-09-16 16:35:55,246 : ERROR : main_logger : This trade contains error(s)! : 4:35 PMBOTBBS-TRADE-BOTThuhKangOUT - TSLA - 9/18 - 470C - 8 - DAY - Cut rest of pos
+2020-09-17 02:07:44,170 : ERROR : main_logger :  Live price:439.87 Strike price:38
+Message with LiveStrikePriceError:['Buy ', ' 9.11 ', ' 380 call ', ' 3 ', ' Sxalp ', ' Following alert. .60 stop']
+2020-09-17 02:08:24,258 : ERROR : main_logger :  Live price:439.87 Strike price:38
+Message with LiveStrikePriceError:['Buy ', ' 9.11 ', ' 380 call ', ' 3 ', ' Sxalp ', ' Following alert. .60 stop']
+2020-09-17 02:11:01,809 : ERROR : main_logger :  Live price:439.87 Strike price:38
+Message with LiveStrikePriceError:['Buy ', ' 9.11 ', ' 380 call ', ' 3 ', ' Sxalp ', ' Following alert. .60 stop']
+2020-09-17 02:14:23,764 : ERROR : main_logger :  Live price:439.87 Strike price:38
+Message with LiveStrikePriceError:['Buy ', ' 9.11 ', ' 380 call ', ' 3 ', ' Sxalp ', ' Following alert. .60 stop']
+2020-09-17 02:15:49,154 : ERROR : main_logger :  Live price:439.87 Strike price:38
+Message with LiveStrikePriceError:['Buy ', ' 9.11 ', ' 380 call ', ' 3 ', ' Sxalp ', ' Following alert. .60 stop']
+2020-09-17 02:17:31,543 : ERROR : main_logger :  Live price:439.87 Strike price:38
+Message with LiveStrikePriceError:['Buy ', ' 9.11 ', ' 380 call ', ' 3 ', ' Sxalp ', ' Following alert. .60 stop']
+2020-09-17 02:19:59,785 : ERROR : main_logger : This trade contains error(s)! : joelJen♡♡cryptoBuy - tsla - 9.11 - 380 call - 3 - Sxalp - Following alert. .60 stop
+2020-09-17 02:20:46,912 : ERROR : main_logger :  Live price:439.87 Strike price:38
+Message with LiveStrikePriceError:['Buy ', ' 9.11 ', ' 380 call ', ' 3 ', ' Sxalp ', ' Following alert. .60 stop']
+2020-09-17 02:26:20,845 : ERROR : main_logger :  Live price:439.87 Strike price:380
+Message with LiveStrikePriceError:['Buy ', ' 9.11 ', ' 380 call ', ' 3 ', ' Sxalp ', ' Following alert. .60 stop']

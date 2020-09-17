@@ -68,5 +68,13 @@ class LiveBuyPriceError(Exception):
 class ReleaseTradeError(Exception):
     '''Error in release trade function!'''
 
+
 class MarketClosed(Exception):
     '''Market is closed'''
+
+
+class ExpirationFixerFailed(Exception):
+    '''
+    All attempts to find an expiration in the trade has failed.
+    Typically caused by trader writing the expiration with a . ex. (9.25)
+    '''

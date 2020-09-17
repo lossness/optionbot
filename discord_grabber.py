@@ -20,6 +20,15 @@ from main_logger import logger
 from second_level_checks import ErrorChecker
 from decimal import *
 
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException
+
 # include parent directory in path
 PATH = pathlib.Path.cwd()
 EVENT = config.EVENT
@@ -66,6 +75,13 @@ def get_trade_expiration(split_message_list: list):
                 expiration_date = ''.join(expiration_date[0])
                 expiration_date = expiration_date.replace('.', '/')
                 split_message_list.remove(' ' + expiration_date + ' ')
+            # elif len(possible_expiration_date) == 2:
+            #     candidates = []
+            #     for item in possible_expiration_date:
+            #         candidate = item
+            #         candidate = ''.join(candidate)
+            #         candidate = candidate.replace('.', '/')
+            #         candidates.append(candidate)
             else:
                 raise KeyError("Could not determine expiration of trade!")
 
@@ -75,6 +91,23 @@ def get_trade_expiration(split_message_list: list):
 
     finally:
         return expiration_date, split_message_list
+
+
+def get_trade_expiration_from_shit_jen(split_message_list):
+    potential_expiration = split_message_list[1]
+    new_expiration = 'error'
+    try:
+        new_expiration = float(potential_expiration)
+        split_message_list.remove(potential_expiration)
+        new_expiration = str(new_expiration).replace('.', '/')
+
+    except ValueError:
+        new_expiration = 'error'
+        logger.fatal(
+            "Jens special expiration function failed to detect her shit :(")
+
+    finally:
+        return str(new_expiration), split_message_list
 
 
 def three_feet(split_message_list: list, ticker_func):
@@ -101,12 +134,14 @@ def three_feet(split_message_list: list, ticker_func):
             if 'c' in str(item).lower():
                 strike_price = re.findall(r'[-+]?\d*\.\d+|\d+', str(item))
                 strike_price = strike_price[0]
+                if strike_price[-1] == '0' and '.' in strike_price:
+                    strike_price = strike_price[:-1]
                 try:
                     ticker_data = yf.Ticker(ticker)
                     call_or_put = 'call'
                     live_price = ticker_data.info['open']
                     if float(((live_price - float(strike_price)) * 100) /
-                             float(strike_price)) > 15:
+                             float(strike_price)) > 100:
                         raise LiveStrikePriceError
                     split_message_list.remove(' ' + item)
                     break
@@ -120,12 +155,14 @@ def three_feet(split_message_list: list, ticker_func):
             if 'p' in str(item).lower():
                 strike_price = re.findall(r'[-+]?\d*\.\d+|\d+', str(item))
                 strike_price = strike_price[0]
+                if strike_price[-1] == '0' and '.' in strike_price:
+                    strike_price = strike_price[:-1]
                 try:
                     ticker_data = yf.Ticker(ticker)
                     call_or_put = 'put'
                     live_price = ticker_data.info['open']
                     if float(((live_price - float(strike_price)) * 100) /
-                             float(strike_price)) > 15:
+                             float(strike_price)) > 100:
                         raise LiveStrikePriceError
                     split_message_list.remove(' ' + item)
                     break
@@ -240,16 +277,6 @@ def get_buy_price(split_message_list):
         return buy_price, split_message_list
 
 
-def message_listener(driver) -> list:
-    try:
-        newest_message = []
-        newest_message.append(
-            driver.find_element_by_xpath("//*[@id='messages-51']").text)
-        return list(newest_message)
-    except NoSuchElementException('ERROR FINDING NEWEST MESSAGE') as e:
-        logger.warning(e)
-
-
 def filter_message(variable):
     noise_words = ['BOT', r'BBS-TRADE-BOT\nBOT', 'BBS-TRADE-BOT', 'joel']
     if (variable in noise_words):
@@ -282,16 +309,53 @@ def producer(driver):
 
         new_message = driver.find_elements_by_xpath(
             "//*[@role='group']")[-1].text
+
+        # if len(new_message) < 3 or new_message.isdigit():
+        #     new_message = driver.find_elements_by_xpath(
+        #         "//*[@role='group']")[-2].text
+
         if new_message != LAST_MESSAGE:
             processor(new_message)
             LAST_MESSAGE = new_message
         else:
             EVENT.wait(.1)
             return
-    except (TimeoutException, NoSuchElementException) as error:
-        logger.warning(
-            f"{error}: PRODUCER COULD NOT FIND NEWEST DISCORD MESSAGE!!")
+
+    except TimeoutException as error:
+        logger.fatal(
+            f"{error}\n Message listener timed out while looking for latest message."
+        )
         pass
+
+    except (NoSuchElementException, StaleElementReferenceException) as error:
+        logger.fatal(
+            f"{error}\n Last message missing.  Probably received a reaction emoji"
+        )
+        pass
+        # ignored_exceptions = (NoSuchElementException,
+        #                       StaleElementReferenceException)
+        # try:
+        #     new_message = WebDriverWait(driver, 5,ignored_exceptions=ignored_exceptions)\
+        #                     .until(EC.presence_of_element_located((By.XPATH, "//*[@role='group']")))
+        #     if new_message:
+        #         new_message = driver.find_elements_by_xpath(
+        #             "//*[@role='group']")[-1].text
+
+        #         if len(new_message) < 3 or new_message.isdigit():
+        #             new_message = driver.find_elements_by_xpath(
+        #                 "//*[@role='group']")[-2].text
+
+        #         if new_message != LAST_MESSAGE:
+        #             processor(new_message)
+        #             LAST_MESSAGE = new_message
+        #         else:
+        #             EVENT.wait(.1)
+        #             return
+        # except TimeoutException as error:
+        #     logger.fatal(
+        #         f"{error}\n Error in second level exception handler discord_grabber:producer function: ignored_exceptions = (NoSuchElementException, StaleElementReferenceException))\n",
+        #         exc_info=True)
+        #     pass
 
 
 def mask_buy_price(price: str) -> str:
@@ -464,8 +528,13 @@ def processor(new_message):
 
         call_or_put_tup, strike_price_tup, stock_ticker_tup, double_split_result = three_feet_results
 
-        trade_expiration_tup, double_split_result = get_trade_expiration(
-            double_split_result)
+        if 'jen' in trade_author_tup.lower():
+            trade_expiration_tup, double_split_result = get_trade_expiration_from_shit_jen(
+                double_split_result)
+
+        if not 'jen' in trade_author_tup.lower():
+            trade_expiration_tup, double_split_result = get_trade_expiration(
+                double_split_result)
 
         buy_price_tup, double_split_result = get_buy_price(double_split_result)
 
@@ -575,8 +644,7 @@ def processor(new_message):
 
 
 ### ERROR CHECKING FUNCTIONS BELOW
-
-
+'''
 def error_producer_classic(driver):
     # loop over single discord posts in all matched posts in main channel
     try:
@@ -700,3 +768,4 @@ def error_producer_classic(driver):
 
     finally:
         print(counter)
+'''

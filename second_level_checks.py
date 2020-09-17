@@ -6,7 +6,7 @@ from datetime import datetime
 
 from main_logger import logger
 from db_utils import db_connect, convert_date
-from exceptions import DatabaseEmpty, MultipleMatchingIn, StageOneError, StageTwoError, StageThreeError, LiveBuyPriceError
+from exceptions import DatabaseEmpty, MultipleMatchingIn, StageOneError, StageTwoError, StageThreeError, LiveBuyPriceError, ExpirationFixerFailed
 
 
 class ErrorChecker:
@@ -414,6 +414,63 @@ class ErrorChecker:
             elif len(matched_trades) > 1:
                 raise MultipleMatchingIn
 
+            # elif len(matched_trades) == 0:
+
+            #     class expiration_date_candidates:
+            #         def __init__(self, possible_expiration_date,
+            #                      original_list_value):
+            #             self.possible_expiration_date = possible_expiration_date
+            #             self.original_list_value = original_list_value
+
+            #     possible_expiration_dates = []
+            #     duplicate_possibles = []
+            #     for list_value in processed_list:
+            #         possible_result = list_value.replace(' ', '')
+
+            #         if any(char.isalpha()
+            #                for char in possible_result) is False:
+            #             if ',' in possible_result:
+            #                 comma_split_values = possible_result.split(',')
+            #                 for split_value in comma_split_values:
+            #                     possible_expiration_dates.append(
+            #                         expiration_date_candidates(
+            #                             split_value, list_value))
+            #             else:
+            #                 possible_expiration_dates.append(
+            #                     expiration_date_candidates(
+            #                         possible_result, list_value))
+
+            #     if len(possible_expiration_dates) == 1:
+            #         new_expiration = possible_expiration_dates[
+            #             0].possible_expiration_date
+            #         processed_list.remove(
+            #             possible_expiration_dates[0].original_list_value)
+
+            #     elif len(possible_expiration_dates) > 1:
+            #         list_of_possible_results = []
+            #         for obj in possible_expiration_dates:
+            #             list_of_possible_results.append(
+            #                 obj.possible_expiration_date)
+
+            #         for item in list_of_possible_results:
+            #             if list_of_possible_results.count(item) > 1:
+            #                 duplicate_possibles.append(item)
+
+            #         if len(duplicate_possibles) == 1 or len(
+            #                 set(duplicate_possibles)) == 1:
+            #             for obj in possible_expiration_dates:
+            #                 if obj.possible_expiration_date == duplicate_possibles[
+            #                         0]:
+            #                     possible_expiration_dates.remove(obj)
+            #                     # processed_list.remove(obj.original_list_value)
+
+            #         elif duplicate_possibles == [] or len(
+            #                 duplicate_possibles) > 1:
+            #             raise ExpirationFixerFailed
+
+            # else:
+            #     raise ExpirationFixerFailed
+
         except DatabaseEmpty as info_error:
             logger.info(info_error)
             new_expiration = 'error'
@@ -423,6 +480,9 @@ class ErrorChecker:
                 f'{error} | Processed message : {processed_list} New trade : {new_trade}'
             )
             new_expiration = 'error'
+
+        except ExpirationFixerFailed as error:
+            logger.fatal(f'{error}', exc_info=True)
 
         finally:
             return new_expiration
