@@ -406,3 +406,71 @@ Message with LiveStrikePriceError:['Buy ', ' 9.11 ', ' 380 call ', ' 3 ', ' Sxal
 Message with LiveStrikePriceError:['Buy ', ' 9.11 ', ' 380 call ', ' 3 ', ' Sxalp ', ' Following alert. .60 stop']
 2020-09-17 02:26:20,845 : ERROR : main_logger :  Live price:439.87 Strike price:380
 Message with LiveStrikePriceError:['Buy ', ' 9.11 ', ' 380 call ', ' 3 ', ' Sxalp ', ' Following alert. .60 stop']
+2020-09-21 15:00:53,191 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Buy ', ' Nkla ', ' 9.25 ', ' 20 put ', ' 1.25 ', ' Scalp ', ' Have a stop. super risky!!!']
+2020-09-21 15:00:55,074 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-21 15:00:55,076 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTJen♡♡cryptoBuy - Nkla - 9.25 - 20 put - 1.25 - Scalp - Have a stop. super risky!!!
+2020-09-22 01:26:39,015 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Buy ', ' Nkla ', ' 9.25 ', ' 20 put ', ' 1.25 ', ' Scalp ', ' Have a stop. super risky!!!']
+2020-09-22 01:36:43,652 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Buy ', ' Nkla ', ' 9.25 ', ' 20 put ', ' 1.25 ', ' Scalp ', ' Have a stop. super risky!!!']
+2020-09-22 01:36:50,830 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 01:37:11,323 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Buy ', ' Nkla ', ' 9.25 ', ' 20 put ', ' 1.25 ', ' Scalp ', ' Have a stop. super risky!!!']
+2020-09-22 01:37:17,122 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 01:37:34,664 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Buy ', ' Nkla ', ' 9.25 ', ' 20 put ', ' 1.25 ', ' Scalp ', ' Have a stop. super risky!!!']
+2020-09-22 01:37:39,676 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 01:38:15,901 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Buy ', ' Nkla ', ' 9.25 ', ' 20 put ', ' 1.25 ', ' Scalp ', ' Have a stop. super risky!!!']
+2020-09-22 01:38:22,343 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 01:38:25,656 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 01:40:42,217 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Buy ', ' Nkla ', ' 9.25 ', ' 20 put ', ' 1.25 ', ' Scalp ', ' Have a stop. super risky!!!']
+2020-09-22 01:40:44,327 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 01:40:44,327 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 01:40:44,329 : ERROR : main_logger : This trade contains error(s)! : joelJen♡♡cryptoBuy - Nkla - 9.25 - 20 put - 1.25 - Scalp - Have a stop. super risky!!!
+2020-09-22 01:42:53,673 : ERROR : main_logger :  : Ticker matches : 0 trade : ['Buy ', ' Nkla ', ' 9.25 ', ' 20 put ', ' 1.25 ', ' Scalp ', ' Have a stop. super risky!!!']
+2020-09-22 01:52:58,360 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 01:52:58,360 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 01:53:11,535 : ERROR : main_logger : This trade contains error(s)! : joelJen♡♡cryptoBuy - Nkla - 9.25 - 20 put - 1.25 - Scalp - Have a stop. super risky!!!
+2020-09-22 01:54:31,483 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 01:54:31,485 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 01:55:18,618 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 01:55:26,447 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 01:55:52,388 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 01:57:34,787 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 01:58:06,818 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 02:08:27,606 : ERROR : main_logger : This trade contains error(s)! : joelThuhKangIN - KO - 10-16 - 50C - 1.23 - SWING - STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT. CHANGED STRIKE. RISKY AF. DONT TAKE UNLESS WILLING TO RISK ALL
+2020-09-22 02:44:34,456 : ERROR : main_logger : list index out of range
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/db_utils.py", line 334, in convert_date
+    day = split_date[1]
+IndexError: list index out of range
+2020-09-22 02:44:34,461 : ERROR : main_logger : 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/second_level_checks.py", line 497, in live_buy_price
+    raise LiveBuyPriceError
+exceptions.LiveBuyPriceError
+2020-09-22 02:44:34,462 : ERROR : main_logger : This trade contains error(s)! : joelMariaC82IN - KO - 10-16 - 50C - 1.23 - SWING - STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT. CHANGED STRIKE. RISKY AF. DONT TAKE UNLESS WILLING TO RISK ALL
+2020-09-22 02:45:28,048 : ERROR : main_logger : list index out of range
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/db_utils.py", line 334, in convert_date
+    day = split_date[1]
+IndexError: list index out of range
+2020-09-22 02:45:28,050 : ERROR : main_logger : 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/second_level_checks.py", line 497, in live_buy_price
+    raise LiveBuyPriceError
+exceptions.LiveBuyPriceError
+2020-09-22 02:45:28,051 : ERROR : main_logger : This trade contains error(s)! : joelMariaC82IN - KO - 10-16 - 50C - 1.23 - SWING - STOP AT YOUR OWN RISK FOLLOWING RAPIDFIRE BULLISH FLOW ALERT. CHANGED STRIKE. RISKY AF. DONT TAKE UNLESS WILLING TO RISK ALL
+2020-09-22 03:09:46,699 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 09/22/2020 Trade Expiration: 09/21
+2020-09-22 03:09:46,700 : ERROR : main_logger : This trade contains error(s)! : 3:09 AMjoelMariaC82IN - SPY - 09/21 - 180C - 1.09 - SCALP - STOP AT YOUR OWN RISK RISKY AF..LOD
+2020-09-22 03:10:38,560 : ERROR : main_logger :  Live price:325.7 Strike price:180
+Message with LiveStrikePriceError:['IN', '09/21', '180C', '1.09', 'SCALP', 'STOP AT YOUR OWN RISK RISKY AF..LOD']
+2020-09-22 03:10:38,568 : ERROR : main_logger : This trade contains error(s)! : 3:09 AMjoelMariaC82IN - SPY - 09/21 - 180C - 1.09 - SCALP - STOP AT YOUR OWN RISK RISKY AF..LOD
+2020-09-22 03:18:16,942 : ERROR : main_logger :  Live price:325.7 Strike price:180
+Message with LiveStrikePriceError:['IN', '09/21', '180C', '1.09', 'SCALP', 'STOP AT YOUR OWN RISK RISKY AF..LOD']
+2020-09-22 03:18:16,948 : ERROR : main_logger : This trade contains error(s)! : 3:09 AMjoelMariaC82IN - SPY - 09/21 - 180C - 1.09 - SCALP - STOP AT YOUR OWN RISK RISKY AF..LOD
+2020-09-22 03:19:05,542 : ERROR : main_logger :  Live price:325.7 Strike price:180
+Message with LiveStrikePriceError:['IN', '09/21', '180C', '1.09', 'SCALP', 'STOP AT YOUR OWN RISK RISKY AF..LOD']
+2020-09-22 03:19:05,545 : ERROR : main_logger : This trade contains error(s)! : joelMariaC82IN - SPY - 09/21 - 180C - 1.09 - SCALP - STOP AT YOUR OWN RISK RISKY AF..LOD
+2020-09-22 03:19:13,994 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 09/22/2020 Trade Expiration: 09/21
+2020-09-22 03:19:13,995 : ERROR : main_logger : This trade contains error(s)! : joelMariaC82IN - SPY - 09/21 - 322P - 1.09 - SCALP - STOP AT YOUR OWN RISK RISKY AF..LOD.. CORRECTING PREVIOUS POST

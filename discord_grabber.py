@@ -59,12 +59,14 @@ def get_trade_expiration(split_message_list: list):
     expiration_date = []
     try:
         expiration_date = re.findall(
-            r"\s(0?[1-9]|1[0-2])(|/|\\|-)(0?[1-9]|[12][0-9]|3[01])\s",
+            r"\s'(0?[1-9]|1[0-2])(|/|\\|-)(0?[1-9]|[12][0-9]|3[01])'",
             str(split_message_list))
 
         if expiration_date:
             expiration_date = ''.join(expiration_date[0])
-            split_message_list.remove(' ' + expiration_date + ' ')
+            if '-' in expiration_date:
+                expiration_date = expiration_date.replace('-', '/')
+            split_message_list.remove(expiration_date)
 
         if expiration_date == []:
             possible_expiration_date = re.findall(
@@ -74,7 +76,7 @@ def get_trade_expiration(split_message_list: list):
                 expiration_date = possible_expiration_date
                 expiration_date = ''.join(expiration_date[0])
                 expiration_date = expiration_date.replace('.', '/')
-                split_message_list.remove(' ' + expiration_date + ' ')
+                split_message_list.remove(expiration_date)
             # elif len(possible_expiration_date) == 2:
             #     candidates = []
             #     for item in possible_expiration_date:
@@ -94,19 +96,20 @@ def get_trade_expiration(split_message_list: list):
 
 
 def get_trade_expiration_from_shit_jen(split_message_list):
-    potential_expiration = split_message_list[1]
     new_expiration = 'error'
-    try:
-        new_expiration = float(potential_expiration)
-        split_message_list.remove(potential_expiration)
-        new_expiration = str(new_expiration).replace('.', '/')
+    for item in split_message_list[:3]:
+        try:
+            new_expiration = float(item)
+            split_message_list.remove(item)
+            new_expiration = str(new_expiration).replace('.', '/')
 
-    except ValueError:
-        new_expiration = 'error'
-        logger.fatal(
-            "Jens special expiration function failed to detect her shit :(")
+        except ValueError:
+            new_expiration = 'error'
+            logger.fatal(
+                "Jens special expiration function failed to detect her shit :("
+            )
+            continue
 
-    finally:
         return str(new_expiration), split_message_list
 
 
@@ -141,13 +144,13 @@ def three_feet(split_message_list: list, ticker_func):
                     call_or_put = 'call'
                     live_price = ticker_data.info['open']
                     if float(((live_price - float(strike_price)) * 100) /
-                             float(strike_price)) > 100:
+                             float(strike_price)) > 10:
                         raise LiveStrikePriceError
-                    split_message_list.remove(' ' + item)
+                    split_message_list.remove(item)
                     break
 
                 except LiveStrikePriceError as error:
-                    logger.error(
+                    logger.fatal(
                         f'{error} Live price:{live_price} Strike price:{strike_price}\nMessage with LiveStrikePriceError:{split_message_list}'
                     )
                     strike_price = 'error'
@@ -162,13 +165,13 @@ def three_feet(split_message_list: list, ticker_func):
                     call_or_put = 'put'
                     live_price = ticker_data.info['open']
                     if float(((live_price - float(strike_price)) * 100) /
-                             float(strike_price)) > 100:
+                             float(strike_price)) > 10:
                         raise LiveStrikePriceError
-                    split_message_list.remove(' ' + item)
+                    split_message_list.remove(item)
                     break
 
                 except LiveStrikePriceError as error:
-                    logger.error(
+                    logger.fatal(
                         f'{error} Live price:{live_price} Strike price:{strike_price}\nMessage with LiveStrikePriceError:{split_message_list}'
                     )
                     strike_price = 'error'
@@ -259,15 +262,14 @@ def get_buy_price(split_message_list):
             if len(split) > 2 and any(char.isalpha()
                                       for char in split) is False:
                 filtered_list.append(split)
-        buy_price = re.findall(r'\s([-+]?\d*)(\.)(\d+|\d+)\s',
-                               str(filtered_list))
+        buy_price = re.findall(r'([-+]?\d*)(\.)(\d+|\d+)', str(filtered_list))
 
         if buy_price == [] or len(buy_price) > 1:
             raise KeyError("Could not determine buy price!")
 
         if buy_price:
             buy_price = ''.join(buy_price[0])
-            split_message_list.remove(' ' + buy_price + ' ')
+            split_message_list.remove(buy_price)
 
     except KeyError as e:
         logger.warning(f'{e} : {split_message_list}')
@@ -521,7 +523,7 @@ def processor(new_message):
         trade_author_tup = trade_author[0]
         # find the longest string left which is the message string
         longest_string = max(split_result, key=len)
-        double_split_result = longest_string.split('-')
+        double_split_result = longest_string.split(' - ')
         double_split_result = list(filter(None, double_split_result))
         # gets a call or put status, and pops that matched entry out of the list
         three_feet_results = three_feet(double_split_result, get_stock_ticker)
