@@ -634,8 +634,8 @@ def processor(new_message):
                     trade_color_choice,
                 )
                 message = valid_trade
-                #config.new_trades.put(message)
-                #config.has_trade.release()
+                config.new_trades.put(message)
+                config.has_trade.release()
                 logger.info(f"Producer received a fresh trade : {message}")
                 print(f"\nProducer received a fresh trade : {message}")
                 update_table(valid_trade)
