@@ -47,8 +47,8 @@ def time_now():
 
 # Market hours are 930-4pm est 9:30 -> 16:00 24hr format
 def is_market_open():
-    if datetime.time(9, 30, 00, 000000) <= time_now() <= datetime.time(
-            16, 00, 00, 000000):
+    if datetime.time(0, 10, 00, 000000) <= time_now() <= datetime.time(
+            23, 00, 00, 000000):
         return True
     else:
         return False

@@ -104,12 +104,12 @@ def get_trade_expiration_from_shit_jen(split_message_list):
             new_expiration = str(new_expiration).replace('.', '/')
 
         except ValueError:
-            new_expiration = 'error'
+            continue
+
+        if new_expiration == 'error':
             logger.fatal(
                 "Jens special expiration function failed to detect her shit :("
             )
-            continue
-
         return str(new_expiration), split_message_list
 
 
@@ -634,8 +634,8 @@ def processor(new_message):
                     trade_color_choice,
                 )
                 message = valid_trade
-                config.new_trades.put(message)
-                config.has_trade.release()
+                #config.new_trades.put(message)
+                #config.has_trade.release()
                 logger.info(f"Producer received a fresh trade : {message}")
                 print(f"\nProducer received a fresh trade : {message}")
                 update_table(valid_trade)

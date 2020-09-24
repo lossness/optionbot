@@ -474,3 +474,132 @@ Message with LiveStrikePriceError:['IN', '09/21', '180C', '1.09', 'SCALP', 'STOP
 LIVE BUY PRICE ERROR:
  Current Date: 09/22/2020 Trade Expiration: 09/21
 2020-09-22 03:19:13,995 : ERROR : main_logger : This trade contains error(s)! : joelMariaC82IN - SPY - 09/21 - 322P - 1.09 - SCALP - STOP AT YOUR OWN RISK RISKY AF..LOD.. CORRECTING PREVIOUS POST
+2020-09-22 13:48:00,721 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 95, in consumer
+    next_button = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-22 13:50:39,401 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 87, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-22 13:52:02,484 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 13:52:07,716 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 87, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-22 14:23:07,557 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 14:23:12,820 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 87, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-22 16:57:42,320 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-22 18:05:13,789 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-23 13:50:07,692 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-23 15:51:24,119 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-23 16:58:30,263 : CRITICAL : main_logger :  Live price:111.62 Strike price:20
+Message with LiveStrikePriceError:['IN', '9/25', '20P', '.80', 'DAY', 'SMALL YOLO YOLO ASF WILLING TO LOSE ALL']
+2020-09-23 16:58:30,264 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTThuhKangIN - AAPL - 9/25 - 20P - .80 - DAY - SMALL YOLO YOLO ASF WILLING TO LOSE ALL
+2020-09-23 16:59:39,554 : CRITICAL : main_logger : COULD NOT OPEN IMAGE TO POST TRADE!
+2020-09-23 16:59:39,555 : CRITICAL : main_logger : 
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 85, in consumer
+    raise MakeImageError
+exceptions.MakeImageError
+2020-09-24 04:46:10,344 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-24 04:55:47,366 : CRITICAL : main_logger : Jens special expiration function failed to detect her shit :(
+2020-09-24 06:02:31,713 : INFO : main_logger : Producer received a fresh trade : ('in', 'nke', '2020-09-24 06:02:31.711224', '130', 'call', '1.80', 'MariaC82', '09/25', 'FA5')
+2020-09-24 06:03:28,197 : INFO : main_logger : Producer received a fresh trade : ('in', 'ba', '2020-09-24 06:03:28.195596', '160', 'call', '2.65', 'ThuhKang', '9/25', 'FA9')
+2020-09-24 06:03:30,999 : INFO : main_logger : Producer received a fresh trade : ('in', 'ba', '2020-09-24 06:03:30.999133', '160', 'call', '2.65', 'ThuhKang', '9/25', 'FA5')
+2020-09-24 06:03:33,445 : INFO : main_logger : Producer received a fresh trade : ('in', 'ba', '2020-09-24 06:03:33.444731', '160', 'call', '2.65', 'ThuhKang', '9/25', 'FA12')
+2020-09-24 06:04:37,478 : INFO : main_logger : Producer received a fresh trade : ('in', 'ba', '2020-09-24 06:04:37.475966', '160', 'call', '2.65', 'ThuhKang', '9/25', 'FA5')
+2020-09-24 06:04:43,789 : INFO : main_logger : Producer received a fresh trade : ('in', 'nke', '2020-09-24 06:04:43.788035', '130', 'call', '1.80', 'MariaC82', '09/25', 'FA3')
+2020-09-24 06:04:52,911 : INFO : main_logger : Producer received a fresh trade : ('out', 'nke', '2020-09-24 06:04:52.908616', '130', 'call', '2.50', 'MariaC82', '09/25', 'FA3')
+2020-09-24 06:04:59,621 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '3.2', 'DAY', 'closing 1/2 pos 2.64', '3.2']
+2020-09-24 06:04:59,628 : INFO : main_logger : Producer received a fresh trade : ('out', 'ba', '2020-09-24 06:04:59.624116', '160', 'call', '3.30', 'ThuhKang', '9/25', 'FA5')
+2020-09-24 06:05:14,385 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '3.2', 'DAY', 'closing 1/2 pos 2.64', '3.2']
+2020-09-24 06:05:15,418 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '3.2', 'DAY', 'closing 1/2 pos 2.64', '3.2']
+2020-09-24 06:05:17,068 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '3.2', 'DAY', 'closing 1/2 pos 2.64', '3.2']
+2020-09-24 06:05:18,401 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '3.2', 'DAY', 'closing 1/2 pos 2.64', '3.2']
+2020-09-24 06:05:35,713 : INFO : main_logger : Producer received a fresh trade : ('in', 'twtr', '2020-09-24 06:05:35.711556', '45', 'call', '1.65', 'Jen♡♡crypto', '10/2', 'FA2')
+2020-09-24 06:05:45,968 : WARNING : main_logger : 'Could not determine buy price!' : ['IN', '12', 'DAY', 'TRADE AT YOUR OWN RISK....USE OWN STOPS.. RISKY TRADE']
+2020-09-24 06:05:45,970 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-24 06:05:45.968717', '390', 'put', '12.05', 'ThuhKang', '9/25', 'FA7')
+2020-09-24 06:05:54,845 : WARNING : main_logger : 'Could not determine buy price!' : ['IN', '12', 'DAY', 'TRADE AT YOUR OWN RISK....USE OWN STOPS.. RISKY TRADE']
+2020-09-24 06:05:56,607 : WARNING : main_logger : 'Could not determine buy price!' : ['IN', '12', 'DAY', 'TRADE AT YOUR OWN RISK....USE OWN STOPS.. RISKY TRADE']
+2020-09-24 06:05:58,368 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '14', 'DAY', 'CLOSING 1/2 POS 12', '14']
+2020-09-24 06:05:58,372 : INFO : main_logger : Producer received a fresh trade : ('out', 'tsla', '2020-09-24 06:05:58.368534', '390', 'put', '14.05', 'ThuhKang', '9/25', 'FA7')
+2020-09-24 06:06:06,309 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '14', 'DAY', 'CLOSING 1/2 POS 12', '14']
+2020-09-24 06:06:07,695 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '14', 'DAY', 'CLOSING 1/2 POS 12', '14']
+2020-09-24 06:06:09,852 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '14', 'DAY', 'CLOSING 1/2 POS 12', '14']
+2020-09-24 06:06:11,763 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '14', 'DAY', 'CLOSING 1/2 POS 12', '14']
+2020-09-24 06:06:13,593 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '14', 'DAY', 'CLOSING 1/2 POS 12', '14']
+2020-09-24 06:06:21,903 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '14', 'DAY', 'CLOSING 1/2 POS 12', '14']
+2020-09-24 06:06:23,490 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '14', 'DAY', 'CLOSING 1/2 POS 12', '14']
+2020-09-24 06:06:25,400 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '14', 'DAY', 'CLOSING 1/2 POS 12', '14']
+2020-09-24 06:06:29,211 : INFO : main_logger : Producer received a fresh trade : ('out', 'twtr', '2020-09-24 06:06:29.208049', '45', 'call', '2.60', 'Jen♡♡crypto', '10/2', 'FA2')
+2020-09-24 06:06:38,271 : CRITICAL : main_logger :  Live price:111.62 Strike price:20
+Message with LiveStrikePriceError:['IN', '9/25', '20P', '.80', 'DAY', 'SMALL YOLO YOLO ASF WILLING TO LOSE ALL']
+2020-09-24 06:06:38,273 : ERROR : main_logger : This trade contains error(s)! : joelThuhKangIN - AAPL - 9/25 - 20P - .80 - DAY - SMALL YOLO YOLO ASF WILLING TO LOSE ALL
+2020-09-24 06:06:39,796 : CRITICAL : main_logger :  Live price:111.62 Strike price:20
+Message with LiveStrikePriceError:['IN', '9/25', '20P', '.80', 'DAY', 'SMALL YOLO YOLO ASF WILLING TO LOSE ALL']
+2020-09-24 06:06:39,798 : ERROR : main_logger : This trade contains error(s)! : 6:06 AMjoelThuhKangIN - AAPL - 9/25 - 20P - .80 - DAY - SMALL YOLO YOLO ASF WILLING TO LOSE ALL
+2020-09-24 06:06:41,756 : CRITICAL : main_logger :  Live price:111.62 Strike price:20
+Message with LiveStrikePriceError:['IN', '9/25', '20P', '.80', 'DAY', 'SMALL YOLO YOLO ASF WILLING TO LOSE ALL']
+2020-09-24 06:06:41,758 : ERROR : main_logger : This trade contains error(s)! : joelThuhKangIN - AAPL - 9/25 - 20P - .80 - DAY - SMALL YOLO YOLO ASF WILLING TO LOSE ALL
+2020-09-24 06:07:05,807 : CRITICAL : main_logger :  Live price:111.62 Strike price:20
+Message with LiveStrikePriceError:['IN', '9/25', '20P', '.80', 'DAY', 'SMALL YOLO YOLO ASF WILLING TO LOSE ALL']
+2020-09-24 06:07:05,809 : ERROR : main_logger : This trade contains error(s)! : 6:06 AMjoelThuhKangIN - AAPL - 9/25 - 20P - .80 - DAY - SMALL YOLO YOLO ASF WILLING TO LOSE ALL
+2020-09-24 06:07:18,368 : CRITICAL : main_logger :  Live price:111.62 Strike price:20
+Message with LiveStrikePriceError:['IN', '9/25', '20P', '.80', 'DAY', 'SMALL YOLO YOLO ASF WILLING TO LOSE ALL']
+2020-09-24 06:07:18,369 : ERROR : main_logger : This trade contains error(s)! : joelThuhKangIN - AAPL - 9/25 - 20P - .80 - DAY - SMALL YOLO YOLO ASF WILLING TO LOSE ALL
+2020-09-24 06:07:21,220 : INFO : main_logger : Producer received a fresh trade : ('in', 'nkla', '2020-09-24 06:07:21.218616', '20', 'put', '.83', 'ThuhKang', '9/25', 'FA8')
+2020-09-24 06:07:34,454 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '20P', '1.35', 'DAY', 'CLOSE 2/3 YOLO .80', '1.35']
+2020-09-24 06:07:34,460 : INFO : main_logger : Producer received a fresh trade : ('out', 'nkla', '2020-09-24 06:07:34.454545', '20', 'put', '1.40', 'ThuhKang', '9/25', 'FA8')
+2020-09-24 06:07:50,721 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '1', 'DAY', "cut rest of pos @ 1 dm's on fleek"]
+2020-09-24 06:07:51,902 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '1', 'DAY', "cut rest of pos @ 1 dm's on fleek"]
+2020-09-24 06:07:53,041 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '1', 'DAY', "cut rest of pos @ 1 dm's on fleek"]
+2020-09-24 06:07:56,159 : INFO : main_logger : Producer received a fresh trade : ('in', 'aapl', '2020-09-24 06:07:56.157657', '107.5', 'put', '1.50', 'ThuhKang', '9/25', 'FA12')
+2020-09-24 06:08:01,731 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '1.6', 'DAY', 'closing 2/3 pos 1.47', '1.6']
+2020-09-24 06:08:01,735 : INFO : main_logger : Producer received a fresh trade : ('out', 'aapl', '2020-09-24 06:08:01.731724', '107.5', 'put', '1.70', 'ThuhKang', '9/25', 'FA12')
+2020-09-24 06:08:04,324 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '1.6', 'DAY', 'closing 2/3 pos 1.47', '1.6']
+2020-09-24 06:08:05,552 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '1.6', 'DAY', 'closing 2/3 pos 1.47', '1.6']
+2020-09-24 06:08:07,806 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '1.47', 'DAY', 'closing pos 1.47', '1.6, 1.47']
+2020-09-24 06:08:10,018 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '1.47', 'DAY', 'closing pos 1.47', '1.6, 1.47']
+2020-09-24 06:08:11,802 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '1.47', 'DAY', 'closing pos 1.47', '1.6, 1.47']
+2020-09-24 06:08:14,173 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-24 06:08:14.171514', '370', 'put', '7.95', 'ThuhKang', '9/25', 'FA10')
+2020-09-24 06:08:33,342 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '9.75', 'DAY', 'CLOSING POS 7.85', '8.6, 9.75']
+2020-09-24 06:08:33,346 : INFO : main_logger : Producer received a fresh trade : ('out', 'tsla', '2020-09-24 06:08:33.342318', '370', 'put', '9.80', 'ThuhKang', '9/25', 'FA10')
+2020-09-24 06:08:45,312 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '9.75', 'DAY', 'CLOSING POS 7.85', '8.6, 9.75']
+2020-09-24 06:08:52,474 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '9.75', 'DAY', 'CLOSING POS 7.85', '8.6, 9.75']
+2020-09-24 06:08:55,562 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '9.75', 'DAY', 'CLOSING POS 7.85', '8.6, 9.75']
+2020-09-24 06:08:56,800 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '9.75', 'DAY', 'CLOSING POS 7.85', '8.6, 9.75']
+2020-09-24 06:09:36,238 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '9.75', 'DAY', 'CLOSING POS 7.85', '8.6, 9.75']
+2020-09-24 06:09:37,490 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '9.75', 'DAY', 'CLOSING POS 7.85', '8.6, 9.75']
+2020-09-24 06:09:39,162 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '9.75', 'DAY', 'CLOSING POS 7.85', '8.6, 9.75']
+2020-09-24 06:09:50,502 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '9.75', 'DAY', 'CLOSING POS 7.85', '8.6, 9.75']
+2020-09-24 06:09:51,762 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '9.75', 'DAY', 'CLOSING POS 7.85', '8.6, 9.75']
+2020-09-24 06:09:55,137 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '9.75', 'DAY', 'CLOSING POS 7.85', '8.6, 9.75']
