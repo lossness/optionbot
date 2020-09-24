@@ -84,7 +84,7 @@ def consumer(driver):
             if 'error' in image_path:
                 raise MakeImageError
 
-            upload_element = WebDriverWait(driver, 5).until(
+            upload_element = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((
                     By.XPATH,
                     "//*[@id='react-root']//div[3][@data-testid='new-post-button']"
@@ -92,11 +92,11 @@ def consumer(driver):
             upload_element.click()
             driver.find_elements_by_css_selector('form input')[0].send_keys(
                 image_path)
-            next_button = WebDriverWait(driver, 5).until(
+            next_button = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located(
                     (By.XPATH, "//button[text()='Next']")))
             next_button.click()
-            share_button = WebDriverWait(driver, 5).until(
+            share_button = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located(
                     (By.XPATH, "//button[text()='Share']")))
             share_button.click()

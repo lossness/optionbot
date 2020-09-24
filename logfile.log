@@ -603,3 +603,59 @@ Message with LiveStrikePriceError:['IN', '9/25', '20P', '.80', 'DAY', 'SMALL YOL
 2020-09-24 06:09:50,502 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '9.75', 'DAY', 'CLOSING POS 7.85', '8.6, 9.75']
 2020-09-24 06:09:51,762 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '9.75', 'DAY', 'CLOSING POS 7.85', '8.6, 9.75']
 2020-09-24 06:09:55,137 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '9.75', 'DAY', 'CLOSING POS 7.85', '8.6, 9.75']
+2020-09-24 14:00:23,831 : INFO : main_logger : Producer received a fresh trade : ('in', 'aapl', '2020-09-24 14:00:23.830606', '112.5', 'call', '.52', 'ThuhKang', '9/25', 'FA4')
+2020-09-24 14:00:43,603 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 95, in consumer
+    next_button = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-24 14:00:46,162 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-24 14:00:46.161263', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA7')
+2020-09-24 14:00:51,387 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 87, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-24 14:02:03,247 : INFO : main_logger : Producer received a fresh trade : ('in', 'msft', '2020-09-24 14:02:03.246529', '207.5', 'call', '0.80', 'MariaC82', '09/25', 'FA3')
+2020-09-24 14:02:08,481 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 87, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-24 14:03:32,856 : INFO : main_logger : Producer received a fresh trade : ('out', 'tsla', '2020-09-24 14:03:32.854419', '400', 'call', '3.40', 'Jen♡♡crypto', '9/25', 'FA7')
+2020-09-24 14:03:38,091 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 87, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-24 14:14:00,918 : INFO : main_logger : Producer received a fresh trade : ('in', 'nflx', '2020-09-24 14:14:00.917232', '480', 'call', '4.30', 'ThuhKang', '9/25', 'FA6')
+2020-09-24 14:14:06,283 : CRITICAL : main_logger : Message: 
+
+ COULD NOT POST TO INSTA. 
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/instapost.py", line 87, in consumer
+    upload_element = WebDriverWait(driver, 5).until(
+  File "/usr/lib/python3.8/site-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+2020-09-24 14:22:14,945 : INFO : main_logger : Producer received a fresh trade : ('in', 'amd', '2020-09-24 14:22:14.944099', '76', 'put', '.99', 'Jen♡♡crypto', '9/25', 'FA2')
