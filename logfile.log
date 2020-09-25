@@ -659,3 +659,46 @@ Traceback (most recent call last):
 selenium.common.exceptions.TimeoutException: Message: 
 
 2020-09-24 14:22:14,945 : INFO : main_logger : Producer received a fresh trade : ('in', 'amd', '2020-09-24 14:22:14.944099', '76', 'put', '.99', 'Jen♡♡crypto', '9/25', 'FA2')
+2020-09-24 14:32:06,226 : INFO : main_logger : Producer received a fresh trade : ('out', 'msft', '2020-09-24 14:32:06.225534', '207.5', 'call', '0.55', 'MariaC82', '09/25', 'FA3')
+2020-09-24 14:32:27,751 : INFO : main_logger : Producer received a fresh trade : ('out', 'amd', '2020-09-24 14:32:27.749901', '76', 'put', '1.30', 'Jen♡♡crypto', '9/25', 'FA2')
+2020-09-24 15:29:24,781 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '.54', 'DAY', 'CLOSING POS .51', '.54']
+2020-09-24 15:29:24,782 : INFO : main_logger : Producer received a fresh trade : ('out', 'aapl', '2020-09-24 15:29:24.781601', '112.5', 'call', '.55', 'ThuhKang', '9/25', 'FA4')
+2020-09-24 15:59:14,274 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-24 15:59:14.272438', '410', 'call', '5.90', 'ThuhKang', '9/25', 'FA7')
+2020-09-24 19:20:53,159 : INFO : main_logger : Producer received a fresh trade : ('out', 'nflx', '2020-09-24 19:20:53.157879', '480', 'call', '2.10', 'ThuhKang', '9/25', 'FA6')
+2020-09-25 03:23:24,087 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '9.75', 'DAY', 'CLOSING POS 7.85', '8.6, 9.75']
+2020-09-25 03:25:21,463 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '9.75', 'DAY', 'CLOSING POS 7.85', '8.6, 9.75']
+2020-09-25 03:26:13,998 : INFO : main_logger : Producer received a fresh trade : ('in', 'aapl', '2020-09-25 03:26:13.996580', '112.5', 'call', '.54', 'ThuhKang', '9/25', 'FA11')
+2020-09-25 03:27:21,017 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 03:27:21.015080', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA1')
+2020-09-25 03:31:31,975 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 03:31:31.972537', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA4')
+2020-09-25 03:34:09,316 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 03:34:09.314026', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA10')
+2020-09-25 04:11:29,660 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 04:11:29.658302', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA10')
+2020-09-25 04:12:07,554 : INFO : main_logger : Producer received a fresh trade : ('in', 'aapl', '2020-09-25 04:12:07.552165', '112.5', 'call', '.54', 'ThuhKang', '9/25', 'FA6')
+2020-09-25 04:12:08,826 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 04:12:08.825719', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA2')
+2020-09-25 04:33:51,869 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 04:33:51.867247', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA8')
+2020-09-25 04:50:06,157 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 04:50:06.154643', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA4')
+2020-09-25 04:51:51,696 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 04:51:51.694462', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA5')
+2020-09-25 04:53:29,612 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 04:53:29.609836', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA5')
+2020-09-25 05:20:58,411 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 05:20:58.409339', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA8')
+2020-09-25 05:27:55,889 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 05:27:55.886747', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA9')
+2020-09-25 05:59:20,046 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 05:59:20.044271', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA6')
+2020-09-25 06:04:03,551 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 06:04:03.549100', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA9')
+2020-09-25 06:05:04,804 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 06:05:04.801868', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA8')
+2020-09-25 06:05:06,454 : ERROR : main_logger : near "VALUES": syntax error
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/db_utils.py", line 164, in db_insta_posting_successful
+    cur.execute(update_sql, ("true", trade_id))
+sqlite3.OperationalError: near "VALUES": syntax error
+2020-09-25 06:06:31,021 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 06:06:31.011524', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA8')
+2020-09-25 06:28:10,684 : INFO : main_logger : Producer received a fresh trade : ('in', 'aapl', '2020-09-25 06:28:10.682615', '112.5', 'call', '.52', 'ThuhKang', '9/25', 'FA2')
+2020-09-25 06:28:12,039 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 06:28:12.037608', '400', 'call', '1.85', 'Jen♡♡crypto', '9/25', 'FA9')
+2020-09-25 06:29:58,728 : INFO : main_logger : Producer received a fresh trade : ('out', 'tsla', '2020-09-25 06:29:58.720789', '400', 'call', '3.40', 'Jen♡♡crypto', '9/25', 'FA9')
+2020-09-25 06:30:09,909 : ERROR : main_logger : database is locked
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/db_utils.py", line 165, in db_insta_posting_successful
+    cur.execute(update_sql, data)
+sqlite3.OperationalError: database is locked
+2020-09-25 06:32:33,913 : INFO : main_logger : Producer received a fresh trade : ('out', 'tsla', '2020-09-25 06:32:33.910546', '400', 'call', '3.40', 'Jen♡♡crypto', '9/25', 'FA9')
+2020-09-25 06:33:50,658 : INFO : main_logger : Producer received a fresh trade : ('in', 'nflx', '2020-09-25 06:33:50.657002', '480', 'call', '4.30', 'ThuhKang', '9/25', 'FA2')
+2020-09-25 06:34:18,313 : INFO : main_logger : Producer received a fresh trade : ('out', 'nflx', '2020-09-25 06:34:18.310968', '480', 'call', '2.10', 'ThuhKang', '9/25', 'FA2')
+2020-09-25 06:35:00,709 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 06:35:00.707102', '410', 'call', '5.90', 'ThuhKang', '9/25', 'FA5')
+2020-09-25 06:39:54,398 : INFO : main_logger : Producer received a fresh trade : ('in', 'ko', '2020-09-25 06:39:54.396048', '50', 'call', '1.25', 'MariaC82', '10/16', 'FA12')

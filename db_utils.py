@@ -40,6 +40,7 @@ def create_table():
         buy_price text NOT NULL,
         user_name text NOT NULL,
         color text NOT NULL,
+        posted text NOT NULL,
         FOREIGN KEY (user_name) REFERENCES traders (id))"""
 
     cur.execute(trades_sql)
@@ -130,6 +131,51 @@ def has_trade_match(database_trades: list, new_trade: tuple) -> bool:
         return match_exists, trade_color
 
 
+def is_posted_to_insta(new_trade: tuple) -> bool:
+    try:
+        insta_posted = "true"
+        con = db_connect()
+        cur = con.cursor()
+        database_search_parameters = "SELECT in_or_out, ticker, strike_price, call_or_put, user_name, expiration, insta_posted from trades"
+        in_or_out, ticker, date_time, strike_price, call_or_put, buy_price, user_name, expiration, color = new_trade
+        cur.execute(database_search_parameters)
+        filtered_trades = cur.fetchall()
+        matched_trades = re.findall(
+            rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{user_name}\'), (\'{expiration}\'), (\'\True\'))\)',
+            str(filtered_trades))
+
+        if len(matched_trades) != 1:
+            insta_posted = "false"
+
+    except DatabaseEmpty as info_error:
+        logger.info(info_error)
+
+    finally:
+        if (con):
+            con.close()
+        return insta_posted
+
+
+def db_insta_posting_successful(trade_id: str):
+    try:
+        con = db_connect()
+        cur = con.cursor()
+        update_sql = ''' UPDATE trades SET insta_posted = ? WHERE id = ? '''
+        data = ("true", trade_id)
+        cur.execute(update_sql, data)
+        con.commit()
+
+    except sqlite3.Error as error:
+        logger.error(f"{error}", exc_info=True)
+
+    except KeyError as error:
+        logger.error("Trader already in database", exc_info=True)
+
+    finally:
+        if (con):
+            con.close()
+
+
 def verify_trade(parsed_trade: tuple):
     try:
         is_out = False
@@ -203,8 +249,14 @@ def verify_trade(parsed_trade: tuple):
         return verification_tuple
 
 
-def update_table(parsed_trade: tuple):
+def update_table(parsed_trade: tuple) -> str:
+    '''
+    Updates the database with a trade.
+
+    Returns: the trades unique ID in database.
+    '''
     try:
+        trade_id = ''
         con = db_connect()
         cur = con.cursor()
         trade_sql = "INSERT INTO trades (in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
@@ -215,6 +267,7 @@ def update_table(parsed_trade: tuple):
         con.commit()
         print("Trade added to the database ")
         print(parsed_trade)
+        trade_id = str(cur.lastrowid)
         cur.close()
     except sqlite3.Error as error:
         print("Failed to update trade in sqlite table", error)
@@ -223,6 +276,7 @@ def update_table(parsed_trade: tuple):
     finally:
         if (con):
             con.close()
+            return trade_id
             # print("the sqlite connection is closed")
 
 

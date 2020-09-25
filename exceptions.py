@@ -78,3 +78,10 @@ class ExpirationFixerFailed(Exception):
     All attempts to find an expiration in the trade has failed.
     Typically caused by trader writing the expiration with a . ex. (9.25)
     '''
+
+
+class MatchingInNeverPosted(Exception):
+    '''
+    The matching IN trade never got posted to instagram.
+    This out trade will not post to instagram.
+    '''

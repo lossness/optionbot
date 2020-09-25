@@ -19,6 +19,7 @@ from tqdm import tqdm
 from main_logger import logger
 from second_level_checks import ErrorChecker
 from decimal import *
+from collections import namedtuple
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -633,12 +634,12 @@ def processor(new_message):
                     trade_expiration_tup,
                     trade_color_choice,
                 )
-                message = valid_trade
+                logger.info(f"Producer received a fresh trade : {valid_trade}")
+                print(f"\nProducer received a fresh trade : {valid_trade}")
+                trade_id = update_table(valid_trade)
+                message = (trade_id, valid_trade)
                 config.new_trades.put(message)
                 config.has_trade.release()
-                logger.info(f"Producer received a fresh trade : {message}")
-                print(f"\nProducer received a fresh trade : {message}")
-                update_table(valid_trade)
 
     except (KeyError, IndexError, ValueError) as error:
         print(f"\n{error}")

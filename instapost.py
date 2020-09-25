@@ -14,8 +14,8 @@ from PIL import Image, ImageDraw, ImageFont
 from dotenv import load_dotenv
 from timeit import default_timer as timer
 from main_logger import logger
-from exceptions import MakeImageError
-from db_utils import convert_date
+from exceptions import *
+from db_utils import convert_date, is_posted_to_insta, db_insta_posting_successful
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -75,39 +75,56 @@ def make_image(msg):
 
 
 def consumer(driver):
-    while config.has_trade.acquire():
+    while config.has_trade.acquire(blocking=True):
         start = timer()
         print("\nInstagram posting initiated..")
-        message = config.new_trades.get()
+        full_message = config.new_trades.get()
+        trade_id = full_message[0]
+        message = full_message[1]
         try:
-            image_path = make_image(message)
-            if 'error' in image_path:
-                raise MakeImageError
+            if message[0] == 'out' and is_posted_to_insta(
+                    message).lower() == 'true' or message[0] == 'in':
+                image_path = make_image(message)
+                if 'error' in image_path:
+                    raise MakeImageError
 
-            upload_element = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((
-                    By.XPATH,
-                    "//*[@id='react-root']//div[3][@data-testid='new-post-button']"
-                )))
-            upload_element.click()
-            driver.find_elements_by_css_selector('form input')[0].send_keys(
-                image_path)
-            next_button = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located(
-                    (By.XPATH, "//button[text()='Next']")))
-            next_button.click()
-            share_button = WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located(
-                    (By.XPATH, "//button[text()='Share']")))
-            share_button.click()
-            print("\ninstagram posting completed")
-            time.sleep(2)
+                upload_element = WebDriverWait(driver, 20).until(
+                    EC.presence_of_element_located((
+                        By.XPATH,
+                        "//*[@id='react-root']//div[3][@data-testid='new-post-button']"
+                    )))
+                upload_element.click()
+                #driver.find_elements_by_css_selector('form input')[0].send_keys(
+                #    image_path)
+                form_field = WebDriverWait(driver, 8).until(
+                    EC.presence_of_all_elements_located(
+                        (By.CSS_SELECTOR, "form input")))
+                form_field[0].send_keys(image_path)
+                next_button = WebDriverWait(driver, 20).until(
+                    EC.presence_of_element_located(
+                        (By.XPATH, "//button[text()='Next']")))
+                next_button.click()
+                share_button = WebDriverWait(driver, 20).until(
+                    EC.presence_of_element_located(
+                        (By.XPATH, "//button[text()='Share']")))
+                share_button.click()
+                print("\ninstagram posting completed")
+                db_insta_posting_successful(trade_id)
+                config.EVENT.wait(1.0)
+            else:
+                raise MatchingInNeverPosted
 
         except (MakeImageError, NoSuchElementException,
                 TimeoutException) as error:
             logger.fatal(f'{error}\n COULD NOT POST TO INSTA. ', exc_info=True)
             # caption_field = WebDriverWait(driver, 5).until(
             # EC.presence_of_element_located((By.XPATH, "//textarea")))
+
+        except MatchingInNeverPosted:
+            logger.fatal(
+                "The matching in for this trade had an error while being posted to insta.  This trade will not post."
+            )
+
         finally:
             end = timer()
             print(f"\n{end - start}")
