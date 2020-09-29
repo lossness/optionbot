@@ -702,3 +702,170 @@ sqlite3.OperationalError: database is locked
 2020-09-25 06:34:18,313 : INFO : main_logger : Producer received a fresh trade : ('out', 'nflx', '2020-09-25 06:34:18.310968', '480', 'call', '2.10', 'ThuhKang', '9/25', 'FA2')
 2020-09-25 06:35:00,709 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 06:35:00.707102', '410', 'call', '5.90', 'ThuhKang', '9/25', 'FA5')
 2020-09-25 06:39:54,398 : INFO : main_logger : Producer received a fresh trade : ('in', 'ko', '2020-09-25 06:39:54.396048', '50', 'call', '1.25', 'MariaC82', '10/16', 'FA12')
+2020-09-25 14:48:04,685 : INFO : main_logger : Producer received a fresh trade : ('out', 'tsla', '2020-09-25 14:48:04.684277', '410', 'call', '3.20', 'ThuhKang', '9/25', 'FA5')
+2020-09-25 14:55:04,618 : INFO : main_logger : Producer received a fresh trade : ('in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12')
+2020-09-25 15:10:14,917 : CRITICAL : main_logger :  Live price:203.55 Strike price:111.25
+Message with LiveStrikePriceError:['out', '9/25', '111.25c', '.51', 'DAY', 'closing 1/2 pos .38', '.51']
+2020-09-25 15:10:15,913 : CRITICAL : main_logger :  Live price:203.55 Strike price:2
+Message with LiveStrikePriceError:['out', '9/25', '111.25c', '.51', 'DAY', 'closing 1/2 pos .38', '.51']
+2020-09-25 15:10:15,914 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '111.25c', '.51', 'DAY', 'closing 1/2 pos .38', '.51']
+2020-09-25 15:10:15,915 : ERROR : main_logger : This trade contains error(s)! : 3:10 PMBOTBBS-TRADE-BOTThuhKangout - MSFT - 9/25 - 111.25c - .51 - DAY - closing 1/2 pos .38 - .51
+2020-09-25 15:11:50,707 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '.51', 'DAY', 'closing 1/2 pos .38', '.51']
+2020-09-25 15:11:50,708 : INFO : main_logger : Producer received a fresh trade : ('out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12')
+2020-09-25 15:17:36,896 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '.55', 'DAY', 'CLOSING MORE .38', '.51, .55']
+2020-09-25 15:29:26,407 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '.40', 'DAY', 'CLOSING POS .38', '.51, .55, .40']
+2020-09-25 16:52:36,416 : INFO : main_logger : Producer received a fresh trade : ('in', 'ba', '2020-09-25 16:52:36.412153', '155', 'call', '.37', 'ThuhKang', '9/25', 'FA7')
+2020-09-25 17:26:48,296 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '.35', 'DAY', 'CLOSING 2/3 POS .34', '.35']
+2020-09-25 17:26:48,298 : INFO : main_logger : Producer received a fresh trade : ('out', 'ba', '2020-09-25 17:26:48.297142', '155', 'call', '.40', 'ThuhKang', '9/25', 'FA7')
+2020-09-25 18:07:39,756 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-09-25 18:07:39.755842', '3080', 'call', '5.15', 'ThuhKang', '9/25', 'FA8')
+2020-09-25 18:10:46,906 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-25 18:10:46.901868', '410', 'call', '.78', 'Jen♡♡crypto', '9/25', 'FA12')
+2020-09-25 18:12:28,837 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '5.7', 'DAY', 'CLOSING 1/2 POS 5.1', '5.7']
+2020-09-25 18:12:28,839 : INFO : main_logger : Producer received a fresh trade : ('out', 'amzn', '2020-09-25 18:12:28.838171', '3080', 'call', '5.80', 'ThuhKang', '9/25', 'FA8')
+2020-09-25 18:25:06,129 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '11.5', 'DAY', 'CLOSING POS 5.1', '5.7, 11.5']
+2020-09-25 18:31:34,464 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '.45', 'DAY', 'CLOSING POS .34', '.35, .45']
+2020-09-25 19:04:07,927 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-09-25 19:04:07.925976', '3100', 'call', '3.15', 'ThuhKang', '9/25', 'FA4')
+2020-09-25 19:05:09,175 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '3.7', 'DAY', 'CLOSING 1/2 POS 3.1', '3.7']
+2020-09-25 19:05:09,176 : INFO : main_logger : Producer received a fresh trade : ('out', 'amzn', '2020-09-25 19:05:09.175425', '3100', 'call', '3.80', 'ThuhKang', '9/25', 'FA4')
+2020-09-25 19:10:14,643 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '4.25', 'DAY', 'CLOSING POS 3.1', '3.7, 4.25']
+2020-09-28 13:41:34,951 : INFO : main_logger : Producer received a fresh trade : ('in', 'penn', '2020-09-28 13:41:34.950549', '69', 'call', '3.10', 'MariaC82', '10/02', 'FA1')
+2020-09-28 13:43:26,841 : INFO : main_logger : Producer received a fresh trade : ('in', 'amd', '2020-09-28 13:43:26.840322', '78.5', 'call', '2', 'Jen♡♡crypto', '10/2', 'FA6')
+2020-09-28 13:46:42,711 : INFO : main_logger : Producer received a fresh trade : ('out', 'penn', '2020-09-28 13:46:42.710502', '69', 'call', '3.20', 'MariaC82', '10/02', 'FA1')
+2020-09-28 14:35:40,035 : INFO : main_logger : Producer received a fresh trade : ('in', 'nflx', '2020-09-28 14:35:40.034763', '480', 'put', '6.90', 'ThuhKang', '10/2', 'FA9')
+2020-09-28 14:37:29,730 : INFO : main_logger : Producer received a fresh trade : ('out', 'nflx', '2020-09-28 14:37:29.729014', '480', 'put', '7.50', 'ThuhKang', '10/2', 'FA9')
+2020-09-28 14:44:34,160 : WARNING : main_logger : 'Could not determine buy price!' : ['OUT', '8.5', 'DAY', 'CLOSING POS 6.8', '7.4, 8.5']
+2020-09-28 15:06:06,550 : INFO : main_logger : Producer received a fresh trade : ('in', 'dkng', '2020-09-28 15:06:06.549089', '60', 'call', '1.85', 'Jen♡♡crypto', '10/2', 'FA8')
+2020-09-28 15:22:13,918 : INFO : main_logger : Producer received a fresh trade : ('in', 'ba', '2020-09-28 15:22:13.917709', '170', 'call', '2.65', 'ThuhKang', '10/2', 'FA1')
+2020-09-28 15:26:23,425 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '2.8', 'DAY', 'closing 2/3 pos 2.62', '2.8']
+2020-09-28 15:26:23,426 : INFO : main_logger : Producer received a fresh trade : ('out', 'ba', '2020-09-28 15:26:23.425568', '170', 'call', '2.90', 'ThuhKang', '10/2', 'FA1')
+2020-09-28 15:34:52,321 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '2.7', 'DAY', 'closing pos 2.62', '2.8, 2.7']
+2020-09-28 15:41:25,562 : WARNING : main_logger : 'Could not determine buy price!' : ['Sell', '78.5 call', 'Scalp', '10% but price action annoying. Holding 1']
+2020-09-28 15:41:25,562 : WARNING : main_logger :  
+ ['78.5 call', 'Scalp', '10% but price action annoying. Holding 1'] 
+ BOT
+BBS-TRADE-BOT
+Jen♡♡crypto
+Sell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 15:41:26,618 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 09/28/2020 Trade Expiration: 2/2
+2020-09-28 15:41:26,619 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTJen♡♡cryptoSell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 16:06:43,175 : WARNING : main_logger : 'Could not determine buy price!' : ['Sell', '78.5 call', 'Scalp', '10% but price action annoying. Holding 1']
+2020-09-28 16:06:43,175 : WARNING : main_logger :  
+ ['78.5 call', 'Scalp', '10% but price action annoying. Holding 1'] 
+ 3:41 PM
+BOT
+BBS-TRADE-BOT
+Jen♡♡crypto
+Sell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 16:06:44,123 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 09/28/2020 Trade Expiration: 2/2
+2020-09-28 16:06:44,123 : ERROR : main_logger : This trade contains error(s)! : 3:41 PMBOTBBS-TRADE-BOTJen♡♡cryptoSell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 16:06:48,249 : WARNING : main_logger : 'Could not determine buy price!' : ['Sell', '78.5 call', 'Scalp', '10% but price action annoying. Holding 1']
+2020-09-28 16:06:48,250 : WARNING : main_logger :  
+ ['78.5 call', 'Scalp', '10% but price action annoying. Holding 1'] 
+ BOT
+BBS-TRADE-BOT
+Jen♡♡crypto
+Sell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 16:06:49,188 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 09/28/2020 Trade Expiration: 2/2
+2020-09-28 16:06:49,189 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTJen♡♡cryptoSell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 16:06:52,216 : WARNING : main_logger : 'Could not determine buy price!' : ['Sell', '78.5 call', 'Scalp', '10% but price action annoying. Holding 1']
+2020-09-28 16:06:52,217 : WARNING : main_logger :  
+ ['78.5 call', 'Scalp', '10% but price action annoying. Holding 1'] 
+ 3:41 PM
+BOT
+BBS-TRADE-BOT
+Jen♡♡crypto
+Sell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 16:06:52,993 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 09/28/2020 Trade Expiration: 2/2
+2020-09-28 16:06:52,994 : ERROR : main_logger : This trade contains error(s)! : 3:41 PMBOTBBS-TRADE-BOTJen♡♡cryptoSell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 16:07:00,270 : WARNING : main_logger : 'Could not determine buy price!' : ['Sell', '78.5 call', 'Scalp', '10% but price action annoying. Holding 1']
+2020-09-28 16:07:00,270 : WARNING : main_logger :  
+ ['78.5 call', 'Scalp', '10% but price action annoying. Holding 1'] 
+ BOT
+BBS-TRADE-BOT
+Jen♡♡crypto
+Sell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 16:07:01,481 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 09/28/2020 Trade Expiration: 2/2
+2020-09-28 16:07:01,482 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTJen♡♡cryptoSell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 16:08:02,257 : WARNING : main_logger : 'Could not determine buy price!' : ['Sell', '10/2', 'Scalp', '10% but price action annoying. Holding 1']
+2020-09-28 16:08:44,341 : WARNING : main_logger : 'Could not determine buy price!' : ['Sell', '10/2', 'Scalp', '10% but price action annoying. Holding 1']
+2020-09-28 16:10:42,987 : WARNING : main_logger : 'Could not determine buy price!' : ['Sell', '78.5 call', 'Scalp', '10% but price action annoying. Holding 1']
+2020-09-28 16:10:42,987 : WARNING : main_logger :  
+ ['78.5 call', 'Scalp', '10% but price action annoying. Holding 1'] 
+ 4:10 PM
+Treefidey
+Jen♡♡crypto
+Sell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 16:10:44,035 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 09/28/2020 Trade Expiration: 2/2
+2020-09-28 16:10:44,035 : ERROR : main_logger : This trade contains error(s)! : 4:10 PMTreefideyJen♡♡cryptoSell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 16:11:42,290 : WARNING : main_logger : 'Could not determine buy price!' : ['Sell', '10/02', 'Scalp', '10% but price action annoying. Holding 1']
+2020-09-28 16:12:27,956 : INFO : main_logger : Producer received a fresh trade : ('out', 'amd', '2020-09-28 16:12:27.954931', '78.5', 'call', '2.25', 'Jen♡♡crypto', '10/2', 'FA6')
+2020-09-28 16:13:02,724 : WARNING : main_logger : 'Could not determine buy price!' : ['Sell', '78.5 call', 'Scalp', '10% but price action annoying. Holding 1']
+2020-09-28 16:13:02,724 : WARNING : main_logger :  
+ ['78.5 call', 'Scalp', '10% but price action annoying. Holding 1'] 
+ BOT
+BBS-TRADE-BOT
+Jen♡♡crypto
+Sell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 16:13:03,651 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 09/28/2020 Trade Expiration: 2/2
+2020-09-28 16:13:03,651 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTJen♡♡cryptoSell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 17:44:16,677 : WARNING : main_logger : 'Could not determine buy price!' : ['Sell', '78.5 call', 'Scalp', '10% but price action annoying. Holding 1']
+2020-09-28 17:44:16,677 : WARNING : main_logger :  
+ ['78.5 call', 'Scalp', '10% but price action annoying. Holding 1'] 
+ 3:41 PM
+BOT
+BBS-TRADE-BOT
+Jen♡♡crypto
+Sell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 17:44:17,633 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 09/28/2020 Trade Expiration: 2/2
+2020-09-28 17:44:17,633 : ERROR : main_logger : This trade contains error(s)! : 3:41 PMBOTBBS-TRADE-BOTJen♡♡cryptoSell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 17:44:18,874 : WARNING : main_logger : 'Could not determine buy price!' : ['Sell', '78.5 call', 'Scalp', '10% but price action annoying. Holding 1']
+2020-09-28 17:44:18,874 : WARNING : main_logger :  
+ ['78.5 call', 'Scalp', '10% but price action annoying. Holding 1'] 
+ BOT
+BBS-TRADE-BOT
+Jen♡♡crypto
+Sell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 17:44:19,890 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 09/28/2020 Trade Expiration: 2/2
+2020-09-28 17:44:19,890 : ERROR : main_logger : This trade contains error(s)! : BOTBBS-TRADE-BOTJen♡♡cryptoSell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-28 18:20:27,049 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-09-28 18:20:27.048190', '410', 'put', '11.70', 'ThuhKang', '10/2', 'FA9')
+2020-09-28 18:52:59,493 : INFO : main_logger : Producer received a fresh trade : ('out', 'tsla', '2020-09-28 18:52:59.492250', '410', 'put', '10.30', 'ThuhKang', '10/2', 'FA9')
+2020-09-28 19:04:16,359 : INFO : main_logger : Producer received a fresh trade : ('in', 'aapl', '2020-09-28 19:04:16.358855', '113.75', 'put', '1.95', 'ThuhKang', '10/2', 'FA8')
+2020-09-29 02:50:37,195 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '1.55', 'cut', 'pos 1.92', '1.55']
+2020-09-29 02:50:37,200 : INFO : main_logger : Producer received a fresh trade : ('out', 'aapl', '2020-09-29 02:50:37.198186', '113.75', 'put', '1.60', 'ThuhKang', '10/2', 'FA8')
+2020-09-29 02:57:32,170 : WARNING : main_logger : 'Could not determine buy price!' : ['Sell', '78.5 call', 'Scalp', '10% but price action annoying. Holding 1']
+2020-09-29 02:57:32,172 : WARNING : main_logger :  
+ ['78.5 call', 'Scalp', '10% but price action annoying. Holding 1'] 
+ 2:57 AM
+joel
+Jen♡♡crypto
+Sell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-29 02:57:33,320 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 09/29/2020 Trade Expiration: 2/2
+2020-09-29 02:58:03,362 : WARNING : main_logger : 'Could not determine buy price!' : ['Sell', '78.5 call', 'Scalp', '10% but price action annoying. Holding 1']
+2020-09-29 02:58:03,363 : WARNING : main_logger :  
+ ['78.5 call', 'Scalp', '10% but price action annoying. Holding 1'] 
+ 2:57 AM
+joel
+Jen♡♡crypto
+Sell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-09-29 02:58:04,445 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 09/29/2020 Trade Expiration: 2/2

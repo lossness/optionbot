@@ -18,7 +18,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException
 from instapost import consumer
-from discord_grabber import producer
+from discord_grabber import DiscordGrabber
 #from insta_browser import switch_to_mobile
 from main_logger import logger
 from dotenv import load_dotenv
@@ -47,8 +47,8 @@ def time_now():
 
 # Market hours are 930-4pm est 9:30 -> 16:00 24hr format
 def is_market_open():
-    if datetime.time(9, 30, 00, 000000) <= time_now() <= datetime.time(
-            16, 00, 00, 000000):
+    if datetime.time(0, 30, 00, 000000) <= time_now() <= datetime.time(
+            23, 59, 00, 000000):
         return True
     else:
         return False
@@ -77,10 +77,11 @@ def check_discord():
         logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
     listen_spinner = Spinner('Listening for new messages ')
 
+    grabber = DiscordGrabber(driver=discord_driver)
     while True:
         if is_market_open():
             try:
-                producer(discord_driver)
+                grabber.producer()
 
             except (TimeoutException, NoSuchElementException) as error:
                 logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
