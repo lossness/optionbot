@@ -1,8 +1,9 @@
 import queue
 import threading
 
+new_unprocessed_trades = queue.Queue()
+has_unprocessed_trade = threading.Semaphore(value=0)
+
 new_trades = queue.Queue()
-trades_to_fix = queue.Queue()
-has_fixed_trade = threading.Semaphore(value=0)
 has_trade = threading.Semaphore(value=0)
 EVENT = threading.Event()

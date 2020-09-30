@@ -19,12 +19,14 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException
 from instapost import consumer
 from discord_grabber import DiscordGrabber
+from dev_listener import discord_bot
 #from insta_browser import switch_to_mobile
 from main_logger import logger
 from dotenv import load_dotenv
 
 load_dotenv()
 EVENT = config.EVENT
+GRABBER = DiscordGrabber(driver=check_discord.discord_driver)
 
 if os.name == 'nt':
     # DISCORD_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
@@ -77,11 +79,11 @@ def check_discord():
         logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
     listen_spinner = Spinner('Listening for new messages ')
 
-    grabber = DiscordGrabber(driver=discord_driver)
+    GRABBER.driver = discord_driver
     while True:
         if is_market_open():
             try:
-                grabber.producer()
+                GRABBER.producer()
 
             except (TimeoutException, NoSuchElementException) as error:
                 logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
@@ -95,6 +97,22 @@ def check_discord():
 
     logger.fatal("INFINITE CHECK_DISCORD LISTENER GOT OUT THE LOOP FUCK")
     print("It should never reach here! check_discord")
+
+
+def check_for_unprocessed_messages():
+    while True:
+        if is_market_open():
+            try:
+                GRABBER.processor()
+            except:
+                continue
+        else:
+            EVENT.wait(3)
+    logger.fatal(
+        "INFINITE CHECK_FOR_UNPROCESSED_MESSAGES GOT OUT OF THE LOOP FUCK")
+    print(
+        "Infinite loop exited in check_for_unprocessed_messages! Its become setinent!"
+    )
 
 
 def post_driver():
@@ -122,14 +140,21 @@ def post_driver():
 
 def main():
     scraper = threading.Thread(target=check_discord)
+    dev_scraper = threading.Thread(target=discord_bot)
     poster = threading.Thread(target=post_driver)
+    processor = threading.Thread(target=check_for_unprocessed_messages)
 
     scraper.start()
+    dev_scraper.start()
+    processor.start()
     poster.start()
 
     config.new_trades.join()
+    config.new_unprocessed_trades.join()
 
     scraper.join()
+    dev_scraper.join()
+    processor.join()
     poster.join()
 
 
