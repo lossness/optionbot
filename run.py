@@ -7,6 +7,7 @@ import pathlib
 import concurrent.futures
 import queue
 import config
+import discord
 
 from progress.spinner import Spinner, LineSpinner
 from selenium import webdriver
@@ -18,7 +19,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException
 from instapost import consumer
-from discord_grabber import DiscordGrabber
+from grabber import DiscordGrabber
 from dev_listener import discord_bot
 #from insta_browser import switch_to_mobile
 from main_logger import logger

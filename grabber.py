@@ -13,7 +13,6 @@ from datetime import datetime
 from make_image import text_on_img
 from db_utils import update_table, error_checker, verify_trade, update_error_table, convert_date, convert_date_to_text
 from timeit import default_timer as timer
-from tqdm import tqdm
 from main_logger import logger
 from second_level_checks import ErrorChecker
 from decimal import *
