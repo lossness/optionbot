@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/home/swing/projects/env/bin/python3",
+    "python.pythonPath": "/root/.local/share/virtualenvs/swing-TZp177Pi/bin/python3",
     "python.formatting.provider": "yapf",
     "python.linting.pylintEnabled": true,
     "python.linting.mypyEnabled": false,
