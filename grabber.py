@@ -36,11 +36,47 @@ TRADERS = [
 ]
 LAST_MESSAGE = "None"
 LAST_FIXED_MESSAGE = "None"
+if os.name == 'nt':
+    # DISCORD_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
+    #                                   'windows', 'discord',
+    #                                   'chromedriver.exe')
+    #INSTA_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
+    #                                 'windows', 'insta', 'chromedriver.exe')
+    DISCORD_DRIVER_PATH = os.getenv('WINDOWS_DISCORD_DRIVER_PATH')
+    INSTA_DRIVER_PATH = os.getenv('WINDOWS_INSTA_DRIVER_PATH')
+if os.name == 'posix':
+    DISCORD_DRIVER_PATH = r'/usr/bin/chromedriver'
+    INSTA_DRIVER_PATH = r'/usr/bin/chromedriver'
+
+
+def initiate_discord_driver():
+    chrome_options = Options()
+    # chrome_options.add_argument("--window-size=1920,1080")
+    # chrome_options.add_argument("--disable-extensions")
+    # chrome_options.add_argument("--start-maximized")
+    # chrome_options.add_argument("--headless")
+    # chrome_options.add_argument("--disable-gpu")
+    # chrome_options.add_argument("--disable-dev-shm-usage")
+    # chrome_options.add_argument("--no-sandbox")
+    # chrome_options.add_argument("--ignore-certificate-errors")
+    chrome_options.add_argument('--log-level=3')
+    chrome_options.debugger_address = '127.0.0.1:9222'
+    discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
+                                      options=chrome_options)
+    try:
+        element = discord_driver.find_elements_by_xpath(
+            "//*[@role='group']")[-1]
+        element.location_once_scrolled_into_view
+
+    except (NoSuchElementException, TimeoutError) as error:
+        logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
+    finally:
+        return discord_driver
 
 
 class DiscordGrabber:
-    def __init__(self, driver):
-        self.driver = driver
+    def __init__(self):
+        self.driver = initiate_discord_driver()
         self.LAST_MESSAGE = LAST_MESSAGE
         self.LAST_FIXED_MESSAGE = LAST_FIXED_MESSAGE
 
@@ -487,8 +523,7 @@ class DiscordGrabber:
                 split_result = new_message.splitlines()
                 # removes any empty strings from list
                 split_result = list(filter(None, split_result))
-                split_result = list(
-                    filter(DiscordGrabber.filter_message, split_result))
+                split_result = list(filter(self.filter_message, split_result))
                 trade_author = list(filter(self.filter_trader, split_result))
                 trade_author_tup = trade_author[0]
                 # find the longest string left which is the message string

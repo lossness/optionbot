@@ -869,3 +869,14 @@ Sell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoyin
 2020-09-29 02:58:04,445 : ERROR : main_logger : No tables found:
 LIVE BUY PRICE ERROR:
  Current Date: 09/29/2020 Trade Expiration: 2/2
+2020-10-01 04:18:16,183 : WARNING : main_logger : 'Could not determine buy price!' : ['Sell', '78.5 call', 'Scalp', '10% but price action annoying. Holding 1']
+2020-10-01 04:18:16,188 : WARNING : main_logger :  
+ ['78.5 call', 'Scalp', '10% but price action annoying. Holding 1'] 
+ 2:57 AM
+joel
+Jen♡♡crypto
+Sell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoying. Holding 1
+2020-10-01 04:18:37,626 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-01 04:18:37.623849', '3150', 'put', '27.60', 'ThuhKang', '10/2', 'FA11')
+2020-10-01 04:20:18,964 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-01 04:20:18.962246', '3150', 'put', '27.60', 'ThuhKang', '10/2', 'FA12')
+2020-10-01 04:52:27,485 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '32', 'DAY', 'closing 1/3 pos 27.5', '32']
+2020-10-01 04:52:27,489 : INFO : main_logger : Producer received a fresh trade : ('out', 'amzn', '2020-10-01 04:52:27.485779', '3150', 'put', '32.05', 'ThuhKang', '10/2', 'FA12')

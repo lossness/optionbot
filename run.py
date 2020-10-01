@@ -8,6 +8,7 @@ import concurrent.futures
 import queue
 import config
 import discord
+import asyncio
 
 from progress.spinner import Spinner, LineSpinner
 from selenium import webdriver
@@ -20,14 +21,14 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException
 from instapost import consumer
 from grabber import DiscordGrabber
-from dev_listener import discord_bot
+from dev_listener import bot_async_start
 #from insta_browser import switch_to_mobile
 from main_logger import logger
 from dotenv import load_dotenv
 
 load_dotenv()
 EVENT = config.EVENT
-GRABBER = DiscordGrabber(driver=check_discord.discord_driver)
+GRABBER = DiscordGrabber()
 
 if os.name == 'nt':
     # DISCORD_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
@@ -50,37 +51,40 @@ def time_now():
 
 # Market hours are 930-4pm est 9:30 -> 16:00 24hr format
 def is_market_open():
-    if datetime.time(0, 30, 00, 000000) <= time_now() <= datetime.time(
+    if datetime.time(0, 1, 00, 000000) <= time_now() <= datetime.time(
             23, 59, 00, 000000):
         return True
     else:
         return False
 
 
+# def initiate_discord_driver():
+#     chrome_options = Options()
+#     # chrome_options.add_argument("--window-size=1920,1080")
+#     # chrome_options.add_argument("--disable-extensions")
+#     # chrome_options.add_argument("--start-maximized")
+#     # chrome_options.add_argument("--headless")
+#     # chrome_options.add_argument("--disable-gpu")
+#     # chrome_options.add_argument("--disable-dev-shm-usage")
+#     # chrome_options.add_argument("--no-sandbox")
+#     # chrome_options.add_argument("--ignore-certificate-errors")
+#     chrome_options.add_argument('--log-level=3')
+#     chrome_options.debugger_address = '127.0.0.1:9222'
+#     discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
+#                                       options=chrome_options)
+#     try:
+#         element = discord_driver.find_elements_by_xpath(
+#             "//*[@role='group']")[-1]
+#         element.location_once_scrolled_into_view
+
+#     except (NoSuchElementException, TimeoutError) as error:
+#         logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
+#     finally:
+#         return discord_driver
+
+
 def check_discord():
-    chrome_options = Options()
-    # chrome_options.add_argument("--window-size=1920,1080")
-    # chrome_options.add_argument("--disable-extensions")
-    # chrome_options.add_argument("--start-maximized")
-    # chrome_options.add_argument("--headless")
-    # chrome_options.add_argument("--disable-gpu")
-    # chrome_options.add_argument("--disable-dev-shm-usage")
-    # chrome_options.add_argument("--no-sandbox")
-    # chrome_options.add_argument("--ignore-certificate-errors")
-    chrome_options.add_argument('--log-level=3')
-    chrome_options.debugger_address = '127.0.0.1:9222'
-    discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
-                                      options=chrome_options)
-    try:
-        element = discord_driver.find_elements_by_xpath(
-            "//*[@role='group']")[-1]
-        element.location_once_scrolled_into_view
-
-    except (NoSuchElementException, TimeoutError) as error:
-        logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
     listen_spinner = Spinner('Listening for new messages ')
-
-    GRABBER.driver = discord_driver
     while True:
         if is_market_open():
             try:
@@ -139,9 +143,17 @@ def post_driver():
             #os.system('taskkill /f /im chromedriver.exe')
 
 
+def bot_loop_start(loop):
+    loop.run_forever()
+
+
 def main():
+    if os.name != 'win32':
+        asyncio.get_child_watcher()
+    loop = asyncio.get_event_loop()
+    loop.create_task(bot_async_start())
     scraper = threading.Thread(target=check_discord)
-    dev_scraper = threading.Thread(target=discord_bot)
+    dev_scraper = threading.Thread(target=bot_loop_start, args=(loop, ))
     poster = threading.Thread(target=post_driver)
     processor = threading.Thread(target=check_for_unprocessed_messages)
 
