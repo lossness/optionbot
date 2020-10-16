@@ -85,3 +85,9 @@ class MatchingInNeverPosted(Exception):
     The matching IN trade never got posted to instagram.
     This out trade will not post to instagram.
     '''
+
+
+class LiveExpirationError(Exception):
+    '''
+    Expiration value is not valid!
+    '''

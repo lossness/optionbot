@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 from timeit import default_timer as timer
 from main_logger import logger
 from exceptions import *
-from db_utils import convert_date, is_posted_to_insta, db_insta_posting_successful
+from db_utils import convert_date, is_posted_to_insta, db_insta_posting_successful, prune_completed_trades
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -38,7 +38,7 @@ PATH = pathlib.Path.cwd()
 
 def make_image(msg):
     suffix = '.png'
-    in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color = msg
+    in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color, date, time = msg
     try:
         expiration = convert_date(expiration)
         expiration = expiration.replace('/', '-')
@@ -110,6 +110,8 @@ def consumer(driver):
                 share_button.click()
                 print("\ninstagram posting completed")
                 db_insta_posting_successful(trade_id)
+                config.EVENT.wait(.5)
+                prune_completed_trades()
                 config.EVENT.wait(1.0)
             else:
                 raise MatchingInNeverPosted

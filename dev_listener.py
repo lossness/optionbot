@@ -25,9 +25,9 @@ async def on_message(message):
     if str(channel.id) != TRADE_CHANNEL:
         return
     elif message.author != bot.user:
-        await channel.send(
-            "Would you like to submit this trade for processing? y/n")
         try:
+            await channel.send(
+                "Would you like to submit this trade for processing? y/n")
             msg = await bot.wait_for('message', timeout=15)
 
             def check_for_yes(m):
@@ -38,7 +38,6 @@ async def on_message(message):
                 config.new_unprocessed_trades.put(payload)
                 config.has_unprocessed_trade.release()
                 await channel.send("Trade submitted for processing!")
-                return
         except asyncio.TimeoutError:
             await channel.send("Alright then.")
 

@@ -9,6 +9,7 @@ import queue
 import config
 import discord
 import asyncio
+import calendar
 
 from progress.spinner import Spinner, LineSpinner
 from selenium import webdriver
@@ -22,6 +23,7 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException,
 from instapost import consumer
 from grabber import DiscordGrabber
 from dev_listener import bot_async_start
+from time_utils import get_time_and_day
 #from insta_browser import switch_to_mobile
 from main_logger import logger
 from dotenv import load_dotenv
@@ -43,16 +45,13 @@ if os.name == 'posix':
     INSTA_DRIVER_PATH = r'/usr/bin/chromedriver'
 
 
-def time_now():
-    utc_now = pytz.utc.localize(datetime.datetime.utcnow())
-    ast_now = utc_now.astimezone(pytz.timezone("America/New_York"))
-    return ast_now.time()
-
-
 # Market hours are 930-4pm est 9:30 -> 16:00 24hr format
 def is_market_open():
-    if datetime.time(9, 30, 00, 000000) <= time_now() <= datetime.time(
-            16, 1, 00, 000000):
+    the_time, day_of_the_week = get_time_and_day()
+    market_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+    #market_days = ['Saturday', 'Sunday']
+    if datetime.time(0, 1, 00, 000000) <= the_time <= datetime.time(
+            23, 59, 00, 000000) and day_of_the_week in market_days:
         return True
     else:
         return False

@@ -880,3 +880,387 @@ Sell - Amd - 78.5 call - 78.5 call - 2.20 - Scalp - 10% but price action annoyin
 2020-10-01 04:20:18,964 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-01 04:20:18.962246', '3150', 'put', '27.60', 'ThuhKang', '10/2', 'FA12')
 2020-10-01 04:52:27,485 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '32', 'DAY', 'closing 1/3 pos 27.5', '32']
 2020-10-01 04:52:27,489 : INFO : main_logger : Producer received a fresh trade : ('out', 'amzn', '2020-10-01 04:52:27.485779', '3150', 'put', '32.05', 'ThuhKang', '10/2', 'FA12')
+2020-10-08 07:12:19,590 : WARNING : main_logger : 'Could not determine buy price!' : ['Buy', '10/16', 'Swing. May scalp some', 'Have a stop. Remember yesterday']
+2020-10-08 07:14:27,113 : WARNING : main_logger : 'Could not determine buy price!' : ['Buy', '10/16', 'Swing. May scalp some', 'Have a stop. Remember yesterday']
+2020-10-08 07:25:12,263 : INFO : main_logger : Producer received a fresh trade : ('in', 'work', '2020-10-08 07:25:12.260442', '30.5', 'call', '.87', 'Jen♡♡crypto', '10/16', 'FA7')
+2020-10-08 13:30:03,985 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '7', 'DAY', 'closing 1/2 pos 6.57', '7']
+2020-10-08 13:34:29,020 : INFO : main_logger : Producer received a fresh trade : ('in', 'ibm', '2020-10-08 13:34:29.018997', '135', 'call', '1.35', 'MariaC82', '10/09', 'FA4')
+2020-10-08 13:36:00,695 : INFO : main_logger : Producer received a fresh trade : ('out', 'ibm', '2020-10-08 13:36:00.693463', '135', 'call', '2.20', 'MariaC82', '10/09', 'FA4')
+2020-10-08 13:46:11,732 : INFO : main_logger : Producer received a fresh trade : ('in', 'fb', '2020-10-08 13:46:11.731638', '265', 'call', '1.15', 'MariaC82', '10/09', 'FA7')
+2020-10-08 13:54:03,477 : INFO : main_logger : Producer received a fresh trade : ('out', 'fb', '2020-10-08 13:54:03.476071', '265', 'call', '1.25', 'MariaC82', '10/09', 'FA7')
+2020-10-08 15:01:19,123 : INFO : main_logger : Producer received a fresh trade : ('in', 'nflx', '2020-10-08 15:01:19.121249', '520', 'put', '3', 'ThuhKang', '10/9', 'FA11')
+2020-10-08 15:28:08,566 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '2.32', 'DAY', 'closing 1/2 pos 1.77', '2.32']
+2020-10-08 15:33:18,326 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '2.75', 'DAY', 'closing more 1.77', '2.32, 2.75']
+2020-10-08 18:00:40,364 : INFO : main_logger : Producer received a fresh trade : ('in', 'aapl', '2020-10-08 18:00:40.362001', '113.75', 'put', '.65', 'ThuhKang', '10/9', 'FA12')
+2020-10-08 18:44:16,367 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '.46', 'DAY', 'cut pos .62', '.46']
+2020-10-08 18:44:16,369 : INFO : main_logger : Producer received a fresh trade : ('out', 'aapl', '2020-10-08 18:44:16.367698', '113.75', 'put', '.50', 'ThuhKang', '10/9', 'FA12')
+2020-10-08 18:49:18,896 : INFO : main_logger : Producer received a fresh trade : ('out', 'nflx', '2020-10-08 18:49:18.894595', '520', 'put', '.95', 'ThuhKang', '10/9', 'FA11')
+2020-10-08 19:37:37,844 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-08 19:37:37.829871', '425', 'put', '4.40', 'ThuhKang', '10/9', 'FA12')
+2020-10-08 19:54:51,725 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '4.75', 'DAY', 'closing 2/3 pos 4.35', '4..75']
+2020-10-08 19:54:51,725 : WARNING : main_logger :  
+ ['4.75', 'DAY', 'closing 2/3 pos 4.35', '4..75'] 
+ 7:54 PM
+BOT
+BBS-TRADE-BOT
+ThuhKang
+out - tsla - 10/9 - 425p - 4.75 - DAY - closing 2/3 pos 4.35 - 4..75
+2020-10-08 19:54:52,554 : INFO : main_logger : Producer received a fresh trade : ('out', 'tsla', '2020-10-08 19:54:51.725554', '425', 'put', '4.70', 'ThuhKang', '10/9', 'FA12')
+2020-10-08 19:59:02,036 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '4.8', 'DAY', '4.35', '4..75, 4.8']
+2020-10-10 19:32:13,142 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 10/10/2020 Trade Expiration: 10/9
+2020-10-10 22:42:19,270 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-10 22:42:19,282 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-10 22:38:31.721198', '3310', 'call', '50.95', 'ThuhKang', '10/16', 'FA8', '10-10-2020', '18:38:31')
+2020-10-10 22:43:02,897 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-10 22:43:02,904 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-10 22:42:49.967971', '3310', 'call', '50.95', 'ThuhKang', '10/16', 'FA4', '10-10-2020', '18:42:49')
+2020-10-10 22:49:00,840 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-10 22:49:00,846 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-10 22:48:58.917196', '3310', 'call', '50.95', 'ThuhKang', '10/16', 'FA8', '10-10-2020', '18:48:58')
+2020-10-11 21:51:47,147 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-11 21:51:47,159 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-11 21:51:44.866594', '3310', 'call', '50.95', 'ThuhKang', '10/16', 'FA8', '11-10-2020', '17:51:44')
+2020-10-11 22:05:26,146 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-11 22:05:26,155 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-11 22:05:24.169378', '3310', 'call', '50.95', 'ThuhKang', '10/16', 'FA12', '11-10-2020', '18:05:24')
+2020-10-11 22:06:44,731 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-11 22:06:44,750 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-11 22:06:42.868288', '3310', 'call', '50.95', 'ThuhKang', '10/16', 'FA9', '11-10-2020', '18:06:42')
+2020-10-11 23:02:27,797 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-11 23:02:27,808 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-11 23:02:26.020587', '3310', 'call', '50.95', 'ThuhKang', '10/16', 'FA8', '11-10-2020', '19:02:26')
+2020-10-11 23:04:14,859 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-11 23:04:14,870 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-11 23:04:12.783683', '3310', 'call', '50.95', 'ThuhKang', '10/16', 'FA2', '11-10-2020', '19:04:12')
+2020-10-11 23:06:55,215 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-11 23:06:55,235 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-11 23:06:52.971247', '3310', 'call', '50.95', 'ThuhKang', '10/16', 'FA9', '11-10-2020', '19:06:52')
+2020-10-11 23:26:52,194 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-11 23:29:10,080 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-11 23:34:30,121 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-11 23:34:53,120 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-11 23:34:28.137417', '3310', 'call', '50.95', 'ThuhKang', '10/16', 'FA3', '11-10-2020', '19:34:28')
+2020-10-11 23:35:10,988 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-12 00:17:18,993 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-12 00:17:23,116 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-12 00:17:17.052892', '3310', 'call', '50.95', 'ThuhKang', '10/16', 'FA11', '11-10-2020', '20:17:17')
+2020-10-12 00:23:24,354 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-12 00:37:50,324 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-12 00:37:51,598 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-12 00:37:48.462296', '3310', 'call', '50.95', 'ThuhKang', '10/16', 'FA6', '11-10-2020', '20:37:48')
+2020-10-12 00:54:50,230 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-12 00:54:53,137 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-12 00:54:48.050398', '3310', 'call', '50.95', 'ThuhKang', '10/16', 'FA10', '11-10-2020', '20:54:48')
+2020-10-12 01:01:54,077 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-12 01:01:56,908 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-12 01:01:51.846558', '3310', 'call', '50.95', 'ThuhKang', '10/16', 'FA7', '11-10-2020', '21:01:51')
+2020-10-12 01:11:45,915 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-12 01:19:58,586 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-12 01:20:15,775 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-12 01:19:56.381904', '3310', 'call', '50.95', 'ThuhKang', '10/16', 'FA11', '11-10-2020', '21:19:56')
+2020-10-12 01:36:33,514 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-12 01:36:42,613 : INFO : main_logger : Producer received a fresh trade : ('in', 'amzn', '2020-10-12 01:36:31.407053', '3310', 'call', '50.95', 'ThuhKang', '10/16', 'FA4', '11-10-2020', '21:36:31')
+2020-10-13 03:08:46,146 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 03:08:41.990927', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA8', '12-10-2020', '23:08:41')
+2020-10-13 03:10:40,658 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 03:10:36.588912', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA1', '12-10-2020', '23:10:36')
+2020-10-13 03:20:41,926 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 03:20:37.904345', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA11', '12-10-2020', '23:20:37')
+2020-10-13 03:28:04,881 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 03:28:00.341009', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA12', '12-10-2020', '23:28:00')
+2020-10-13 05:21:56,068 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 05:21:51.484306', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA5', '13-10-2020', '01:21:51')
+2020-10-13 05:24:08,987 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 05:23:56.312096', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA5', '13-10-2020', '01:23:56')
+2020-10-13 05:27:17,540 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 05:27:13.638169', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA9', '13-10-2020', '01:27:13')
+2020-10-13 05:29:44,051 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 05:29:40.215029', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA2', '13-10-2020', '01:29:40')
+2020-10-13 05:30:51,225 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 05:30:47.809595', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA1', '13-10-2020', '01:30:47')
+2020-10-13 05:54:19,842 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 05:54:15.829300', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA12', '13-10-2020', '01:54:15')
+2020-10-13 05:54:23,443 : INFO : main_logger : ("'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", "'in'", "'aapl'", "'2020-09-25 14:55:04.617628'", "'111.25'", "'call'", "'.40'", "'ThuhKang'", "'9/25'", "'FA12'", "'true'", "'11-10-2020'", "'21:36:31'") added to completed_trades database
+2020-10-13 05:56:06,284 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 05:56:02.265055', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA8', '13-10-2020', '01:56:02')
+2020-10-13 05:56:09,684 : INFO : main_logger : ("'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", "'in'", "'aapl'", "'2020-09-25 14:55:04.617628'", "'111.25'", "'call'", "'.40'", "'ThuhKang'", "'9/25'", "'FA12'", "'true'", "'11-10-2020'", "'21:36:31'") added to completed_trades database
+2020-10-13 05:58:50,580 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 05:58:46.693986', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA12', '13-10-2020', '01:58:46')
+2020-10-13 06:10:06,759 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 06:10:02.468174', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA12', '13-10-2020', '02:10:02')
+2020-10-13 06:10:06,974 : INFO : main_logger : ("'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", "'in'", "'aapl'", "'2020-09-25 14:55:04.617628'", "'111.25'", "'call'", "'.40'", "'ThuhKang'", "'9/25'", "'FA12'", "'true'", "'11-10-2020'", "'21:36:31'") added to completed_trades database
+2020-10-13 06:18:39,020 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 06:18:35.346091', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA9', '13-10-2020', '02:18:35')
+2020-10-13 06:28:02,802 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 06:27:58.514927', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA10', '13-10-2020', '02:27:58')
+2020-10-13 06:35:53,219 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 06:35:49.526942', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA7', '13-10-2020', '02:35:49')
+2020-10-13 06:37:13,067 : INFO : main_logger : ("'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-13 07:00:07,572 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 07:00:03.052589', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA4', '13-10-2020', '03:00:03')
+2020-10-13 07:05:53,140 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-13 07:05:49.294108', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA10', '13-10-2020', '03:05:49')
+2020-10-13 07:06:27,772 : INFO : main_logger : ("'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-14 02:43:33,898 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-14 02:43:29.902549', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA2', '13-10-2020', '22:43:29')
+2020-10-14 02:44:53,944 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-14 02:44:50.335660', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA11', '13-10-2020', '22:44:50')
+2020-10-14 02:48:59,392 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-14 02:48:55.805946', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA8', '13-10-2020', '22:48:55')
+2020-10-14 03:12:17,669 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-14 03:12:13.747089', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA4', '13-10-2020', '23:12:13')
+2020-10-14 03:48:39,937 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-14 03:48:36.149378', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA8', '13-10-2020', '23:48:36')
+2020-10-14 03:49:56,746 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-14 03:49:52.678648', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA5', '13-10-2020', '23:49:52')
+2020-10-14 03:50:47,183 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-14 03:50:43.555252', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA9', '13-10-2020', '23:50:43')
+2020-10-14 03:51:03,528 : INFO : main_logger : ("'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-14 03:51:03,531 : INFO : main_logger : ("'out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-14 03:51:03,533 : INFO : main_logger : ("'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-14 03:51:03,535 : INFO : main_logger : ("'out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-14 03:57:06,621 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-14 03:57:03.069387', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA7', '13-10-2020', '23:57:03')
+2020-10-14 03:57:06,785 : INFO : main_logger : ("'out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-14 03:57:06,788 : INFO : main_logger : ("'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-14 05:08:33,239 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-14 05:08:29.486860', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA6', '14-10-2020', '01:08:29')
+2020-10-14 05:08:33,397 : INFO : main_logger : ("'out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-14 05:08:33,407 : INFO : main_logger : ("'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-14 05:11:45,242 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-14 05:11:41.516719', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA9', '14-10-2020', '01:11:41')
+2020-10-14 05:11:45,397 : INFO : main_logger : ("'out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-14 05:11:45,399 : INFO : main_logger : ("'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-14 05:13:44,183 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-14 05:13:40.239759', '445', 'call', '8.85', 'ThuhKang', '10/16', 'FA9', '14-10-2020', '01:13:40')
+2020-10-14 05:13:44,327 : INFO : main_logger : ("'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-14 05:13:44,329 : INFO : main_logger : ("'out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-15 02:21:11,276 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-15 02:21:11,285 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-15 02:21:07.357893', '445', 'call', '18.70', 'ThuhKang', '10/16', 'FA4', '14-10-2020', '22:21:07')
+2020-10-15 02:21:11,486 : INFO : main_logger : ("'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-15 02:21:11,489 : INFO : main_logger : ("'out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-15 03:08:41,930 : ERROR : main_logger : Last option price differs more than 25% from traders price! Using live..
+2020-10-15 03:08:41,937 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-15 03:08:38.102853', '445', 'call', '18.70', 'ThuhKang', '10/16', 'FA6', '14-10-2020', '23:08:38')
+2020-10-15 03:08:42,092 : INFO : main_logger : ("'out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-15 03:09:02,494 : INFO : main_logger : ('out', 'aapl', '2020-09-25 15:11:50.707866', '111.25', 'call', '.55', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') deleted from live table trades
+2020-10-15 03:09:02,496 : INFO : main_logger : ("'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31'", 'in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') added to completed_trades database
+2020-10-15 03:09:51,053 : INFO : main_logger : ('in', 'aapl', '2020-09-25 14:55:04.617628', '111.25', 'call', '.40', 'ThuhKang', '9/25', 'FA12', 'true', '11-10-2020', '21:36:31') deleted from live table trades
+2020-10-15 03:20:35,188 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '14-10-2020 23:20:31', '490', 'call', '2', 'Jen♡♡crypto', '10/16', 'FA11', '14-10-2020', '23:20:31')
+2020-10-15 03:21:26,231 : WARNING : main_logger : 'Could not determine buy price!' : ['IN', '6', 'DAY', 'TRADE AT YOUR OWN RISK....USE OWN STOPS. risky trade']
+2020-10-15 03:21:30,229 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '14-10-2020 23:21:26', '470', 'call', '6.05', 'ThuhKang', '10/16', 'FA6', '14-10-2020', '23:21:26')
+2020-10-15 03:21:59,187 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '7.05', 'DAY', 'closing 1/2 pos 6', '7.05']
+2020-10-15 03:22:02,977 : INFO : main_logger : Producer received a fresh trade : ('out', 'tsla', '14-10-2020 23:21:59', '470', 'call', '7.10', 'ThuhKang', '10/16', 'FA6', '14-10-2020', '23:21:59')
+2020-10-15 03:29:02,296 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '7.05', 'DAY', 'closing 1/2 pos 6', '7.05']
+2020-10-15 03:29:53,028 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '7.05', 'DAY', 'closing 1/2 pos 6', '7.05']
+2020-10-15 03:31:15,201 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-15 03:31:06.927300', '490', 'call', '2', 'Jen♡♡crypto', '10/16', 'FA5', '14-10-2020', '23:31:06')
+2020-10-15 03:31:36,220 : WARNING : main_logger : 'Could not determine buy price!' : ['IN', '6', 'DAY', 'TRADE AT YOUR OWN RISK....USE OWN STOPS. risky trade']
+2020-10-15 03:31:40,088 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-15 03:31:36.223773', '470', 'call', '6.05', 'ThuhKang', '10/16', 'FA1', '14-10-2020', '23:31:36')
+2020-10-15 03:31:54,642 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '7.05', 'DAY', 'closing 1/2 pos 6', '7.05']
+2020-10-15 03:31:58,515 : INFO : main_logger : Producer received a fresh trade : ('out', 'tsla', '2020-10-15 03:31:54.653381', '470', 'call', '7.10', 'ThuhKang', '10/16', 'FA1', '14-10-2020', '23:31:54')
+2020-10-15 03:33:24,396 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '7.05', 'DAY', 'closing 1/2 pos 6', '7.05']
+2020-10-15 03:34:15,040 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '7.05', 'DAY', 'closing 1/2 pos 6', '7.05']
+2020-10-15 03:34:19,079 : INFO : main_logger : Producer received a fresh trade : ('out', 'tsla', '2020-10-15 03:34:15.042288', '470', 'call', '7.10', 'ThuhKang', '10/16', 'FA1', '14-10-2020', '23:34:15')
+2020-10-15 03:49:02,843 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '7.05', 'DAY', 'closing 1/2 pos 6', '7.05']
+2020-10-15 03:49:06,370 : INFO : main_logger : Producer received a fresh trade : ('out', 'tsla', '2020-10-15 03:49:02.849807', '470', 'call', '7.10', 'ThuhKang', '10/16', 'FA1', '14-10-2020', '23:49:02')
+2020-10-15 03:49:22,646 : INFO : main_logger : ("'out', 'tsla', '2020-10-15 03:49:02.849807', '470', 'call', '7.10', 'ThuhKang', '10/16', 'FA1', 'true', '14-10-2020', '23:49:02'", 'out', 'tsla', '2020-10-15 03:49:02.849807', '470', 'call', '7.10', 'ThuhKang', '10/16', 'FA1', 'true', '14-10-2020', '23:49:02') added to completed_trades database
+2020-10-15 03:49:22,648 : INFO : main_logger : ('out', 'tsla', '2020-10-15 03:49:02.849807', '470', 'call', '7.10', 'ThuhKang', '10/16', 'FA1', 'true', '14-10-2020', '23:49:02') deleted from live table trades
+2020-10-15 03:49:22,651 : INFO : main_logger : ("'in', 'tsla', '2020-10-15 03:31:36.223773', '470', 'call', '6.05', 'ThuhKang', '10/16', 'FA1', 'true', '14-10-2020', '23:31:36'", 'in', 'tsla', '2020-10-15 03:31:36.223773', '470', 'call', '6.05', 'ThuhKang', '10/16', 'FA1', 'true', '14-10-2020', '23:31:36') added to completed_trades database
+2020-10-15 03:49:22,654 : INFO : main_logger : ('in', 'tsla', '2020-10-15 03:31:36.223773', '470', 'call', '6.05', 'ThuhKang', '10/16', 'FA1', 'true', '14-10-2020', '23:31:36') deleted from live table trades
+2020-10-15 03:51:20,710 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-15 03:51:17.311265', '490', 'call', '2.10', 'ThuhKang', '10/16', 'FA7', '14-10-2020', '23:51:17')
+2020-10-15 04:50:14,804 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 10/15/2020 Trade Expiration: 10/17
+2020-10-15 04:51:37,637 : ERROR : main_logger : Expiration date is not valid!
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/second_level_checks.py", line 539, in live_expiration
+    ops.get_puts(ticker, converted_expiration)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/yahoo_fin/options.py", line 61, in get_puts
+    options_chain = get_options_chain(ticker, date)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/yahoo_fin/options.py", line 32, in get_options_chain
+    tables = pd.read_html(site)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/util/_decorators.py", line 296, in wrapper
+    return func(*args, **kwargs)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 1086, in read_html
+    return _parse(
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 917, in _parse
+    raise retained
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 898, in _parse
+    tables = p.parse_tables()
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 217, in parse_tables
+    tables = self._parse_tables(self._build_doc(), self.match, self.attrs)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 547, in _parse_tables
+    raise ValueError("No tables found")
+ValueError: No tables found
+2020-10-15 04:55:59,689 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 10/15/2020 Trade Expiration: 10/17
+2020-10-15 04:56:07,176 : ERROR : main_logger : Expiration date is not valid!
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/second_level_checks.py", line 539, in live_expiration
+    ops.get_puts(ticker, converted_expiration)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/yahoo_fin/options.py", line 61, in get_puts
+    options_chain = get_options_chain(ticker, date)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/yahoo_fin/options.py", line 32, in get_options_chain
+    tables = pd.read_html(site)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/util/_decorators.py", line 296, in wrapper
+    return func(*args, **kwargs)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 1086, in read_html
+    return _parse(
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 917, in _parse
+    raise retained
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 898, in _parse
+    tables = p.parse_tables()
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 217, in parse_tables
+    tables = self._parse_tables(self._build_doc(), self.match, self.attrs)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 547, in _parse_tables
+    raise ValueError("No tables found")
+ValueError: No tables found
+2020-10-15 04:59:02,816 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 10/15/2020 Trade Expiration: 10/17
+2020-10-15 04:59:05,379 : ERROR : main_logger : Expiration date is not valid!
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/second_level_checks.py", line 539, in live_expiration
+    ops.get_puts(ticker, converted_expiration)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/yahoo_fin/options.py", line 61, in get_puts
+    options_chain = get_options_chain(ticker, date)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/yahoo_fin/options.py", line 32, in get_options_chain
+    tables = pd.read_html(site)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/util/_decorators.py", line 296, in wrapper
+    return func(*args, **kwargs)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 1086, in read_html
+    return _parse(
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 917, in _parse
+    raise retained
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 898, in _parse
+    tables = p.parse_tables()
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 217, in parse_tables
+    tables = self._parse_tables(self._build_doc(), self.match, self.attrs)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 547, in _parse_tables
+    raise ValueError("No tables found")
+ValueError: No tables found
+2020-10-15 04:59:46,951 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 10/15/2020 Trade Expiration: 10/17
+2020-10-15 04:59:49,711 : ERROR : main_logger : Expiration date is not valid!
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/second_level_checks.py", line 539, in live_expiration
+    ops.get_puts(ticker, converted_expiration)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/yahoo_fin/options.py", line 61, in get_puts
+    options_chain = get_options_chain(ticker, date)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/yahoo_fin/options.py", line 32, in get_options_chain
+    tables = pd.read_html(site)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/util/_decorators.py", line 296, in wrapper
+    return func(*args, **kwargs)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 1086, in read_html
+    return _parse(
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 917, in _parse
+    raise retained
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 898, in _parse
+    tables = p.parse_tables()
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 217, in parse_tables
+    tables = self._parse_tables(self._build_doc(), self.match, self.attrs)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 547, in _parse_tables
+    raise ValueError("No tables found")
+ValueError: No tables found
+2020-10-15 05:01:18,093 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 10/15/2020 Trade Expiration: 10/17
+2020-10-15 05:01:21,445 : ERROR : main_logger : Expiration date is not valid!
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/second_level_checks.py", line 539, in live_expiration
+    ops.get_puts(ticker, converted_expiration)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/yahoo_fin/options.py", line 61, in get_puts
+    options_chain = get_options_chain(ticker, date)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/yahoo_fin/options.py", line 32, in get_options_chain
+    tables = pd.read_html(site)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/util/_decorators.py", line 296, in wrapper
+    return func(*args, **kwargs)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 1086, in read_html
+    return _parse(
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 917, in _parse
+    raise retained
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 898, in _parse
+    tables = p.parse_tables()
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 217, in parse_tables
+    tables = self._parse_tables(self._build_doc(), self.match, self.attrs)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 547, in _parse_tables
+    raise ValueError("No tables found")
+ValueError: No tables found
+2020-10-15 05:01:32,171 : ERROR : main_logger : This trade contains error(s)! : 4:49 AMjoelJen♡♡cryptoBuy - Tsla - 10.17 - 490 call - 1.96 - Scalp - RISKY AFFFFFF LOL
+2020-10-16 01:40:21,930 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 10/16/2020 Trade Expiration: 10/17
+2020-10-16 01:40:39,517 : ERROR : main_logger : Expiration date is not valid!
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/second_level_checks.py", line 539, in live_expiration
+    ops.get_puts(ticker, converted_expiration)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/yahoo_fin/options.py", line 61, in get_puts
+    options_chain = get_options_chain(ticker, date)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/yahoo_fin/options.py", line 32, in get_options_chain
+    tables = pd.read_html(site)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/util/_decorators.py", line 296, in wrapper
+    return func(*args, **kwargs)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 1086, in read_html
+    return _parse(
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 917, in _parse
+    raise retained
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 898, in _parse
+    tables = p.parse_tables()
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 217, in parse_tables
+    tables = self._parse_tables(self._build_doc(), self.match, self.attrs)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 547, in _parse_tables
+    raise ValueError("No tables found")
+ValueError: No tables found
+2020-10-16 01:40:44,565 : ERROR : main_logger : This trade contains error(s)! : 4:49 AMjoelJen♡♡cryptoBuy - Tsla - 10.17 - 490 call - 1.96 - Scalp - RISKY AFFFFFF LOL
+2020-10-16 01:41:49,269 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 10/16/2020 Trade Expiration: 10/17
+2020-10-16 01:54:18,473 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 10/16/2020 Trade Expiration: 10/17
+2020-10-16 01:54:21,280 : ERROR : main_logger : Expiration date is not valid!
+Traceback (most recent call last):
+  File "/home/swing/projects/optionbot/second_level_checks.py", line 539, in live_expiration
+    ops.get_puts(ticker, converted_expiration)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/yahoo_fin/options.py", line 61, in get_puts
+    options_chain = get_options_chain(ticker, date)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/yahoo_fin/options.py", line 32, in get_options_chain
+    tables = pd.read_html(site)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/util/_decorators.py", line 296, in wrapper
+    return func(*args, **kwargs)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 1086, in read_html
+    return _parse(
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 917, in _parse
+    raise retained
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 898, in _parse
+    tables = p.parse_tables()
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 217, in parse_tables
+    tables = self._parse_tables(self._build_doc(), self.match, self.attrs)
+  File "/root/.local/share/virtualenvs/swing-TZp177Pi/lib/python3.8/site-packages/pandas/io/html.py", line 547, in _parse_tables
+    raise ValueError("No tables found")
+ValueError: No tables found
+2020-10-16 01:54:24,485 : ERROR : main_logger : This trade contains error(s)! : 4:49 AMjoelJen♡♡cryptoBuy - Tsla - 10.17 - 490 call - 1.96 - Scalp - RISKY AFFFFFF LOL
+2020-10-16 02:01:29,230 : ERROR : main_logger : No tables found:
+LIVE BUY PRICE ERROR:
+ Current Date: 10/16/2020 Trade Expiration: 10/17
+2020-10-16 02:28:14,671 : INFO : main_logger : Producer received a fresh trade : ('in', 'twtr', '2020-10-16 02:28:13.124063', '48.5', 'call', '1.55', 'Jen', '10/23', 'FA12', '15-10-2020', '22:28:13')
+2020-10-16 02:28:14,678 : INFO : main_logger : Trade added to database!
+('in', 'twtr', '2020-10-16 02:28:13.124063', '48.5', 'call', '1.55', 'Jen', '10/23', 'FA12', '15-10-2020', '22:28:13')
+2020-10-16 02:47:54,961 : INFO : main_logger : Producer received a fresh trade : ('out', 'tsla', '2020-10-16 02:47:47.597378', '440', 'put', '4.70', 'ThuhKang', '10/16', 'FA12', '15-10-2020', '22:47:47')
+2020-10-16 02:47:54,973 : INFO : main_logger : Trade added to database!
+('out', 'tsla', '2020-10-16 02:47:47.597378', '440', 'put', '4.70', 'ThuhKang', '10/16', 'FA12', '15-10-2020', '22:47:47')
+2020-10-16 02:50:44,435 : INFO : main_logger : Producer received a fresh trade : ('in', 'dkng', '2020-10-16 02:50:43.264350', '48', 'put', '1.20', 'Jen', '10/16', 'FA12', '15-10-2020', '22:50:43')
+2020-10-16 02:50:44,450 : INFO : main_logger : Trade added to database!
+('in', 'dkng', '2020-10-16 02:50:43.264350', '48', 'put', '1.20', 'Jen', '10/16', 'FA12', '15-10-2020', '22:50:43')
+2020-10-16 03:01:46,315 : INFO : main_logger : Producer received a fresh trade : ('out', 'dkng', '2020-10-16 03:01:44.597526', '48', 'put', '1.55', 'Jen', '10/16', 'FA12', '15-10-2020', '23:01:44')
+2020-10-16 03:01:46,319 : INFO : main_logger : Trade added to database!
+('out', 'dkng', '2020-10-16 03:01:44.597526', '48', 'put', '1.55', 'Jen', '10/16', 'FA12', '15-10-2020', '23:01:44')
+2020-10-16 03:01:48,826 : INFO : main_logger : ("'in', 'dkng', '2020-10-16 02:50:43.264350', '48', 'put', '1.20', 'Jen', '10/16', 'FA12', 'true', '15-10-2020', '22:50:43'", 'in', 'dkng', '2020-10-16 02:50:43.264350', '48', 'put', '1.20', 'Jen', '10/16', 'FA12', 'true', '15-10-2020', '22:50:43') added to completed_trades table
+2020-10-16 03:01:48,829 : INFO : main_logger : ('in', 'dkng', '2020-10-16 02:50:43.264350', '48', 'put', '1.20', 'Jen', '10/16', 'FA12', 'true', '15-10-2020', '22:50:43') deleted from live table trades
+2020-10-16 03:01:48,829 : INFO : main_logger : ("'in', 'dkng', '2020-10-16 02:50:43.264350', '48', 'put', '1.20', 'Jen', '10/16', 'FA12', 'true', '15-10-2020', '22:50:43'", 'in', 'dkng', '2020-10-16 02:50:43.264350', '48', 'put', '1.20', 'Jen', '10/16', 'FA12', 'true', '15-10-2020', '22:50:43') deleted from live table
+2020-10-16 03:01:48,831 : INFO : main_logger : ("'out', 'dkng', '2020-10-16 03:01:44.597526', '48', 'put', '1.55', 'Jen', '10/16', 'FA12', 'true', '15-10-2020', '23:01:44'", 'out', 'dkng', '2020-10-16 03:01:44.597526', '48', 'put', '1.55', 'Jen', '10/16', 'FA12', 'true', '15-10-2020', '23:01:44') added to completed_trades table
+2020-10-16 03:01:48,834 : INFO : main_logger : ('out', 'dkng', '2020-10-16 03:01:44.597526', '48', 'put', '1.55', 'Jen', '10/16', 'FA12', 'true', '15-10-2020', '23:01:44') deleted from live table trades
+2020-10-16 03:01:48,835 : INFO : main_logger : ("'out', 'dkng', '2020-10-16 03:01:44.597526', '48', 'put', '1.55', 'Jen', '10/16', 'FA12', 'true', '15-10-2020', '23:01:44'", 'out', 'dkng', '2020-10-16 03:01:44.597526', '48', 'put', '1.55', 'Jen', '10/16', 'FA12', 'true', '15-10-2020', '23:01:44') deleted from live table
+2020-10-16 03:05:50,798 : INFO : main_logger : Producer received a fresh trade : ('in', 'spy', '2020-10-16 03:05:48.372025', '343', 'put', '1.30', 'Jen', '10/16', 'FA6', '15-10-2020', '23:05:48')
+2020-10-16 03:05:50,821 : INFO : main_logger : Trade added to database!
+('in', 'spy', '2020-10-16 03:05:48.372025', '343', 'put', '1.30', 'Jen', '10/16', 'FA6', '15-10-2020', '23:05:48')
+2020-10-16 03:06:12,181 : INFO : main_logger : Producer received a fresh trade : ('out', 'spy', '2020-10-16 03:06:09.513943', '343', 'put', '1.65', 'Jen', '10/16', 'FA6', '15-10-2020', '23:06:09')
+2020-10-16 03:06:12,186 : INFO : main_logger : Trade added to database!
+('out', 'spy', '2020-10-16 03:06:09.513943', '343', 'put', '1.65', 'Jen', '10/16', 'FA6', '15-10-2020', '23:06:09')
+2020-10-16 03:06:14,236 : INFO : main_logger : COMPLETED TRADE TABLE: Trade added: ('out', 'spy', '2020-10-16 03:06:09.513943', '343', 'put', '1.65', 'Jen', '10/16', 'FA6', 'true', '15-10-2020', '23:06:09')
+2020-10-16 03:06:14,237 : INFO : main_logger : ("'out', 'spy', '2020-10-16 03:06:09.513943', '343', 'put', '1.65', 'Jen', '10/16', 'FA6', 'true', '15-10-2020', '23:06:09'", 'out', 'spy', '2020-10-16 03:06:09.513943', '343', 'put', '1.65', 'Jen', '10/16', 'FA6', 'true', '15-10-2020', '23:06:09') added to completed_trades table
+2020-10-16 03:06:14,241 : INFO : main_logger : ('out', 'spy', '2020-10-16 03:06:09.513943', '343', 'put', '1.65', 'Jen', '10/16', 'FA6', 'true', '15-10-2020', '23:06:09') deleted from live table trades
+2020-10-16 03:06:14,242 : INFO : main_logger : ("'out', 'spy', '2020-10-16 03:06:09.513943', '343', 'put', '1.65', 'Jen', '10/16', 'FA6', 'true', '15-10-2020', '23:06:09'", 'out', 'spy', '2020-10-16 03:06:09.513943', '343', 'put', '1.65', 'Jen', '10/16', 'FA6', 'true', '15-10-2020', '23:06:09') deleted from live table
+2020-10-16 03:06:14,244 : INFO : main_logger : COMPLETED TRADE TABLE: Trade added: ('in', 'spy', '2020-10-16 03:05:48.372025', '343', 'put', '1.30', 'Jen', '10/16', 'FA6', 'true', '15-10-2020', '23:05:48')
+2020-10-16 03:06:14,244 : INFO : main_logger : ("'in', 'spy', '2020-10-16 03:05:48.372025', '343', 'put', '1.30', 'Jen', '10/16', 'FA6', 'true', '15-10-2020', '23:05:48'", 'in', 'spy', '2020-10-16 03:05:48.372025', '343', 'put', '1.30', 'Jen', '10/16', 'FA6', 'true', '15-10-2020', '23:05:48') added to completed_trades table
+2020-10-16 03:06:14,247 : INFO : main_logger : ('in', 'spy', '2020-10-16 03:05:48.372025', '343', 'put', '1.30', 'Jen', '10/16', 'FA6', 'true', '15-10-2020', '23:05:48') deleted from live table trades
+2020-10-16 03:06:14,249 : INFO : main_logger : ("'in', 'spy', '2020-10-16 03:05:48.372025', '343', 'put', '1.30', 'Jen', '10/16', 'FA6', 'true', '15-10-2020', '23:05:48'", 'in', 'spy', '2020-10-16 03:05:48.372025', '343', 'put', '1.30', 'Jen', '10/16', 'FA6', 'true', '15-10-2020', '23:05:48') deleted from live table
+2020-10-16 03:06:45,056 : WARNING : main_logger : 'Could not determine buy price!' : ['IN', '6', 'DAY', 'TRADE AT YOUR OWN RISK....USE OWN STOPS risky trade']
+2020-10-16 03:06:52,979 : INFO : main_logger : Producer received a fresh trade : ('in', 'tsla', '2020-10-16 03:06:45.057469', '445', 'put', '6.05', 'ThuhKang', '10/16', 'FA12', '15-10-2020', '23:06:45')
+2020-10-16 03:06:52,986 : INFO : main_logger : Trade added to database!
+('in', 'tsla', '2020-10-16 03:06:45.057469', '445', 'put', '6.05', 'ThuhKang', '10/16', 'FA12', '15-10-2020', '23:06:45')
+2020-10-16 03:08:33,174 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '7.2', 'DAY', 'closing 1/2 pos 6', '7.2']
+2020-10-16 03:08:41,205 : INFO : main_logger : Producer received a fresh trade : ('out', 'tsla', '2020-10-16 03:08:33.175928', '445', 'put', '7.30', 'ThuhKang', '10/16', 'FA12', '15-10-2020', '23:08:33')
+2020-10-16 03:08:41,209 : INFO : main_logger : Trade added to database!
+('out', 'tsla', '2020-10-16 03:08:33.175928', '445', 'put', '7.30', 'ThuhKang', '10/16', 'FA12', '15-10-2020', '23:08:33')
+2020-10-16 03:08:43,248 : INFO : main_logger : COMPLETED TRADE TABLE: Trade added: ('in', 'tsla', '2020-10-16 03:06:45.057469', '445', 'put', '6.05', 'ThuhKang', '10/16', 'FA12', 'true', '15-10-2020', '23:06:45')
+2020-10-16 03:08:43,248 : INFO : main_logger : ("'in', 'tsla', '2020-10-16 03:06:45.057469', '445', 'put', '6.05', 'ThuhKang', '10/16', 'FA12', 'true', '15-10-2020', '23:06:45'", 'in', 'tsla', '2020-10-16 03:06:45.057469', '445', 'put', '6.05', 'ThuhKang', '10/16', 'FA12', 'true', '15-10-2020', '23:06:45') added to completed_trades table
+2020-10-16 03:08:43,251 : INFO : main_logger : ('in', 'tsla', '2020-10-16 03:06:45.057469', '445', 'put', '6.05', 'ThuhKang', '10/16', 'FA12', 'true', '15-10-2020', '23:06:45') deleted from live table trades
+2020-10-16 03:08:43,251 : INFO : main_logger : ("'in', 'tsla', '2020-10-16 03:06:45.057469', '445', 'put', '6.05', 'ThuhKang', '10/16', 'FA12', 'true', '15-10-2020', '23:06:45'", 'in', 'tsla', '2020-10-16 03:06:45.057469', '445', 'put', '6.05', 'ThuhKang', '10/16', 'FA12', 'true', '15-10-2020', '23:06:45') deleted from live table
+2020-10-16 03:08:43,253 : INFO : main_logger : COMPLETED TRADE TABLE: Trade added: ('out', 'tsla', '2020-10-16 03:08:33.175928', '445', 'put', '7.30', 'ThuhKang', '10/16', 'FA12', 'true', '15-10-2020', '23:08:33')
+2020-10-16 03:08:43,254 : INFO : main_logger : ("'out', 'tsla', '2020-10-16 03:08:33.175928', '445', 'put', '7.30', 'ThuhKang', '10/16', 'FA12', 'true', '15-10-2020', '23:08:33'", 'out', 'tsla', '2020-10-16 03:08:33.175928', '445', 'put', '7.30', 'ThuhKang', '10/16', 'FA12', 'true', '15-10-2020', '23:08:33') added to completed_trades table
+2020-10-16 03:08:43,256 : INFO : main_logger : ('out', 'tsla', '2020-10-16 03:08:33.175928', '445', 'put', '7.30', 'ThuhKang', '10/16', 'FA12', 'true', '15-10-2020', '23:08:33') deleted from live table trades
+2020-10-16 03:08:43,256 : INFO : main_logger : ("'out', 'tsla', '2020-10-16 03:08:33.175928', '445', 'put', '7.30', 'ThuhKang', '10/16', 'FA12', 'true', '15-10-2020', '23:08:33'", 'out', 'tsla', '2020-10-16 03:08:33.175928', '445', 'put', '7.30', 'ThuhKang', '10/16', 'FA12', 'true', '15-10-2020', '23:08:33') deleted from live table
+2020-10-16 03:09:28,305 : INFO : main_logger : Producer received a fresh trade : ('in', 'nflx', '2020-10-16 03:09:26.515916', '535', 'put', '4.65', 'ThuhKang', '10/16', 'FA1', '15-10-2020', '23:09:26')
+2020-10-16 03:09:28,317 : INFO : main_logger : Trade added to database!
+('in', 'nflx', '2020-10-16 03:09:26.515916', '535', 'put', '4.65', 'ThuhKang', '10/16', 'FA1', '15-10-2020', '23:09:26')
+2020-10-16 03:09:58,867 : WARNING : main_logger : 'Could not determine buy price!' : ['out', '5', 'DAY', 'closing 2/3 pos 4.6', '5']
+2020-10-16 03:10:00,410 : INFO : main_logger : Producer received a fresh trade : ('out', 'nflx', '2020-10-16 03:09:58.868406', '535', 'put', '5.05', 'ThuhKang', '10/16', 'FA1', '15-10-2020', '23:09:58')
+2020-10-16 03:10:00,414 : INFO : main_logger : Trade added to database!
+('out', 'nflx', '2020-10-16 03:09:58.868406', '535', 'put', '5.05', 'ThuhKang', '10/16', 'FA1', '15-10-2020', '23:09:58')
+2020-10-16 03:10:02,119 : INFO : main_logger : COMPLETED TRADE TABLE: Trade added: ('out', 'nflx', '2020-10-16 03:09:58.868406', '535', 'put', '5.05', 'ThuhKang', '10/16', 'FA1', 'true', '15-10-2020', '23:09:58')
+2020-10-16 03:10:02,120 : INFO : main_logger : ("'out', 'nflx', '2020-10-16 03:09:58.868406', '535', 'put', '5.05', 'ThuhKang', '10/16', 'FA1', 'true', '15-10-2020', '23:09:58'", 'out', 'nflx', '2020-10-16 03:09:58.868406', '535', 'put', '5.05', 'ThuhKang', '10/16', 'FA1', 'true', '15-10-2020', '23:09:58') added to completed_trades table
+2020-10-16 03:10:02,122 : INFO : main_logger : ('out', 'nflx', '2020-10-16 03:09:58.868406', '535', 'put', '5.05', 'ThuhKang', '10/16', 'FA1', 'true', '15-10-2020', '23:09:58') deleted from live table trades
+2020-10-16 03:10:02,123 : INFO : main_logger : ("'out', 'nflx', '2020-10-16 03:09:58.868406', '535', 'put', '5.05', 'ThuhKang', '10/16', 'FA1', 'true', '15-10-2020', '23:09:58'", 'out', 'nflx', '2020-10-16 03:09:58.868406', '535', 'put', '5.05', 'ThuhKang', '10/16', 'FA1', 'true', '15-10-2020', '23:09:58') deleted from live table
+2020-10-16 03:10:02,126 : INFO : main_logger : COMPLETED TRADE TABLE: Trade added: ('in', 'nflx', '2020-10-16 03:09:26.515916', '535', 'put', '4.65', 'ThuhKang', '10/16', 'FA1', 'true', '15-10-2020', '23:09:26')
+2020-10-16 03:10:02,126 : INFO : main_logger : ("'in', 'nflx', '2020-10-16 03:09:26.515916', '535', 'put', '4.65', 'ThuhKang', '10/16', 'FA1', 'true', '15-10-2020', '23:09:26'", 'in', 'nflx', '2020-10-16 03:09:26.515916', '535', 'put', '4.65', 'ThuhKang', '10/16', 'FA1', 'true', '15-10-2020', '23:09:26') added to completed_trades table
+2020-10-16 03:10:02,131 : INFO : main_logger : ('in', 'nflx', '2020-10-16 03:09:26.515916', '535', 'put', '4.65', 'ThuhKang', '10/16', 'FA1', 'true', '15-10-2020', '23:09:26') deleted from live table trades
+2020-10-16 03:10:02,131 : INFO : main_logger : ("'in', 'nflx', '2020-10-16 03:09:26.515916', '535', 'put', '4.65', 'ThuhKang', '10/16', 'FA1', 'true', '15-10-2020', '23:09:26'", 'in', 'nflx', '2020-10-16 03:09:26.515916', '535', 'put', '4.65', 'ThuhKang', '10/16', 'FA1', 'true', '15-10-2020', '23:09:26') deleted from live table

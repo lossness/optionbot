@@ -11,13 +11,15 @@ import yahoo_fin.stock_info as si
 
 from datetime import datetime
 from make_image import text_on_img
-from db_utils import update_table, error_checker, verify_trade, update_error_table, convert_date, convert_date_to_text
+from db_utils import update_table, verify_trade, update_error_table, convert_date, convert_date_to_text
 from timeit import default_timer as timer
 from main_logger import logger
 from second_level_checks import ErrorChecker
 from decimal import *
 from collections import namedtuple
 from exceptions import LiveBuyPriceError, LiveStrikePriceError, ReleaseTradeError, TimeoutException, TickerError
+from time_utils import get_date_and_time, standard_datetime
+from math_utils import percent_difference
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -79,6 +81,7 @@ class DiscordGrabber:
         self.driver = initiate_discord_driver()
         self.LAST_MESSAGE = LAST_MESSAGE
         self.LAST_FIXED_MESSAGE = LAST_FIXED_MESSAGE
+        self.check = ErrorChecker()
 
     def find_new_messages(self, driver) -> list:
         '''
@@ -96,6 +99,8 @@ class DiscordGrabber:
         for split in split_message_list:
             if split in TRADERS:
                 trade_author = split
+                if "Jen" in trade_author:
+                    trade_author = "Jen"
                 return trade_author
 
     def get_trade_expiration(self, split_message_list: list):
@@ -141,9 +146,13 @@ class DiscordGrabber:
         new_expiration = 'error'
         for item in split_message_list[:3]:
             try:
-                new_expiration = float(item)
-                split_message_list.remove(item)
-                new_expiration = str(new_expiration).replace('.', '/')
+                if '/' in item and item.replace('/', '').isdigit():
+                    new_expiration = item
+                    split_message_list.remove(item)
+                else:
+                    new_expiration = float(item)
+                    split_message_list.remove(item)
+                    new_expiration = str(new_expiration).replace('.', '/')
 
             except ValueError:
                 continue
@@ -313,6 +322,16 @@ class DiscordGrabber:
 
         finally:
             return buy_price, split_message_list
+
+    # def compare_live_buy_price(self, new_trade):
+    #     live_price = "error"
+    #     try:
+    #         in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color = new_trade
+    #         live_price = self.check.live_buy_price(ticker, strike_price,
+    #                                                expiration, call_or_put)
+    #         print(live_price)
+    #     except:
+    #         pass
 
     def filter_message(self, variable):
         noise_words = ['BOT', r'BBS-TRADE-BOT\nBOT', 'BBS-TRADE-BOT', 'joel']
@@ -526,6 +545,8 @@ class DiscordGrabber:
                 split_result = list(filter(self.filter_message, split_result))
                 trade_author = list(filter(self.filter_trader, split_result))
                 trade_author_tup = trade_author[0]
+                if "Jen" in trade_author_tup:
+                    trade_author_tup = "Jen"
                 # find the longest string left which is the message string
                 longest_string = max(split_result, key=len)
                 double_split_result = longest_string.split(' - ')
@@ -550,46 +571,41 @@ class DiscordGrabber:
                 in_or_out_tup, double_split_result = self.get_in_or_out(
                     double_split_result)
 
-                datetime_tup = str(datetime.now())
+                date_tup, time_tup = get_date_and_time()
+                datetime_tup = standard_datetime()
                 stock_ticker_tup = stock_ticker_tup.lower()
                 color_tup = 'error_check'
 
-                check = ErrorChecker()
+                #check = ErrorChecker()
 
-                error_tuple = (
-                    in_or_out_tup,
-                    stock_ticker_tup,
-                    datetime_tup,
-                    strike_price_tup,
-                    call_or_put_tup,
-                    buy_price_tup,
-                    trade_author_tup,
-                    trade_expiration_tup,
-                    color_tup,
-                )
+                error_tuple = (in_or_out_tup, stock_ticker_tup, datetime_tup,
+                               strike_price_tup, call_or_put_tup,
+                               buy_price_tup, trade_author_tup,
+                               trade_expiration_tup, color_tup, date_tup,
+                               time_tup)
 
                 if buy_price_tup == strike_price_tup:
-                    strike_price_tup, call_or_put_tup = check.strike_price_fixer(
+                    strike_price_tup, call_or_put_tup = self.check.strike_price_fixer(
                         double_split_result, error_tuple)
 
-                    buy_price_tup, double_split_result = check.buy_price_fixer(
+                    buy_price_tup, double_split_result = self.check.buy_price_fixer(
                         double_split_result, new_message)
 
                 if 'error' in error_tuple:
                     if buy_price_tup == 'error':
-                        buy_price_tup, double_split_result = check.buy_price_fixer(
+                        buy_price_tup, double_split_result = self.check.buy_price_fixer(
                             double_split_result, new_message)
 
                     if strike_price_tup == 'error':
-                        strike_price_tup, call_or_put_tup = check.strike_price_fixer(
+                        strike_price_tup, call_or_put_tup = self.check.strike_price_fixer(
                             double_split_result, error_tuple)
 
                     if trade_expiration_tup == 'error':
-                        trade_expiration_tup = check.expiration_fixer(
+                        trade_expiration_tup = self.check.expiration_fixer(
                             double_split_result, error_tuple)
 
                     if call_or_put_tup == 'error':
-                        call_or_put_tup = check.call_or_put_fixer(
+                        call_or_put_tup = self.check.call_or_put_fixer(
                             double_split_result, error_tuple)
 
                     if in_or_out_tup == 'error':
@@ -598,27 +614,46 @@ class DiscordGrabber:
                 if 'error' not in (strike_price_tup, stock_ticker_tup,
                                    trade_expiration_tup, call_or_put_tup
                                    ) and 'error' in buy_price_tup:
-                    buy_price_tup = check.live_buy_price(
+                    buy_price_tup = self.check.live_buy_price(
+                        stock_ticker_tup, strike_price_tup,
+                        trade_expiration_tup, call_or_put_tup)
+                if not 'error' in (strike_price_tup, stock_ticker_tup,
+                                   trade_expiration_tup, call_or_put_tup):
+                    live_buy_price = self.check.live_buy_price(
                         stock_ticker_tup, strike_price_tup,
                         trade_expiration_tup, call_or_put_tup)
 
-                trade_tuple = (
-                    in_or_out_tup,
-                    stock_ticker_tup,
-                    datetime_tup,
-                    strike_price_tup,
-                    call_or_put_tup,
-                    buy_price_tup,
-                    trade_author_tup,
-                    trade_expiration_tup,
-                    color_tup,
-                )
+                # checks if the expiration is valid given the ticker, strike, expiration and call_or_put
+                # values are not 'error'.
+                if not 'error' in (stock_ticker_tup, strike_price_tup,
+                                   trade_expiration_tup, call_or_put_tup):
+                    trade_expiration_tup = self.check.live_expiration(
+                        stock_ticker_tup, strike_price_tup,
+                        trade_expiration_tup, call_or_put_tup)
+                if not buy_price_tup.isalpha() and live_buy_price.isalpha():
+                    if percent_difference(live_buy_price, buy_price_tup) > 40:
+                        buy_price_tup = live_buy_price
+                        logger.error(
+                            r"Last option price differs more than 25% from traders price! Using live.."
+                        )
+
+                #trade_expiration_tup = self.check.
+
+                trade_tuple = (in_or_out_tup, stock_ticker_tup, datetime_tup,
+                               strike_price_tup, call_or_put_tup,
+                               buy_price_tup, trade_author_tup,
+                               trade_expiration_tup, color_tup, date_tup,
+                               time_tup)
 
                 if 'error' in trade_tuple:
-                    full_message = new_message.replace('\n', '')
+                    error_tuple = (in_or_out_tup, stock_ticker_tup,
+                                   datetime_tup, strike_price_tup,
+                                   call_or_put_tup, buy_price_tup,
+                                   trade_author_tup, trade_expiration_tup,
+                                   color_tup, 'false', date_tup, time_tup)
                     logger.error(
-                        f'This trade contains error(s)! : {full_message}')
-                    update_error_table(trade_tuple)
+                        f'This trade contains error(s)! : {error_tuple}')
+                    update_error_table(error_tuple)
 
                 elif 'error' not in trade_tuple:
                     ignore_trade, trade_color_choice = verify_trade(
@@ -631,29 +666,23 @@ class DiscordGrabber:
                             buy_price_tup = self.mask_buy_price(buy_price_tup)
                         if in_or_out_tup == 'out':
                             buy_price_tup = self.mask_sell_price(buy_price_tup)
-                        valid_trade = (
-                            in_or_out_tup,
-                            stock_ticker_tup,
-                            datetime_tup,
-                            strike_price_tup,
-                            call_or_put_tup,
-                            buy_price_tup,
-                            trade_author_tup,
-                            trade_expiration_tup,
-                            trade_color_choice,
-                        )
+                        valid_trade = (in_or_out_tup, stock_ticker_tup,
+                                       datetime_tup, strike_price_tup,
+                                       call_or_put_tup, buy_price_tup,
+                                       trade_author_tup, trade_expiration_tup,
+                                       trade_color_choice, date_tup, time_tup)
                         logger.info(
                             f"Producer received a fresh trade : {valid_trade}")
-                        print(
-                            f"\nProducer received a fresh trade : {valid_trade}"
-                        )
                         trade_id = update_table(valid_trade)
                         message = (trade_id, valid_trade)
                         config.new_trades.put(message)
                         config.has_trade.release()
 
-            except (KeyError, IndexError, ValueError) as error:
+            except (KeyError, ValueError) as error:
                 print(f"\n{error}")
+                pass
+
+            except IndexError:
                 pass
 
     ### ERROR CHECKING FUNCTIONS BELOW

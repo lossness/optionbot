@@ -6,7 +6,8 @@ from datetime import datetime
 
 from main_logger import logger
 from db_utils import db_connect, convert_date
-from exceptions import DatabaseEmpty, MultipleMatchingIn, StageOneError, StageTwoError, StageThreeError, LiveBuyPriceError, ExpirationFixerFailed
+from time_utils import standard_datetime
+from exceptions import *
 
 
 class ErrorChecker:
@@ -518,11 +519,7 @@ class ErrorChecker:
             last_sell_price = 'error'
 
         except ValueError as error:
-            date_object_now = datetime.now()
-            date_now = date_object_now.strftime("%m/%d/%Y")
-            print(
-                f"LIVE BUY PRICE ERROR:\n Current Date: {date_now} Trade Expiration: {expiration}"
-            )
+            date_now = standard_datetime()
             logger.error(
                 f"{error}:\nLIVE BUY PRICE ERROR:\n Current Date: {date_now} Trade Expiration: {expiration}"
             )
@@ -530,3 +527,25 @@ class ErrorChecker:
 
         finally:
             return str(last_sell_price)
+
+    def live_expiration(self, ticker, strike, expiration, call_or_put):
+        '''
+        Verifies the expiration date is valid by submitting it to
+        the yfinance api as a parameter. Invalid dates throw a ValueError.
+        '''
+        try:
+            converted_expiration = convert_date(expiration)
+            if converted_expiration == 'error':
+                raise LiveExpirationError
+            ops.get_puts(ticker, converted_expiration)
+
+        except LiveExpirationError as error:
+            logger.error(f'{error} {expiration}', exc_info=True)
+            expiration = 'error'
+
+        except ValueError:
+            logger.error("Expiration date is not valid!", exc_info=True)
+            expiration = 'error'
+
+        finally:
+            return str(expiration)

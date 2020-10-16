@@ -80,9 +80,9 @@ def duplicate_check(database_trades: list, new_trade: tuple) -> bool:
         is_duplicate = False
         return is_duplicate
     try:
-        in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, trader, expiration, color = new_trade
+        in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, trader, expiration, color, date, time = new_trade
         matched_trades = re.findall(
-            rf'\(((?:\'{in_or_out}\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{trader}\'), (\'{expiration}\'))\)',
+            rf'\(((?:\'{in_or_out}\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{trader}\'), (\'{expiration}\'), (\'{date}\'))\)',
             str(database_trades))
         if matched_trades == []:
             is_duplicate = False
@@ -106,7 +106,7 @@ def has_trade_match(database_trades: list, new_trade: tuple) -> bool:
         if database_trades == []:
             raise DatabaseEmpty
 
-        in_or_out, ticker, date_time, strike_price, call_or_put, buy_price, user_name, expiration, color = new_trade
+        in_or_out, ticker, date_time, strike_price, call_or_put, buy_price, user_name, expiration, color, date, time = new_trade
         ticker = ticker.lower()
         matched_trades = re.findall(
             rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{user_name}\'), (\'{expiration}\'), (\'\w+\'))\)',
@@ -131,21 +131,54 @@ def has_trade_match(database_trades: list, new_trade: tuple) -> bool:
         return match_exists, trade_color
 
 
-def is_posted_to_insta(new_trade: tuple) -> bool:
+def trade_currently_open(database_trades: list, new_trade: tuple) -> bool:
+    '''
+    Checks if a trade with the same ticker and expiration has a IN
+    in the database and does not have a matching out yet
+    '''
     try:
-        insta_posted = "true"
+        currently_open = True
+        if database_trades == []:
+            raise DatabaseEmpty
+        in_or_out, ticker, date_time, strike_price, call_or_put, buy_price, user_name, expiration, color, date, time = new_trade
+        ticker = ticker.lower()
+        matched_trades = re.findall(
+            rf'\(((\'\w+\'), (\'{ticker}\'), (\'\d+\'), (\'\w+\'), (\'\w+\'), (\'{expiration}\'), \'([\d]+-[\d]+-[\d]+)\')\)',
+            str(database_trades))
+
+        if len(matched_trades) == 0:
+            currently_open = False
+
+    except DatabaseEmpty as info_error:
+        logger.info(info_error)
+
+    finally:
+        return currently_open
+
+
+def is_posted_to_insta(new_trade: tuple) -> str:
+    '''
+    Called during insta posting phase on out trades. Checks if
+    the matching IN trade was posted.
+    '''
+    try:
+        insta_posted = "false"
         con = db_connect()
         cur = con.cursor()
         database_search_parameters = "SELECT in_or_out, ticker, strike_price, call_or_put, user_name, expiration, insta_posted from trades"
-        in_or_out, ticker, date_time, strike_price, call_or_put, buy_price, user_name, expiration, color = new_trade
+        in_or_out, ticker, date_time, strike_price, call_or_put, buy_price, user_name, expiration, color, date, time = new_trade
         cur.execute(database_search_parameters)
         filtered_trades = cur.fetchall()
-        matched_trades = re.findall(
-            rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{user_name}\'), (\'{expiration}\'), (\'\True\'))\)',
-            str(filtered_trades))
-
-        if len(matched_trades) != 1:
-            insta_posted = "false"
+        #matched_trades = re.findall(
+        #    rf'\((\'(in)\', \'({ticker})\', \'([\d]{{4}}-[\d]{{2}}-[\d]{{2}}\s[\d]{{2}}:[\d]{{2}}:[\d]{{2}}.[\d]+)\', \'({strike_price})\', \'({call_or_put})\', \'([\d]*.[\d]*)\', \'({user_name})\', \'({expiration})\', \'(\w+)\', \'(true)\', \'([\d]+-[\d]+-[\d]+)\', \'([\d]+:[\d]+:[\d]+)\')\)',
+        #    str(filtered_trades))
+        #matched_trades = re.findall(
+        #    rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{user_name}\'), (\'{expiration}\'), (\'\true\'))\)',
+        #    str(filtered_trades))
+        search_criteria = ("in", ticker, strike_price, call_or_put, user_name,
+                           expiration, "true")
+        if str(search_criteria) in str(filtered_trades):
+            insta_posted = "true"
 
     except DatabaseEmpty as info_error:
         logger.info(info_error)
@@ -176,6 +209,51 @@ def db_insta_posting_successful(trade_id: str):
             con.close()
 
 
+def prune_completed_trades():
+    '''
+    1. Queries all trades by the following parameters,
+    ticker, strike_price, call_or_put, user_name, expiration
+    2. Adds all trades with these parameters that have 2 entries.
+    3. Inserts the trades into the completed_trades table and removes
+    them from the 'trades' table. 
+    '''
+    try:
+        con = db_connect()
+        cur = con.cursor()
+        sql_filter = "SELECT ticker, strike_price, call_or_put, user_name, expiration from trades"
+        cur.execute(sql_filter)
+        all_trades = cur.fetchall()
+        duplicate_list = []
+        for item in all_trades:
+            if all_trades.count(item) >= 2:
+                duplicate_list.append(item)
+
+        retreive_all_trades_sql = "SELECT in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color, insta_posted, date, time from trades"
+        cur.execute(retreive_all_trades_sql)
+        all_trades = cur.fetchall()
+        completed_trades = []
+        for trade in duplicate_list:
+            ticker, strike_price, call_or_put, user_name, expiration = trade
+            matched_trades = re.findall(
+                rf'\((\'(\w+)\', \'({ticker})\', \'([\d]{{4}}-[\d]{{2}}-[\d]{{2}}\s[\d]{{2}}:[\d]{{2}}:[\d]{{2}}.[\d]+)\', \'({strike_price})\', \'({call_or_put})\', \'([\d]*.[\d]*)\', \'({user_name})\', \'({expiration})\', \'(\w+)\', \'(\w+)\', \'([\d]+-[\d]+-[\d]+)\', \'([\d]+:[\d]+:[\d]+)\')\)',
+                str(all_trades))
+            if len(matched_trades) > 0:
+                for trade in matched_trades:
+                    completed_trades.append(tuple(trade))
+        completed_trades = list(set(completed_trades))
+        for completed_trade in completed_trades:
+            update_completed_table(tuple(completed_trade[1:]))
+            logger.info(f"{completed_trade} added to completed_trades table")
+            delete_from_open_trades(tuple(completed_trade[1:]))
+            logger.info(f"{completed_trade} deleted from live table")
+
+    except sqlite3.Error as error:
+        logger.error(f"{error}", exc_info=True)
+    finally:
+        if (con):
+            con.close()
+
+
 def verify_trade(parsed_trade: tuple):
     try:
         is_out = False
@@ -186,11 +264,18 @@ def verify_trade(parsed_trade: tuple):
         con = db_connect()
         cur = con.cursor()
         filtered_trades_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, user_name, expiration, color from trades"
-        filtered_trades_no_color_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, user_name, expiration from trades"
+        filtered_trades_no_color_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, user_name, expiration, date from trades"
         cur.execute(filtered_trades_sql)
         filtered_trades = cur.fetchall()
         cur.execute(filtered_trades_no_color_sql)
         filtered_trades_no_color = cur.fetchall()
+
+        if 'in' in parsed_trade[0]:
+            is_currently_open = trade_currently_open(filtered_trades_no_color,
+                                                     tuple(parsed_trade))
+            if is_currently_open:
+                ignore_trade = True
+                raise IgnoreTrade
 
         is_duplicate = duplicate_check(filtered_trades_no_color,
                                        tuple(parsed_trade))
@@ -259,18 +344,18 @@ def update_table(parsed_trade: tuple) -> str:
         trade_id = ''
         con = db_connect()
         cur = con.cursor()
-        trade_sql = "INSERT INTO trades (in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        trade_sql = "INSERT INTO trades (in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color, date, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         cur.execute(trade_sql,
                     (parsed_trade[0], parsed_trade[1], parsed_trade[2],
                      parsed_trade[3], parsed_trade[4], parsed_trade[5],
-                     parsed_trade[6], parsed_trade[7], parsed_trade[8]))
+                     parsed_trade[6], parsed_trade[7], parsed_trade[8],
+                     parsed_trade[9], parsed_trade[10]))
         con.commit()
-        print("Trade added to the database ")
-        print(parsed_trade)
+        logger.info(f"Trade added to database!\n{parsed_trade}")
         trade_id = str(cur.lastrowid)
         cur.close()
     except sqlite3.Error as error:
-        print("Failed to update trade in sqlite table", error)
+        logger.fatal(f"Failed to update trade in sqlite table\n{error}")
     except KeyError as error:
         pass
     finally:
@@ -280,27 +365,74 @@ def update_table(parsed_trade: tuple) -> str:
             # print("the sqlite connection is closed")
 
 
+def delete_from_open_trades(parsed_trade: tuple):
+    '''
+    Deletes a given trade from the live table named 'trades'
+    '''
+    try:
+        con = db_connect()
+        cur = con.cursor()
+        trade_sql = "DELETE FROM trades where (in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color, insta_posted, date, time) = (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        cur.execute(trade_sql,
+                    (parsed_trade[0], parsed_trade[1], parsed_trade[2],
+                     parsed_trade[3], parsed_trade[4], parsed_trade[5],
+                     parsed_trade[6], parsed_trade[7], parsed_trade[8],
+                     parsed_trade[9], parsed_trade[10], parsed_trade[11]))
+        con.commit()
+        logger.info(f"{parsed_trade} deleted from live table trades")
+        cur.close()
+    except sqlite3.Error as error:
+        logger.fatal(f"{error}")
+    except KeyError as error:
+        pass
+    finally:
+        if (con):
+            con.close()
+
+
 def update_error_table(parsed_trade: tuple):
     try:
         con = db_connect()
         cur = con.cursor()
-        trade_sql = "INSERT INTO error_trades (in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        trade_sql = "INSERT INTO error_trades (in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color, insta_posted, date, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         cur.execute(trade_sql,
                     (parsed_trade[0], parsed_trade[1], parsed_trade[2],
                      parsed_trade[3], parsed_trade[4], parsed_trade[5],
-                     parsed_trade[6], parsed_trade[7], parsed_trade[8]))
+                     parsed_trade[6], parsed_trade[7], parsed_trade[8],
+                     parsed_trade[9], parsed_trade[10], parsed_trade[11]))
         con.commit()
-        print("Trade added to the database ")
-        print(parsed_trade)
+        logger.error(f"ERROR_TABLE: Trade added {parsed_trade}")
         cur.close()
     except sqlite3.Error as error:
-        print("Failed to update trade in sqlite table", error)
+        logger.fatal(f"{error}")
     except KeyError as error:
         pass
     finally:
         if (con):
             con.close()
             # print("the sqlite connection is closed")
+
+
+def update_completed_table(parsed_trade: tuple):
+    try:
+        con = db_connect()
+        cur = con.cursor()
+        trade_sql = "INSERT INTO completed_trades (in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color, insta_posted, date, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        cur.execute(trade_sql,
+                    (parsed_trade[0], parsed_trade[1], parsed_trade[2],
+                     parsed_trade[3], parsed_trade[4], parsed_trade[5],
+                     parsed_trade[6], parsed_trade[7], parsed_trade[8],
+                     parsed_trade[9], parsed_trade[10], parsed_trade[11]))
+        con.commit()
+        cur.close()
+        logger.info(f"COMPLETED TRADE TABLE: Trade added: {parsed_trade}")
+    except sqlite3.Error as error:
+        logger.fatal(f"{error}")
+    except KeyError as error:
+        pass
+    finally:
+        if (con):
+            con.close()
 
 
 def create_trader(trader: str):
@@ -332,53 +464,6 @@ def create_trader(trader: str):
         if (con):
             con.close()
             print("the sqlite connection is closed")
-
-
-def check_expration(error_trades: list, all_trades: list):
-    pass
-
-
-def check_call_or_put(error_trades: list, all_trades: list):
-    for trade in error_trades:
-        (in_or_out, ticker, strike_price, call_or_put, buy_price, user_name,
-         expiration) = trade
-        if 'error' in (strike_price, call_or_put):
-            try:
-                ticker = ticker.lower()
-                matched_trades = re.findall(
-                    rf'\(((?:[\'in\', \'out\'])+, (\'{ticker}\'), (\'{user_name}\'), (\'{expiration}\'))\)',
-                    str(all_trades))
-
-            finally:
-                pass
-
-
-def check_strike_price(trades: list, all_trades: list):
-    pass
-
-
-def check_ticker(trades: list, all_trades: list):
-    pass
-
-
-def error_checker():
-    try:
-        con = db_connect()
-        cur = con.cursor()
-        load_trades_table_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, buy_price, user_name, expiration from trades"
-        cur.execute(load_trades_table_sql)
-        full_trades = cur.fetchall()
-        trades_with_errors = []
-        for row in full_trades:
-            if 'error' in row:
-                trades_with_errors.append(row)
-        print(trades_with_errors)
-        check_call_or_put(trades_with_errors, full_trades)
-
-    finally:
-        if (con):
-            con.close()
-            print("Error check completed.")
 
 
 def convert_date(date):
