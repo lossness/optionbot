@@ -50,8 +50,8 @@ def is_market_open():
     the_time, day_of_the_week = get_time_and_day()
     market_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
     #market_days = ['Saturday', 'Sunday']
-    if datetime.time(0, 1, 00, 000000) <= the_time <= datetime.time(
-            23, 59, 00, 000000) and day_of_the_week in market_days:
+    if datetime.time(9, 30, 00, 000000) <= the_time <= datetime.time(
+            16, 1, 00, 000000) and day_of_the_week in market_days:
         return True
     else:
         return False
