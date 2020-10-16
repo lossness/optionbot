@@ -22,3 +22,5 @@ settings.json
 /settings.json
 test.sqlite3
 __pycache__/config.cpython-38.pyc
+.mypy_cache/*
+
