@@ -5,11 +5,14 @@ import os
 
 from dotenv import load_dotenv
 from discord.ext import commands
+from time_utils import standard_datetime
+from main_logger import logger
 
 load_dotenv()
 bot = commands.Bot(command_prefix='$')
 TRADE_CHANNEL = os.getenv("TRADE_CHANNEL")
 TOKEN = os.getenv("DISCORD_TOKEN")
+EVENT = config.EVENT
 
 
 @bot.event

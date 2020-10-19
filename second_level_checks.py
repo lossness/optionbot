@@ -280,6 +280,7 @@ class ErrorChecker:
                         if obj.possible_buy_price == duplicate_possibles[0]:
                             buy_price = obj.possible_buy_price
                             processed_list.remove(obj.original_list_value)
+                            return
 
                 elif duplicate_possibles == [] or len(duplicate_possibles) > 1:
                     raise StageOneError

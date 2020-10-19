@@ -33,7 +33,8 @@ CHROME_INSTA = os.getenv("INSTACHROME")
 DRIVER_PATH = os.getenv("DRIVER_PATH")
 # include parent directory in path
 PATH = pathlib.Path.cwd()
-#KEYBOARD = Controller()
+# debug flag to skip posting the image to insta
+DEBUG = config.DEBUG
 
 
 def make_image(msg):
@@ -82,12 +83,15 @@ def consumer(driver):
         trade_id = full_message[0]
         message = full_message[1]
         try:
-            if message[0] == 'out' and is_posted_to_insta(
+            if DEBUG:
+                db_insta_posting_successful(trade_id)
+                print(message)
+                prune_completed_trades()
+            elif message[0] == 'out' and is_posted_to_insta(
                     message).lower() == 'true' or message[0] == 'in':
                 image_path = make_image(message)
                 if 'error' in image_path:
                     raise MakeImageError
-
                 upload_element = WebDriverWait(driver, 20).until(
                     EC.presence_of_element_located((
                         By.XPATH,

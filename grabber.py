@@ -32,6 +32,7 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException,
 
 # include parent directory in path
 PATH = pathlib.Path.cwd()
+DEBUG = config.DEBUG
 EVENT = config.EVENT
 TRADERS = [
     "Eric68", "MariaC82", "ThuhKang", "Jen♡♡crypto", "joel", "Treefidey"
@@ -151,8 +152,12 @@ class DiscordGrabber:
                     split_message_list.remove(item)
                 else:
                     new_expiration = float(item)
+                    if item[-1] == '0':
+                        new_expiration = str(new_expiration).replace('.',
+                                                                     '/') + '0'
+                    else:
+                        new_expiration = str(new_expiration).replace('.', '/')
                     split_message_list.remove(item)
-                    new_expiration = str(new_expiration).replace('.', '/')
 
             except ValueError:
                 continue
@@ -630,8 +635,10 @@ class DiscordGrabber:
                     trade_expiration_tup = self.check.live_expiration(
                         stock_ticker_tup, strike_price_tup,
                         trade_expiration_tup, call_or_put_tup)
-                if not buy_price_tup.isalpha() and live_buy_price.isalpha():
-                    if percent_difference(live_buy_price, buy_price_tup) > 40:
+                if buy_price_tup.isalpha() is False and live_buy_price.isalpha(
+                ) is False:
+                    if percent_difference(float(live_buy_price),
+                                          float(buy_price_tup)) > 40:
                         buy_price_tup = live_buy_price
                         logger.error(
                             r"Last option price differs more than 25% from traders price! Using live.."
@@ -677,6 +684,8 @@ class DiscordGrabber:
                         message = (trade_id, valid_trade)
                         config.new_trades.put(message)
                         config.has_trade.release()
+                        #config.new_discord_trades.put(message)
+                        #config.has_new_discord_trade.release()
 
             except (KeyError, ValueError) as error:
                 print(f"\n{error}")

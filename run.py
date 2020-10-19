@@ -30,6 +30,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 EVENT = config.EVENT
+DEBUG = config.DEBUG
 GRABBER = DiscordGrabber()
 
 if os.name == 'nt':
@@ -47,14 +48,17 @@ if os.name == 'posix':
 
 # Market hours are 930-4pm est 9:30 -> 16:00 24hr format
 def is_market_open():
-    the_time, day_of_the_week = get_time_and_day()
-    market_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-    #market_days = ['Saturday', 'Sunday']
-    if datetime.time(9, 30, 00, 000000) <= the_time <= datetime.time(
-            16, 1, 00, 000000) and day_of_the_week in market_days:
-        return True
+    if DEBUG is False:
+        the_time, day_of_the_week = get_time_and_day()
+        market_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+        #market_days = ['Saturday', 'Sunday']
+        if datetime.time(9, 30, 00, 000000) <= the_time <= datetime.time(
+                16, 1, 00, 000000) and day_of_the_week in market_days:
+            return True
+        else:
+            return False
     else:
-        return False
+        return True
 
 
 # def initiate_discord_driver():
