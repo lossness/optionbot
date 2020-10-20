@@ -1,6 +1,6 @@
 import re
 import sqlite3
-import yahoo_fin.options as ops
+import yfinance as yf
 
 from datetime import datetime
 
@@ -122,7 +122,7 @@ class ErrorChecker:
                 con.close()
             return filtered_trades
 
-    def strike_price_fixer(self, processed_list, new_trade) -> str:
+    def strike_price_fixer(self, processed_list, new_trade) -> tuple:
         '''
         This runs when the first round of processing detects
         an error in the strike price value of the processed tuple.
@@ -219,19 +219,7 @@ class ErrorChecker:
         #     logger.warning(f"{error} In call_or_put level 2 check!")
         #     result = 'error'
 
-    def in_or_out_fixer(self, processed_list, new_trade) -> str:
-        '''
-        Runs when the first round of processing
-        detects an error determing the in or out
-        status of a trade.
-
-        First step is to try and find a matching
-        trade in the database to pull the in_or_out
-        data from.
-        '''
-        in_or_out_fix = 'error'
-
-    def buy_price_fixer(self, processed_list, original_message) -> str:
+    def buy_price_fixer(self, processed_list, original_message) -> tuple:
         '''
         Runs when the first round of processing
         detects an error determing the buy price.
@@ -292,11 +280,6 @@ class ErrorChecker:
             buy_price = 'error'
             logger.warning(
                 f'{error} \n {processed_list} \n {original_message}')
-            # buy_price_list = list(buy_price)
-            # fixed_list = []
-            # for item in buy_price_list:
-            #     item = list(item)
-            #     fixed_list.append(item)
             split_original_message = original_message.split('-')
             duplicates = [
                 value for value in processed_list
@@ -416,63 +399,6 @@ class ErrorChecker:
             elif len(matched_trades) > 1:
                 raise MultipleMatchingIn
 
-            # elif len(matched_trades) == 0:
-
-            #     class expiration_date_candidates:
-            #         def __init__(self, possible_expiration_date,
-            #                      original_list_value):
-            #             self.possible_expiration_date = possible_expiration_date
-            #             self.original_list_value = original_list_value
-
-            #     possible_expiration_dates = []
-            #     duplicate_possibles = []
-            #     for list_value in processed_list:
-            #         possible_result = list_value.replace(' ', '')
-
-            #         if any(char.isalpha()
-            #                for char in possible_result) is False:
-            #             if ',' in possible_result:
-            #                 comma_split_values = possible_result.split(',')
-            #                 for split_value in comma_split_values:
-            #                     possible_expiration_dates.append(
-            #                         expiration_date_candidates(
-            #                             split_value, list_value))
-            #             else:
-            #                 possible_expiration_dates.append(
-            #                     expiration_date_candidates(
-            #                         possible_result, list_value))
-
-            #     if len(possible_expiration_dates) == 1:
-            #         new_expiration = possible_expiration_dates[
-            #             0].possible_expiration_date
-            #         processed_list.remove(
-            #             possible_expiration_dates[0].original_list_value)
-
-            #     elif len(possible_expiration_dates) > 1:
-            #         list_of_possible_results = []
-            #         for obj in possible_expiration_dates:
-            #             list_of_possible_results.append(
-            #                 obj.possible_expiration_date)
-
-            #         for item in list_of_possible_results:
-            #             if list_of_possible_results.count(item) > 1:
-            #                 duplicate_possibles.append(item)
-
-            #         if len(duplicate_possibles) == 1 or len(
-            #                 set(duplicate_possibles)) == 1:
-            #             for obj in possible_expiration_dates:
-            #                 if obj.possible_expiration_date == duplicate_possibles[
-            #                         0]:
-            #                     possible_expiration_dates.remove(obj)
-            #                     # processed_list.remove(obj.original_list_value)
-
-            #         elif duplicate_possibles == [] or len(
-            #                 duplicate_possibles) > 1:
-            #             raise ExpirationFixerFailed
-
-            # else:
-            #     raise ExpirationFixerFailed
-
         except DatabaseEmpty as info_error:
             logger.info(info_error)
             new_expiration = 'error'
@@ -495,21 +421,25 @@ class ErrorChecker:
                 raise LiveBuyPriceError
 
             converted_expiration = convert_date(expiration)
+            split = converted_expiration.split('/')
+            converted_expiration = rf"{split[2]}-{split[0]}-{split[1]}"
+            ticker_data = yf.Ticker(f"{ticker.upper()}")
             if converted_expiration == 'error':
                 raise LiveBuyPriceError
+            options = ticker_data.option_chain(converted_expiration)
 
             if call_or_put == 'call':
-                df = ops.get_calls(f'{ticker}', converted_expiration)
+                df = options.calls
 
             if call_or_put == 'put':
-                df = ops.get_puts(f'{ticker}', converted_expiration)
+                df = options.puts
 
             if '.' in strike:
-                table = df.loc[df['Strike'] == float(strike)]
+                table = df.loc[df['strike'] == float(strike)]
             if '.' not in strike:
-                table = df.loc[df['Strike'] == int(strike)]
+                table = df.loc[df['strike'] == int(strike)]
 
-            last_sell_price = list(table['Last Price'])[0]
+            last_sell_price = list(table['lastPrice'])[0]
 
         except LiveBuyPriceError as error:
             logger.error(f"{error}", exc_info=True)
@@ -536,9 +466,12 @@ class ErrorChecker:
         '''
         try:
             converted_expiration = convert_date(expiration)
+            split = converted_expiration.split('/')
+            converted_expiration = rf"{split[2]}-{split[0]}-{split[1]}"
+            ticker_data = yf.Ticker(f"{ticker.upper()}")
             if converted_expiration == 'error':
                 raise LiveExpirationError
-            ops.get_puts(ticker, converted_expiration)
+            ticker_data.option_chain(converted_expiration)
 
         except LiveExpirationError as error:
             logger.error(f'{error} {expiration}', exc_info=True)

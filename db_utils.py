@@ -466,7 +466,11 @@ def create_trader(trader: str):
             print("the sqlite connection is closed")
 
 
-def convert_date(date):
+def convert_date(date) -> str:
+    '''
+    Converts an expiration date like 10/23 to the format
+    10/23/2020.
+    '''
     try:
         split_date = date.split('/')
         month = split_date[0]

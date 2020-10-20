@@ -638,10 +638,18 @@ class DiscordGrabber:
                 if buy_price_tup.isalpha() is False and live_buy_price.isalpha(
                 ) is False:
                     if percent_difference(float(live_buy_price),
-                                          float(buy_price_tup)) > 40:
+                                          float(buy_price_tup)
+                                          ) > 25 and in_or_out_tup == 'out':
                         buy_price_tup = live_buy_price
                         logger.error(
                             r"Last option price differs more than 25% from traders price! Using live.."
+                        )
+                    elif percent_difference(
+                            float(live_buy_price), float(
+                                buy_price_tup)) > 25 and in_or_out_tup == 'in':
+                        buy_price_tup = 'error'
+                        logger.error(
+                            r"Last option price differs more than 25% from traders price! Ignoring trade.."
                         )
 
                 #trade_expiration_tup = self.check.
