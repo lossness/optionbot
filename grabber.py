@@ -198,8 +198,9 @@ class DiscordGrabber:
                         ticker_data = yf.Ticker(ticker)
                         call_or_put = 'call'
                         live_price = ticker_data.info['open']
-                        if float(((live_price - float(strike_price)) * 100) /
-                                 float(strike_price)) > 10:
+                        price_difference = percent_difference(
+                            float(live_price), float(strike_price))
+                        if price_difference > 35:
                             raise LiveStrikePriceError
                         split_message_list.remove(item)
                         break
@@ -219,8 +220,9 @@ class DiscordGrabber:
                         ticker_data = yf.Ticker(ticker)
                         call_or_put = 'put'
                         live_price = ticker_data.info['open']
-                        if float(((live_price - float(strike_price)) * 100) /
-                                 float(strike_price)) > 10:
+                        price_difference = percent_difference(
+                            float(live_price), float(strike_price))
+                        if price_difference > 35:
                             raise LiveStrikePriceError
                         split_message_list.remove(item)
                         break
