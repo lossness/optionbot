@@ -11,4 +11,4 @@ new_discord_trades = queue.Queue()
 has_new_discord_trade = threading.Semaphore(value=0)
 
 EVENT = threading.Event()
-DEBUG = True
+DEBUG = False
