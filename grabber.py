@@ -647,12 +647,12 @@ class DiscordGrabber:
                     price_difference = percent_difference(
                         float(live_buy_price), float(buy_price_tup))
 
-                    if price_difference > 300 and in_or_out_tup == 'out':
+                    if price_difference > 100 and in_or_out_tup == 'out':
                         buy_price_tup = live_buy_price
                         logger.error(
                             r"Last option price differs more than 25% from traders price! Using live.."
                         )
-                    elif price_difference > 300 and in_or_out_tup == 'in':
+                    elif price_difference > 100 and in_or_out_tup == 'in':
                         buy_price_tup = 'error'
                         logger.error(
                             r"Last option price differs more than 25% from traders price! Ignoring trade.."
