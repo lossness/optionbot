@@ -23,26 +23,32 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     channel = message.channel
-    if message.author == bot.user or message.author.bot is True:
+
+    if message.author.id == bot.user.id:
         return
+
     if str(channel.id) != TRADE_CHANNEL:
         return
-    elif message.author != bot.user:
+
+    elif message.content.startswith('$trade'):
+        await channel.send(
+            "Would you like to submit this trade for processing? y/n")
+
+        def check_for_yes(m):
+            return 'y' in m.content and m.channel == channel
+
         try:
-            await channel.send(
-                "Would you like to submit this trade for processing? y/n")
-            msg = await bot.wait_for('message', timeout=15)
-
-            def check_for_yes(m):
-                return 'y' in m.content and m.channel == channel
-
-            if check_for_yes(msg):
-                payload = f"{str(message.author.name)}\n{str(message.clean_content)}"
-                config.new_unprocessed_trades.put(payload)
-                config.has_unprocessed_trade.release()
-                await channel.send("Trade submitted for processing!")
+            msg = await bot.wait_for('message',
+                                     check=check_for_yes,
+                                     timeout=15)
         except asyncio.TimeoutError:
-            await channel.send("Alright then.")
+            return await channel.send("No trade was submitted.")
+
+        if check_for_yes(msg):
+            payload = f"{str(message.author.name)}\n{str(message.clean_content).replace('$trade', '')}"
+            config.new_unprocessed_trades.put(payload)
+            config.has_unprocessed_trade.release()
+            await channel.send("Trade submitted for processing!")
 
 
 async def bot_async_start():

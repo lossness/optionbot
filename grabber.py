@@ -346,6 +346,8 @@ class DiscordGrabber:
             return True
 
     def filter_trader(self, variable):
+        if ' ' in variable:
+            variable = variable.replace(' ', '')
         if (variable in TRADERS):
             return True
         else:
@@ -550,6 +552,8 @@ class DiscordGrabber:
                 split_result = list(filter(self.filter_message, split_result))
                 trade_author = list(filter(self.filter_trader, split_result))
                 trade_author_tup = trade_author[0]
+                if ' ' in trade_author_tup:
+                    trade_author_tup = trade_author_tup.replace(' ', '')
                 if "Jen" in trade_author_tup:
                     trade_author_tup = "Jen"
                 # find the longest string left which is the message string
@@ -627,7 +631,8 @@ class DiscordGrabber:
                     live_buy_price = self.check.live_buy_price(
                         stock_ticker_tup, strike_price_tup,
                         trade_expiration_tup, call_or_put_tup)
-
+                    logger.info(f"{live_buy_price} LIVE PRICE")
+                    logger.info(f"{buy_price_tup} TRADE PRICE")
                 # checks if the expiration is valid given the ticker, strike, expiration and call_or_put
                 # values are not 'error'.
                 if not 'error' in (stock_ticker_tup, strike_price_tup,
@@ -637,16 +642,15 @@ class DiscordGrabber:
                         trade_expiration_tup, call_or_put_tup)
                 if buy_price_tup.isalpha() is False and live_buy_price.isalpha(
                 ) is False:
-                    if percent_difference(float(live_buy_price),
-                                          float(buy_price_tup)
-                                          ) > 25 and in_or_out_tup == 'out':
+                    price_difference = percent_difference(
+                        float(live_buy_price), float(buy_price_tup))
+
+                    if price_difference > 300 and in_or_out_tup == 'out':
                         buy_price_tup = live_buy_price
                         logger.error(
                             r"Last option price differs more than 25% from traders price! Using live.."
                         )
-                    elif percent_difference(
-                            float(live_buy_price), float(
-                                buy_price_tup)) > 25 and in_or_out_tup == 'in':
+                    elif price_difference > 300 and in_or_out_tup == 'in':
                         buy_price_tup = 'error'
                         logger.error(
                             r"Last option price differs more than 25% from traders price! Ignoring trade.."
