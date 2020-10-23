@@ -53,13 +53,19 @@ async def on_message(message):
             config.new_unprocessed_trades.put(payload)
             config.has_unprocessed_trade.release()
             await channel.send("Trade submitted for processing!")
+    await dev_bot.process_commands(message)
 
 
 @fa_bot.event
 async def on_ready():
     print(f'{fa_bot.user.name} has connected to Discord!')
+    await listener()
+
+
+@fa_bot.event
+async def listener():
     while True:
-        if config.has_new_discord_trade.acquire():
+        if config.has_new_discord_trade.acquire(timeout=2):
             full_message = config.new_discord_trades.get()
             in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, trader, expiration, color, date, time = full_message[
                 1]
@@ -97,53 +103,50 @@ async def on_ready():
             config.new_discord_trades.task_done()
             logger.info(
                 f"{standard_datetime()} : FA MSG POSTED : {full_message}")
-            return
         else:
-            EVENT.wait(1)
-            return
+            await asyncio.sleep(1)
 
 
-# First, we must attach an event signalling when the bot has been
-# closed to the client itself so we know when to fully close the event loop.
-def start_bot_loop(loop):
-    Entry = namedtuple('Entry', 'client event')
-    entries = [
-        Entry(client=fa_bot, event=asyncio.Event()),
-        Entry(client=dev_bot, event=asyncio.Event())
-    ]
+# # First, we must attach an event signalling when the bot has been
+# # closed to the client itself so we know when to fully close the event loop.
+# def start_bot_loop(loop):
+#     Entry = namedtuple('Entry', 'client event')
+#     entries = [
+#         Entry(client=fa_bot, event=asyncio.Event()),
+#         Entry(client=dev_bot, event=asyncio.Event())
+#     ]
 
-    # Then, we should login to all our clients and wrap the connect call
-    # so it knows when to do the actual full closure
-    async def login():
-        for e in entries:
-            if e.client.description == "FA server bot":
-                await e.client.login(FLOW_SIGNAL_TOKEN)
-            elif e.client.description == "Dev server bot":
-                await e.client.login(TOKEN)
+#     # Then, we should login to all our clients and wrap the connect call
+#     # so it knows when to do the actual full closure
+#     async def login():
+#         for e in entries:
+#             if e.client.description == "FA server bot":
+#                 await e.client.login(FLOW_SIGNAL_TOKEN)
+#             elif e.client.description == "Dev server bot":
+#                 await e.client.login(TOKEN)
 
-    async def wrapped_connect(entry):
-        try:
-            await entry.client.connect()
-        except Exception as e:
-            await entry.client.close()
-            print('We got an exception: ', e.__class__.__name__, e)
-            entry.event.set()
+#     async def wrapped_connect(entry):
+#         try:
+#             await entry.client.connect()
+#         except Exception as e:
+#             await entry.client.close()
+#             print('We got an exception: ', e.__class__.__name__, e)
+#             entry.event.set()
 
-    # actually check if we should close the event loop:
-    async def check_close():
-        futures = [e.event.wait() for e in entries]
-        await asyncio.wait(futures)
+#     # actually check if we should close the event loop:
+#     async def check_close():
+#         futures = [e.event.wait() for e in entries]
+#         await asyncio.wait(futures)
 
-    # here is when we actually login
-    loop.run_until_complete(login())
+#     # here is when we actually login
+#     loop.run_until_complete(login())
 
-    # now we connect to every client
-    for entry in entries:
-        loop.create_task(wrapped_connect(entry))
+#     # now we connect to every client
+#     for entry in entries:
+#         loop.create_task(wrapped_connect(entry))
 
-    # now we're waiting for all the clients to close
-    loop.run_until_complete(check_close())
-
+#     # now we're waiting for all the clients to close
+#     loop.run_until_complete(check_close())
 
 # def run_bots():
 #     if os.name != 'win32':
