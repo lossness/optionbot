@@ -698,8 +698,8 @@ class DiscordGrabber:
                         message = (trade_id, valid_trade)
                         config.new_trades.put(message)
                         config.has_trade.release()
-                        #config.new_discord_trades.put(message)
-                        #config.has_new_discord_trade.release()
+                        config.new_discord_trades.put(message)
+                        config.has_new_discord_trade.release()
 
             except (KeyError, ValueError) as error:
                 print(f"\n{error}")

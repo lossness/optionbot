@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 from time_utils import standard_datetime
 from main_logger import logger
+from collections import namedtuple
 
 load_dotenv()
 dev_bot = commands.Bot(command_prefix='$', description='Dev server bot')
@@ -66,14 +67,33 @@ async def on_ready():
                 in_or_out = 'buy'
             if 'out' in in_or_out:
                 in_or_out = 'sell'
-            trade_message = f"\n Symbol: {ticker.upper()}\n Action: {in_or_out.upper()}\n Strike: {strike_price}\n Price: {buy_price}\n Expiration: {expiration}"
-            embed = discord.Embed(
-                colour=discord.Colour.blurple(),
-                title="Trade Alert",
-                description=trade_message,
+            embed = discord.Embed(title="Signal", colour=0xffff80)
+            embed.set_author(
+                name="FlowAlerts",
+                icon_url=
+                "https://www.flowalerts.com/wp-content/uploads/2020/09/cropped-Untitled-3-32x32.png"
             )
-            channel = fa_bot.get_channel(id=FLOW_SIGNAL_CHANNEL)
-            await channel.send_embed(embed)
+            embed.add_field(name="Ticker:",
+                            value=f"{ticker.upper()}",
+                            inline=False)
+            embed.add_field(name="Type:",
+                            value=f"{in_or_out.upper()}",
+                            inline=False)
+            embed.add_field(name="Strike:",
+                            value=f"{strike_price}",
+                            inline=False)
+            embed.add_field(name="Leverage:",
+                            value=f"{buy_price}",
+                            inline=False)
+            embed.add_field(name="Expiration:",
+                            value=f"{expiration}",
+                            inline=False)
+            embed.set_footer(
+                text=
+                "This is not investment advice, all data on this post represents a personal trade made public for others to see. Trading and investing carries a HIGH LEVEL OF RISK, you could lose some or all of your investment. Trading commodities or any other financial instrument may not be suitable for all traders. We accept no liability for any losses or damages you may incur—this means that you alone are responsible for your actions in any trading or investing activities. "
+            )
+            channel = fa_bot.get_channel(id=int(FLOW_SIGNAL_CHANNEL))
+            await channel.send(embed=embed)
             config.new_discord_trades.task_done()
             logger.info(
                 f"{standard_datetime()} : FA MSG POSTED : {full_message}")
@@ -83,17 +103,58 @@ async def on_ready():
             return
 
 
-def run_bots():
-    if os.name != 'win32':
-        asyncio.get_child_watcher()
-    loop = asyncio.get_event_loop()
-    loop.create_task(dev_bot.start(TOKEN))
-    loop.create_task(fa_bot.start(FLOW_SIGNAL_TOKEN))
-    return loop
+# First, we must attach an event signalling when the bot has been
+# closed to the client itself so we know when to fully close the event loop.
+def start_bot_loop(loop):
+    Entry = namedtuple('Entry', 'client event')
+    entries = [
+        Entry(client=fa_bot, event=asyncio.Event()),
+        Entry(client=dev_bot, event=asyncio.Event())
+    ]
+
+    # Then, we should login to all our clients and wrap the connect call
+    # so it knows when to do the actual full closure
+    async def login():
+        for e in entries:
+            if e.client.description == "FA server bot":
+                await e.client.login(FLOW_SIGNAL_TOKEN)
+            elif e.client.description == "Dev server bot":
+                await e.client.login(TOKEN)
+
+    async def wrapped_connect(entry):
+        try:
+            await entry.client.connect()
+        except Exception as e:
+            await entry.client.close()
+            print('We got an exception: ', e.__class__.__name__, e)
+            entry.event.set()
+
+    # actually check if we should close the event loop:
+    async def check_close():
+        futures = [e.event.wait() for e in entries]
+        await asyncio.wait(futures)
+
+    # here is when we actually login
+    loop.run_until_complete(login())
+
+    # now we connect to every client
+    for entry in entries:
+        loop.create_task(wrapped_connect(entry))
+
+    # now we're waiting for all the clients to close
+    loop.run_until_complete(check_close())
 
 
-def start_bot_loop(loop=run_bots()):
-    try:
-        loop.run_forever()
-    finally:
-        loop.stop()
+# def run_bots():
+#     if os.name != 'win32':
+#         asyncio.get_child_watcher()
+#     loop = asyncio.get_event_loop()
+#     loop.create_task(dev_bot.start(TOKEN))
+#     loop.create_task(fa_bot.start(FLOW_SIGNAL_TOKEN))
+#     return loop
+
+# def start_bot_loop(loop=run_bots()):
+#     try:
+#         loop.run_forever()
+#     finally:
+#         loop.stop()

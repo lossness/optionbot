@@ -11,6 +11,7 @@ import discord
 import asyncio
 import calendar
 
+from collections import namedtuple
 from progress.spinner import Spinner, LineSpinner
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -22,12 +23,13 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException
 from instapost import consumer
 from grabber import DiscordGrabber
-from dev_listener import bot_async_start
+#from dev_listener import dev_bot
+#from flowalerts_discord import fa_bot
 from time_utils import get_time_and_day
 #from insta_browser import switch_to_mobile
 from main_logger import logger
 from dotenv import load_dotenv
-
+from bots import TOKEN, FLOW_SIGNAL_TOKEN, fa_bot, dev_bot
 load_dotenv()
 EVENT = config.EVENT
 DEBUG = config.DEBUG
@@ -56,7 +58,7 @@ def is_market_open():
                 16, 1, 00, 000000) and day_of_the_week in market_days:
             return True
         else:
-            return False
+            return True
     else:
         return True
 
@@ -146,33 +148,148 @@ def post_driver():
             #os.system('taskkill /f /im chromedriver.exe')
 
 
-def bot_loop_start(loop):
-    loop.run_forever()
+# def bot_main(bot1=dev_bot, bot2=fa_bot):
+#     # First, we must attach an event signalling when the bot has been
+#     # closed to the client itself so we know when to fully close the event loop.
+
+#     Entry = namedtuple('Entry', 'client event')
+#     entries = [
+#         Entry(bot=bot1, event=asyncio.Event()),
+#         Entry(bot=bot2, event=asyncio.Event())
+#     ]
+
+#     # Then, we should login to all our clients and wrap the connect call
+#     # so it knows when to do the actual full closure
+
+#     loop = asyncio.get_event_loop()
+
+#     async def login():
+#         for e in entries:
+#             await e.bot.run()
+
+#     async def wrapped_connect(entry):
+#         try:
+#             await entry.client.connect()
+#         except Exception as e:
+#             await entry.client.close()
+#             print('We got an exception: ', e.__class__.__name__, e)
+#             entry.event.set()
+
+#     # actually check if we should close the event loop:
+#     async def check_close():
+#         futures = [e.event.wait() for e in entries]
+#         await asyncio.wait(futures)
+
+#     # here is when we actually login
+#     loop.run_until_complete(login())
+
+#     # now we connect to every client
+#     for entry in entries:
+#         loop.create_task(wrapped_connect(entry))
+
+#     # now we're waiting for all the clients to close
+#     loop.run_until_complete(check_close())
+
+#     # finally, we close the event loop
+#     loop.close()
+
+# def bot_start():
+#     if os.name != 'win32':
+#         asyncio.get_child_watcher()
+#     loop = asyncio.get_event_loop()
+#     loop.create_task(dev_bot)
+#     loop.create_task(fa_bot)
+#     return loop
+
+# def bot_loop_start(loop=bot_start()):
+#     try:
+#         loop.run_forever()
+#     finally:
+#         loop.stop()
+
+Entry = namedtuple('Entry', 'client event')
+entries = [
+    Entry(client=fa_bot, event=asyncio.Event()),
+    Entry(client=dev_bot, event=asyncio.Event())
+]
 
 
-def main():
+# Then, we should login to all our clients and wrap the connect call
+# so it knows when to do the actual full closure
+async def login():
+    for e in entries:
+        if e.client.description == "FA server bot":
+            await e.client.login(FLOW_SIGNAL_TOKEN)
+        elif e.client.description == "Dev server bot":
+            await e.client.login(TOKEN)
+
+
+async def wrapped_connect(entry):
+    try:
+        await entry.client.connect()
+    except Exception as e:
+        await entry.client.close()
+        print('We got an exception: ', e.__class__.__name__, e)
+        entry.event.set()
+
+
+# actually check if we should close the event loop:
+async def check_close():
+    futures = [e.event.wait() for e in entries]
+    await asyncio.wait(futures)
+
+
+def get_the_loop():
     if os.name != 'win32':
         asyncio.get_child_watcher()
     loop = asyncio.get_event_loop()
-    loop.create_task(bot_async_start())
+    return loop
+
+
+# here is when we actually login
+def run_loop(loop=get_the_loop()):
+    loop.run_until_complete(login())
+
+    # now we connect to every client
+    for entry in entries:
+        loop.create_task(wrapped_connect(entry))
+
+    # now we're waiting for all the clients to close
+    loop.run_until_complete(check_close())
+
+    loop.close()
+
+
+def main():
     scraper = threading.Thread(target=check_discord)
-    dev_scraper = threading.Thread(target=bot_loop_start, args=(loop, ))
     poster = threading.Thread(target=post_driver)
     processor = threading.Thread(target=check_for_unprocessed_messages)
+    start_bots = threading.Thread(target=run_loop, daemon=True)
 
     scraper.start()
-    dev_scraper.start()
     processor.start()
     poster.start()
+    start_bots.start()
 
     config.new_trades.join()
     config.new_unprocessed_trades.join()
+    config.new_discord_trades.join()
 
     scraper.join()
-    dev_scraper.join()
     processor.join()
     poster.join()
+    start_bots.join()
 
+
+# if os.name != 'win32':
+#     asyncio.get_child_watcher()
+# loop = asyncio.get_event_loop()
+# loop.create_task(dev_bot)
+# loop.create_task(fa_bot)
+# try:
+#     loop.run_forever()
+# finally:
+#     loop.stop()
 
 if __name__ == "__main__":
     main()
