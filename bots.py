@@ -88,9 +88,7 @@ async def listener():
             embed.add_field(name="Strike:",
                             value=f"{strike_price}",
                             inline=False)
-            embed.add_field(name="Leverage:",
-                            value=f"{buy_price}",
-                            inline=False)
+            embed.add_field(name="Price:", value=f"${buy_price}", inline=False)
             embed.add_field(name="Expiration:",
                             value=f"{expiration}",
                             inline=False)

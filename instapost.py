@@ -111,6 +111,17 @@ def consumer(driver):
                 share_button = WebDriverWait(driver, 20).until(
                     EC.presence_of_element_located(
                         (By.XPATH, "//button[text()='Share']")))
+                try:
+                    form_field_description = WebDriverWait(driver, 8).until(
+                        EC.presence_of_all_elements_located((
+                            By.XPATH,
+                            "//*[@id='react-root']/section/div[2]/section[1]/div[1]/textarea"
+                        )))
+                    form_field_description[0].send_keys(
+                        "\n.\n.\n.\n#flowalerts #optionstrading #daytrader #trader #stockmarket #investing #wallstreet #entrepreneur #investment #tradingswing #tradingoptions #tradingsignals #marketanalysis #optionswings #easytrading #optionstrading #swingtrading #callsandputs #swingtrader #swingtrade #stockoptions #makingmoney #makemoney #success #successfultrading"
+                    )
+                except TimeoutException:
+                    pass
                 share_button.click()
                 print("\ninstagram posting completed")
                 db_insta_posting_successful(trade_id)
