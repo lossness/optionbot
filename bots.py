@@ -83,6 +83,9 @@ async def listener():
                             value=f"{ticker.upper()}",
                             inline=False)
             embed.add_field(name="Type:",
+                            value=f"{call_or_put.upper()}",
+                            inline=False)
+            embed.add_field(name="Position:",
                             value=f"{in_or_out.upper()}",
                             inline=False)
             embed.add_field(name="Strike:",

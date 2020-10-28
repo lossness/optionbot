@@ -1,6 +1,9 @@
 import re
 import sqlite3
 import yfinance as yf
+import requests
+import os
+import json
 
 from datetime import datetime
 
@@ -28,15 +31,15 @@ class ErrorChecker:
     strike_price(processed_list)
     call_or_put(processed_list)
     '''
-    def __intit__(self, processed_list, new_trade_tuple):
-        '''
-        Parameters
-        ----------
-        processed_list : list
-        The end result of the inital trade message
-        after having all successful algorithms
-        remove required data
-        '''
+    '''
+    Parameters
+    ----------
+    processed_list : list
+    The end result of the inital trade message
+    after having all successful algorithms
+    remove required data
+    '''
+    def __init__(self):
         self.processed_list = []
         self.new_trade_tuple = ()
 
@@ -415,7 +418,33 @@ class ErrorChecker:
         finally:
             return new_expiration
 
+    #def get_options_data(self, ticker, contract_symbol):
+    #    url = f"https://stock-and-options-trading-data-provider.p.rapidapi.com/options/{ticker.lower()}?length=100"
+    #    headers = {
+    #        'x-rapidapi-host': f"{RAPID_API_HOST}",
+    #        'x-rapidapi-key': f"{RAPID_API_KEY}",
+    #        'x-rapidapi-proxy-secret': f"{RAPID_API_PROXY_SECRET}"
+    #    }
+    #    for attempt in range(5):
+    #        try:
+    #            response = requests.request("GET", url, headers=headers)
+    #            if response.status_code != 200:
+    #                raise RuntimeError
+    #        except RuntimeError as error:
+    #            logger.error(
+    #                f"RAPID API GET REQUEST ERROR: STATUS CODE: {response.status_code}"
+    #            )
+    #            pass
+    #    data = json.loads(response.content)
+    #    df = pd.json_normalize(data, 'options')
+    #    return response.text
+
     def live_buy_price(self, ticker, strike, expiration, call_or_put):
+        '''
+        Retreives the live market price for the given trade.
+        Parameters:
+        ticker, strike, expiration, call_or_put
+        '''
         try:
             if 'error' in (ticker, strike, expiration, call_or_put):
                 raise LiveBuyPriceError
