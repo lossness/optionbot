@@ -22,7 +22,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException
 from instapost import consumer
-from grabber import DiscordGrabber
+from grabber import TradeGrabber
 #from dev_listener import dev_bot
 #from flowalerts_discord import fa_bot
 from time_utils import get_time_and_day
@@ -33,7 +33,7 @@ from bots import TOKEN, FLOW_SIGNAL_TOKEN, fa_bot, dev_bot
 load_dotenv()
 EVENT = config.EVENT
 DEBUG = config.DEBUG
-GRABBER = DiscordGrabber()
+GRABBER = TradeGrabber()
 
 if os.name == 'nt':
     # DISCORD_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
@@ -93,7 +93,7 @@ def check_discord():
     while True:
         if is_market_open():
             try:
-                GRABBER.producer()
+                GRABBER.bbs_discord_producer()
 
             except (TimeoutException, NoSuchElementException) as error:
                 logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
@@ -105,8 +105,17 @@ def check_discord():
             listen_spinner.next()
             EVENT.wait(3)
 
-    logger.fatal("INFINITE CHECK_DISCORD LISTENER GOT OUT THE LOOP FUCK")
-    print("It should never reach here! check_discord")
+
+def check_etwitter():
+    while True:
+        if is_market_open():
+            try:
+                GRABBER.etwitter_producer()
+            except (TimeoutException, NoSuchElementException) as error:
+                logger.fatal(f'{error}', exc_info=True)
+                continue
+        else:
+            EVENT.wait(3)
 
 
 def check_for_unprocessed_messages():
@@ -261,12 +270,14 @@ def run_loop(loop=get_the_loop()):
 
 
 def main():
-    scraper = threading.Thread(target=check_discord)
+    bbs_scraper = threading.Thread(target=check_discord)
+    etwit_scraper = threading.Thread(target=check_etwitter)
     poster = threading.Thread(target=post_driver)
     processor = threading.Thread(target=check_for_unprocessed_messages)
     start_bots = threading.Thread(target=run_loop, daemon=True)
 
-    scraper.start()
+    bbs_scraper.start()
+    etwit_scraper.start()
     processor.start()
     poster.start()
     start_bots.start()
@@ -275,7 +286,8 @@ def main():
     config.new_unprocessed_trades.join()
     config.new_discord_trades.join()
 
-    scraper.join()
+    bbs_scraper.join()
+    etwit_scraper.join()
     processor.join()
     poster.join()
     start_bots.join()

@@ -35,10 +35,12 @@ PATH = pathlib.Path.cwd()
 DEBUG = config.DEBUG
 EVENT = config.EVENT
 TRADERS = [
-    "Eric68", "MariaC82", "ThuhKang", "Jen♡♡crypto", "joel", "Treefidey"
+    "Eric68", "MariaC82", "ThuhKang", "Jen♡♡crypto", "joel", "Treefidey",
+    "Etwit"
 ]
 LAST_MESSAGE = "None"
 LAST_FIXED_MESSAGE = "None"
+LAST_ETWIT_MESSAGE = "None"
 if os.name == 'nt':
     # DISCORD_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
     #                                   'windows', 'discord',
@@ -52,7 +54,7 @@ if os.name == 'posix':
     INSTA_DRIVER_PATH = r'/usr/bin/chromedriver'
 
 
-def initiate_discord_driver():
+def initiate_bbs_driver():
     chrome_options = Options()
     # chrome_options.add_argument("--window-size=1920,1080")
     # chrome_options.add_argument("--disable-extensions")
@@ -68,7 +70,8 @@ def initiate_discord_driver():
                                       options=chrome_options)
     try:
         element = discord_driver.find_elements_by_xpath(
-            "//*[@role='group']")[-1]
+            "//*[@aria-label='bot-dev-talk (channel)']//div[@aria-label='Messages in bot-dev-talk']/child::div/child::div[@role='document']"
+        )[-1]
         element.location_once_scrolled_into_view
 
     except (NoSuchElementException, TimeoutError) as error:
@@ -77,24 +80,28 @@ def initiate_discord_driver():
         return discord_driver
 
 
-class DiscordGrabber:
+def initiate_etwitter_driver():
+    chrome_options = Options()
+    chrome_options.debugger_address = '127.0.0.1:9224'
+    etwitter_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
+                                       options=chrome_options)
+    try:
+        etwitter_driver.find_elements_by_xpath(
+            "//*[@class='js-chirp-container chirp-container']")
+    except (NoSuchElementException, TimeoutError) as error:
+        logger.fatal(f'{error}\n COULD NOT FIND LAST ETWEET')
+    finally:
+        return etwitter_driver
+
+
+class TradeGrabber:
     def __init__(self):
-        self.driver = initiate_discord_driver()
+        self.bbs_driver = initiate_bbs_driver()
+        self.etwitter_driver = initiate_etwitter_driver()
         self.LAST_MESSAGE = LAST_MESSAGE
         self.LAST_FIXED_MESSAGE = LAST_FIXED_MESSAGE
+        self.LAST_ETWIT_MESSAGE = LAST_ETWIT_MESSAGE
         self.check = ErrorChecker()
-
-    def find_new_messages(self, driver) -> list:
-        '''
-        Scrapes new messages from discord and returns them in a list
-        '''
-        message_list = []
-        messages = driver.find_elements_by_xpath("//*[@role='group']")
-        for message in messages:
-            for trader in TRADERS:
-                if trader in message.text:
-                    message_list += [message.text]
-        return message_list
 
     def match_trader(self, split_message_list: list):
         for split in split_message_list:
@@ -126,13 +133,6 @@ class DiscordGrabber:
                     expiration_date = ''.join(expiration_date[0])
                     expiration_date = expiration_date.replace('.', '/')
                     split_message_list.remove(expiration_date)
-                # elif len(possible_expiration_date) == 2:
-                #     candidates = []
-                #     for item in possible_expiration_date:
-                #         candidate = item
-                #         candidate = ''.join(candidate)
-                #         candidate = candidate.replace('.', '/')
-                #         candidates.append(candidate)
                 else:
                     raise KeyError("Could not determine expiration of trade!")
 
@@ -247,12 +247,19 @@ class DiscordGrabber:
             in_or_out = 'error'
             matches = 0
             for split in split_message_list:
-                if str(split.lower()).replace(' ', '') in ('in', 'buy'):
+                if str(split.lower()).replace(' ', '') in (
+                        'in', 'buy') or '#ALERT' in split_message_list and str(
+                            split.lower()).replace(
+                                ' ', '') in ('in', 'buy', 'bought'):
                     split_message_list.remove(split)
                     in_or_out = 'in'
                     matches += 1
 
-                if str(split.lower()).replace(' ', '') in ('out', 'sell'):
+                if str(split.lower()).replace(' ', '') in (
+                        'out',
+                        'sell') or '#ALERT' in split_message_list and str(
+                            split.lower()).replace(
+                                ' ', '') in ('out', 'sell', 'sold'):
                     split_message_list.remove(split)
                     in_or_out = 'out'
                     matches += 1
@@ -290,7 +297,9 @@ class DiscordGrabber:
                         split_message_list.remove(split)
                         break
 
-                    if potential_ticker in lines and potential_ticker != 'OUT':
+                    if potential_ticker in lines and potential_ticker not in [
+                            'OUT', 'ALL', 'FAST'
+                    ]:
                         result = potential_ticker
                         ticker_matches += 1
                         split_message_list.remove(split)
@@ -517,11 +526,12 @@ class DiscordGrabber:
         except:
             pass
 
-    def producer(self):
+    def bbs_discord_producer(self):
         try:
             global LAST_MESSAGE
-            new_message = self.driver.find_elements_by_xpath(
-                "//*[@role='group']")[-1].text
+            new_message = self.bbs_driver.find_elements_by_xpath(
+                "//*[@aria-label='bot-dev-talk (channel)']//div[@aria-label='Messages in bot-dev-talk']/child::div/child::div[@role='document']"
+            )[-1].text
             # if len(new_message) < 3 or new_message.isdigit():
             #     new_message = driver.find_elements_by_xpath(
             #         "//*[@role='group']")[-2].text
@@ -544,336 +554,218 @@ class DiscordGrabber:
             )
             pass
 
+    def etwitter_producer(self):
+        try:
+            global LAST_ETWIT_MESSAGE
+            new_etwit_message = self.etwitter_driver.find_elements_by_xpath(
+                "//*[@class='js-chirp-container chirp-container']//p[@class='js-tweet-text tweet-text with-linebreaks ']"
+            )[0].text
+            if new_etwit_message != LAST_ETWIT_MESSAGE:
+                new_etwit_message = f"Etwit\n{new_etwit_message}"
+                config.new_unprocessed_trades.put(new_etwit_message)
+                config.has_unprocessed_trade.release()
+                LAST_ETWIT_MESSAGE = new_etwit_message
+            else:
+                EVENT.wait(.2)
+                return
+        except TimeoutError as error:
+            logger.fatal(f"TIMEOUT WHILE FINDING ETWIT MESSAGE XPATH",
+                         exc_info=True)
+            pass
+        except (NoSuchElementException,
+                StaleElementReferenceException) as error:
+            logger.fatal(f"{error}\n Last etwit missing", exc_info=True)
+            pass
+
+    def etwit_standardizer(self, new_message):
+        try:
+            new_message = new_message[1].split(' ')
+        except IndexError:
+            new_message = new_message[0].split(' ')
+            pass
+        finally:
+            return new_message
+
     def processor(self):
         while config.has_unprocessed_trade.acquire():
             new_message = config.new_unprocessed_trades.get()
-            try:
-                split_result = new_message.splitlines()
-                # removes any empty strings from list
-                split_result = list(filter(None, split_result))
-                split_result = list(filter(self.filter_message, split_result))
-                trade_author = list(filter(self.filter_trader, split_result))
-                trade_author_tup = trade_author[0]
-                if ' ' in trade_author_tup:
-                    trade_author_tup = trade_author_tup.replace(' ', '')
-                if "Jen" in trade_author_tup:
-                    trade_author_tup = "Jen"
-                # find the longest string left which is the message string
-                longest_string = max(split_result, key=len)
-                double_split_result = longest_string.split(' - ')
-                double_split_result = list(filter(None, double_split_result))
-                # gets a call or put status, and pops that matched entry out of the list
-                three_feet_results = self.three_feet(double_split_result,
-                                                     self.get_stock_ticker)
+            if new_message not in (LAST_ETWIT_MESSAGE, LAST_MESSAGE):
+                try:
+                    split_result = new_message.splitlines()
+                    # removes any empty strings from list
+                    split_result = list(filter(None, split_result))
+                    split_result = list(
+                        filter(self.filter_message, split_result))
+                    trade_author = list(
+                        filter(self.filter_trader, split_result))
+                    #testing reliability of this
+                    if trade_author == [] and '#ALERT' in split_result[0]:
+                        trade_author = ['Etwit']
+                    trade_author_tup = trade_author[0]
+                    if trade_author_tup == "Etwit":
+                        split_result = self.etwit_standardizer(split_result)
+                    if ' ' in trade_author_tup:
+                        trade_author_tup = trade_author_tup.replace(' ', '')
+                    if "Jen" in trade_author_tup:
+                        trade_author_tup = "Jen"
+                    # find the longest string left which is the message string
+                    if trade_author_tup != "Etwit":
+                        longest_string = max(split_result, key=len)
+                        double_split_result = longest_string.split(' - ')
+                        double_split_result = list(
+                            filter(None, double_split_result))
+                        # gets a call or put status, and pops that matched entry out of the list
+                        three_feet_results = self.three_feet(
+                            double_split_result, self.get_stock_ticker)
+                    if trade_author_tup == "Etwit":
+                        three_feet_results = self.three_feet(
+                            split_result, self.get_stock_ticker)
+                    call_or_put_tup, strike_price_tup, stock_ticker_tup, double_split_result = three_feet_results
 
-                call_or_put_tup, strike_price_tup, stock_ticker_tup, double_split_result = three_feet_results
+                    if 'jen' in trade_author_tup.lower():
+                        trade_expiration_tup, double_split_result = self.get_trade_expiration_from_shit_jen(
+                            double_split_result)
 
-                if 'jen' in trade_author_tup.lower():
-                    trade_expiration_tup, double_split_result = self.get_trade_expiration_from_shit_jen(
+                    if not 'jen' in trade_author_tup.lower():
+                        trade_expiration_tup, double_split_result = self.get_trade_expiration(
+                            double_split_result)
+                    if trade_author_tup == 'Etwit' and trade_expiration_tup == 'error':
+                        trade_expiration_tup = self.check.fetch_closest_expiration(
+                            stock_ticker_tup)
+
+                    buy_price_tup, double_split_result = self.get_buy_price(
                         double_split_result)
 
-                if not 'jen' in trade_author_tup.lower():
-                    trade_expiration_tup, double_split_result = self.get_trade_expiration(
+                    in_or_out_tup, double_split_result = self.get_in_or_out(
                         double_split_result)
 
-                buy_price_tup, double_split_result = self.get_buy_price(
-                    double_split_result)
+                    date_tup, time_tup = get_date_and_time()
+                    datetime_tup = standard_datetime()
+                    stock_ticker_tup = stock_ticker_tup.lower()
+                    color_tup = 'error_check'
 
-                in_or_out_tup, double_split_result = self.get_in_or_out(
-                    double_split_result)
+                    #check = ErrorChecker()
 
-                date_tup, time_tup = get_date_and_time()
-                datetime_tup = standard_datetime()
-                stock_ticker_tup = stock_ticker_tup.lower()
-                color_tup = 'error_check'
-
-                #check = ErrorChecker()
-
-                error_tuple = (in_or_out_tup, stock_ticker_tup, datetime_tup,
-                               strike_price_tup, call_or_put_tup,
-                               buy_price_tup, trade_author_tup,
-                               trade_expiration_tup, color_tup, date_tup,
-                               time_tup)
-
-                if buy_price_tup == strike_price_tup:
-                    strike_price_tup, call_or_put_tup = self.check.strike_price_fixer(
-                        double_split_result, error_tuple)
-
-                    buy_price_tup, double_split_result = self.check.buy_price_fixer(
-                        double_split_result, new_message)
-
-                if 'error' in error_tuple:
-                    if buy_price_tup == 'error':
-                        buy_price_tup, double_split_result = self.check.buy_price_fixer(
-                            double_split_result, new_message)
-
-                    if strike_price_tup == 'error':
-                        strike_price_tup, call_or_put_tup = self.check.strike_price_fixer(
-                            double_split_result, error_tuple)
-
-                    if trade_expiration_tup == 'error':
-                        trade_expiration_tup = self.check.expiration_fixer(
-                            double_split_result, error_tuple)
-
-                    if call_or_put_tup == 'error':
-                        call_or_put_tup = self.check.call_or_put_fixer(
-                            double_split_result, error_tuple)
-
-                    if in_or_out_tup == 'error':
-                        print(f'ERROR IN_OR_OUT {in_or_out_tup}')
-
-                if 'error' not in (strike_price_tup, stock_ticker_tup,
-                                   trade_expiration_tup, call_or_put_tup
-                                   ) and 'error' in buy_price_tup:
-                    buy_price_tup = self.check.live_buy_price(
-                        stock_ticker_tup, strike_price_tup,
-                        trade_expiration_tup, call_or_put_tup)
-                if not 'error' in (strike_price_tup, stock_ticker_tup,
-                                   trade_expiration_tup, call_or_put_tup):
-                    live_buy_price = self.check.live_buy_price(
-                        stock_ticker_tup, strike_price_tup,
-                        trade_expiration_tup, call_or_put_tup)
-                    logger.info(f"{live_buy_price} LIVE PRICE")
-                    logger.info(f"{buy_price_tup} TRADE PRICE")
-                # checks if the expiration is valid given the ticker, strike, expiration and call_or_put
-                # values are not 'error'.
-                if not 'error' in (stock_ticker_tup, strike_price_tup,
-                                   trade_expiration_tup, call_or_put_tup):
-                    trade_expiration_tup = self.check.live_expiration(
-                        stock_ticker_tup, strike_price_tup,
-                        trade_expiration_tup, call_or_put_tup)
-                if buy_price_tup.isalpha() is False and live_buy_price.isalpha(
-                ) is False:
-                    price_difference = percent_difference(
-                        float(live_buy_price), float(buy_price_tup))
-
-                    if price_difference > 200 and in_or_out_tup == 'out':
-                        buy_price_tup = live_buy_price
-                        logger.error(
-                            r"Last option price differs more than 25% from traders price! Using live.."
-                        )
-                    elif price_difference > 200 and in_or_out_tup == 'in':
-                        buy_price_tup = 'error'
-                        logger.error(
-                            r"Last option price differs more than 25% from traders price! Ignoring trade.."
-                        )
-
-                #trade_expiration_tup = self.check.
-
-                trade_tuple = (in_or_out_tup, stock_ticker_tup, datetime_tup,
-                               strike_price_tup, call_or_put_tup,
-                               buy_price_tup, trade_author_tup,
-                               trade_expiration_tup, color_tup, date_tup,
-                               time_tup)
-
-                if 'error' in trade_tuple:
                     error_tuple = (in_or_out_tup, stock_ticker_tup,
                                    datetime_tup, strike_price_tup,
                                    call_or_put_tup, buy_price_tup,
                                    trade_author_tup, trade_expiration_tup,
-                                   color_tup, 'false', date_tup, time_tup)
-                    logger.error(
-                        f'This trade contains error(s)! : {error_tuple}')
-                    update_error_table(error_tuple)
-
-                elif 'error' not in trade_tuple:
-                    ignore_trade, trade_color_choice = verify_trade(
-                        list(trade_tuple))
-                    if ignore_trade:
-                        return
-
-                    elif ignore_trade is False:
-                        if in_or_out_tup == 'in':
-                            buy_price_tup = self.mask_buy_price(buy_price_tup)
-                        if in_or_out_tup == 'out':
-                            buy_price_tup = self.mask_sell_price(buy_price_tup)
-                        valid_trade = (in_or_out_tup, stock_ticker_tup,
-                                       datetime_tup, strike_price_tup,
-                                       call_or_put_tup, buy_price_tup,
-                                       trade_author_tup, trade_expiration_tup,
-                                       trade_color_choice, date_tup, time_tup)
-                        logger.info(
-                            f"Producer received a fresh trade : {valid_trade}")
-                        trade_id = update_table(valid_trade)
-                        message = (trade_id, valid_trade)
-                        config.new_trades.put(message)
-                        config.has_trade.release()
-                        config.new_discord_trades.put(message)
-                        config.has_new_discord_trade.release()
-
-            except (KeyError, ValueError) as error:
-                print(f"\n{error}")
-                pass
-
-            except IndexError:
-                pass
-
-    ### ERROR CHECKING FUNCTIONS BELOW
-    '''
-    def error_producer_classic(driver):
-        # loop over single discord posts in all matched posts in main channel
-        try:
-            counter = 0
-            error_counter = 0
-            message_list = find_new_messages(driver)
-            try:
-                for new_message in tqdm(message_list):
-                    split_result = new_message.splitlines()
-                    print(split_result)
-                    # removes any empty strings from list
-                    split_result = list(filter(None, split_result))
-                    split_result = list(filter(filter_message, split_result))
-                    trade_author = list(filter(filter_trader, split_result))
-                    trade_author_tup = trade_author[0]
-                    # find the longest string left which is the message string
-                    longest_string = max(split_result, key=len)
-                    double_split_result = longest_string.split('-')
-                    double_split_result = list(filter(None, double_split_result))
-                    # gets a call or put status, and pops that matched entry out of the list
-                    three_feet_results = three_feet(double_split_result,
-                                                    get_stock_ticker)
-
-                    call_or_put_tup, strike_price_tup, stock_ticker_tup, double_split_result = three_feet_results
-
-                    trade_expiration_tup, double_split_result = get_trade_expiration(
-                        double_split_result)
-
-                    buy_price_tup, double_split_result = get_buy_price(
-                        double_split_result)
-
-                    in_or_out_tup, double_split_result = get_in_or_out(
-                        double_split_result)
-
-                    datetime_tup = str(datetime.now())
-                    stock_ticker_tup = stock_ticker_tup.lower()
-                    color_tup = 'error_check'
-
-                    check = ErrorChecker()
-
-                    error_tuple = (
-                        in_or_out_tup,
-                        stock_ticker_tup,
-                        datetime_tup,
-                        strike_price_tup,
-                        call_or_put_tup,
-                        buy_price_tup,
-                        trade_author_tup,
-                        trade_expiration_tup,
-                        color_tup,
-                    )
+                                   color_tup, date_tup, time_tup)
 
                     if buy_price_tup == strike_price_tup:
-                        strike_price_tup, call_or_put_tup = check.strike_price_fixer(
+                        strike_price_tup, call_or_put_tup = self.check.strike_price_fixer(
                             double_split_result, error_tuple)
 
-                        buy_price_tup, double_split_result = check.buy_price_fixer(
+                        buy_price_tup, double_split_result = self.check.buy_price_fixer(
                             double_split_result, new_message)
 
                     if 'error' in error_tuple:
                         if buy_price_tup == 'error':
-                            buy_price_tup, double_split_result = check.buy_price_fixer(
+                            buy_price_tup, double_split_result = self.check.buy_price_fixer(
                                 double_split_result, new_message)
 
                         if strike_price_tup == 'error':
-                            strike_price_tup, call_or_put_tup = check.strike_price_fixer(
+                            strike_price_tup, call_or_put_tup = self.check.strike_price_fixer(
                                 double_split_result, error_tuple)
 
                         if trade_expiration_tup == 'error':
-                            trade_expiration_tup = check.expiration_fixer(
+                            trade_expiration_tup = self.check.expiration_fixer(
                                 double_split_result, error_tuple)
 
                         if call_or_put_tup == 'error':
-                            call_or_put_tup = check.call_or_put_fixer(
+                            call_or_put_tup = self.check.call_or_put_fixer(
                                 double_split_result, error_tuple)
 
                         if in_or_out_tup == 'error':
                             print(f'ERROR IN_OR_OUT {in_or_out_tup}')
 
                     if 'error' not in (strike_price_tup, stock_ticker_tup,
-                                    trade_expiration_tup, call_or_put_tup
-                                    ) and 'error' in buy_price_tup:
-                        buy_price_tup = check.live_buy_price(
+                                       trade_expiration_tup, call_or_put_tup
+                                       ) and 'error' in buy_price_tup:
+                        buy_price_tup = self.check.live_buy_price(
                             stock_ticker_tup, strike_price_tup,
                             trade_expiration_tup, call_or_put_tup)
+                    if not 'error' in (strike_price_tup, stock_ticker_tup,
+                                       trade_expiration_tup, call_or_put_tup):
+                        live_buy_price = self.check.live_buy_price(
+                            stock_ticker_tup, strike_price_tup,
+                            trade_expiration_tup, call_or_put_tup)
+                        logger.info(f"{live_buy_price} LIVE PRICE")
+                        logger.info(f"{buy_price_tup} TRADE PRICE")
+                    # checks if the expiration is valid given the ticker, strike, expiration and call_or_put
+                    # values are not 'error'.
+                    if not 'error' in (stock_ticker_tup, strike_price_tup,
+                                       trade_expiration_tup, call_or_put_tup):
+                        trade_expiration_tup = self.check.live_expiration(
+                            stock_ticker_tup, strike_price_tup,
+                            trade_expiration_tup, call_or_put_tup)
+                    if buy_price_tup.isalpha(
+                    ) is False and live_buy_price.isalpha() is False:
+                        price_difference = percent_difference(
+                            float(live_buy_price), float(buy_price_tup))
 
-                    trade_tuple = (
-                        in_or_out_tup,
-                        stock_ticker_tup,
-                        datetime_tup,
-                        strike_price_tup,
-                        call_or_put_tup,
-                        buy_price_tup,
-                        trade_author_tup,
-                        trade_expiration_tup,
-                        color_tup,
-                    )
+                        if price_difference > 200 and in_or_out_tup == 'out':
+                            buy_price_tup = live_buy_price
+                            logger.error(
+                                r"Last option price differs more than 25% from traders price! Using live.."
+                            )
+                        elif price_difference > 200 and in_or_out_tup == 'in':
+                            buy_price_tup = 'error'
+                            logger.error(
+                                r"Last option price differs more than 25% from traders price! Ignoring trade.."
+                            )
+
+                    #trade_expiration_tup = self.check.
+
+                    trade_tuple = (in_or_out_tup, stock_ticker_tup,
+                                   datetime_tup, strike_price_tup,
+                                   call_or_put_tup, buy_price_tup,
+                                   trade_author_tup, trade_expiration_tup,
+                                   color_tup, date_tup, time_tup)
 
                     if 'error' in trade_tuple:
-                        full_message = new_message.replace('\n', '')
-                        logger.info(
-                            f'This trade contains error(s)! : {full_message}')
-                        update_error_table(trade_tuple)
-                        error_counter += 1
+                        error_tuple = (in_or_out_tup, stock_ticker_tup,
+                                       datetime_tup, strike_price_tup,
+                                       call_or_put_tup, buy_price_tup,
+                                       trade_author_tup, trade_expiration_tup,
+                                       color_tup, 'false', date_tup, time_tup)
+                        logger.error(
+                            f'This trade contains error(s)! : {error_tuple}')
+                        update_error_table(error_tuple)
 
                     elif 'error' not in trade_tuple:
                         ignore_trade, trade_color_choice = verify_trade(
                             list(trade_tuple))
-                        if ignore_trade is False:
-                            update_table(trade_tuple)
-                            counter += 1
+                        if ignore_trade:
+                            return
 
-            except (KeyError, IndexError, ValueError) as error:
-                print(f"{error}")
-                pass
+                        elif ignore_trade is False:
+                            if in_or_out_tup == 'in':
+                                buy_price_tup = self.mask_buy_price(
+                                    buy_price_tup)
+                            if in_or_out_tup == 'out':
+                                buy_price_tup = self.mask_sell_price(
+                                    buy_price_tup)
+                            valid_trade = (in_or_out_tup, stock_ticker_tup,
+                                           datetime_tup, strike_price_tup,
+                                           call_or_put_tup, buy_price_tup,
+                                           trade_author_tup,
+                                           trade_expiration_tup,
+                                           trade_color_choice, date_tup,
+                                           time_tup)
+                            logger.info(
+                                f"Producer received a fresh trade : {valid_trade}"
+                            )
+                            trade_id = update_table(valid_trade)
+                            message = (trade_id, valid_trade)
+                            config.new_trades.put(message)
+                            config.has_trade.release()
+                            config.new_discord_trades.put(message)
+                            config.has_new_discord_trade.release()
 
-        except (TimeoutException, NoSuchElementException) as error:
-            logger.error(
-                f"{error}: PRODUCER COULD NOT FIND NEWEST DISCORD MESSAGE!!")
-            pass
+                except (KeyError, ValueError) as error:
+                    print(f"\n{error}")
+                    pass
 
-        finally:
-            print(counter)
-    '''
-
-    #     try:
-    #         fixed_trade = "error"
-    #         global LAST_FIXED_MESSAGE
-    #         self.driver.find_element_by_xpath(
-    #             "//*[@aria-label='vidyagaymers']").click()
-    #         corrections_channel = self.driver.find_element_by_xpath(
-    #             "//*[@aria-label='trade-corrections (text channel)']")
-    #         corrections_channel.click()
-    #         newest_message = self.driver.find_elements_by_xpath(
-    #             "//*[@role='group']")[-1]
-    #         newest_message.location_once_scrolled_into_view
-    #         if newest_message != LAST_FIXED_MESSAGE:
-    #             fixed_trade = self.processor(newest_message)
-    #             LAST_FIXED_MESSAGE = newest_message
-    #             if 'error' in fixed_trade:
-    #                 return
-    #             else:
-    #                 config.has_fixed_trade.release
-    #         else:
-    #             EVENT.wait(.1)
-    #             return
-    #     except TimeoutException as error:
-    #         logger.fatal(
-    #             f"{error}\n Message listener timed out while looking for latest message."
-    #         )
-    #         pass
-    #     except (NoSuchElementException,
-    #             StaleElementReferenceException) as error:
-    #         logger.fatal(
-    #             f"{error}\n Last message missing.  Probably received a reaction emoji"
-    #         )
-    #         pass
-    # finally:
-    #     self.driver.find_element_by_xpath(
-    #         "//*[@aria-label='BlackBox']").click()
-    #     live_channel = self.driver.find_element_by_xpath(
-    #         "//*[@aria-label='all-mod-plays-text (text channel)']")
-    #     live_channel.click()
-    #     newest_live_message = self.driver.find_elements_by_xpath(
-    #         "//*[@role='group']")[-1]
-    #     newest_live_message.location_once_scrolled_into_view
-    #     return fixed_trade
+                except IndexError:
+                    pass

@@ -512,3 +512,16 @@ class ErrorChecker:
 
         finally:
             return str(expiration)
+
+    def fetch_closest_expiration(self, ticker):
+        '''
+        Fetches the next expiration date for a tickers options contracts
+        '''
+        try:
+            ticker_data = yf.Ticker(f"{ticker.upper()}")
+            expiration = ticker_data.options[0].split('-')
+            expiration = rf"{expiration[1]}/{expiration[2]}"
+        except:
+            pass
+        finally:
+            return expiration
