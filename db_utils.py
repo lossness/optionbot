@@ -5,12 +5,14 @@ import random
 import math
 
 import pandas as pd
+import config
 from make_image import text_on_img
 from exceptions import DuplicateTrade, TradeAlreadyOut, IsAInTrade, DatabaseEmpty, MultipleMatchingIn, IgnoreTrade, DateConversionError
 from main_logger import logger
 from datetime import datetime
 
 DEFAULT_PATH = os.path.join(os.path.dirname(__file__), 'database.sqlite3')
+DEBUG = config.DEBUG
 
 
 def db_connect(db_path=DEFAULT_PATH):
@@ -241,11 +243,17 @@ def prune_completed_trades():
                 for trade in matched_trades:
                     completed_trades.append(tuple(trade))
         completed_trades = list(set(completed_trades))
-        for completed_trade in completed_trades:
-            update_completed_table(tuple(completed_trade[1:]))
-            logger.info(f"{completed_trade} added to completed_trades table")
-            delete_from_open_trades(tuple(completed_trade[1:]))
-            logger.info(f"{completed_trade} deleted from live table")
+        if DEBUG == False:
+            for completed_trade in completed_trades:
+                update_completed_table(tuple(completed_trade[1:]))
+                logger.info(
+                    f"{completed_trade} added to completed_trades table")
+                delete_from_open_trades(tuple(completed_trade[1:]))
+                logger.info(f"{completed_trade} deleted from live table")
+        else:
+            for completed_trade in completed_trades:
+                delete_from_open_trades(tuple(completed_trade[1:]))
+                print(f"{completed_trade} deleted from live table")
 
     except sqlite3.Error as error:
         logger.error(f"{error}", exc_info=True)

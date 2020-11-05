@@ -371,7 +371,7 @@ class ErrorChecker:
         finally:
             return str(buy_price), processed_list
 
-    def expiration_fixer(self, processed_list, new_trade):
+    def expiration_fixer(self, new_trade):
         '''
         Runs after the first round of processing
         detects an error determing the trade expiration.
@@ -408,7 +408,7 @@ class ErrorChecker:
 
         except MultipleMatchingIn as error:
             logger.error(
-                f'{error} | Processed message : {processed_list} New trade : {new_trade}'
+                "Multiple matching IN trades found! Second_level_checks.py - expiration_fixer"
             )
             new_expiration = 'error'
 
@@ -488,7 +488,7 @@ class ErrorChecker:
         finally:
             return str(last_sell_price)
 
-    def live_expiration(self, ticker, strike, expiration, call_or_put):
+    def live_expiration(self, ticker, expiration):
         '''
         Verifies the expiration date is valid by submitting it to
         the yfinance api as a parameter. Invalid dates throw a ValueError.

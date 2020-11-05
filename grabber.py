@@ -69,16 +69,18 @@ def initiate_bbs_driver():
     chrome_options.debugger_address = '127.0.0.1:9222'
     discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
                                       options=chrome_options)
+
     if DEBUG == 'dev':
-        #channel = 'bot-dev-talk (channel)'
-        #child_element = 'Messages in bot-dev-talk'
         try:
             last_element = discord_driver.find_elements_by_xpath(
                 "//*[@aria-label='bot-dev-talk (channel)']//div[@aria-label='Messages in bot-dev-talk']/child::div/child::div[@role='document']"
             )[-1]
             last_element.location_once_scrolled_into_view
         except (NoSuchElementException, TimeoutError, IndexError) as error:
-            logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
+            logger.fatal(
+                "LAST MESSAGE ELEMENT NOT FOUND IN DEV XPATH GRABBER.py, initiate_bbs_driver"
+            )
+            pass
         finally:
             return discord_driver
 
@@ -92,7 +94,10 @@ def initiate_bbs_driver():
             last_element.location_once_scrolled_into_view
 
         except (NoSuchElementException, TimeoutError, IndexError) as error:
-            logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
+            logger.fatal(
+                "LAST MESSAGE ELEMENT NOT FOUND IN GRABBER.py initiate_bbs_driver"
+            )
+            pass
         finally:
             return discord_driver
 
@@ -103,8 +108,10 @@ def initiate_etwitter_driver():
     etwitter_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
                                        options=chrome_options)
     try:
-        etwitter_driver.find_elements_by_xpath(
-            "//*[@class='js-chirp-container chirp-container']")
+        last_element_etwitter = WebDriverWait(etwitter_driver, 8).until(
+            EC.presence_of_all_elements_located(
+                (By.XPATH,
+                 "//*[@class='js-chirp-container chirp-container']")))
     except (NoSuchElementException, TimeoutError) as error:
         logger.fatal(f'{error}\n COULD NOT FIND LAST ETWEET')
     finally:
@@ -128,9 +135,14 @@ class TradeGrabber:
                     trade_author = "Jen"
                 return trade_author
 
-    def get_trade_expiration(self, split_message_list: list):
-        expiration_date = []
-        possible_expiration_date = []
+    def get_trade_expiration(self, split_message_list: list, ticker):
+        '''
+        Extracts trade expiration from message.
+        Parameters:
+        message, ticker
+        '''
+        expiration_date = 'error'
+        possible_expiration_date = 'error'
         try:
             expiration_date = re.findall(
                 r"\s'(0?[1-9]|1[0-2])(|/|\\|-)(0?[1-9]|[12][0-9]|3[01])'",
@@ -164,7 +176,8 @@ class TradeGrabber:
                     expiration_date = f"{expiration_date[0]}/{expiration_date[1]}"
                 else:
                     raise KeyError("Could not determine expiration of trade!")
-
+            expiration_date = self.check.live_expiration(
+                ticker, expiration_date)
         except KeyError as e:
             logger.error(
                 f'{e} : GRABBER - GET_TRADE_EXPIRATION FUNC : {split_message_list}',
@@ -331,7 +344,7 @@ class TradeGrabber:
                         break
 
                     if potential_ticker in lines and potential_ticker not in [
-                            'OUT', 'ALL', 'FAST'
+                            'OUT', 'ALL', 'FAST', 'ROLL'
                     ]:
                         result = potential_ticker
                         ticker_matches += 1
@@ -564,17 +577,23 @@ class TradeGrabber:
     def bbs_discord_producer(self):
         try:
             global LAST_MESSAGE
-            if DEBUG == 'dev' or 'dev_live':
-                new_message = self.bbs_driver.find_elements_by_xpath(
-                    "//*[@aria-label='bot-dev-talk (channel)']//div[@aria-label='Messages in bot-dev-talk']/child::div/child::div[@role='document']"
-                )[-1].text
-                # if len(new_message) < 3 or new_message.isdigit():
-                #     new_message = driver.find_elements_by_xpath(
-                #         "//*[@role='group']")[-2].text
+            new_message = ''
+            if DEBUG == 'dev' or DEBUG == 'dev_live':
+                try:
+                    new_message = self.bbs_driver.find_elements_by_xpath(
+                        "//*[@aria-label='bot-dev-talk (channel)']//div[@aria-label='Messages in bot-dev-talk']/child::div/child::div[@role='document']"
+                    )[-1].text
+                except IndexError:
+                    print("index error in debug dev discord producer")
+                    pass
             if DEBUG == 'bbs' or DEBUG is False:
-                new_message = self.bbs_driver.find_elements_by_xpath(
-                    "//div[contains(@data-list-item-id, 'chat-messages___chat-messages')]//div[starts-with(@class, 'container')]//div[starts-with(@class, 'embedWrapper')]//div[starts-with(@class, 'grid')]"
-                )[-1].text
+                try:
+                    new_message = self.bbs_driver.find_elements_by_xpath(
+                        "//div[contains(@data-list-item-id, 'chat-messages___chat-messages')]//div[starts-with(@class, 'container')]//div[starts-with(@class, 'embedWrapper')]//div[starts-with(@class, 'grid')]"
+                    )[-1].text
+                except IndexError:
+                    print("index error in debug bbs discord producer")
+                    pass
             if new_message != LAST_MESSAGE:
                 config.new_unprocessed_trades.put(new_message)
                 config.has_unprocessed_trade.release()
@@ -585,14 +604,13 @@ class TradeGrabber:
                 return
         except TimeoutException as error:
             logger.fatal(
-                f"{error}\n Message listener timed out while looking for latest message."
+                f"Message listener timed out while looking for latest message."
             )
             pass
         except (NoSuchElementException,
                 StaleElementReferenceException) as error:
             logger.fatal(
-                f"{error}\n Last message missing.  Probably received a reaction emoji"
-            )
+                f"Last message missing.  Probably received a reaction emoji")
             pass
         except IndexError:
             pass
@@ -622,9 +640,14 @@ class TradeGrabber:
 
     def etwit_standardizer(self, new_message):
         try:
-            new_message = new_message[1].split(' ')
+            new_message = str(new_message)
+            new_message = new_message.replace("'", "")
+            new_message = new_message.replace("[", "")
+            new_message = new_message.replace("]", "")
+            new_message = new_message.replace(",", "")
+            new_message = new_message.split(' ')
         except IndexError:
-            new_message = new_message[0].split(' ')
+            print("Etwit_standardizer index error")
             pass
         finally:
             return new_message
@@ -668,7 +691,7 @@ class TradeGrabber:
 
                 if not 'jen' in trade_author_tup.lower():
                     trade_expiration_tup, double_split_result = self.get_trade_expiration(
-                        double_split_result)
+                        double_split_result, stock_ticker_tup)
                 if trade_author_tup == 'Etwit' and trade_expiration_tup == 'error':
                     trade_expiration_tup = self.check.fetch_closest_expiration(
                         stock_ticker_tup)
@@ -710,7 +733,7 @@ class TradeGrabber:
 
                     if trade_expiration_tup == 'error':
                         trade_expiration_tup = self.check.expiration_fixer(
-                            double_split_result, error_tuple)
+                            error_tuple)
 
                     if call_or_put_tup == 'error':
                         call_or_put_tup = self.check.call_or_put_fixer(
@@ -733,13 +756,6 @@ class TradeGrabber:
                         trade_expiration_tup, call_or_put_tup)
                     logger.info(f"{live_buy_price} LIVE PRICE")
                     logger.info(f"{buy_price_tup} TRADE PRICE")
-                # checks if the expiration is valid given the ticker, strike, expiration and call_or_put
-                # values are not 'error'.
-                if not 'error' in (stock_ticker_tup, strike_price_tup,
-                                   trade_expiration_tup, call_or_put_tup):
-                    trade_expiration_tup = self.check.live_expiration(
-                        stock_ticker_tup, strike_price_tup,
-                        trade_expiration_tup, call_or_put_tup)
                 if buy_price_tup.isalpha() is False and live_buy_price.isalpha(
                 ) is False:
                     price_difference = percent_difference(
@@ -756,13 +772,20 @@ class TradeGrabber:
                             r"Last option price differs more than 25% from traders price! Ignoring trade.."
                         )
 
-                #trade_expiration_tup = self.check.
-
                 trade_tuple = (in_or_out_tup, stock_ticker_tup, datetime_tup,
                                strike_price_tup, call_or_put_tup,
                                buy_price_tup, trade_author_tup,
                                trade_expiration_tup, color_tup, date_tup,
                                time_tup)
+                if trade_author_tup == 'Etwit' and in_or_out_tup == 'out':
+                    etwit_expiration = self.check.expiration_fixer(trade_tuple)
+                    if etwit_expiration != 'error':
+                        trade_expiration_tup = etwit_expiration
+                        trade_tuple = (in_or_out_tup, stock_ticker_tup,
+                                       datetime_tup, strike_price_tup,
+                                       call_or_put_tup, buy_price_tup,
+                                       trade_author_tup, trade_expiration_tup,
+                                       color_tup, date_tup, time_tup)
 
                 if 'error' in trade_tuple:
                     error_tuple = (in_or_out_tup, stock_ticker_tup,
