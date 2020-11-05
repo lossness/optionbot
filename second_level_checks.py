@@ -386,7 +386,7 @@ class ErrorChecker:
             if database_trades == []:
                 raise DatabaseEmpty
 
-            in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color = new_trade
+            in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color, date, time = new_trade
             ticker = ticker.lower()
             matched_trades = re.findall(
                 rf'\(((\'in\'), (\'{ticker}\'), (\'{strike_price}\'), (\'{call_or_put}\'), (\'{user_name}\'), (\'\d+/\d+\'), (\'\w+\'))\)',

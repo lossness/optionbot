@@ -11,4 +11,7 @@ new_discord_trades = queue.Queue()
 has_new_discord_trade = threading.Semaphore(value=0)
 
 EVENT = threading.Event()
-DEBUG = True
+# DEBUG PARAMETERS
+# bbs - setup to capture embed messages in discord channel
+# dev - setup to capture regular messages in channel
+DEBUG = False

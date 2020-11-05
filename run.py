@@ -99,7 +99,11 @@ def check_discord():
                 logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
                 continue
 
+            except IndexError:
+                continue
+
             finally:
+                EVENT.wait(1)
                 listen_spinner.next()
         else:
             listen_spinner.next()
@@ -114,6 +118,8 @@ def check_etwitter():
             except (TimeoutException, NoSuchElementException) as error:
                 logger.fatal(f'{error}', exc_info=True)
                 continue
+            finally:
+                EVENT.wait(1)
         else:
             EVENT.wait(3)
 

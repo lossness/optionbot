@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/root/.local/share/virtualenvs/swing-TZp177Pi/bin/python3",
+    "python.pythonPath": "/home/swing/.local/share/virtualenvs/optionbot-PzIcFZgc/bin/python",
     "python.formatting.provider": "yapf",
     "python.linting.pylintEnabled": true,
     "python.linting.mypyEnabled": false,

@@ -300,7 +300,7 @@ def verify_trade(parsed_trade: tuple):
         if filtered_trades == [] and 'in' in parsed_trade[0]:
             colors = [
                 'FA1', 'FA2', 'FA3', 'FA4', 'FA5', 'FA6', 'FA7', 'FA8', 'FA9',
-                'FA10', 'FA11', 'FA12'
+                'FA10', 'FA11', 'FA12', 'FA13', 'FA14'
             ]
             trade_color = random.choice(colors)
             ignore_trade = False
@@ -308,7 +308,7 @@ def verify_trade(parsed_trade: tuple):
         if has_matching_in is False:
             colors = [
                 'FA1', 'FA2', 'FA3', 'FA4', 'FA5', 'FA6', 'FA7', 'FA8', 'FA9',
-                'FA10', 'FA11', 'FA12'
+                'FA10', 'FA11', 'FA12', 'FA13', 'FA14'
             ]
             trade_color = random.choice(colors)
 

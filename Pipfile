@@ -1,0 +1,26 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+pandas = "*"
+pyperclip = "*"
+python-dotenv = "*"
+"discord.py" = "*"
+pillow = "*"
+selenium = "*"
+pylint = "*"
+yapf = "*"
+progress = "*"
+yfinance = "*"
+yahoo-fin = "*"
+requests-html = "*"
+matplotlib = "*"
+html5lib = "*"
+mypy = "*"
+
+[requires]
+python_version = "3.8"
