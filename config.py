@@ -14,4 +14,4 @@ EVENT = threading.Event()
 # DEBUG PARAMETERS
 # bbs - setup to capture embed messages in discord channel
 # dev - setup to capture regular messages in channel
-DEBUG = False
+DEBUG = 'dev'

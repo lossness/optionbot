@@ -135,7 +135,8 @@ class TradeGrabber:
                     trade_author = "Jen"
                 return trade_author
 
-    def get_trade_expiration(self, split_message_list: list, ticker):
+    def get_trade_expiration(self, split_message_list: list, ticker,
+                             trade_author):
         '''
         Extracts trade expiration from message.
         Parameters:
@@ -174,14 +175,17 @@ class TradeGrabber:
                     split_message_list.remove(expiration_date)
                     expiration_date = expiration_date.split('/')
                     expiration_date = f"{expiration_date[0]}/{expiration_date[1]}"
+                if len(possible_expiration_date
+                       ) == 0 and trade_author == 'Etwit':
+                    expiration_date = self.check.fetch_closest_expiration(
+                        ticker)
                 else:
                     raise KeyError("Could not determine expiration of trade!")
             expiration_date = self.check.live_expiration(
                 ticker, expiration_date)
         except KeyError as e:
             logger.error(
-                f'{e} : GRABBER - GET_TRADE_EXPIRATION FUNC : {split_message_list}',
-                exc_info=True)
+                f'GRABBER - GET_TRADE_EXPIRATION FUNC : {split_message_list}')
             expiration_date = 'error'
 
         finally:
@@ -343,9 +347,8 @@ class TradeGrabber:
                         split_message_list.remove(split)
                         break
 
-                    if potential_ticker in lines and potential_ticker not in [
-                            'OUT', 'ALL', 'FAST', 'ROLL'
-                    ]:
+                    if potential_ticker in lines and potential_ticker.upper(
+                    ) not in ['OUT', 'ALL', 'FAST', 'ROLL', 'SEE']:
                         result = potential_ticker
                         ticker_matches += 1
                         split_message_list.remove(split)
@@ -381,6 +384,8 @@ class TradeGrabber:
         except KeyError as e:
             logger.warning(f'{e} : {split_message_list}')
             buy_price = 'error'
+        except ValueError:
+            pass
 
         finally:
             return buy_price, split_message_list
@@ -584,7 +589,6 @@ class TradeGrabber:
                         "//*[@aria-label='bot-dev-talk (channel)']//div[@aria-label='Messages in bot-dev-talk']/child::div/child::div[@role='document']"
                     )[-1].text
                 except IndexError:
-                    print("index error in debug dev discord producer")
                     pass
             if DEBUG == 'bbs' or DEBUG is False:
                 try:
@@ -592,7 +596,6 @@ class TradeGrabber:
                         "//div[contains(@data-list-item-id, 'chat-messages___chat-messages')]//div[starts-with(@class, 'container')]//div[starts-with(@class, 'embedWrapper')]//div[starts-with(@class, 'grid')]"
                     )[-1].text
                 except IndexError:
-                    print("index error in debug bbs discord producer")
                     pass
             if new_message != LAST_MESSAGE:
                 config.new_unprocessed_trades.put(new_message)
@@ -618,9 +621,11 @@ class TradeGrabber:
     def etwitter_producer(self):
         try:
             global LAST_ETWIT_MESSAGE
-            new_etwit_message = self.etwitter_driver.find_elements_by_xpath(
-                "//*[@class='js-chirp-container chirp-container']//p[@class='js-tweet-text tweet-text with-linebreaks ']"
-            )[0].text
+            new_etwit_message = WebDriverWait(self.etwitter_driver, 8).until(
+                EC.presence_of_all_elements_located((
+                    By.XPATH,
+                    "//*[@data-account-key='twitter:1322023677270102018']//div[starts-with(@class, 'tweet-body')]"
+                )))[0].text
             if new_etwit_message != LAST_ETWIT_MESSAGE.replace("Etwit\n", ""):
                 new_etwit_message = f"Etwit\n{new_etwit_message}"
                 config.new_unprocessed_trades.put(new_etwit_message)
@@ -639,13 +644,26 @@ class TradeGrabber:
             pass
 
     def etwit_standardizer(self, new_message):
+        def filter_noise(msg):
+            noise = ["1/2", "1/3", "1/4", "'", "[", "]", ","]
+            if (msg in noise):
+                return False
+            else:
+                return True
+
         try:
+            str_message = str(new_message)
+            if 'SOLD' in str_message:
+                new_message = new_message[:-1]
+            new_message[1] = new_message[1].replace("1/2", "")
+            new_message[1] = new_message[1].replace("1/3", "")
+            new_message[1] = new_message[1].replace("1/4", "")
             new_message = str(new_message)
             new_message = new_message.replace("'", "")
             new_message = new_message.replace("[", "")
             new_message = new_message.replace("]", "")
             new_message = new_message.replace(",", "")
-            new_message = new_message.split(' ')
+            new_message = new_message.split(" ")
         except IndexError:
             print("Etwit_standardizer index error")
             pass
@@ -691,10 +709,8 @@ class TradeGrabber:
 
                 if not 'jen' in trade_author_tup.lower():
                     trade_expiration_tup, double_split_result = self.get_trade_expiration(
-                        double_split_result, stock_ticker_tup)
-                if trade_author_tup == 'Etwit' and trade_expiration_tup == 'error':
-                    trade_expiration_tup = self.check.fetch_closest_expiration(
-                        stock_ticker_tup)
+                        double_split_result, stock_ticker_tup,
+                        trade_author_tup)
 
                 buy_price_tup, double_split_result = self.get_buy_price(
                     double_split_result)

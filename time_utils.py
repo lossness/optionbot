@@ -18,6 +18,17 @@ def get_date_and_time() -> tuple:
     return date_and_time
 
 
+def east_coast_datetime() -> str:
+    utc_now = pytz.utc.localize(datetime.datetime.utcnow())
+    ast_now = utc_now.astimezone(pytz.timezone("America/New_York"))
+    timeObj = ast_now.time()
+    time_str = timeObj.strftime("%H:%M:%S")
+    dateObj = ast_now.date()
+    date_str = dateObj.strftime("%d-%m-%Y")
+    date_and_time = f"{date_str}:{time_str}"
+    return date_and_time
+
+
 def get_time_and_day() -> tuple:
     '''
     Fetches a datetime object for the local time in New York and

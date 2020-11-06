@@ -58,7 +58,7 @@ def is_market_open():
                 16, 3, 00, 000000) and day_of_the_week in market_days:
             return True
         else:
-            return True
+            return False
     else:
         return True
 
