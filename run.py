@@ -23,10 +23,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException
 from instapost import consumer
 from grabber import TradeGrabber
-#from dev_listener import dev_bot
-#from flowalerts_discord import fa_bot
 from time_utils import get_time_and_day
-#from insta_browser import switch_to_mobile
 from main_logger import logger
 from dotenv import load_dotenv
 from bots import TOKEN, FLOW_SIGNAL_TOKEN, fa_bot, dev_bot
@@ -36,11 +33,6 @@ DEBUG = config.DEBUG
 GRABBER = TradeGrabber()
 
 if os.name == 'nt':
-    # DISCORD_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
-    #                                   'windows', 'discord',
-    #                                   'chromedriver.exe')
-    #INSTA_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
-    #                                 'windows', 'insta', 'chromedriver.exe')
     DISCORD_DRIVER_PATH = os.getenv('WINDOWS_DISCORD_DRIVER_PATH')
     INSTA_DRIVER_PATH = os.getenv('WINDOWS_INSTA_DRIVER_PATH')
 if os.name == 'posix':
@@ -160,67 +152,7 @@ def post_driver():
         except (TimeoutException, NoSuchElementException) as error:
             logger.warning(error)
             continue
-            #os.system('taskkill /f /im chromedriver.exe')
 
-
-# def bot_main(bot1=dev_bot, bot2=fa_bot):
-#     # First, we must attach an event signalling when the bot has been
-#     # closed to the client itself so we know when to fully close the event loop.
-
-#     Entry = namedtuple('Entry', 'client event')
-#     entries = [
-#         Entry(bot=bot1, event=asyncio.Event()),
-#         Entry(bot=bot2, event=asyncio.Event())
-#     ]
-
-#     # Then, we should login to all our clients and wrap the connect call
-#     # so it knows when to do the actual full closure
-
-#     loop = asyncio.get_event_loop()
-
-#     async def login():
-#         for e in entries:
-#             await e.bot.run()
-
-#     async def wrapped_connect(entry):
-#         try:
-#             await entry.client.connect()
-#         except Exception as e:
-#             await entry.client.close()
-#             print('We got an exception: ', e.__class__.__name__, e)
-#             entry.event.set()
-
-#     # actually check if we should close the event loop:
-#     async def check_close():
-#         futures = [e.event.wait() for e in entries]
-#         await asyncio.wait(futures)
-
-#     # here is when we actually login
-#     loop.run_until_complete(login())
-
-#     # now we connect to every client
-#     for entry in entries:
-#         loop.create_task(wrapped_connect(entry))
-
-#     # now we're waiting for all the clients to close
-#     loop.run_until_complete(check_close())
-
-#     # finally, we close the event loop
-#     loop.close()
-
-# def bot_start():
-#     if os.name != 'win32':
-#         asyncio.get_child_watcher()
-#     loop = asyncio.get_event_loop()
-#     loop.create_task(dev_bot)
-#     loop.create_task(fa_bot)
-#     return loop
-
-# def bot_loop_start(loop=bot_start()):
-#     try:
-#         loop.run_forever()
-#     finally:
-#         loop.stop()
 
 Entry = namedtuple('Entry', 'client event')
 entries = [
@@ -299,42 +231,5 @@ def main():
     start_bots.join()
 
 
-# if os.name != 'win32':
-#     asyncio.get_child_watcher()
-# loop = asyncio.get_event_loop()
-# loop.create_task(dev_bot)
-# loop.create_task(fa_bot)
-# try:
-#     loop.run_forever()
-# finally:
-#     loop.stop()
-
 if __name__ == "__main__":
     main()
-
-# format = "%(asctime)s: %(message)s"
-# logger.basicConfig(format=format, level=loggej.INFO, datefmt="%H:%M:%S")
-# # logger.getLogger().setLevel(loggej.DEBUG)
-# new_trades = queue.Queue(maxsize=4)
-# with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-#     executor.submit(check_discord, new_trades, event)
-#     executor.submit(post_driver, new_trades, event)
-
-#     time.sleep(0.1)
-#     logger.info("Main: about to set event")
-#     event.set()
-
-# ERROR CHECKING FUNCTIONS BELOW ########
-
-# def discord_error_checker():
-#     chrome_options = Options()
-#     # chrome_options.add_argument("--headless")
-#     # chrome_options.add_argument('--disable-gpu')
-#     # chrome_options.add_argument('--log-level=3')
-#     chrome_options.debugger_address = '127.0.0.1:9222'
-#     discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
-#                                       options=chrome_options)
-#     try:
-#         error_producer_classic(discord_driver)
-#     except (TimeoutException, NoSuchElementException) as error:
-#         print(f"{error}")

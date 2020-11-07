@@ -50,3 +50,14 @@ def standard_datetime() -> str:
     ast_now = utc_now.astimezone(pytz.timezone("America/New_York"))
     datetime_now = ast_now.now()
     return str(datetime_now)
+
+
+def month_converter(month) -> str:
+    ''' Converts month to month number.
+    JAN -> 01
+    '''
+    months = [
+        'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT',
+        'NOV', 'DEC'
+    ]
+    return str(months.index(month) + 1)

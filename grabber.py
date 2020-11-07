@@ -18,7 +18,7 @@ from second_level_checks import ErrorChecker
 from decimal import *
 from collections import namedtuple
 from exceptions import LiveBuyPriceError, LiveStrikePriceError, ReleaseTradeError, TimeoutException, TickerError
-from time_utils import get_date_and_time, standard_datetime
+from time_utils import get_date_and_time, standard_datetime, month_converter
 from math_utils import percent_difference
 
 from selenium import webdriver
@@ -242,48 +242,45 @@ class TradeGrabber:
                     strike_price = strike_price[0]
                     if strike_price[-1] == '0' and '.' in strike_price:
                         strike_price = strike_price[:-1]
-                    try:
-                        ticker_data = yf.Ticker(ticker)
-                        call_or_put = 'call'
-                        live_price = ticker_data.info['open']
-                        price_difference = percent_difference(
-                            float(live_price), float(strike_price))
-                        if price_difference > 35:
-                            raise LiveStrikePriceError
-                        split_message_list.remove(item)
-                        break
-
-                    except LiveStrikePriceError as error:
-                        logger.fatal(
-                            f'{error} Live price:{live_price} Strike price:{strike_price}\nMessage with LiveStrikePriceError:{split_message_list}'
-                        )
-                        strike_price = 'error'
+                    ticker_data = yf.Ticker(ticker)
+                    call_or_put = 'call'
+                    live_price = ticker_data.info['open']
+                    price_difference = percent_difference(
+                        float(live_price), float(strike_price))
+                    if price_difference > 35:
+                        raise LiveStrikePriceError
+                    split_message_list.remove(item)
+                    break
 
                 if 'p' in str(item).lower():
                     strike_price = re.findall(r'[-+]?\d*\.\d+|\d+', str(item))
                     strike_price = strike_price[0]
                     if strike_price[-1] == '0' and '.' in strike_price:
                         strike_price = strike_price[:-1]
-                    try:
-                        ticker_data = yf.Ticker(ticker)
-                        call_or_put = 'put'
-                        live_price = ticker_data.info['open']
-                        price_difference = percent_difference(
-                            float(live_price), float(strike_price))
-                        if price_difference > 35:
-                            raise LiveStrikePriceError
-                        split_message_list.remove(item)
-                        break
+                    ticker_data = yf.Ticker(ticker)
+                    call_or_put = 'put'
+                    live_price = ticker_data.info['open']
+                    price_difference = percent_difference(
+                        float(live_price), float(strike_price))
+                    if price_difference > 35:
+                        raise LiveStrikePriceError
+                    split_message_list.remove(item)
+                    break
 
-                    except LiveStrikePriceError as error:
-                        logger.fatal(
-                            f'{error} Live price:{live_price} Strike price:{strike_price}\nMessage with LiveStrikePriceError:{split_message_list}'
-                        )
-                        strike_price = 'error'
+        except ValueError:
+            logger.error(
+                f"Grabber.py - three_feat error getting live_price with ticker.  Ticker most likely is 'error'. Value of the ticker variable : '{ticker}'\n                              Current trade: {split_message_list}"
+            )
+            strike_price = 'error'
 
         except KeyError as e:
             logger.warning(f'{e} : {split_message_list}')
-            call_or_put = 'error'
+            strike_price = 'error'
+
+        except LiveStrikePriceError as error:
+            logger.fatal(
+                f'{error} Live price:{live_price} Strike price:{strike_price}\nMessage with LiveStrikePriceError:{split_message_list}'
+            )
             strike_price = 'error'
 
         finally:
@@ -389,16 +386,6 @@ class TradeGrabber:
 
         finally:
             return buy_price, split_message_list
-
-    # def compare_live_buy_price(self, new_trade):
-    #     live_price = "error"
-    #     try:
-    #         in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color = new_trade
-    #         live_price = self.check.live_buy_price(ticker, strike_price,
-    #                                                expiration, call_or_put)
-    #         print(live_price)
-    #     except:
-    #         pass
 
     def filter_message(self, variable):
         noise_words = [
@@ -644,26 +631,32 @@ class TradeGrabber:
             pass
 
     def etwit_standardizer(self, new_message):
-        def filter_noise(msg):
-            noise = ["1/2", "1/3", "1/4", "'", "[", "]", ","]
-            if (msg in noise):
-                return False
-            else:
-                return True
-
         try:
             str_message = str(new_message)
             if 'SOLD' in str_message:
-                new_message = new_message[:-1]
+                test_message = new_message[:-1]
+                if len(test_message[-1]) > 5:
+                    new_message = test_message
+
             new_message[1] = new_message[1].replace("1/2", "")
             new_message[1] = new_message[1].replace("1/3", "")
             new_message[1] = new_message[1].replace("1/4", "")
-            new_message = str(new_message)
-            new_message = new_message.replace("'", "")
-            new_message = new_message.replace("[", "")
-            new_message = new_message.replace("]", "")
-            new_message = new_message.replace(",", "")
-            new_message = new_message.split(" ")
+            new_message[1] = new_message[1].upper()
+            expiration = re.findall(
+                r"((?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)[a-z]*(?:-|\.|\s|,)\s?\d{,2}[a-z]*(0?[1-9]|[1-2][0-9]|[30-31]))",
+                str(new_message))
+            date = expiration[0][0]
+            month = date.split()[0]
+            day = date.split()[1]
+            month_number = month_converter(month)
+            new_message[1] = new_message[1].replace(f"{month} {day}",
+                                                    f"{month_number}/{day}")
+            new_message[1] = new_message[1].replace(" ", " - ")
+            #new_message[1] = new_message[1].replace("'", "")
+            #new_message[1] = new_message.replace("[", "")
+            #new_message = new_message.replace("]", "")
+            #new_message = new_message.replace(",", "")
+            #new_message = new_message.splitlines()
         except IndexError:
             print("Etwit_standardizer index error")
             pass
@@ -680,7 +673,7 @@ class TradeGrabber:
                 split_result = list(filter(self.filter_message, split_result))
                 trade_author = list(filter(self.filter_trader, split_result))
                 #testing reliability of this
-                if trade_author == [] and '#ALERT' in split_result[0]:
+                if trade_author == [] and '#ALERT' in split_result[-1]:
                     trade_author = ['Etwit']
                 trade_author_tup = trade_author[0]
                 if trade_author_tup == "Etwit":
@@ -690,17 +683,12 @@ class TradeGrabber:
                 if "Jen" in trade_author_tup:
                     trade_author_tup = "Jen"
                 # find the longest string left which is the message string
-                if trade_author_tup != "Etwit":
-                    longest_string = max(split_result, key=len)
-                    double_split_result = longest_string.split(' - ')
-                    double_split_result = list(
-                        filter(None, double_split_result))
-                    # gets a call or put status, and pops that matched entry out of the list
-                    three_feet_results = self.three_feet(
-                        double_split_result, self.get_stock_ticker)
-                if trade_author_tup == "Etwit":
-                    three_feet_results = self.three_feet(
-                        split_result, self.get_stock_ticker)
+                longest_string = max(split_result, key=len)
+                double_split_result = longest_string.split(' - ')
+                double_split_result = list(filter(None, double_split_result))
+                # gets a call or put status, and pops that matched entry out of the list
+                three_feet_results = self.three_feet(double_split_result,
+                                                     self.get_stock_ticker)
                 call_or_put_tup, strike_price_tup, stock_ticker_tup, double_split_result = three_feet_results
 
                 if 'jen' in trade_author_tup.lower():
@@ -770,8 +758,8 @@ class TradeGrabber:
                     live_buy_price = self.check.live_buy_price(
                         stock_ticker_tup, strike_price_tup,
                         trade_expiration_tup, call_or_put_tup)
-                    logger.info(f"{live_buy_price} LIVE PRICE")
-                    logger.info(f"{buy_price_tup} TRADE PRICE")
+                    logger.error(f"{live_buy_price} LIVE PRICE")
+                    logger.error(f"{buy_price_tup} TRADE PRICE")
                 if buy_price_tup.isalpha() is False and live_buy_price.isalpha(
                 ) is False:
                     price_difference = percent_difference(
@@ -811,7 +799,10 @@ class TradeGrabber:
                                    color_tup, 'false', date_tup, time_tup)
                     logger.error(
                         f'This trade contains error(s)! : {error_tuple}')
-                    update_error_table(error_tuple)
+                    if DEBUG is False:
+                        update_error_table(error_tuple)
+                    else:
+                        print(f"FAILURE: {error_tuple}")
 
                 elif 'error' not in trade_tuple:
                     ignore_trade, trade_color_choice = verify_trade(
@@ -829,14 +820,18 @@ class TradeGrabber:
                                        call_or_put_tup, buy_price_tup,
                                        trade_author_tup, trade_expiration_tup,
                                        trade_color_choice, date_tup, time_tup)
-                        logger.info(
-                            f"Producer received a fresh trade : {valid_trade}")
-                        trade_id = update_table(valid_trade)
-                        message = (trade_id, valid_trade)
-                        config.new_trades.put(message)
-                        config.has_trade.release()
-                        config.new_discord_trades.put(message)
-                        config.has_new_discord_trade.release()
+                        if DEBUG is False:
+                            logger.info(
+                                f"Producer received a fresh trade : {valid_trade}"
+                            )
+                            trade_id = update_table(valid_trade)
+                            message = (trade_id, valid_trade)
+                            config.new_trades.put(message)
+                            config.has_trade.release()
+                            config.new_discord_trades.put(message)
+                            config.has_new_discord_trade.release()
+                        else:
+                            print(f"SUCCESS: {valid_trade}")
 
             except (KeyError, ValueError) as error:
                 print(f"\n{error}")

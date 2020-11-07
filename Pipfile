@@ -21,6 +21,7 @@ requests-html = "*"
 matplotlib = "*"
 html5lib = "*"
 mypy = "*"
+python-telegram-bot = "*"
 
 [requires]
 python_version = "3.8"

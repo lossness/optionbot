@@ -131,7 +131,7 @@ class ErrorChecker:
         an error in the strike price value of the processed tuple.
         '''
         strike_price = 'error'
-        in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color = new_trade
+        in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color, date, time = new_trade
         if 'out' in in_or_out:
             try:
                 database_trades = self.fetch_matchable_trades()
@@ -146,6 +146,7 @@ class ErrorChecker:
                     strike_price = matched_trade[0][3].replace("'", "")
                     if 'error' in call_or_put:
                         call_or_put = matched_trade[0][4].replace("'", "")
+
                 else:
                     raise StageTwoError
 
@@ -438,6 +439,41 @@ class ErrorChecker:
     #    data = json.loads(response.content)
     #    df = pd.json_normalize(data, 'options')
     #    return response.text
+
+    def live_strike_price(self, ticker, strike, expiration, call_or_put):
+        '''
+        Validates the strike price with available strike prices on
+        yfinance.  
+        '''
+        try:
+            if 'error' in (ticker, strike, expiration, call_or_put):
+                raise ValueError
+            converted_expiration = convert_date(expiration)
+            split = converted_expiration.split('/')
+            converted_expiration = rf"{split[2]}-{split[0]}-{split[1]}"
+            ticker_data = yf.Ticker(f"{ticker.upper()}")
+            if converted_expiration == 'error':
+                raise ValueError
+            options = ticker_data.option_chain(converted_expiration)
+
+            if call_or_put == 'call':
+                df = options.calls
+
+            if call_or_put == 'put':
+                df = options.puts
+
+            if '.' in strike:
+                table = df.loc[df['strike'] == float(strike)]
+            if '.' not in strike:
+                table = df.loc[df['strike'] == int(strike)]
+        except (ValueError, IndexError):
+            logger.error(
+                "Could not get live strike price to validate. error in parameters\n second_level_checks.py live_strike_price"
+            )
+            strike = 'error'
+
+        finally:
+            return strike
 
     def live_buy_price(self, ticker, strike, expiration, call_or_put):
         '''
