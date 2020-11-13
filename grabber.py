@@ -271,6 +271,7 @@ class TradeGrabber:
             logger.error(
                 f"Grabber.py - three_feat error getting live_price with ticker.  Ticker most likely is 'error'. Value of the ticker variable : '{ticker}'\n                              Current trade: {split_message_list}"
             )
+            pass
 
         except KeyError as e:
             logger.warning(f'{e} : {split_message_list}')
