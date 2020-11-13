@@ -15,7 +15,7 @@ from db_utils import update_table, verify_trade, update_error_table, convert_dat
 from timeit import default_timer as timer
 from main_logger import logger
 from second_level_checks import ErrorChecker
-from decimal import *
+from decimal import ROUND_UP, getcontext, Decimal
 from collections import namedtuple
 from exceptions import LiveBuyPriceError, LiveStrikePriceError, ReleaseTradeError, TimeoutException, TickerError
 from time_utils import get_date_and_time, standard_datetime, month_converter
@@ -247,7 +247,7 @@ class TradeGrabber:
                     live_price = ticker_data.info['open']
                     price_difference = percent_difference(
                         float(live_price), float(strike_price))
-                    if price_difference > 35:
+                    if price_difference > 50:
                         raise LiveStrikePriceError
                     split_message_list.remove(item)
                     break
@@ -262,7 +262,7 @@ class TradeGrabber:
                     live_price = ticker_data.info['open']
                     price_difference = percent_difference(
                         float(live_price), float(strike_price))
-                    if price_difference > 35:
+                    if price_difference > 50:
                         raise LiveStrikePriceError
                     split_message_list.remove(item)
                     break
@@ -271,7 +271,6 @@ class TradeGrabber:
             logger.error(
                 f"Grabber.py - three_feat error getting live_price with ticker.  Ticker most likely is 'error'. Value of the ticker variable : '{ticker}'\n                              Current trade: {split_message_list}"
             )
-            strike_price = 'error'
 
         except KeyError as e:
             logger.warning(f'{e} : {split_message_list}')
@@ -327,6 +326,11 @@ class TradeGrabber:
             return in_or_out, split_message_list
 
     def get_stock_ticker(self, split_message_list):
+        '''
+        Runs all slices of the split message thru a combined list
+        of NASDAQ and NYSE ticker symbols.
+        Returns: 'error' or ticker symbol
+        '''
         lines = []
         result = 'error'
         ticker_matches = 0
@@ -361,7 +365,7 @@ class TradeGrabber:
 
             finally:
                 file.close()
-                return result, split_message_list
+                return str(result), split_message_list
 
     def get_buy_price(self, split_message_list):
         try:
@@ -638,25 +642,30 @@ class TradeGrabber:
                 if len(test_message[-1]) > 5:
                     new_message = test_message
 
-            new_message[1] = new_message[1].replace("1/2", "")
-            new_message[1] = new_message[1].replace("1/3", "")
-            new_message[1] = new_message[1].replace("1/4", "")
-            new_message[1] = new_message[1].upper()
-            expiration = re.findall(
-                r"((?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)[a-z]*(?:-|\.|\s|,)\s?\d{,2}[a-z]*(0?[1-9]|[1-2][0-9]|[30-31]))",
-                str(new_message))
-            date = expiration[0][0]
-            month = date.split()[0]
-            day = date.split()[1]
-            month_number = month_converter(month)
-            new_message[1] = new_message[1].replace(f"{month} {day}",
-                                                    f"{month_number}/{day}")
-            new_message[1] = new_message[1].replace(" ", " - ")
-            #new_message[1] = new_message[1].replace("'", "")
-            #new_message[1] = new_message.replace("[", "")
-            #new_message = new_message.replace("]", "")
-            #new_message = new_message.replace(",", "")
-            #new_message = new_message.splitlines()
+            new_message[-1] = new_message[-1].replace("1/2", "")
+            new_message[-1] = new_message[-1].replace("1/3", "")
+            new_message[-1] = new_message[-1].replace("1/4", "")
+            new_message[-1] = new_message[-1].upper()
+            try:
+                expiration = re.findall(
+                    r"((?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)[a-z]*(?:-|\.|\s|,)\s?\d{,2}[a-z]*(0?[1-9]|[1-2][0-9]|[30-31]))",
+                    str(new_message))
+                date = expiration[0][0]
+                month = date.split()[0]
+                day = date.split()[1]
+                month_number = month_converter(month)
+                new_message[-1] = new_message[-1].replace(
+                    f"{month} {day}", f"{month_number}/{day}")
+            except IndexError:
+                logger.info(
+                    f"No expiration given for etwit trade : {new_message}")
+                pass
+            finally:
+                if "Etwit" not in str(new_message):
+                    new_message[:0] = ["Etwit"]
+                new_message[-1] = new_message[-1].replace(" ", " - ")
+                if len(new_message) > 2:
+                    new_message[-2] = new_message[-2].replace(" ", " - ")
         except IndexError:
             print("Etwit_standardizer index error")
             pass
@@ -673,7 +682,7 @@ class TradeGrabber:
                 split_result = list(filter(self.filter_message, split_result))
                 trade_author = list(filter(self.filter_trader, split_result))
                 #testing reliability of this
-                if trade_author == [] and '#ALERT' in split_result[-1]:
+                if trade_author == [] and '#ALERT' in str(split_result):
                     trade_author = ['Etwit']
                 trade_author_tup = trade_author[0]
                 if trade_author_tup == "Etwit":
@@ -760,28 +769,29 @@ class TradeGrabber:
                         trade_expiration_tup, call_or_put_tup)
                     logger.error(f"{live_buy_price} LIVE PRICE")
                     logger.error(f"{buy_price_tup} TRADE PRICE")
-                if buy_price_tup.isalpha() is False and live_buy_price.isalpha(
-                ) is False:
-                    price_difference = percent_difference(
-                        float(live_buy_price), float(buy_price_tup))
+                if DEBUG is False:
+                    if buy_price_tup.isalpha(
+                    ) is False and live_buy_price.isalpha() is False:
+                        price_difference = percent_difference(
+                            float(live_buy_price), float(buy_price_tup))
 
-                    if price_difference > 200 and in_or_out_tup == 'out':
-                        buy_price_tup = live_buy_price
-                        logger.error(
-                            r"Last option price differs more than 25% from traders price! Using live.."
-                        )
-                    elif price_difference > 200 and in_or_out_tup == 'in':
-                        buy_price_tup = 'error'
-                        logger.error(
-                            r"Last option price differs more than 25% from traders price! Ignoring trade.."
-                        )
+                        if price_difference > 250 and in_or_out_tup == 'out':
+                            buy_price_tup = live_buy_price
+                            logger.error(
+                                r"Last option price differs more than 25% from traders price! Using live.."
+                            )
+                        elif price_difference > 250 and in_or_out_tup == 'in':
+                            buy_price_tup = 'error'
+                            logger.error(
+                                r"Last option price differs more than 25% from traders price! Ignoring trade.."
+                            )
 
                 trade_tuple = (in_or_out_tup, stock_ticker_tup, datetime_tup,
                                strike_price_tup, call_or_put_tup,
                                buy_price_tup, trade_author_tup,
                                trade_expiration_tup, color_tup, date_tup,
                                time_tup)
-                if trade_author_tup == 'Etwit' and in_or_out_tup == 'out':
+                if trade_author_tup == 'Etwit' and in_or_out_tup == 'out' and trade_expiration_tup == 'error':
                     etwit_expiration = self.check.expiration_fixer(trade_tuple)
                     if etwit_expiration != 'error':
                         trade_expiration_tup = etwit_expiration
@@ -807,10 +817,13 @@ class TradeGrabber:
                 elif 'error' not in trade_tuple:
                     ignore_trade, trade_color_choice = verify_trade(
                         list(trade_tuple))
-                    if ignore_trade:
+                    if DEBUG != False:
+                        print(f"SUCCESS : {trade_tuple}")
+                        return
+                    elif ignore_trade and DEBUG is False:
                         return
 
-                    elif ignore_trade is False:
+                    elif ignore_trade is False and DEBUG is False:
                         if in_or_out_tup == 'in':
                             buy_price_tup = self.mask_buy_price(buy_price_tup)
                         if in_or_out_tup == 'out':
@@ -820,18 +833,14 @@ class TradeGrabber:
                                        call_or_put_tup, buy_price_tup,
                                        trade_author_tup, trade_expiration_tup,
                                        trade_color_choice, date_tup, time_tup)
-                        if DEBUG is False:
-                            logger.info(
-                                f"Producer received a fresh trade : {valid_trade}"
-                            )
-                            trade_id = update_table(valid_trade)
-                            message = (trade_id, valid_trade)
-                            config.new_trades.put(message)
-                            config.has_trade.release()
-                            config.new_discord_trades.put(message)
-                            config.has_new_discord_trade.release()
-                        else:
-                            print(f"SUCCESS: {valid_trade}")
+                        logger.info(
+                            f"Producer received a fresh trade : {valid_trade}")
+                        trade_id = update_table(valid_trade)
+                        message = (trade_id, valid_trade)
+                        config.new_trades.put(message)
+                        config.has_trade.release()
+                        config.new_discord_trades.put(message)
+                        config.has_new_discord_trade.release()
 
             except (KeyError, ValueError) as error:
                 print(f"\n{error}")
