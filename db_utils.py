@@ -6,7 +6,6 @@ import math
 
 import pandas as pd
 import config
-from make_image import text_on_img
 from exceptions import DuplicateTrade, TradeAlreadyOut, IsAInTrade, DatabaseEmpty, MultipleMatchingIn, IgnoreTrade, DateConversionError
 from main_logger import logger
 from datetime import datetime

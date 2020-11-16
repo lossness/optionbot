@@ -8,6 +8,7 @@ from discord.ext import commands
 from time_utils import standard_datetime
 from main_logger import logger
 from collections import namedtuple
+from instapost import force_make_image
 
 load_dotenv()
 dev_bot = commands.Bot(command_prefix='$', description='Dev server bot')
@@ -54,6 +55,42 @@ async def on_message(message):
             config.has_unprocessed_trade.release()
             await channel.send("Trade submitted for processing!")
     await dev_bot.process_commands(message)
+
+
+@dev_bot.command()
+async def post(message):
+    try:
+        image_colors = {
+            'red': 'FA1',
+            'orange': 'FA2',
+            'yellow': 'FA3',
+            'pink': 'FA4',
+            'purple': 'FA5',
+            'teal': 'FA6',
+            'green': 'FA7',
+            'darkblue': 'FA8',
+            'lightgreen': 'FA9',
+            'blue': 'FA10',
+            'black': 'FA11',
+            'gray': 'FA12',
+            'grey': 'FA12',
+            'darkred': 'FA13',
+            'brown': 'FA14'
+        }
+        trade_message = message.message.clean_content
+        trade_message = trade_message.replace('$post ', '')
+        split_message = trade_message.split('-')
+        split_message[-1] = image_colors.get(split_message[-1])
+        split_message += ['force_trade']
+        trade_tuple = tuple(split_message)
+        filename = force_make_image(trade_tuple)
+        split_message += [filename]
+        trade_tuple = tuple(split_message)
+        config.new_trades.put(trade_tuple)
+        config.has_trade.release()
+    except Exception:
+        pass
+    await message.send("Trade sent for posting!")
 
 
 @fa_bot.event

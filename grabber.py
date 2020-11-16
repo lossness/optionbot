@@ -10,7 +10,6 @@ import math
 import yahoo_fin.stock_info as si
 
 from datetime import datetime
-from make_image import text_on_img
 from db_utils import update_table, verify_trade, update_error_table, convert_date, convert_date_to_text
 from timeit import default_timer as timer
 from main_logger import logger

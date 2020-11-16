@@ -30,8 +30,3 @@ def text_on_img(trade, color_choice):
     return filename
     # show file
     #os.system(filename)
-
-
-# text_on_img('test-01.png',
-#             'We are going\n IN on TWTR\n for a PUT at\n 33, expires\n 6/26',
-#             'blue')
