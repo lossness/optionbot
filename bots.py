@@ -25,17 +25,17 @@ async def on_ready():
     print(f'{dev_bot.user.name} has connected to Discord!')
 
 
-@dev_bot.event
-async def on_message(message):
-    channel = message.channel
+@dev_bot.command()
+async def trade(message):
+    try:
+        channel = message.channel
 
-    if message.author.id == dev_bot.user.id:
-        return
+        if message.author.id == dev_bot.user.id:
+            return
 
-    if str(channel.id) != TRADE_CHANNEL:
-        return
+        if str(channel.id) != TRADE_CHANNEL:
+            return
 
-    elif message.content.startswith('$trade'):
         await channel.send(
             "Would you like to submit this trade for processing? y/n")
 
@@ -50,11 +50,12 @@ async def on_message(message):
             return await channel.send("No trade was submitted.")
 
         if check_for_yes(msg):
-            payload = f"{str(message.author.name)}\n{str(message.clean_content).replace('$trade', '')}"
+            payload = f"{str(message.author.name)}\n{str(message.message.clean_content).replace('$trade', '')}"
             config.new_unprocessed_trades.put(payload)
             config.has_unprocessed_trade.release()
             await channel.send("Trade submitted for processing!")
-    await dev_bot.process_commands(message)
+    except Exception:
+        pass
 
 
 @dev_bot.command()

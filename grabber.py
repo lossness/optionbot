@@ -639,12 +639,15 @@ class TradeGrabber:
             str_message = str(new_message)
             if 'SOLD' in str_message:
                 test_message = new_message[:-1]
-                if len(test_message[-1]) > 5:
+                if test_message != [] and len(test_message[-1]) > 5:
                     new_message = test_message
 
             new_message[-1] = new_message[-1].replace("1/2", "")
             new_message[-1] = new_message[-1].replace("1/3", "")
             new_message[-1] = new_message[-1].replace("1/4", "")
+            new_message[0] = new_message[0].replace("1/2", "")
+            new_message[0] = new_message[0].replace("1/3", "")
+            new_message[0] = new_message[0].replace("1/4", "")
             new_message[-1] = new_message[-1].upper()
             try:
                 expiration = re.findall(
@@ -665,7 +668,12 @@ class TradeGrabber:
                     new_message[:0] = ["Etwit"]
                 new_message[-1] = new_message[-1].replace(" ", " - ")
                 if len(new_message) > 2:
-                    new_message[-2] = new_message[-2].replace(" ", " - ")
+                    if '$' not in new_message[-1]:
+                        new_message.pop()
+                    if len(new_message) > 2:
+                        new_message[-2] = new_message[-2].replace(" ", " - ")
+                    else:
+                        new_message[-1] = new_message[-1].replace(" ", " - ")
         except IndexError:
             print("Etwit_standardizer index error")
             pass
