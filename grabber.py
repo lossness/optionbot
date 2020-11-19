@@ -349,7 +349,8 @@ class TradeGrabber:
                         break
 
                     if potential_ticker in lines and potential_ticker.upper(
-                    ) not in ['OUT', 'ALL', 'FAST', 'ROLL', 'SEE']:
+                    ) not in ['OUT', 'ALL', 'FAST', 'ROLL', 'SEE'
+                              ] and result != potential_ticker:
                         result = potential_ticker
                         ticker_matches += 1
                         split_message_list.remove(split)
