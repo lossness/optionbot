@@ -51,6 +51,24 @@ FREQUENT_TAGS = [
 ]
 
 
+def create_image(img_path, text, filename):
+    my_font = ImageFont.truetype(
+        r'/home/swing/projects/fonts/Eurostile LT Bold.ttf', 60)
+    draw = ImageDraw.Draw(img_path)
+    # w, h = draw.multiline_textsize(text, font=my_font)
+    # draw text
+    draw.multiline_text((215, 425),
+                        text,
+                        fill='black',
+                        font=my_font,
+                        spacing=4,
+                        align='center')
+    # save file
+    trade_image_path = os.path.join(PATH, 'trade_images', filename)
+    img_path.save(trade_image_path)
+    return trade_image_path
+
+
 def make_image(msg):
     suffix = '.png'
     in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, user_name, expiration, color, date, time = msg
@@ -63,24 +81,14 @@ def make_image(msg):
             in_or_out = 'SELLing'
 
         im = Image.open(os.path.join(PATH, 'template_images', color + suffix))
+        delayed_im = Image.open(
+            os.path.join(PATH, 'delayed_template_images', color + suffix))
         text = f'We\'re {in_or_out} {ticker.upper()}\n Strike: {strike_price.upper()}\n {call_or_put.upper()} Price: {buy_price}\n Expires: {expiration}'
         filename = f'{in_or_out}.{ticker}.{strike_price}.{call_or_put}.{expiration}.png'
-        #my_font = ImageFont.truetype('micross.ttf', 75)
-        my_font = ImageFont.truetype(
-            r'/home/swing/projects/fonts/Eurostile LT Bold.ttf', 60)
-        draw = ImageDraw.Draw(im)
-        # w, h = draw.multiline_textsize(text, font=my_font)
-        # draw text
-        draw.multiline_text((215, 425),
-                            text,
-                            fill='black',
-                            font=my_font,
-                            spacing=4,
-                            align='center')
-        # save file
-        trade_image_path = os.path.join(PATH, 'trade_images', filename)
-        im.save(trade_image_path)
-        delayed_trade = (datetime, trade_image_path)
+        delayed_filename = f'{in_or_out}.{ticker}.{strike_price}.{call_or_put}.{expiration}.delayed.png'
+        trade_image_path = create_image(im, text, filename)
+        delayed_image_path = create_image(delayed_im, text, delayed_filename)
+        delayed_trade = (datetime, delayed_image_path)
         config.new_delayed_trades.put(delayed_trade)
         config.has_delayed_trade.release()
     except:
@@ -142,7 +150,7 @@ def consumer(driver):
             message = full_message[1]
             start = timer()
             try:
-                if DEBUG == False or 'post' not in DEBUG:
+                if DEBUG:
                     print("\nInstagram posting initiated..")
                     db_insta_posting_successful(trade_id)
                     print(message)
@@ -269,7 +277,7 @@ def delayed_consumer(driver):
                 image_path = trade[1]
                 config.cooking_trades.remove(trade)
                 try:
-                    if DEBUG == False or 'post' in DEBUG:
+                    if DEBUG == False:
                         upload_element = WebDriverWait(driver, 20).until(
                             EC.presence_of_element_located((
                                 By.XPATH,
