@@ -21,7 +21,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException
-from instapost import consumer
+from instapost import consumer, delayed_consumer
 from grabber import TradeGrabber
 from time_utils import get_time_and_day
 from main_logger import logger
@@ -154,6 +154,19 @@ def post_driver():
             continue
 
 
+def delayed_post_driver():
+    chrome_options = Options()
+    chrome_options.debugger_address = '127.0.0.1:9225'
+    flowalerts_insta_driver = webdriver.Chrome(
+        executable_path=INSTA_DRIVER_PATH, options=chrome_options)
+    while True:
+        try:
+            delayed_consumer(flowalerts_insta_driver)
+        except (TimeoutError, NoSuchElementException) as error:
+            logger.warning(error)
+            continue
+
+
 Entry = namedtuple('Entry', 'client event')
 entries = [
     Entry(client=fa_bot, event=asyncio.Event()),
@@ -211,6 +224,7 @@ def main():
     bbs_scraper = threading.Thread(target=check_discord)
     etwit_scraper = threading.Thread(target=check_etwitter)
     poster = threading.Thread(target=post_driver)
+    delayed_poster = threading.Thread(target=delayed_post_driver)
     processor = threading.Thread(target=check_for_unprocessed_messages)
     start_bots = threading.Thread(target=run_loop, daemon=True)
 
@@ -218,14 +232,17 @@ def main():
     etwit_scraper.start()
     processor.start()
     poster.start()
+    delayed_poster.start()
     start_bots.start()
 
     config.new_trades.join()
+    config.new_delayed_trades.join()
     config.new_unprocessed_trades.join()
     config.new_discord_trades.join()
 
     bbs_scraper.join()
     etwit_scraper.join()
+    delayed_poster.join()
     processor.join()
     poster.join()
     start_bots.join()

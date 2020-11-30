@@ -29,6 +29,14 @@ def east_coast_datetime() -> str:
     return date_and_time
 
 
+def get_date() -> str:
+    utc_now = pytz.utc.localize(datetime.datetime.utcnow())
+    ast_now = utc_now.astimezone(pytz.timezone("America/New_York"))
+    dateObj = ast_now.date()
+    date_str = dateObj.strftime("%Y-%m-%d")
+    return date_str
+
+
 def get_time_and_day() -> tuple:
     '''
     Fetches a datetime object for the local time in New York and
@@ -61,3 +69,17 @@ def month_converter(month) -> str:
         'NOV', 'DEC'
     ]
     return str(months.index(month) + 1)
+
+
+def minutes_difference(trade_datetime):
+    '''
+    Takes a datetime string and finds the difference
+    in minutes between the time and the current time.
+    '''
+    current_time_obj = datetime.datetime.strptime(standard_datetime(),
+                                                  '%Y-%m-%d %H:%M:%S.%f')
+    trade_datetime_obj = datetime.datetime.strptime(trade_datetime,
+                                                    '%Y-%m-%d %H:%M:%S.%f')
+    datetime_obj_difference = current_time_obj - trade_datetime_obj
+    minutes = datetime_obj_difference.total_seconds() / 60
+    return minutes

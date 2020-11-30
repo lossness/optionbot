@@ -37,7 +37,7 @@ EVENT = config.EVENT
 #    "Eric68", "MariaC82", "ThuhKang", "Jen♡♡crypto", "joel", "Treefidey",
 #    "Etwit"
 #]
-TRADERS = ["MariaC82", "joel", "Treefidey", "Etwit", "Jen♡♡crypto"]
+TRADERS = ["MariaC82", "joel", "Treefidey", "Etwit", "Jen♡♡crypto", "ThuhKang"]
 LAST_MESSAGE = "None"
 LAST_FIXED_MESSAGE = "None"
 LAST_ETWIT_MESSAGE = "None"
@@ -643,12 +643,12 @@ class TradeGrabber:
                 if test_message != [] and len(test_message[-1]) > 5:
                     new_message = test_message
 
-            new_message[-1] = new_message[-1].replace("1/2", "")
-            new_message[-1] = new_message[-1].replace("1/3", "")
-            new_message[-1] = new_message[-1].replace("1/4", "")
-            new_message[0] = new_message[0].replace("1/2", "")
-            new_message[0] = new_message[0].replace("1/3", "")
-            new_message[0] = new_message[0].replace("1/4", "")
+            new_message[-1] = new_message[-1].replace("1/2 ", "")
+            new_message[-1] = new_message[-1].replace("1/3 ", "")
+            new_message[-1] = new_message[-1].replace("1/4 ", "")
+            new_message[0] = new_message[0].replace("1/2 ", "")
+            new_message[0] = new_message[0].replace("1/3 ", "")
+            new_message[0] = new_message[0].replace("1/4 ", "")
             new_message[-1] = new_message[-1].upper()
             try:
                 expiration = re.findall(
@@ -826,13 +826,13 @@ class TradeGrabber:
                 elif 'error' not in trade_tuple:
                     ignore_trade, trade_color_choice = verify_trade(
                         list(trade_tuple))
-                    if DEBUG != False:
+                    if DEBUG == 'test':
                         print(f"SUCCESS : {trade_tuple}")
                         return
                     elif ignore_trade and DEBUG is False:
                         return
 
-                    elif ignore_trade is False and DEBUG is False:
+                    elif ignore_trade is False and DEBUG is False or 'post' in DEBUG:
                         if in_or_out_tup == 'in':
                             buy_price_tup = self.mask_buy_price(buy_price_tup)
                         if in_or_out_tup == 'out':

@@ -303,6 +303,9 @@ def verify_trade(parsed_trade: tuple):
             if has_matching_in is False:
                 raise IgnoreTrade
 
+        if 'in' in parsed_trade[0] and 'jen' in parsed_trade[6].lower():
+            raise IgnoreTrade
+
         # for testing
         if filtered_trades == [] and 'in' in parsed_trade[0]:
             colors = [

@@ -18,6 +18,7 @@ FLOW_SIGNAL_TOKEN = os.getenv("FA_DISCORD_TOKEN")
 TRADE_CHANNEL = os.getenv("TRADE_CHANNEL")
 TOKEN = os.getenv("DISCORD_TOKEN")
 EVENT = config.EVENT
+DEBUG = config.DEBUG
 
 
 @dev_bot.event
@@ -102,7 +103,7 @@ async def on_ready():
 
 @fa_bot.event
 async def listener():
-    while True:
+    while True and DEBUG is False:
         if config.has_new_discord_trade.acquire(timeout=2):
             full_message = config.new_discord_trades.get()
             in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, trader, expiration, color, date, time = full_message[

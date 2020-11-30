@@ -25,3 +25,4 @@ __pycache__/config.cpython-38.pyc
 .mypy_cache/*
 /etwitter_session
 /mtwitter_session
+/fainsta_session

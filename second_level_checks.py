@@ -9,7 +9,7 @@ from datetime import datetime
 
 from main_logger import logger
 from db_utils import db_connect, convert_date
-from time_utils import standard_datetime
+from time_utils import standard_datetime, get_date
 from exceptions import *
 
 
@@ -530,6 +530,7 @@ class ErrorChecker:
         the yfinance api as a parameter. Invalid dates throw a ValueError.
         '''
         try:
+            parsed_expiration = expiration
             converted_expiration = convert_date(expiration)
             split = converted_expiration.split('/')
             converted_expiration = rf"{split[2]}-{split[0]}-{split[1]}"
@@ -547,6 +548,8 @@ class ErrorChecker:
             expiration = 'error'
 
         finally:
+            if converted_expiration == get_date():
+                expiration = parsed_expiration
             return str(expiration)
 
     def fetch_closest_expiration(self, ticker):
