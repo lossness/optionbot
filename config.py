@@ -15,6 +15,7 @@ new_discord_trades = queue.Queue()
 has_new_discord_trade = threading.Semaphore(value=0)
 
 EVENT = threading.Event()
+RANDOM_TAG_COUNTER = 0
 # DEBUG PARAMETERS
 # bbs - setup to capture embed messages in discord channel and not post to insta / threaded queue
 # bbs_post - same as bbs but goes through all queues and posts to insta

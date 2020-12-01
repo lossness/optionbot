@@ -179,24 +179,12 @@ def consumer(driver):
                     share_button = WebDriverWait(driver, 20).until(
                         EC.presence_of_element_located(
                             (By.XPATH, "//button[text()='Share']")))
-                    #try:
-                    #    form_field_description = WebDriverWait(driver, 8).until(
-                    #        EC.presence_of_all_elements_located((
-                    #            By.XPATH,
-                    #            "//*[@id='react-root']/section/div[2]/section[1]/div[1]/textarea"
-                    #        )))
-                    #
-                    #    form_field_description[0].send_keys(
-                    #        "\n.\n.\n.\n"
-                    #    )
-                    #except TimeoutException:
-                    #    pass
                     share_button.click()
                     print("\ninstagram posting completed")
                     db_insta_posting_successful(trade_id)
                     config.EVENT.wait(.5)
                     prune_completed_trades()
-                    config.EVENT.wait(1.0)
+                    config.EVENT.wait(2)
                 else:
                     raise MatchingInNeverPosted
 
@@ -238,21 +226,9 @@ def consumer(driver):
                 share_button = WebDriverWait(driver, 20).until(
                     EC.presence_of_element_located(
                         (By.XPATH, "//button[text()='Share']")))
-                #try:
-                #    form_field_description = WebDriverWait(driver, 8).until(
-                #        EC.presence_of_all_elements_located((
-                #            By.XPATH,
-                #            "//*[@id='react-root']/section/div[2]/section[1]/div[1]/textarea"
-                #        )))
-                #
-                #    form_field_description[0].send_keys(
-                #        "\n.\n.\n.\n"
-                #    )
-                #except TimeoutException:
-                #    pass
                 share_button.click()
                 print("\nforce instagram posting completed")
-                config.EVENT.wait(.5)
+                config.EVENT.wait(3)
 
             except (NoSuchElementException, TimeoutException) as error:
                 logger.fatal(f'{error}\n COULD NOT FORCE POST TO INSTA. ',
@@ -273,7 +249,7 @@ def delayed_consumer(driver):
         break
     if len(config.cooking_trades) > 0:
         for trade in config.cooking_trades:
-            if minutes_difference(trade[0]) > 1:
+            if minutes_difference(trade[0]) > 5:
                 image_path = trade[1]
                 config.cooking_trades.remove(trade)
                 try:
@@ -294,6 +270,22 @@ def delayed_consumer(driver):
                             EC.presence_of_element_located(
                                 (By.XPATH, "//button[text()='Next']")))
                         next_button.click()
+                        if config.RANDOM_TAG_COUNTER < 4:
+                            try:
+                                form_field_description = WebDriverWait(
+                                    driver, 8
+                                ).until(
+                                    EC.presence_of_all_elements_located((
+                                        By.XPATH,
+                                        "//*[@id='react-root']/section/div[2]/section[1]/div[1]/textarea"
+                                    )))
+
+                                form_field_description[0].send_keys(
+                                    f"\n.\n.\n.\n.\n{random.choice(NICHE_TAGS)} #flowalerts {random.choice(AVERAGE_TAGS)} {random.choice(FREQUENT_TAGS)} {random.choice(FREQUENT_TAGS)}"
+                                )
+                                config.RANDOM_TAG_COUNTER += 1
+                            except TimeoutException:
+                                pass
                         share_button = WebDriverWait(driver, 20).until(
                             EC.presence_of_element_located(
                                 (By.XPATH, "//button[text()='Share']")))
