@@ -485,10 +485,15 @@ def convert_date(date) -> str:
         split_date = date.split('/')
         month = split_date[0]
         day = split_date[1]
+        year = '2020'
         if len(split_date) == 3:
             year = split_date[2]
-        else:
-            year = '2020'
+        if month.isalpha():
+            if 'DEC' not in month.lower():
+                year = '2021'
+        if month.isdigit():
+            if int(month) != 12:
+                year = '2021'
         if len(year) == 2:
             year = '20' + year
         if len(day) == 1:

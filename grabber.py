@@ -832,7 +832,7 @@ class TradeGrabber:
                     elif ignore_trade and DEBUG is False:
                         return
 
-                    elif ignore_trade is False and DEBUG is False or 'post' in DEBUG:
+                    elif ignore_trade is False and DEBUG is False:
                         if in_or_out_tup == 'in':
                             buy_price_tup = self.mask_buy_price(buy_price_tup)
                         if in_or_out_tup == 'out':

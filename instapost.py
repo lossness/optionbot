@@ -81,16 +81,20 @@ def make_image(msg):
             in_or_out = 'SELLing'
 
         im = Image.open(os.path.join(PATH, 'template_images', color + suffix))
-        delayed_im = Image.open(
-            os.path.join(PATH, 'delayed_template_images', color + suffix))
         text = f'We\'re {in_or_out} {ticker.upper()}\n Strike: {strike_price.upper()}\n {call_or_put.upper()} Price: {buy_price}\n Expires: {expiration}'
         filename = f'{in_or_out}.{ticker}.{strike_price}.{call_or_put}.{expiration}.png'
-        delayed_filename = f'{in_or_out}.{ticker}.{strike_price}.{call_or_put}.{expiration}.delayed.png'
         trade_image_path = create_image(im, text, filename)
-        delayed_image_path = create_image(delayed_im, text, delayed_filename)
-        delayed_trade = (datetime, delayed_image_path)
-        config.new_delayed_trades.put(delayed_trade)
-        config.has_delayed_trade.release()
+        im.save(trade_image_path)
+        if config.RANDOM_TAG_COUNTER < 4:
+            delayed_im = Image.open(
+                os.path.join(PATH, 'delayed_template_images', color + suffix))
+            delayed_filename = f'{in_or_out}.{ticker}.{strike_price}.{call_or_put}.{expiration}.delayed.png'
+            delayed_image_path = create_image(delayed_im, text,
+                                              delayed_filename)
+            delayed_trade = (datetime, delayed_image_path)
+            delayed_im.save(delayed_image_path)
+            config.new_delayed_trades.put(delayed_trade)
+            config.has_delayed_trade.release()
     except:
         logger.fatal("COULD NOT OPEN IMAGE TO POST TRADE!")
         print("COULD NOT OPEN IMAGE TO POST TRADE")
@@ -130,9 +134,6 @@ def force_make_image(msg):
         trade_image_path = os.path.join(PATH, 'trade_images', filename)
         im.save(trade_image_path)
         datetime = standard_datetime()
-        delayed_trade = (datetime, trade_image_path)
-        config.new_delayed_trades.put(delayed_trade)
-        config.has_delayed_trade.release()
     except:
         logger.fatal("COULD NOT OPEN IMAGE TO POST TRADE!")
         print("COULD NOT OPEN IMAGE TO POST TRADE")
@@ -145,10 +146,10 @@ def force_make_image(msg):
 def consumer(driver):
     while config.has_trade.acquire(blocking=True):
         full_message = config.new_trades.get()
+        start = timer()
         if 'force_trade' not in full_message:
             trade_id = full_message[0]
             message = full_message[1]
-            start = timer()
             try:
                 if DEBUG:
                     print("\nInstagram posting initiated..")
@@ -243,55 +244,49 @@ def consumer(driver):
 
 
 def delayed_consumer(driver):
-    while config.has_delayed_trade.acquire(blocking=False):
-        delayed_trade_image_path = config.new_delayed_trades.get()
-        config.cooking_trades.append(delayed_trade_image_path)
-        break
     if len(config.cooking_trades) > 0:
         for trade in config.cooking_trades:
             if minutes_difference(trade[0]) > 5:
                 image_path = trade[1]
                 config.cooking_trades.remove(trade)
                 try:
-                    if DEBUG == False:
-                        upload_element = WebDriverWait(driver, 20).until(
-                            EC.presence_of_element_located((
-                                By.XPATH,
-                                "//*[@id='react-root']//div[3][@data-testid='new-post-button']"
-                            )))
-                        upload_element.click()
-                        #driver.find_elements_by_css_selector('form input')[0].send_keys(
-                        #    image_path)
-                        form_field = WebDriverWait(driver, 8).until(
-                            EC.presence_of_all_elements_located(
-                                (By.CSS_SELECTOR, "form input")))
-                        form_field[0].send_keys(image_path)
-                        next_button = WebDriverWait(driver, 20).until(
-                            EC.presence_of_element_located(
-                                (By.XPATH, "//button[text()='Next']")))
-                        next_button.click()
-                        if config.RANDOM_TAG_COUNTER < 4:
-                            try:
-                                form_field_description = WebDriverWait(
-                                    driver, 8
-                                ).until(
-                                    EC.presence_of_all_elements_located((
-                                        By.XPATH,
-                                        "//*[@id='react-root']/section/div[2]/section[1]/div[1]/textarea"
-                                    )))
+                    upload_element = WebDriverWait(driver, 20).until(
+                        EC.presence_of_element_located((
+                            By.XPATH,
+                            "//*[@id='react-root']//div[3][@data-testid='new-post-button']"
+                        )))
+                    upload_element.click()
+                    #driver.find_elements_by_css_selector('form input')[0].send_keys(
+                    #    image_path)
+                    form_field = WebDriverWait(driver, 8).until(
+                        EC.presence_of_all_elements_located(
+                            (By.CSS_SELECTOR, "form input")))
+                    form_field[0].send_keys(image_path)
+                    next_button = WebDriverWait(driver, 20).until(
+                        EC.presence_of_element_located(
+                            (By.XPATH, "//button[text()='Next']")))
+                    next_button.click()
+                    if config.RANDOM_TAG_COUNTER < 4:
+                        try:
+                            form_field_description = WebDriverWait(
+                                driver, 8
+                            ).until(
+                                EC.presence_of_all_elements_located((
+                                    By.XPATH,
+                                    "//*[@id='react-root']/section/div[2]/section[1]/div[1]/textarea"
+                                )))
 
-                                form_field_description[0].send_keys(
-                                    f"\n.\n.\n.\n.\n{random.choice(NICHE_TAGS)} #flowalerts {random.choice(AVERAGE_TAGS)} {random.choice(FREQUENT_TAGS)} {random.choice(FREQUENT_TAGS)}"
-                                )
-                                config.RANDOM_TAG_COUNTER += 1
-                            except TimeoutException:
-                                pass
-                        share_button = WebDriverWait(driver, 20).until(
-                            EC.presence_of_element_located(
-                                (By.XPATH, "//button[text()='Share']")))
-                        share_button.click()
-                    else:
-                        raise MatchingInNeverPosted
+                            form_field_description[0].send_keys(
+                                f"\n.\n.\n.\n.\n{random.choice(NICHE_TAGS)} #flowalerts {random.choice(AVERAGE_TAGS)} {random.choice(FREQUENT_TAGS)} {random.choice(FREQUENT_TAGS)}"
+                            )
+                            config.RANDOM_TAG_COUNTER += 1
+                        except TimeoutException:
+                            pass
+                    share_button = WebDriverWait(driver, 20).until(
+                        EC.presence_of_element_located(
+                            (By.XPATH, "//button[text()='Share']")))
+                    share_button.click()
+                    EVENT.wait(5)
 
                 except (MakeImageError, NoSuchElementException,
                         TimeoutException) as error:
@@ -299,6 +294,7 @@ def delayed_consumer(driver):
                                  exc_info=True)
                     # caption_field = WebDriverWait(driver, 5).until(
                     # EC.presence_of_element_located((By.XPATH, "//textarea")))
+                    continue
 
                 except MatchingInNeverPosted:
                     logger.fatal(
@@ -309,3 +305,8 @@ def delayed_consumer(driver):
                     config.new_delayed_trades.task_done()
             else:
                 EVENT.wait(3)
+    else:
+        while config.has_delayed_trade.acquire(blocking=False):
+            delayed_trade_image_path = config.new_delayed_trades.get()
+            config.cooking_trades.append(delayed_trade_image_path)
+            break
