@@ -261,7 +261,7 @@ def prune_completed_trades():
             con.close()
 
 
-def verify_trade(parsed_trade: tuple):
+def verify_trade(parsed_trade: tuple, trade_comments):
     try:
         is_out = False
         is_duplicate = False
@@ -303,7 +303,8 @@ def verify_trade(parsed_trade: tuple):
             if has_matching_in is False:
                 raise IgnoreTrade
 
-        if 'in' in parsed_trade[0] and 'jen' in parsed_trade[6].lower():
+        if 'in' in parsed_trade[0] and 'jen' in parsed_trade[6].lower(
+        ) and 'risk' in trade_comments.lower():
             raise IgnoreTrade
 
         # for testing

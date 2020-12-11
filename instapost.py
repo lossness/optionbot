@@ -309,4 +309,5 @@ def delayed_consumer(driver):
         while config.has_delayed_trade.acquire(blocking=False):
             delayed_trade_image_path = config.new_delayed_trades.get()
             config.cooking_trades.append(delayed_trade_image_path)
+            EVENT.wait(3)
             break

@@ -825,7 +825,7 @@ class TradeGrabber:
 
                 elif 'error' not in trade_tuple:
                     ignore_trade, trade_color_choice = verify_trade(
-                        list(trade_tuple))
+                        list(trade_tuple), longest_string)
                     if DEBUG == 'test':
                         print(f"SUCCESS : {trade_tuple}")
                         return
