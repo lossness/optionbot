@@ -85,16 +85,15 @@ def make_image(msg):
         filename = f'{in_or_out}.{ticker}.{strike_price}.{call_or_put}.{expiration}.png'
         trade_image_path = create_image(im, text, filename)
         im.save(trade_image_path)
-        if config.RANDOM_TAG_COUNTER < 4:
-            delayed_im = Image.open(
-                os.path.join(PATH, 'delayed_template_images', color + suffix))
-            delayed_filename = f'{in_or_out}.{ticker}.{strike_price}.{call_or_put}.{expiration}.delayed.png'
-            delayed_image_path = create_image(delayed_im, text,
-                                              delayed_filename)
-            delayed_trade = (datetime, delayed_image_path)
-            delayed_im.save(delayed_image_path)
-            config.new_delayed_trades.put(delayed_trade)
-            config.has_delayed_trade.release()
+        #if config.RANDOM_TAG_COUNTER < 4:
+        delayed_im = Image.open(
+            os.path.join(PATH, 'delayed_template_images', color + suffix))
+        delayed_filename = f'{in_or_out}.{ticker}.{strike_price}.{call_or_put}.{expiration}.delayed.png'
+        delayed_image_path = create_image(delayed_im, text, delayed_filename)
+        delayed_trade = (datetime, delayed_image_path)
+        delayed_im.save(delayed_image_path)
+        config.new_delayed_trades.put(delayed_trade)
+        config.has_delayed_trade.release()
     except:
         logger.fatal("COULD NOT OPEN IMAGE TO POST TRADE!")
         print("COULD NOT OPEN IMAGE TO POST TRADE")
@@ -152,11 +151,12 @@ def consumer(driver):
             message = full_message[1]
             try:
                 if DEBUG:
-                    print("\nInstagram posting initiated..")
+                    print("\nDebug mode: Not posted to instagram.")
                     db_insta_posting_successful(trade_id)
                     print(message)
                     prune_completed_trades()
-                elif message[0] == 'out' and is_posted_to_insta(
+                    return
+                if message[0] == 'out' and is_posted_to_insta(
                         message).lower() == 'true' or message[0] == 'in':
                     image_path = make_image(message)
                     if 'error' in image_path:
@@ -305,9 +305,9 @@ def delayed_consumer(driver):
                     config.new_delayed_trades.task_done()
             else:
                 EVENT.wait(3)
+    elif config.has_delayed_trade.acquire(blocking=False) is True:
+        delayed_trade_image_path = config.new_delayed_trades.get()
+        config.cooking_trades.append(delayed_trade_image_path)
+        EVENT.wait(1)
     else:
-        while config.has_delayed_trade.acquire(blocking=False):
-            delayed_trade_image_path = config.new_delayed_trades.get()
-            config.cooking_trades.append(delayed_trade_image_path)
-            EVENT.wait(3)
-            break
+        EVENT.wait(1)

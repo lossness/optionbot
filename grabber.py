@@ -69,7 +69,7 @@ def initiate_bbs_driver():
     discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
                                       options=chrome_options)
 
-    if DEBUG == 'dev':
+    if DEBUG == 'dev' or DEBUG == 'dev_post':
         try:
             last_element = discord_driver.find_elements_by_xpath(
                 "//*[@aria-label='bot-dev-talk (channel)']//div[@aria-label='Messages in bot-dev-talk']/child::div/child::div[@role='document']"
@@ -83,7 +83,7 @@ def initiate_bbs_driver():
         finally:
             return discord_driver
 
-    if DEBUG == 'bbs' or DEBUG is False:
+    if DEBUG == 'bbs' or DEBUG == 'bbs_post' or DEBUG is False:
         #channel = 'all-mod-plays-text (channel)'
         #child_element = 'Messages in all-mod-plays-text'
         try:
@@ -575,14 +575,14 @@ class TradeGrabber:
         try:
             global LAST_MESSAGE
             new_message = ''
-            if DEBUG == 'dev' or DEBUG == 'dev_live':
+            if DEBUG == 'dev' or DEBUG == 'dev_post':
                 try:
                     new_message = self.bbs_driver.find_elements_by_xpath(
                         "//*[@aria-label='bot-dev-talk (channel)']//div[@aria-label='Messages in bot-dev-talk']/child::div/child::div[@role='document']"
                     )[-1].text
                 except IndexError:
                     pass
-            if DEBUG == 'bbs' or DEBUG is False:
+            if DEBUG == 'bbs' or DEBUG == 'bbs_post' or DEBUG is False:
                 try:
                     new_message = self.bbs_driver.find_elements_by_xpath(
                         "//div[contains(@data-list-item-id, 'chat-messages___chat-messages')]//div[starts-with(@class, 'container')]//div[starts-with(@class, 'embedWrapper')]//div[starts-with(@class, 'grid')]"
@@ -832,7 +832,7 @@ class TradeGrabber:
                     elif ignore_trade and DEBUG is False:
                         return
 
-                    elif ignore_trade is False and DEBUG is False:
+                    elif ignore_trade is False:
                         if in_or_out_tup == 'in':
                             buy_price_tup = self.mask_buy_price(buy_price_tup)
                         if in_or_out_tup == 'out':
