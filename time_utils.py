@@ -60,6 +60,16 @@ def standard_datetime() -> str:
     return str(datetime_now)
 
 
+def newyork_datetime():
+    '''
+    Fetches the standard datetime for the local time in New York
+    and returns the datetime object.
+    '''
+    utc_now = pytz.utc.localize(datetime.datetime.utcnow())
+    ast_now = utc_now.astimezone(pytz.timezone("America/New_York"))
+    return ast_now.time()
+
+
 def month_converter(month) -> str:
     ''' Converts month to month number.
     JAN -> 01
@@ -83,3 +93,18 @@ def minutes_difference(trade_datetime):
     datetime_obj_difference = current_time_obj - trade_datetime_obj
     minutes = datetime_obj_difference.total_seconds() / 60
     return minutes
+
+
+def is_time_between(begin_time, end_time):
+    check_time = newyork_datetime()
+    if begin_time < end_time:
+        return check_time >= begin_time and check_time <= end_time
+    else:  # crosses midnight
+        return check_time >= begin_time or check_time <= end_time
+
+
+def prune_members_window():
+    if is_time_between(datetime.time(18, 30), datetime.time(18, 40)):
+        return True
+    else:
+        return False

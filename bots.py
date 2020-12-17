@@ -2,17 +2,22 @@ import discord
 import config
 import asyncio
 import os
+import csv
 
 from dotenv import load_dotenv
 from discord.ext import commands
-from time_utils import standard_datetime
+from time_utils import standard_datetime, prune_members_window
 from main_logger import logger
 from collections import namedtuple
 from instapost import force_make_image
 
 load_dotenv()
+intents = discord.Intents.default()
+intents.members = True
 dev_bot = commands.Bot(command_prefix='$', description='Dev server bot')
-fa_bot = commands.Bot(command_prefix='^', description='FA server bot')
+fa_bot = commands.Bot(command_prefix='^',
+                      description='FA server bot',
+                      intents=intents)
 FLOW_SIGNAL_CHANNEL = os.getenv("FA_SIGNAL_CHANNEL")
 FLOW_SIGNAL_TOKEN = os.getenv("FA_DISCORD_TOKEN")
 TRADE_CHANNEL = os.getenv("TRADE_CHANNEL")
@@ -98,7 +103,8 @@ async def post(message):
 @fa_bot.event
 async def on_ready():
     print(f'{fa_bot.user.name} has connected to Discord!')
-    await listener()
+    fa_bot.loop.create_task(listener())
+    fa_bot.loop.create_task(prune_members())
 
 
 @fa_bot.event
@@ -144,7 +150,35 @@ async def listener():
             logger.info(
                 f"{standard_datetime()} : FA MSG POSTED : {full_message}")
         else:
-            await asyncio.sleep(1)
+            await asyncio.sleep(2)
+
+
+@fa_bot.event
+async def prune_members():
+    while True:
+        if prune_members_window():
+            try:
+                discord_users = []
+                valid_members = []
+                with open('active_users.csv', mode='r') as csv_file:
+                    user_data = csv.reader(csv_file, delimiter=',')
+                    for lines in user_data:
+                        valid_members.append(lines[3])
+                    valid_members.remove('discord')
+                server = fa_bot.get_guild(771606400181862400)
+                role = discord.utils.get(server.roles, name='Members')
+                for member in server.members:
+                    if role in member.roles:
+                        discord_users.append(member)
+                for privledged_member in discord_users:
+                    if privledged_member.name not in valid_members:
+                        await member.remove_roles(role)
+            except:
+                pass
+            finally:
+                await asyncio.sleep(650)
+        else:
+            await asyncio.sleep(3)
 
 
 # # First, we must attach an event signalling when the bot has been
