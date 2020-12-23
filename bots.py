@@ -15,12 +15,13 @@ load_dotenv()
 intents = discord.Intents.default()
 intents.members = True
 dev_bot = commands.Bot(command_prefix='$', description='Dev server bot')
-fa_bot = commands.Bot(command_prefix='^',
+fa_bot = commands.Bot(command_prefix='!',
                       description='FA server bot',
                       intents=intents)
 FLOW_SIGNAL_CHANNEL = os.getenv("FA_SIGNAL_CHANNEL")
 FLOW_SIGNAL_TOKEN = os.getenv("FA_DISCORD_TOKEN")
 TRADE_CHANNEL = os.getenv("TRADE_CHANNEL")
+MEMBERS_PATH = os.getenv("ACTIVE_DISCORD_MEMBERS_PATH")
 TOKEN = os.getenv("DISCORD_TOKEN")
 EVENT = config.EVENT
 DEBUG = config.DEBUG
@@ -151,6 +152,29 @@ async def listener():
                 f"{standard_datetime()} : FA MSG POSTED : {full_message}")
         else:
             await asyncio.sleep(2)
+
+
+@fa_bot.command(pass_context=True)
+@commands.cooldown(1, 30, commands.BucketType.member)
+async def verify(ctx):
+    member = ctx.author
+    role = discord.utils.get(member.guild.roles, name='Members')
+    with open(f"{MEMBERS_PATH}.txt", "r") as f:
+        lines = f.readlines()
+        for num, line in enumerate(lines):
+            line = line.replace("\n", "")
+            lines[num] = line.lower()
+        if ctx.author.name.lower() in lines:
+            await discord.Member.add_roles(member, role)
+            await ctx.send("You have been added to Members!")
+        else:
+            await ctx.send("Hmm.. you are not on the list.")
+
+
+@verify.error
+async def verify_error(ctx, error):
+    if isinstance(error, commands.CommandOnCooldown):
+        await ctx.send("Try again in a couple minutes..")
 
 
 '''
