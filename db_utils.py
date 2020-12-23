@@ -129,6 +129,9 @@ def has_trade_match(database_trades: list, new_trade: tuple) -> bool:
         match_exists = False
 
     finally:
+        logger.info(
+            f"db_utils | has_trade_match function | {database_trades} | {new_trade} | {match_exists} | {trade_color}"
+        )
         return match_exists, trade_color
 
 
@@ -303,11 +306,15 @@ def verify_trade(parsed_trade: tuple, trade_comments):
             if has_matching_in is False:
                 raise IgnoreTrade
 
-        if 'in' in parsed_trade[0] and 'jen' in parsed_trade[6].lower(
-        ) and 'risk' in trade_comments.lower():
+        #if 'in' in parsed_trade[0] and 'jen' in parsed_trade[6].lower(
+        #) and 'risk' in trade_comments.lower():
+        #    raise IgnoreTrade
+        if 'in' in parsed_trade[0] and 'jen' in parsed_trade[6].lower():
+            raise IgnoreTrade
+        # for testing
+        if 'in' in parsed_trade[0] and 'kang' in parsed_trade[6].lower():
             raise IgnoreTrade
 
-        # for testing
         if filtered_trades == [] and 'in' in parsed_trade[0]:
             colors = [
                 'FA1', 'FA2', 'FA3', 'FA4', 'FA5', 'FA6', 'FA7', 'FA8', 'FA9',

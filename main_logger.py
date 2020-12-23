@@ -7,7 +7,7 @@ from time_utils import east_coast_datetime
 logger = logging.getLogger(__name__)
 
 # set log level
-logger.setLevel(logging.ERROR)
+logger.setLevel(logging.DEBUG)
 
 datetime = east_coast_datetime()
 # define file handler and set formatter

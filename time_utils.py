@@ -104,7 +104,7 @@ def is_time_between(begin_time, end_time):
 
 
 def prune_members_window():
-    if is_time_between(datetime.time(18, 30), datetime.time(18, 40)):
+    if is_time_between(datetime.time(18, 30), datetime.time(18, 35)):
         return True
     else:
         return False

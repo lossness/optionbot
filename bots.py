@@ -104,7 +104,7 @@ async def post(message):
 async def on_ready():
     print(f'{fa_bot.user.name} has connected to Discord!')
     fa_bot.loop.create_task(listener())
-    fa_bot.loop.create_task(prune_members())
+    #fa_bot.loop.create_task(prune_members())
 
 
 @fa_bot.event
@@ -153,6 +153,7 @@ async def listener():
             await asyncio.sleep(2)
 
 
+'''
 @fa_bot.event
 async def prune_members():
     while True:
@@ -162,8 +163,13 @@ async def prune_members():
                 valid_members = []
                 with open('active_users.csv', mode='r') as csv_file:
                     user_data = csv.reader(csv_file, delimiter=',')
-                    for lines in user_data:
-                        valid_members.append(lines[3])
+                    for line in user_data:
+                        if '#' in line[3]:
+                            line[3] = line[3].split("#")
+                            line[3].pop(1)
+                            line[3] = line[3][0]
+                        if line[3] != "":
+                            valid_members.append(line[3])
                     valid_members.remove('discord')
                 server = fa_bot.get_guild(771606400181862400)
                 role = discord.utils.get(server.roles, name='Members')
@@ -171,15 +177,18 @@ async def prune_members():
                     if role in member.roles:
                         discord_users.append(member)
                 for privledged_member in discord_users:
-                    if privledged_member.name not in valid_members:
-                        await member.remove_roles(role)
+                    if privledged_member.name.lower() not in valid_members:
+                        await privledged_member.remove_roles(role)
+                        print(
+                            f"{privledged_member.name} removed from discord members list"
+                        )
             except:
                 pass
             finally:
                 await asyncio.sleep(650)
         else:
             await asyncio.sleep(3)
-
+'''
 
 # # First, we must attach an event signalling when the bot has been
 # # closed to the client itself so we know when to fully close the event loop.

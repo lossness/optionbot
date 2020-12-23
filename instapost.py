@@ -249,60 +249,63 @@ def delayed_consumer(driver):
             if minutes_difference(trade[0]) > 5:
                 image_path = trade[1]
                 config.cooking_trades.remove(trade)
-                try:
-                    upload_element = WebDriverWait(driver, 20).until(
-                        EC.presence_of_element_located((
-                            By.XPATH,
-                            "//*[@id='react-root']//div[3][@data-testid='new-post-button']"
-                        )))
-                    upload_element.click()
-                    #driver.find_elements_by_css_selector('form input')[0].send_keys(
-                    #    image_path)
-                    form_field = WebDriverWait(driver, 8).until(
-                        EC.presence_of_all_elements_located(
-                            (By.CSS_SELECTOR, "form input")))
-                    form_field[0].send_keys(image_path)
-                    next_button = WebDriverWait(driver, 20).until(
-                        EC.presence_of_element_located(
-                            (By.XPATH, "//button[text()='Next']")))
-                    next_button.click()
-                    if config.RANDOM_TAG_COUNTER < 4:
-                        try:
-                            form_field_description = WebDriverWait(
-                                driver, 8
-                            ).until(
-                                EC.presence_of_all_elements_located((
-                                    By.XPATH,
-                                    "//*[@id='react-root']/section/div[2]/section[1]/div[1]/textarea"
-                                )))
-
-                            form_field_description[0].send_keys(
-                                f"\n.\n.\n.\n.\n{random.choice(NICHE_TAGS)} #flowalerts {random.choice(AVERAGE_TAGS)} {random.choice(FREQUENT_TAGS)} {random.choice(FREQUENT_TAGS)}"
-                            )
-                            config.RANDOM_TAG_COUNTER += 1
-                        except TimeoutException:
-                            pass
-                    share_button = WebDriverWait(driver, 20).until(
-                        EC.presence_of_element_located(
-                            (By.XPATH, "//button[text()='Share']")))
-                    share_button.click()
-                    EVENT.wait(5)
-
-                except (MakeImageError, NoSuchElementException,
-                        TimeoutException) as error:
-                    logger.fatal(f'{error}\n COULD NOT POST TO INSTA. ',
-                                 exc_info=True)
-                    # caption_field = WebDriverWait(driver, 5).until(
-                    # EC.presence_of_element_located((By.XPATH, "//textarea")))
-                    continue
-
-                except MatchingInNeverPosted:
-                    logger.fatal(
-                        "The matching in for this trade had an error while being posted to insta.  This trade will not post."
-                    )
-
-                finally:
+                if config.RANDOM_TAG_COUNTER >= 4:
                     config.new_delayed_trades.task_done()
+                else:
+                    try:
+                        upload_element = WebDriverWait(driver, 20).until(
+                            EC.presence_of_element_located((
+                                By.XPATH,
+                                "//*[@id='react-root']//div[3][@data-testid='new-post-button']"
+                            )))
+                        upload_element.click()
+                        #driver.find_elements_by_css_selector('form input')[0].send_keys(
+                        #    image_path)
+                        form_field = WebDriverWait(driver, 8).until(
+                            EC.presence_of_all_elements_located(
+                                (By.CSS_SELECTOR, "form input")))
+                        form_field[0].send_keys(image_path)
+                        next_button = WebDriverWait(driver, 20).until(
+                            EC.presence_of_element_located(
+                                (By.XPATH, "//button[text()='Next']")))
+                        next_button.click()
+                        if config.RANDOM_TAG_COUNTER < 4:
+                            try:
+                                form_field_description = WebDriverWait(
+                                    driver, 8
+                                ).until(
+                                    EC.presence_of_all_elements_located((
+                                        By.XPATH,
+                                        "//*[@id='react-root']/section/div[2]/section[1]/div[1]/textarea"
+                                    )))
+
+                                form_field_description[0].send_keys(
+                                    f"\n.\n.\n.\n.\n{random.choice(NICHE_TAGS)} #flowalerts {random.choice(AVERAGE_TAGS)} {random.choice(FREQUENT_TAGS)} {random.choice(FREQUENT_TAGS)}"
+                                )
+                                config.RANDOM_TAG_COUNTER += 1
+                            except TimeoutException:
+                                pass
+                        share_button = WebDriverWait(driver, 20).until(
+                            EC.presence_of_element_located(
+                                (By.XPATH, "//button[text()='Share']")))
+                        share_button.click()
+                        EVENT.wait(5)
+
+                    except (MakeImageError, NoSuchElementException,
+                            TimeoutException) as error:
+                        logger.fatal(f'{error}\n COULD NOT POST TO INSTA. ',
+                                     exc_info=True)
+                        # caption_field = WebDriverWait(driver, 5).until(
+                        # EC.presence_of_element_located((By.XPATH, "//textarea")))
+                        continue
+
+                    except MatchingInNeverPosted:
+                        logger.fatal(
+                            "The matching in for this trade had an error while being posted to insta.  This trade will not post."
+                        )
+
+                    finally:
+                        config.new_delayed_trades.task_done()
             else:
                 EVENT.wait(3)
     elif config.has_delayed_trade.acquire(blocking=False) is True:

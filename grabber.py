@@ -620,6 +620,7 @@ class TradeGrabber:
                 )))[0].text
             if new_etwit_message != LAST_ETWIT_MESSAGE.replace("Etwit\n", ""):
                 new_etwit_message = f"Etwit\n{new_etwit_message}"
+                logger.fatal(f"{new_etwit_message} DEBUG INFO")
                 config.new_unprocessed_trades.put(new_etwit_message)
                 config.has_unprocessed_trade.release()
                 LAST_ETWIT_MESSAGE = new_etwit_message
