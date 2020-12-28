@@ -174,14 +174,16 @@ async def verify(ctx):
             )
 
 
-@fa_bot.command(pass_context=True)
+@fa_bot.command()
 async def admin_verify(ctx):
-    with open(f"{INSTA_MEMBERS_PATH}", "r") as f:
+    with open(f"{INSTA_MEMBERS_PATH}.txt", "r") as f:
         lines = f.readlines()
         for num, line in enumerate(lines):
             line = line.replace("\n", "")
             lines[num] = line.lower()
-        if ctx.content.lower() in lines:
+        message = ctx.message.clean_content.split(" ")
+        message = message[1]
+        if message.lower() in lines:
             await ctx.send("Verified user.")
         else:
             await ctx.send("Not an active user.")
