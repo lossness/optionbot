@@ -22,6 +22,7 @@ FLOW_SIGNAL_CHANNEL = os.getenv("FA_SIGNAL_CHANNEL")
 FLOW_SIGNAL_TOKEN = os.getenv("FA_DISCORD_TOKEN")
 TRADE_CHANNEL = os.getenv("TRADE_CHANNEL")
 MEMBERS_PATH = os.getenv("ACTIVE_DISCORD_MEMBERS_PATH")
+INSTA_MEMBERS_PATH = os.getenv("ACTIVE_INSTA_MEMBERS_PATH")
 TOKEN = os.getenv("DISCORD_TOKEN")
 EVENT = config.EVENT
 DEBUG = config.DEBUG
@@ -168,7 +169,22 @@ async def verify(ctx):
             await discord.Member.add_roles(member, role)
             await ctx.send("You have been added to Members!")
         else:
-            await ctx.send("Hmm.. you are not on the list.")
+            await ctx.send(
+                "Hmm.. you are not on the list. Please register on flowalerts.com and make sure you provide a discord username!"
+            )
+
+
+@fa_bot.command(pass_context=True)
+async def admin_verify(ctx):
+    with open(f"{INSTA_MEMBERS_PATH}", "r") as f:
+        lines = f.readlines()
+        for num, line in enumerate(lines):
+            line = line.replace("\n", "")
+            lines[num] = line.lower()
+        if ctx.content.lower() in lines:
+            await ctx.send("Verified user.")
+        else:
+            await ctx.send("Not an active user.")
 
 
 @verify.error
@@ -177,7 +193,12 @@ async def verify_error(ctx, error):
         await ctx.send("Try again in a couple minutes..")
 
 
-'''
+@verify.error
+async def verify_command_not_found(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        await ctx.send("You typed the command wrong! Please type !verify")
+
+
 @fa_bot.event
 async def prune_members():
     while True:
@@ -212,7 +233,7 @@ async def prune_members():
                 await asyncio.sleep(650)
         else:
             await asyncio.sleep(3)
-'''
+
 
 # # First, we must attach an event signalling when the bot has been
 # # closed to the client itself so we know when to fully close the event loop.

@@ -130,7 +130,7 @@ def has_trade_match(database_trades: list, new_trade: tuple) -> bool:
 
     finally:
         logger.info(
-            f"db_utils | has_trade_match function | {database_trades} | {new_trade} | {match_exists} | {trade_color}"
+            f"db_utils | has_trade_match function | {new_trade} | {match_exists} | {trade_color}"
         )
         return match_exists, trade_color
 
