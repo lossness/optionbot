@@ -9,7 +9,8 @@ from discord.ext import commands
 from time_utils import standard_datetime, prune_members_window
 from main_logger import logger
 from collections import namedtuple
-from instapost import force_make_image
+from instapost import force_make_image, make_image
+from db_utils import prune_completed_trades
 
 load_dotenv()
 intents = discord.Intents.default()
@@ -151,6 +152,8 @@ async def listener():
             config.new_discord_trades.task_done()
             logger.info(
                 f"{standard_datetime()} : FA MSG POSTED : {full_message}")
+            prune_completed_trades()
+            make_image(full_message[1])
         else:
             await asyncio.sleep(2)
 

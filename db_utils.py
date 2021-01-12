@@ -283,7 +283,7 @@ def verify_trade(parsed_trade: tuple, trade_comments):
         if 'in' in parsed_trade[0]:
             is_currently_open = trade_currently_open(filtered_trades_no_color,
                                                      tuple(parsed_trade))
-            if is_currently_open:
+            if is_currently_open and 'Etwit' not in parsed_trade:
                 ignore_trade = True
                 raise IgnoreTrade
 
@@ -312,7 +312,14 @@ def verify_trade(parsed_trade: tuple, trade_comments):
         if 'in' in parsed_trade[0] and 'jen' in parsed_trade[6].lower():
             raise IgnoreTrade
         # for testing
-        if 'in' in parsed_trade[0] and 'kang' in parsed_trade[6].lower():
+        if 'in' in parsed_trade[0] and 'kang' in parsed_trade[6].lower(
+        ) and 'lotto' in trade_comments.lower():
+            raise IgnoreTrade
+        if 'in' in parsed_trade[0] and 'kang' in parsed_trade[6].lower(
+        ) and 'risk' in trade_comments.lower():
+            raise IgnoreTrade
+        if 'in' in parsed_trade[0] and 'kang' in parsed_trade[6].lower(
+        ) and '#lotto' in trade_comments.lower():
             raise IgnoreTrade
 
         if filtered_trades == [] and 'in' in parsed_trade[0]:

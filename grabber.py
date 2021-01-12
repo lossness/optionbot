@@ -349,7 +349,7 @@ class TradeGrabber:
                         break
 
                     if potential_ticker in lines and potential_ticker.upper(
-                    ) not in ['OUT', 'ALL', 'FAST', 'ROLL', 'SEE'
+                    ) not in ['OUT', 'ALL', 'FAST', 'ROLL', 'SEE', 'I'
                               ] and result != potential_ticker:
                         result = potential_ticker
                         ticker_matches += 1
@@ -650,7 +650,11 @@ class TradeGrabber:
             new_message[0] = new_message[0].replace("1/2 ", "")
             new_message[0] = new_message[0].replace("1/3 ", "")
             new_message[0] = new_message[0].replace("1/4 ", "")
+            new_message[0] = new_message[0].replace("3/4 ", "")
             new_message[-1] = new_message[-1].upper()
+            new_message[-1] = new_message[-1].replace("LIKE ", "")
+            new_message[-1] = new_message[-1].replace("DONT ", "")
+            new_message[-1] = new_message[-1].replace("HOW ", "")
             try:
                 expiration = re.findall(
                     r"((?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)[a-z]*(?:-|\.|\s|,)\s?\d{,2}[a-z]*(0?[1-9]|[1-2][0-9]|[30-31]))",
@@ -785,17 +789,18 @@ class TradeGrabber:
                         price_difference = percent_difference(
                             float(live_buy_price), float(buy_price_tup))
 
-                        if price_difference > 250 and in_or_out_tup == 'out':
+                        if price_difference > 500 and in_or_out_tup == 'out':
                             buy_price_tup = live_buy_price
                             logger.error(
                                 r"Last option price differs more than 25% from traders price! Using live.."
                             )
-                        elif price_difference > 250 and in_or_out_tup == 'in':
+                        elif price_difference > 350 and in_or_out_tup == 'in':
                             buy_price_tup = 'error'
                             logger.error(
                                 r"Last option price differs more than 25% from traders price! Ignoring trade.."
                             )
-
+                if str(trade_expiration_tup).startswith('0'):
+                    trade_expiration_tup = str(trade_expiration_tup[1:])
                 trade_tuple = (in_or_out_tup, stock_ticker_tup, datetime_tup,
                                strike_price_tup, call_or_put_tup,
                                buy_price_tup, trade_author_tup,
@@ -847,8 +852,8 @@ class TradeGrabber:
                             f"Producer received a fresh trade : {valid_trade}")
                         trade_id = update_table(valid_trade)
                         message = (trade_id, valid_trade)
-                        config.new_trades.put(message)
-                        config.has_trade.release()
+                        #config.new_trades.put(message)
+                        #config.has_trade.release()
                         config.new_discord_trades.put(message)
                         config.has_new_discord_trade.release()
 

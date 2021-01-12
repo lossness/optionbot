@@ -399,6 +399,8 @@ class ErrorChecker:
                 new_expiration = matched_list[5]
                 new_expiration = new_expiration.replace("'", "")
                 new_expiration = new_expiration.replace(' ', '')
+                if str(new_expiration).startswith('0'):
+                    new_expiration = new_expiration[1:]
 
             elif len(matched_trades) > 1:
                 raise MultipleMatchingIn
