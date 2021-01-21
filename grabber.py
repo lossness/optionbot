@@ -663,8 +663,11 @@ class TradeGrabber:
                 month = date.split()[0]
                 day = date.split()[1]
                 month_number = month_converter(month)
-                new_message[-1] = new_message[-1].replace(
-                    f"{month} {day}", f"{month_number}/{day}")
+                for position, item in enumerate(new_message):
+                    if f"{month} {day}" in item:
+                        new_message[position] = new_message[position].replace(
+                            f"{month} {day}", f"{month_number}/{day}")
+
             except IndexError:
                 logger.info(
                     f"No expiration given for etwit trade : {new_message}")
@@ -789,12 +792,12 @@ class TradeGrabber:
                         price_difference = percent_difference(
                             float(live_buy_price), float(buy_price_tup))
 
-                        if price_difference > 500 and in_or_out_tup == 'out':
+                        if price_difference > 1000 and in_or_out_tup == 'out':
                             buy_price_tup = live_buy_price
                             logger.error(
                                 r"Last option price differs more than 25% from traders price! Using live.."
                             )
-                        elif price_difference > 350 and in_or_out_tup == 'in':
+                        elif price_difference > 1000 and in_or_out_tup == 'in':
                             buy_price_tup = 'error'
                             logger.error(
                                 r"Last option price differs more than 25% from traders price! Ignoring trade.."
@@ -863,3 +866,5 @@ class TradeGrabber:
 
             except IndexError:
                 pass
+            finally:
+                EVENT.wait(.5)

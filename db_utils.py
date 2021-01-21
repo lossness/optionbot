@@ -264,6 +264,24 @@ def prune_completed_trades():
             con.close()
 
 
+def get_open_trades() -> tuple:
+    '''
+    Queries open trade sql database and returns
+    a tuple of trades that have not been exited 
+    yet.
+    '''
+    try:
+        con = db_connect()
+        cur = con.cursor()
+        open_trades_sql = "SELECT in_or_out, ticker, strike_price, call_or_put, expiration from trades"
+        cur.execute(open_trades_sql)
+        open_trades = cur.fetchall()
+    except sqlite3.Error as error:
+        logger.fatal(f"{error}", exc_info=True)
+    finally:
+        return tuple(open_trades)
+
+
 def verify_trade(parsed_trade: tuple, trade_comments):
     try:
         is_out = False
@@ -312,14 +330,9 @@ def verify_trade(parsed_trade: tuple, trade_comments):
         if 'in' in parsed_trade[0] and 'jen' in parsed_trade[6].lower():
             raise IgnoreTrade
         # for testing
-        if 'in' in parsed_trade[0] and 'kang' in parsed_trade[6].lower(
-        ) and 'lotto' in trade_comments.lower():
+        if 'in' in parsed_trade[0] and 'kang' in parsed_trade[6].lower():
             raise IgnoreTrade
-        if 'in' in parsed_trade[0] and 'kang' in parsed_trade[6].lower(
-        ) and 'risk' in trade_comments.lower():
-            raise IgnoreTrade
-        if 'in' in parsed_trade[0] and 'kang' in parsed_trade[6].lower(
-        ) and '#lotto' in trade_comments.lower():
+        if 'in' in parsed_trade[0] and 'maria' in parsed_trade[6].lower():
             raise IgnoreTrade
 
         if filtered_trades == [] and 'in' in parsed_trade[0]:

@@ -10,17 +10,19 @@ from time_utils import standard_datetime, prune_members_window
 from main_logger import logger
 from collections import namedtuple
 from instapost import force_make_image, make_image
-from db_utils import prune_completed_trades
+from db_utils import prune_completed_trades, get_open_trades
 
 load_dotenv()
 intents = discord.Intents.default()
 intents.members = True
 dev_bot = commands.Bot(command_prefix='$', description='Dev server bot')
 fa_bot = commands.Bot(command_prefix='!',
+                      case_insensitive=True,
                       description='FA server bot',
                       intents=intents)
 FLOW_SIGNAL_CHANNEL = os.getenv("FA_SIGNAL_CHANNEL")
 FLOW_SIGNAL_TOKEN = os.getenv("FA_DISCORD_TOKEN")
+DEV_TESTING_CHANNEL = os.getenv("DEV_TESTING_CHANNEL")
 TRADE_CHANNEL = os.getenv("TRADE_CHANNEL")
 MEMBERS_PATH = os.getenv("ACTIVE_DISCORD_MEMBERS_PATH")
 INSTA_MEMBERS_PATH = os.getenv("ACTIVE_INSTA_MEMBERS_PATH")
@@ -96,8 +98,9 @@ async def post(message):
         filename = force_make_image(trade_tuple)
         split_message += [filename]
         trade_tuple = tuple(split_message)
-        config.new_trades.put(trade_tuple)
-        config.has_trade.release()
+        config.new_discord_trades.put(message)
+        config.has_new_discord_trade.release()
+
     except Exception:
         pass
     await message.send("Trade sent for posting!")
@@ -112,7 +115,10 @@ async def on_ready():
 
 @fa_bot.event
 async def listener():
+    # for production change to while True and DEBUG False:
+    # for testing after market hours change to while True.
     while True and DEBUG is False:
+        '''
         if config.has_new_discord_trade.acquire(timeout=2):
             full_message = config.new_discord_trades.get()
             in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, trader, expiration, color, date, time = full_message[
@@ -129,26 +135,37 @@ async def listener():
             )
             embed.add_field(name="Ticker:",
                             value=f"{ticker.upper()}",
-                            inline=False)
+                            inline=True)
             embed.add_field(name="Type:",
                             value=f"{call_or_put.upper()}",
-                            inline=False)
+                            inline=True)
             embed.add_field(name="Position:",
                             value=f"{in_or_out.upper()}",
-                            inline=False)
+                            inline=True)
             embed.add_field(name="Strike:",
                             value=f"{strike_price}",
-                            inline=False)
-            embed.add_field(name="Price:", value=f"${buy_price}", inline=False)
+                            inline=True)
+            embed.add_field(name="Price:", value=f"${buy_price}", inline=True)
             embed.add_field(name="Expiration:",
                             value=f"{expiration}",
-                            inline=False)
-            embed.set_footer(
-                text=
-                "This is not investment advice, all data on this post represents a personal trade made public for others to see. Trading and investing carries a HIGH LEVEL OF RISK, you could lose some or all of your investment. Trading commodities or any other financial instrument may not be suitable for all traders. We accept no liability for any losses or damages you may incur—this means that you alone are responsible for your actions in any trading or investing activities. "
-            )
+                            inline=True)
             channel = fa_bot.get_channel(id=int(FLOW_SIGNAL_CHANNEL))
             await channel.send(embed=embed)
+            '''
+        if config.has_new_discord_trade.acquire(timeout=2):
+            full_message = config.new_discord_trades.get()
+            open_trades = get_open_trades()
+            in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, trader, expiration, color, date, time = full_message[
+                1]
+            #helpful_explanation provides a little more explanation on the position of the trade.
+            helpful_explanation = ""
+            if in_or_out.lower() == 'in':
+                helpful_explanation = "(Buying)"
+            if in_or_out.lower() == 'out':
+                helpful_explanation = ("(Selling)")
+            channel = fa_bot.get_channel(id=int(FLOW_SIGNAL_CHANNEL))
+            message = f"```\nNEW SIGNAL\n \nPosition: {in_or_out.upper()} {helpful_explanation}\nTicker: {ticker.upper()}\nStrike: {strike_price}\nPrice: ${buy_price}\nType: {call_or_put.upper()}\nExpiration: {expiration}\n```"
+            await channel.send(message)
             config.new_discord_trades.task_done()
             logger.info(
                 f"{standard_datetime()} : FA MSG POSTED : {full_message}")
@@ -239,6 +256,30 @@ async def prune_members():
         else:
             await asyncio.sleep(3)
 
+
+'''
+#DEBUG FUNCTIONS ON TEST SERVER
+@dev_bot.event
+async def test_listener():
+    while DEBUG:
+        if config.has_new_discord_trade.acquire(timeout=2):
+            full_message = config.new_discord_trades.get()
+            open_trades = get_open_trades()
+            in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, trader, expiration, color, date, time = full_message[
+                1]
+            #helpful_explanation provides a little more explanation on the position of the trade.
+            helpful_explanation = ""
+            if in_or_out.lower() == 'in':
+                helpful_explanation = "(Buying)"
+            if in_or_out.lower() == 'out':
+                helpful_explanation = ("(Selling)")
+
+            channel = dev_bot.get_channel(id=int(DEV_TESTING_CHANNEL))
+            message = f"```\nNEW SIGNAL\n \nPosition: {in_or_out.upper()} {helpful_explanation}\nTicker: {ticker.upper()}\nStrike: {strike_price}\nPrice: ${buy_price}\nType: {call_or_put.upper()}\nExpiration: {expiration}\n```"
+            await channel.send(message)
+        else:
+            await asyncio.sleep(2)
+'''
 
 # # First, we must attach an event signalling when the bot has been
 # # closed to the client itself so we know when to fully close the event loop.
