@@ -196,7 +196,7 @@ async def verify(ctx):
 
 @fa_bot.command()
 async def admin_verify(ctx):
-    with open(f"{INSTA_MEMBERS_PATH}.txt", "r") as f:
+    with open(f"{MEMBERS_PATH}.txt", "r") as f:
         lines = f.readlines()
         for num, line in enumerate(lines):
             line = line.replace("\n", "")

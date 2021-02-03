@@ -52,8 +52,7 @@ if os.name == 'nt':
 if os.name == 'posix':
     DISCORD_DRIVER_PATH = r'/usr/bin/chromedriver'
     INSTA_DRIVER_PATH = r'/usr/bin/chromedriver'
-
-
+'''
 def initiate_bbs_driver():
     chrome_options = Options()
     # chrome_options.add_argument("--window-size=1920,1080")
@@ -99,6 +98,7 @@ def initiate_bbs_driver():
             pass
         finally:
             return discord_driver
+'''
 
 
 def initiate_etwitter_driver():
@@ -119,7 +119,7 @@ def initiate_etwitter_driver():
 
 class TradeGrabber:
     def __init__(self):
-        self.bbs_driver = initiate_bbs_driver()
+        #self.bbs_driver = initiate_bbs_driver()
         self.etwitter_driver = initiate_etwitter_driver()
         self.LAST_MESSAGE = LAST_MESSAGE
         self.LAST_FIXED_MESSAGE = LAST_FIXED_MESSAGE
@@ -571,6 +571,7 @@ class TradeGrabber:
         except:
             pass
 
+    '''
     def bbs_discord_producer(self):
         try:
             global LAST_MESSAGE
@@ -609,6 +610,7 @@ class TradeGrabber:
             pass
         except IndexError:
             pass
+    '''
 
     def etwitter_producer(self):
         try:

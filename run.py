@@ -79,8 +79,7 @@ def is_market_open():
 #         logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
 #     finally:
 #         return discord_driver
-
-
+'''
 def check_discord():
     listen_spinner = Spinner('Listening for new messages ')
     while True:
@@ -101,9 +100,11 @@ def check_discord():
         else:
             listen_spinner.next()
             EVENT.wait(3)
+'''
 
 
 def check_etwitter():
+    listen_spinner = Spinner('Listening for new Messages ')
     while True:
         if is_market_open():
             try:
@@ -113,8 +114,10 @@ def check_etwitter():
                 continue
             finally:
                 EVENT.wait(1)
+                listen_spinner.next()
         else:
             EVENT.wait(3)
+            listen_spinner.next()
 
 
 def check_for_unprocessed_messages():
@@ -224,14 +227,14 @@ def run_loop(loop=get_the_loop()):
 
 
 def main():
-    bbs_scraper = threading.Thread(target=check_discord)
+    #bbs_scraper = threading.Thread(target=check_discord)
     etwit_scraper = threading.Thread(target=check_etwitter)
     #poster = threading.Thread(target=post_driver)
     delayed_poster = threading.Thread(target=delayed_post_driver)
     processor = threading.Thread(target=check_for_unprocessed_messages)
     start_bots = threading.Thread(target=run_loop, daemon=True)
 
-    bbs_scraper.start()
+    #bbs_scraper.start()
     etwit_scraper.start()
     processor.start()
     #poster.start()
@@ -243,7 +246,7 @@ def main():
     config.new_unprocessed_trades.join()
     config.new_discord_trades.join()
 
-    bbs_scraper.join()
+    #bbs_scraper.join()
     etwit_scraper.join()
     delayed_poster.join()
     processor.join()
