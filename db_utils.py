@@ -15,36 +15,11 @@ DEBUG = config.DEBUG
 
 
 def db_connect(db_path=DEFAULT_PATH):
+    """Takes the default path of the SQL trade database, creates
+    a connection, and returns the connection object"""
+
     con = sqlite3.connect(db_path)
     return con
-
-
-def create_table():
-    con = db_connect()
-    cur = con.cursor()
-
-    traders_sql = """
-    CREATE TABLE traders (
-        id integer PRIMARY KEY,
-        user_name text NOT NULL)"""
-
-    cur.execute(traders_sql)
-
-    trades_sql = """
-    CREATE TABLE trades (
-        id integer PRIMARY KEY,
-        in_or_out text NOT NULL,
-        ticker text NOT NULL,
-        datetime text NOT NULL,
-        option_price text NOT NULL,
-        call_or_put text NOT NULL,
-        buy_price text NOT NULL,
-        user_name text NOT NULL,
-        color text NOT NULL,
-        posted text NOT NULL,
-        FOREIGN KEY (user_name) REFERENCES traders (id))"""
-
-    cur.execute(trades_sql)
 
 
 def is_trade_already_out(database_trades: list, new_trade: tuple) -> bool:
@@ -72,10 +47,16 @@ def is_trade_already_out(database_trades: list, new_trade: tuple) -> bool:
 
 
 def duplicate_check(database_trades: list, new_trade: tuple) -> bool:
-    '''
-    This will check if the trade is in the database already.
-    returns True or False.
-    '''
+    """
+    This checks if newly scraped trade is in the database already.
+
+    'database_trades': contains all trades inside the SQL database
+    'new_trade': the newly scraped trade
+
+    Runs a RegEx findall match on 'database_trades' with 'new_trade' as the
+     pattern and returns a boolean if the trade is already recorded in the database.
+    """
+
     is_duplicate = True
     if database_trades == []:
         is_duplicate = False
@@ -96,11 +77,17 @@ def duplicate_check(database_trades: list, new_trade: tuple) -> bool:
         return is_duplicate
 
 
-def has_trade_match(database_trades: list, new_trade: tuple) -> bool:
-    '''
-    This will check the database for a matching IN trade and return
-    True or False depending if matched.
-    '''
+def has_trade_match(database_trades: list, new_trade: tuple) -> bool, str:
+    """
+    This checks if a new trade has a matching trade recorded in the database
+    with the 'in_or_out' variable equal to 'IN' and returns a bool and that 
+    trades color.
+
+    'trade_color': Set if a trade match is found. Equal to 'color' variable in 
+    matching database trade.
+    
+
+    """
     match_exists = False
     trade_color = 'error_in_has_trade_match'
     try:
@@ -283,6 +270,7 @@ def get_open_trades() -> tuple:
 
 
 def verify_trade(parsed_trade: tuple, trade_comments):
+    ''
     try:
         is_out = False
         is_duplicate = False
@@ -563,3 +551,34 @@ def convert_date_to_text(date):
 
     finally:
         return converted_date
+
+
+#Dev functions / first time creation
+
+def create_table():
+    """Recreates both existing tables 'traders, trades'."""
+    con = db_connect()
+    cur = con.cursor()
+
+    traders_sql = """
+    CREATE TABLE traders (
+        id integer PRIMARY KEY,
+        user_name text NOT NULL)"""
+
+    cur.execute(traders_sql)
+
+    trades_sql = """
+    CREATE TABLE trades (
+        id integer PRIMARY KEY,
+        in_or_out text NOT NULL,
+        ticker text NOT NULL,
+        datetime text NOT NULL,
+        option_price text NOT NULL,
+        call_or_put text NOT NULL,
+        buy_price text NOT NULL,
+        user_name text NOT NULL,
+        color text NOT NULL,
+        posted text NOT NULL,
+        FOREIGN KEY (user_name) REFERENCES traders (id))"""
+
+    cur.execute(trades_sql)
