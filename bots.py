@@ -118,40 +118,6 @@ async def listener():
     # for production change to while True and DEBUG False:
     # for testing after market hours change to while True.
     while True and DEBUG is False:
-        '''
-        if config.has_new_discord_trade.acquire(timeout=2):
-            full_message = config.new_discord_trades.get()
-            in_or_out, ticker, datetime, strike_price, call_or_put, buy_price, trader, expiration, color, date, time = full_message[
-                1]
-            if 'in' in in_or_out:
-                in_or_out = 'buy'
-            if 'out' in in_or_out:
-                in_or_out = 'sell'
-            embed = discord.Embed(title="Signal", colour=0xffff80)
-            embed.set_author(
-                name="FlowAlerts",
-                icon_url=
-                "https://www.flowalerts.com/wp-content/uploads/2020/09/cropped-Untitled-3-32x32.png"
-            )
-            embed.add_field(name="Ticker:",
-                            value=f"{ticker.upper()}",
-                            inline=True)
-            embed.add_field(name="Type:",
-                            value=f"{call_or_put.upper()}",
-                            inline=True)
-            embed.add_field(name="Position:",
-                            value=f"{in_or_out.upper()}",
-                            inline=True)
-            embed.add_field(name="Strike:",
-                            value=f"{strike_price}",
-                            inline=True)
-            embed.add_field(name="Price:", value=f"${buy_price}", inline=True)
-            embed.add_field(name="Expiration:",
-                            value=f"{expiration}",
-                            inline=True)
-            channel = fa_bot.get_channel(id=int(FLOW_SIGNAL_CHANNEL))
-            await channel.send(embed=embed)
-            '''
         if config.has_new_discord_trade.acquire(timeout=2):
             full_message = config.new_discord_trades.get()
             open_trades = get_open_trades()
@@ -257,7 +223,7 @@ async def prune_members():
             await asyncio.sleep(3)
 
 
-'''
+"""
 #DEBUG FUNCTIONS ON TEST SERVER
 @dev_bot.event
 async def test_listener():
@@ -279,7 +245,7 @@ async def test_listener():
             await channel.send(message)
         else:
             await asyncio.sleep(2)
-'''
+
 
 # # First, we must attach an event signalling when the bot has been
 # # closed to the client itself so we know when to fully close the event loop.
@@ -335,3 +301,4 @@ async def test_listener():
 #         loop.run_forever()
 #     finally:
 #         loop.stop()
+"""

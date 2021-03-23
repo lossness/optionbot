@@ -15,18 +15,21 @@ DEBUG = config.DEBUG
 
 
 def db_connect(db_path=DEFAULT_PATH):
-    """Takes the default path of the SQL trade database, creates
-    a connection, and returns the connection object"""
-
+    """
+    Takes the default path of the SQL trade database, creates
+    a connection, and returns the connection object
+    
+    """
     con = sqlite3.connect(db_path)
     return con
 
 
 def is_trade_already_out(database_trades: list, new_trade: tuple) -> bool:
-    '''
-    This checks if the trade already has one IN and one OUT
+    """
+    Checks if the trade already has one IN and one OUT
     trade. Returns True or False.
-    '''
+    
+    """
     is_out = False
     try:
         if database_trades == []:
@@ -55,6 +58,7 @@ def duplicate_check(database_trades: list, new_trade: tuple) -> bool:
 
     Runs a RegEx findall match on 'database_trades' with 'new_trade' as the
      pattern and returns a boolean if the trade is already recorded in the database.
+
     """
 
     is_duplicate = True
@@ -77,7 +81,7 @@ def duplicate_check(database_trades: list, new_trade: tuple) -> bool:
         return is_duplicate
 
 
-def has_trade_match(database_trades: list, new_trade: tuple) -> bool, str:
+def has_trade_match(database_trades: list, new_trade: tuple):
     """
     This checks if a new trade has a matching trade recorded in the database
     with the 'in_or_out' variable equal to 'IN' and returns a bool and that 
@@ -123,10 +127,11 @@ def has_trade_match(database_trades: list, new_trade: tuple) -> bool, str:
 
 
 def trade_currently_open(database_trades: list, new_trade: tuple) -> bool:
-    '''
+    """
     Checks if a trade with the same ticker and expiration has a IN
     in the database and does not have a matching out yet
-    '''
+    
+    """
     try:
         currently_open = True
         if database_trades == []:
@@ -148,10 +153,11 @@ def trade_currently_open(database_trades: list, new_trade: tuple) -> bool:
 
 
 def is_posted_to_insta(new_trade: tuple) -> str:
-    '''
+    """
     Called during insta posting phase on out trades. Checks if
     the matching IN trade was posted.
-    '''
+
+    """
     try:
         insta_posted = "false"
         con = db_connect()
@@ -181,6 +187,11 @@ def is_posted_to_insta(new_trade: tuple) -> str:
 
 
 def db_insta_posting_successful(trade_id: str):
+    """
+    Updates the 'insta_posted' column from 'false' to 'true' upon the 
+    parsed trade being posted to instagram.
+
+    """
     try:
         con = db_connect()
         cur = con.cursor()
@@ -201,13 +212,16 @@ def db_insta_posting_successful(trade_id: str):
 
 
 def prune_completed_trades():
-    '''
+    """
     1. Queries all trades by the following parameters,
     ticker, strike_price, call_or_put, user_name, expiration
+
     2. Adds all trades with these parameters that have 2 entries.
+
     3. Inserts the trades into the completed_trades table and removes
     them from the 'trades' table. 
-    '''
+
+    """
     try:
         con = db_connect()
         cur = con.cursor()
@@ -252,11 +266,12 @@ def prune_completed_trades():
 
 
 def get_open_trades() -> tuple:
-    '''
+    """
     Queries open trade sql database and returns
     a tuple of trades that have not been exited 
     yet.
-    '''
+    
+    """
     try:
         con = db_connect()
         cur = con.cursor()
@@ -270,7 +285,31 @@ def get_open_trades() -> tuple:
 
 
 def verify_trade(parsed_trade: tuple, trade_comments):
-    ''
+    """
+    The main function that compares the new trade to the database and returns a
+    tuple of flags that are used to determine if the data should be posted.
+
+    ...
+
+    Parameters
+    ---------
+    parsed_trade : tuple
+        A tuple containing variables parsed from a new trade message.
+
+    The following flags / bools are used in relation to their self explanations
+    being true when checking the SQL database.
+    is_out : bool
+        the trade has an IN and matching OUT trade
+    is_duplicate : bool
+        the trade has already been saved in the database
+    has_matching_in : bool
+        Set to True if parsed_trade is an exiting trade and has a match
+    trade_color : str
+        gets changed to a color if applicable
+    ignore_trade : bool
+        if True the trade will not be posted
+
+    """
     try:
         is_out = False
         is_duplicate = False
@@ -361,11 +400,12 @@ def verify_trade(parsed_trade: tuple, trade_comments):
 
 
 def update_table(parsed_trade: tuple) -> str:
-    '''
+    """
     Updates the database with a trade.
 
     Returns: the trades unique ID in database.
-    '''
+
+    """
     try:
         trade_id = ''
         con = db_connect()
@@ -392,9 +432,10 @@ def update_table(parsed_trade: tuple) -> str:
 
 
 def delete_from_open_trades(parsed_trade: tuple):
-    '''
-    Deletes a given trade from the live table named 'trades'
-    '''
+    """
+    Deletes parsed_trade from the 'trades' table in the SQL database
+    
+    """
     try:
         con = db_connect()
         cur = con.cursor()
@@ -417,6 +458,10 @@ def delete_from_open_trades(parsed_trade: tuple):
 
 
 def update_error_table(parsed_trade: tuple):
+    """
+    Adds parsed_trade to the 'error_trades' SQL database table
+
+    """
     try:
         con = db_connect()
         cur = con.cursor()
@@ -440,6 +485,10 @@ def update_error_table(parsed_trade: tuple):
 
 
 def update_completed_table(parsed_trade: tuple):
+    """
+    Adds parsed_trade to the 'completed_trades' SQL database table
+
+    """
     try:
         con = db_connect()
         cur = con.cursor()
@@ -459,6 +508,73 @@ def update_completed_table(parsed_trade: tuple):
     finally:
         if (con):
             con.close()
+
+
+def convert_date(date: str) -> str:
+    """
+    Converts an expiration date from 'MM/DD' to the format
+    'MM/DD/YYYY'
+
+    """
+    try:
+        split_date = date.split('/')
+        month = split_date[0]
+        day = split_date[1]
+        year = '2020'
+        if len(split_date) == 3:
+            year = split_date[2]
+        if month.isalpha():
+            if 'DEC' not in month.lower():
+                year = '2021'
+        if month.isdigit():
+            if int(month) != 12:
+                year = '2021'
+        if len(year) == 2:
+            year = '20' + year
+        if len(day) == 1:
+            day = '0' + day
+        if len(month) == 1:
+            month = '0' + month
+        converted_date = f"{month}/{day}/{year}"
+
+    except (TypeError, ValueError, KeyError, IndexError) as error:
+        logger.error(f"{error}", exc_info=True)
+        converted_date = 'error'
+
+    finally:
+        return converted_date
+
+
+#Dev functions / first time creation
+
+
+def create_table():
+    """Recreates both existing tables 'traders, trades'."""
+    con = db_connect()
+    cur = con.cursor()
+
+    traders_sql = """
+    CREATE TABLE traders (
+        id integer PRIMARY KEY,
+        user_name text NOT NULL)"""
+
+    cur.execute(traders_sql)
+
+    trades_sql = """
+    CREATE TABLE trades (
+        id integer PRIMARY KEY,
+        in_or_out text NOT NULL,
+        ticker text NOT NULL,
+        datetime text NOT NULL,
+        option_price text NOT NULL,
+        call_or_put text NOT NULL,
+        buy_price text NOT NULL,
+        user_name text NOT NULL,
+        color text NOT NULL,
+        posted text NOT NULL,
+        FOREIGN KEY (user_name) REFERENCES traders (id))"""
+
+    cur.execute(trades_sql)
 
 
 def create_trader(trader: str):
@@ -492,41 +608,7 @@ def create_trader(trader: str):
             print("the sqlite connection is closed")
 
 
-def convert_date(date) -> str:
-    '''
-    Converts an expiration date like 10/23 to the format
-    10/23/2020.
-    '''
-    try:
-        split_date = date.split('/')
-        month = split_date[0]
-        day = split_date[1]
-        year = '2020'
-        if len(split_date) == 3:
-            year = split_date[2]
-        if month.isalpha():
-            if 'DEC' not in month.lower():
-                year = '2021'
-        if month.isdigit():
-            if int(month) != 12:
-                year = '2021'
-        if len(year) == 2:
-            year = '20' + year
-        if len(day) == 1:
-            day = '0' + day
-        if len(month) == 1:
-            month = '0' + month
-        converted_date = f"{month}/{day}/{year}"
-
-    except (TypeError, ValueError, KeyError, IndexError) as error:
-        logger.error(f"{error}", exc_info=True)
-        converted_date = 'error'
-
-    finally:
-        return converted_date
-
-
-def convert_date_to_text(date):
+def convert_date_to_text(date: str) -> str:
     try:
         split_date = date.split('/')
         month = split_date[0]
@@ -551,34 +633,3 @@ def convert_date_to_text(date):
 
     finally:
         return converted_date
-
-
-#Dev functions / first time creation
-
-def create_table():
-    """Recreates both existing tables 'traders, trades'."""
-    con = db_connect()
-    cur = con.cursor()
-
-    traders_sql = """
-    CREATE TABLE traders (
-        id integer PRIMARY KEY,
-        user_name text NOT NULL)"""
-
-    cur.execute(traders_sql)
-
-    trades_sql = """
-    CREATE TABLE trades (
-        id integer PRIMARY KEY,
-        in_or_out text NOT NULL,
-        ticker text NOT NULL,
-        datetime text NOT NULL,
-        option_price text NOT NULL,
-        call_or_put text NOT NULL,
-        buy_price text NOT NULL,
-        user_name text NOT NULL,
-        color text NOT NULL,
-        posted text NOT NULL,
-        FOREIGN KEY (user_name) REFERENCES traders (id))"""
-
-    cur.execute(trades_sql)

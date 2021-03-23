@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/home/swing/.local/share/virtualenvs/optionbot-PzIcFZgc/bin/python",
+    "python.pythonPath": "C:\\Users\\joel\\anaconda3\\envs\\optionbotenv\\python.exe",
     "python.formatting.provider": "yapf",
     "python.linting.pylintEnabled": true,
     "python.linting.mypyEnabled": false,
