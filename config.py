@@ -1,3 +1,6 @@
+"""Defines the various queues and flags imported across the program.
+
+"""
 import queue
 import threading
 

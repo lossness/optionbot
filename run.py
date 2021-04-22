@@ -56,30 +56,23 @@ def is_market_open():
         return True
 
 
-# def initiate_discord_driver():
-#     chrome_options = Options()
-#     # chrome_options.add_argument("--window-size=1920,1080")
-#     # chrome_options.add_argument("--disable-extensions")
-#     # chrome_options.add_argument("--start-maximized")
-#     # chrome_options.add_argument("--headless")
-#     # chrome_options.add_argument("--disable-gpu")
-#     # chrome_options.add_argument("--disable-dev-shm-usage")
-#     # chrome_options.add_argument("--no-sandbox")
-#     # chrome_options.add_argument("--ignore-certificate-errors")
-#     chrome_options.add_argument('--log-level=3')
-#     chrome_options.debugger_address = '127.0.0.1:9222'
-#     discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
-#                                       options=chrome_options)
-#     try:
-#         element = discord_driver.find_elements_by_xpath(
-#             "//*[@role='group']")[-1]
-#         element.location_once_scrolled_into_view
+def initiate_discord_driver():
+    chrome_options = Options()
+    chrome_options.add_argument('--log-level=3')
+    chrome_options.debugger_address = '127.0.0.1:9222'
+    discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
+                                      options=chrome_options)
+    try:
+        element = discord_driver.find_elements_by_xpath(
+            "//*[@role='group']")[-1]
+        element.location_once_scrolled_into_view
 
-#     except (NoSuchElementException, TimeoutError) as error:
-#         logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
-#     finally:
-#         return discord_driver
-'''
+    except (NoSuchElementException, TimeoutError) as error:
+        logger.fatal(f'{error}\n COULD NOT FIND LAST MESSAGE')
+    finally:
+        return discord_driver
+
+
 def check_discord():
     listen_spinner = Spinner('Listening for new messages ')
     while True:
@@ -100,7 +93,6 @@ def check_discord():
         else:
             listen_spinner.next()
             EVENT.wait(3)
-'''
 
 
 def check_etwitter():
@@ -136,7 +128,6 @@ def check_for_unprocessed_messages():
     )
 
 
-'''
 def post_driver():
     chrome_options = Options()
     # chrome_options.add_argument("--window-size=1920,1080")
@@ -157,7 +148,6 @@ def post_driver():
         except (TimeoutException, NoSuchElementException) as error:
             logger.warning(error)
             continue
-'''
 
 
 def delayed_post_driver():
@@ -227,17 +217,17 @@ def run_loop(loop=get_the_loop()):
 
 
 def main():
-    #bbs_scraper = threading.Thread(target=check_discord)
+    bbs_scraper = threading.Thread(target=check_discord)
     etwit_scraper = threading.Thread(target=check_etwitter)
-    #poster = threading.Thread(target=post_driver)
+    poster = threading.Thread(target=post_driver)
     delayed_poster = threading.Thread(target=delayed_post_driver)
     processor = threading.Thread(target=check_for_unprocessed_messages)
     start_bots = threading.Thread(target=run_loop, daemon=True)
 
-    #bbs_scraper.start()
+    bbs_scraper.start()
     etwit_scraper.start()
     processor.start()
-    #poster.start()
+    poster.start()
     delayed_poster.start()
     start_bots.start()
 
@@ -246,11 +236,11 @@ def main():
     config.new_unprocessed_trades.join()
     config.new_discord_trades.join()
 
-    #bbs_scraper.join()
+    bbs_scraper.join()
     etwit_scraper.join()
     delayed_poster.join()
     processor.join()
-    #poster.join()
+    poster.join()
     start_bots.join()
 
 

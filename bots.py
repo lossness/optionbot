@@ -1,3 +1,10 @@
+"""All the discord related functions are contained here.
+
+The discord bots and their actions are defined here. There are two separate bots, 
+'dev_bot' and 'fa_bot'. 'dev_bot' listens for commands in the dev server. 'fa_bot' is located
+in the community server. 
+
+"""
 import discord
 import config
 import asyncio
@@ -38,71 +45,85 @@ async def on_ready():
 
 @dev_bot.command()
 async def trade(message):
+    """Handles the discord command '$trade'.
+
+    Verifies the user would like to manually send a trade to the
+    trades queue with a question. if the user replies to the message
+    with 'y' then the trade is submitted to queue for processing.
+
+    Args:
+        message: A discord.Message instance.
+
+    Raises:
+        asyncio.TimeoutError: The user failed to reply to the question.
+    """
+    channel = message.channel
+
+    if message.author.id == dev_bot.user.id:
+        return
+
+    if str(channel.id) != TRADE_CHANNEL:
+        return
+
+    await channel.send(
+        "Would you like to submit this trade for processing? y/n")
+
+    def check_for_yes(m):
+        return 'y' in m.content and m.channel == channel
+
     try:
-        channel = message.channel
+        msg = await dev_bot.wait_for('message',
+                                     check=check_for_yes,
+                                     timeout=15)
+    except asyncio.TimeoutError:
+        return await channel.send("No trade was submitted.")
 
-        if message.author.id == dev_bot.user.id:
-            return
-
-        if str(channel.id) != TRADE_CHANNEL:
-            return
-
-        await channel.send(
-            "Would you like to submit this trade for processing? y/n")
-
-        def check_for_yes(m):
-            return 'y' in m.content and m.channel == channel
-
-        try:
-            msg = await dev_bot.wait_for('message',
-                                         check=check_for_yes,
-                                         timeout=15)
-        except asyncio.TimeoutError:
-            return await channel.send("No trade was submitted.")
-
-        if check_for_yes(msg):
-            payload = f"{str(message.author.name)}\n{str(message.message.clean_content).replace('$trade', '')}"
-            config.new_unprocessed_trades.put(payload)
-            config.has_unprocessed_trade.release()
-            await channel.send("Trade submitted for processing!")
-    except Exception:
-        pass
+    if check_for_yes(msg):
+        payload = f"{str(message.author.name)}\n{str(message.message.clean_content).replace('$trade', '')}"
+        config.new_unprocessed_trades.put(payload)
+        config.has_unprocessed_trade.release()
+        await channel.send("Trade submitted for processing!")
 
 
 @dev_bot.command()
 async def post(message):
-    try:
-        image_colors = {
-            'red': 'FA1',
-            'orange': 'FA2',
-            'yellow': 'FA3',
-            'pink': 'FA4',
-            'purple': 'FA5',
-            'teal': 'FA6',
-            'green': 'FA7',
-            'darkblue': 'FA8',
-            'lightgreen': 'FA9',
-            'blue': 'FA10',
-            'black': 'FA11',
-            'gray': 'FA12',
-            'grey': 'FA12',
-            'darkred': 'FA13',
-            'brown': 'FA14'
-        }
-        trade_message = message.message.clean_content
-        trade_message = trade_message.replace('$post ', '')
-        split_message = trade_message.split('-')
-        split_message[-1] = image_colors.get(split_message[-1])
-        split_message += ['force_trade']
-        trade_tuple = tuple(split_message)
-        filename = force_make_image(trade_tuple)
-        split_message += [filename]
-        trade_tuple = tuple(split_message)
-        config.new_discord_trades.put(message)
-        config.has_new_discord_trade.release()
+    """Handles the discord command '$post'.
 
-    except Exception:
-        pass
+    This command is used to force a trade straight to posting on
+    instagram. All processing is bypassing by sending 'trade_tuple'
+    to the queue 'config.new_discord_trades' which feeds 'instapost.py'.
+
+    Args:
+        message: A discord.Message instance.
+    """
+    image_colors = {
+        'red': 'FA1',
+        'orange': 'FA2',
+        'yellow': 'FA3',
+        'pink': 'FA4',
+        'purple': 'FA5',
+        'teal': 'FA6',
+        'green': 'FA7',
+        'darkblue': 'FA8',
+        'lightgreen': 'FA9',
+        'blue': 'FA10',
+        'black': 'FA11',
+        'gray': 'FA12',
+        'grey': 'FA12',
+        'darkred': 'FA13',
+        'brown': 'FA14'
+    }
+    trade_message = message.message.clean_content
+    trade_message = trade_message.replace('$post ', '')
+    split_message = trade_message.split('-')
+    split_message[-1] = image_colors.get(split_message[-1])
+    split_message += ['force_trade']
+    trade_tuple = tuple(split_message)
+    filename = force_make_image(trade_tuple)
+    split_message += [filename]
+    trade_tuple = tuple(split_message)
+    config.new_discord_trades.put(message)
+    config.has_new_discord_trade.release()
     await message.send("Trade sent for posting!")
 
 

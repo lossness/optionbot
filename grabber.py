@@ -31,22 +31,19 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException,
 
 # include parent directory in path
 PATH = pathlib.Path.cwd()
+# DEBUG possible parameters listed in 'config.py'
 DEBUG = config.DEBUG
+# threading event
 EVENT = config.EVENT
-#TRADERS = [
-#    "Eric68", "MariaC82", "ThuhKang", "Jen♡♡crypto", "joel", "Treefidey",
-#    "Etwit"
-#]
-TRADERS = ["MariaC82", "joel", "Treefidey", "Etwit", "Jen♡♡crypto", "ThuhKang"]
+# trader discord usernames to monitor
+TRADERS = ["joel", "Treefidey"]
 LAST_MESSAGE = "None"
 LAST_FIXED_MESSAGE = "None"
 LAST_ETWIT_MESSAGE = "None"
+ETWIT_KEY = os.getenv("ETWIT_KEY")
+# detect if machine is running windows: "nt" or linux "posix"
+# and sets chrome driver paths accordingly
 if os.name == 'nt':
-    # DISCORD_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
-    #                                   'windows', 'discord',
-    #                                   'chromedriver.exe')
-    #INSTA_DRIVER_PATH = os.path.join(os.path.curdir, 'selenium-utilities',
-    #                                 'windows', 'insta', 'chromedriver.exe')
     DISCORD_DRIVER_PATH = os.getenv('WINDOWS_DISCORD_DRIVER_PATH')
     INSTA_DRIVER_PATH = os.getenv('WINDOWS_INSTA_DRIVER_PATH')
 if os.name == 'posix':
@@ -56,15 +53,6 @@ if os.name == 'posix':
 
 def initiate_bbs_driver():
     chrome_options = Options()
-    # chrome_options.add_argument("--window-size=1920,1080")
-    # chrome_options.add_argument("--disable-extensions")
-    # chrome_options.add_argument("--start-maximized")
-    # chrome_options.add_argument("--headless")
-    # chrome_options.add_argument("--disable-gpu")
-    # chrome_options.add_argument("--disable-dev-shm-usage")
-    # chrome_options.add_argument("--no-sandbox")
-    # chrome_options.add_argument("--ignore-certificate-errors")
-    chrome_options.add_argument('--log-level=3')
     chrome_options.debugger_address = '127.0.0.1:9222'
     discord_driver = webdriver.Chrome(executable_path=DISCORD_DRIVER_PATH,
                                       options=chrome_options)
@@ -75,7 +63,7 @@ def initiate_bbs_driver():
                 "//*[@aria-label='bot-dev-talk (channel)']//div[@aria-label='Messages in bot-dev-talk']/child::div/child::div[@role='document']"
             )[-1]
             last_element.location_once_scrolled_into_view
-        except (NoSuchElementException, TimeoutError, IndexError) as error:
+        except (NoSuchElementException, TimeoutError, IndexError):
             logger.fatal(
                 "LAST MESSAGE ELEMENT NOT FOUND IN DEV XPATH GRABBER.py, initiate_bbs_driver"
             )
@@ -84,15 +72,13 @@ def initiate_bbs_driver():
             return discord_driver
 
     if DEBUG == 'bbs' or DEBUG == 'bbs_post' or DEBUG is False:
-        #channel = 'all-mod-plays-text (channel)'
-        #child_element = 'Messages in all-mod-plays-text'
         try:
             last_element = discord_driver.find_elements_by_xpath(
                 "//div[contains(@data-list-item-id, 'chat-messages___chat-messages')]//div[starts-with(@class, 'container')]//div[starts-with(@class, 'embedWrapper')]//div[starts-with(@class, 'grid')]"
             )[-1]
             last_element.location_once_scrolled_into_view
 
-        except (NoSuchElementException, TimeoutError, IndexError) as error:
+        except (NoSuchElementException, TimeoutError, IndexError):
             logger.fatal(
                 "LAST MESSAGE ELEMENT NOT FOUND IN GRABBER.py initiate_bbs_driver"
             )
@@ -119,7 +105,7 @@ def initiate_etwitter_driver():
 
 class TradeGrabber:
     def __init__(self):
-        #self.bbs_driver = initiate_bbs_driver()
+        self.bbs_driver = initiate_bbs_driver()
         self.etwitter_driver = initiate_etwitter_driver()
         self.LAST_MESSAGE = LAST_MESSAGE
         self.LAST_FIXED_MESSAGE = LAST_FIXED_MESSAGE
@@ -130,17 +116,17 @@ class TradeGrabber:
         for split in split_message_list:
             if split in TRADERS:
                 trade_author = split
-                if "Jen" in trade_author:
-                    trade_author = "Jen"
+                if "John" in trade_author:
+                    trade_author = "John"
                 return trade_author
 
     def get_trade_expiration(self, split_message_list: list, ticker,
                              trade_author):
-        '''
-        Extracts trade expiration from message.
-        Parameters:
-        message, ticker
-        '''
+        """
+        Extracts the trade expiration from the current message. 
+        Upon finding a suitable match, it is removed from split_message_list.
+
+        """
         expiration_date = 'error'
         possible_expiration_date = 'error'
         try:
@@ -163,6 +149,7 @@ class TradeGrabber:
                     expiration_date = ''.join(expiration_date[0])
                     expiration_date = expiration_date.replace('.', '/')
                     split_message_list.remove(expiration_date)
+
             if possible_expiration_date == []:
                 possible_expiration_date = re.findall(
                     r"\s'(0?[1-9]|1[0-2])(|/|\\|-)(0?[1-9]|[12][0-9]|3[01])(|/|\\|-)(2?[0-1]|202[0-1])'",
@@ -180,9 +167,11 @@ class TradeGrabber:
                         ticker)
                 else:
                     raise KeyError("Could not determine expiration of trade!")
+
             expiration_date = self.check.live_expiration(
                 ticker, expiration_date)
-        except KeyError as e:
+
+        except KeyError:
             logger.error(
                 f'GRABBER - GET_TRADE_EXPIRATION FUNC : {split_message_list}')
             expiration_date = 'error'
@@ -190,7 +179,13 @@ class TradeGrabber:
         finally:
             return expiration_date, split_message_list
 
-    def get_trade_expiration_from_shit_jen(self, split_message_list):
+    def get_trade_expiration_from_john(self, split_message_list):
+        """
+        John tends to make typos and use different variations of
+        typing a trade expiration. This function looks
+        for missing zeros and using a '.' instead of a '/'.
+
+        """
         new_expiration = 'error'
         for item in split_message_list[:3]:
             try:
@@ -211,17 +206,18 @@ class TradeGrabber:
 
             if new_expiration == 'error':
                 logger.fatal(
-                    "Jens special expiration function failed to detect her shit :("
+                    "Johns special expiration function failed to fix his typo :("
                 )
             return str(new_expiration), split_message_list
 
     def three_feet(self, split_message_list: list, ticker_func):
-        '''
-        returns three values in ONE! 
+        """
+        Parses the message for the following three values.
         1. If the trade is call or put
         2. The strike price of the trade
         3. The ticker for the trade
-        '''
+        
+        """
         try:
             call_or_put = 'error'
             strike_price = 'error'
@@ -416,10 +412,11 @@ class TradeGrabber:
             return False
 
     def mask_buy_price(self, price: str) -> str:
-        '''
+        """
         Pads the buy price depending on value
-        for added safety.
-        '''
+        for added safety due to delay in market.
+
+        """
         # Set decimal rounding to .xx
         getcontext().prec = 3
         getcontext().rounding = ROUND_UP
@@ -616,7 +613,7 @@ class TradeGrabber:
             new_etwit_message = WebDriverWait(self.etwitter_driver, 8).until(
                 EC.presence_of_all_elements_located((
                     By.XPATH,
-                    "//*[@data-account-key='twitter:1322023677270102018']//div[starts-with(@class, 'tweet-body')]"
+                    f"//*[@data-account-key='twitter:{ETWIT_KEY}']//div[starts-with(@class, 'tweet-body')]"
                 )))[0].text
             if new_etwit_message != LAST_ETWIT_MESSAGE.replace("Etwit\n", ""):
                 new_etwit_message = f"Etwit\n{new_etwit_message}"
@@ -690,6 +687,11 @@ class TradeGrabber:
             return new_message
 
     def processor(self):
+        """
+        The main function for 'grabber.py'. Uses the other functions in 
+        a optimized order to maximize parsing success.
+
+        """
         while config.has_unprocessed_trade.acquire():
             new_message = config.new_unprocessed_trades.get()
             try:
@@ -698,7 +700,6 @@ class TradeGrabber:
                 split_result = list(filter(None, split_result))
                 split_result = list(filter(self.filter_message, split_result))
                 trade_author = list(filter(self.filter_trader, split_result))
-                #testing reliability of this
                 if trade_author == [] and '#ALERT' in str(split_result):
                     trade_author = ['Etwit']
                 trade_author_tup = trade_author[0]
@@ -706,22 +707,21 @@ class TradeGrabber:
                     split_result = self.etwit_standardizer(split_result)
                 if ' ' in trade_author_tup:
                     trade_author_tup = trade_author_tup.replace(' ', '')
-                if "Jen" in trade_author_tup:
-                    trade_author_tup = "Jen"
+                if "John" in trade_author_tup:
+                    trade_author_tup = "John"
                 # find the longest string left which is the message string
                 longest_string = max(split_result, key=len)
                 double_split_result = longest_string.split(' - ')
                 double_split_result = list(filter(None, double_split_result))
-                # gets a call or put status, and pops that matched entry out of the list
                 three_feet_results = self.three_feet(double_split_result,
                                                      self.get_stock_ticker)
                 call_or_put_tup, strike_price_tup, stock_ticker_tup, double_split_result = three_feet_results
 
-                if 'jen' in trade_author_tup.lower():
-                    trade_expiration_tup, double_split_result = self.get_trade_expiration_from_shit_jen(
+                if 'john' in trade_author_tup.lower():
+                    trade_expiration_tup, double_split_result = self.get_trade_expiration_from_john(
                         double_split_result)
 
-                if not 'jen' in trade_author_tup.lower():
+                if not 'john' in trade_author_tup.lower():
                     trade_expiration_tup, double_split_result = self.get_trade_expiration(
                         double_split_result, stock_ticker_tup,
                         trade_author_tup)
@@ -860,11 +860,8 @@ class TradeGrabber:
                         config.new_discord_trades.put(message)
                         config.has_new_discord_trade.release()
 
-            except (KeyError, ValueError) as error:
-                print(f"\n{error}")
+            except (KeyError, ValueError, IndexError):
                 pass
 
-            except IndexError:
-                pass
             finally:
                 EVENT.wait(.5)
